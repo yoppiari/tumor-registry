@@ -1,0 +1,37 @@
+import { PrismaService } from '@/database/prisma.service';
+export declare class PerformanceService {
+    private prisma;
+    private readonly logger;
+    private queryCache;
+    constructor(prisma: PrismaService);
+    getDatabaseOptimizationRecommendations(): Promise<any>;
+    getApplicationPerformanceMetrics(): Promise<any>;
+    implementCachingStrategy(): Promise<any>;
+    optimizeQueryPerformance(): Promise<any>;
+    private analyzeSlowQueries;
+    private analyzeMissingIndexes;
+    private analyzeTableStatistics;
+    private analyzeConnectionPool;
+    private getQueryOptimizationSuggestion;
+    private calculatePerformanceScore;
+    private calculateOverallImpact;
+    private generateImplementationPlan;
+    private getMemoryMetrics;
+    private getCPUMetrics;
+    private getResponseTimeMetrics;
+    private getErrorMetrics;
+    private getCacheMetrics;
+    private getDatabasePerformanceMetrics;
+    private identifyBottlenecks;
+    private generatePerformanceRecommendations;
+    private calculateApplicationHealthScore;
+    private optimizePatientQueries;
+    private optimizeAnalyticsQueries;
+    private optimizeSearchQueries;
+    private optimizeReportingQueries;
+    private calculateOverallPerformanceGain;
+    private generateQueryRecommendations;
+    private generateRolloutPlan;
+    private generateRollbackPlan;
+    private generateTestingStrategy;
+}

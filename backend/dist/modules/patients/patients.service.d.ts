@@ -1,0 +1,83 @@
+import { PrismaService } from '@/database/prisma.service';
+import { Patient, Gender, BloodType, MaritalStatus } from '@prisma/client';
+export declare class PatientsService {
+    private prisma;
+    private readonly logger;
+    constructor(prisma: PrismaService);
+    findAll(centerId?: string, includeInactive?: boolean, page?: number, limit?: number, search?: string): Promise<{
+        patients: any[];
+        total: number;
+        page: number;
+        totalPages: number;
+    }>;
+    findById(id: string, includeMedicalHistory?: boolean): Promise<any>;
+    findByNIK(nik: string): Promise<Patient>;
+    findByMedicalRecordNumber(mrn: string): Promise<Patient>;
+    create(patientData: {
+        name: string;
+        nik: string;
+        dateOfBirth: Date;
+        placeOfBirth?: string;
+        gender: Gender;
+        bloodType?: BloodType;
+        religion?: string;
+        maritalStatus?: MaritalStatus;
+        occupation?: string;
+        education?: string;
+        phoneNumber?: string;
+        email?: string;
+        address?: string;
+        province?: string;
+        regency?: string;
+        district?: string;
+        village?: string;
+        postalCode?: string;
+        emergencyContact?: any;
+        centerId: string;
+    }): Promise<Patient>;
+    update(id: string, updateData: {
+        name?: string;
+        phoneNumber?: string;
+        email?: string;
+        address?: string;
+        province?: string;
+        regency?: string;
+        district?: string;
+        village?: string;
+        postalCode?: string;
+        emergencyContact?: any;
+        bloodType?: BloodType;
+        religion?: string;
+        maritalStatus?: MaritalStatus;
+        occupation?: string;
+        education?: string;
+        isActive?: boolean;
+        isDeceased?: boolean;
+        dateOfDeath?: Date;
+        causeOfDeath?: string;
+    }): Promise<Patient>;
+    getPatientStatistics(centerId?: string): Promise<any>;
+    searchPatients(query: {
+        search?: string;
+        centerId?: string;
+        gender?: Gender;
+        bloodType?: BloodType;
+        maritalStatus?: MaritalStatus;
+        isDeceased?: boolean;
+        dateOfBirthFrom?: Date;
+        dateOfBirthTo?: Date;
+        page?: number;
+        limit?: number;
+    }): Promise<{
+        patients: any[];
+        total: number;
+        page: number;
+        totalPages: number;
+    }>;
+    private generateMedicalRecordNumber;
+    private calculateAge;
+    private getAgeGroup;
+    private getGenderStatistics;
+    private getAgeStatistics;
+    private getBloodTypeStatistics;
+}

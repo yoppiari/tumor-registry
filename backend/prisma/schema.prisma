@@ -1,0 +1,605 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  previewFeatures = ["multiSchema"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  schemas  = ["system", "audit", "medical"]
+}
+
+// System Schema for multi-tenant architecture
+model Center {
+  id            String   @id @default(cuid())
+  name          String
+  code          String   @unique
+  province      String
+  regency       String?
+  address       String?
+  isActive      Boolean  @default(true)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  users         User[]
+patients      Patient[]
+
+  @@map("centers")
+  @@schema("system")
+}
+
+model User {
+  id            String   @id @default(cuid())
+  email         String   @unique
+  name          String
+  kolegiumId     String?  // Kolegium member ID
+  passwordHash  String
+  phone         String?
+  nik           String?  // National ID
+  isActive      Boolean  @default(true)
+  isEmailVerified Boolean @default(false)
+  mfaEnabled    Boolean  @default(false)
+  mfaSecret     String?
+  lastLoginAt   DateTime?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  centerId      String
+  center        Center   @relation(fields: [centerId], references: [id], onDelete: Cascade)
+
+  userRoles     UserRole[]
+
+  @@map("users")
+  @@schema("system")
+}
+
+model Role {
+  id          String @id @default(cuid())
+  name        String @unique
+  code        String @unique
+  description String?
+  level       Int    // 1: User, 2: Center Admin, 3: National Admin, 4: System Admin
+
+  userRoles   UserRole[]
+  permissions RolePermission[]
+
+  @@map("roles")
+  @@schema("system")
+}
+
+model UserRole {
+  id        String   @id @default(cuid())
+  userId    String
+  roleId    String
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  role      Role     @relation(fields: [roleId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, roleId])
+  @@map("user_roles")
+  @@schema("system")
+}
+
+model Permission {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  code        String   @unique
+  resource    String
+  action      String
+  description String?
+
+  rolePermissions RolePermission[]
+
+  @@map("permissions")
+  @@schema("system")
+}
+
+model RolePermission {
+  id           String @id @default(cuid())
+  roleId       String
+  permissionId String
+  createdAt    DateTime @default(now())
+
+  role         Role       @relation(fields: [roleId], references: [id], onDelete: Cascade)
+  permission   Permission @relation(fields: [permissionId], references: [id], onDelete: Cascade)
+
+  @@unique([roleId, permissionId])
+  @@map("role_permissions")
+  @@schema("system")
+}
+
+// Audit Schema for compliance
+model AuditLog {
+  id        String   @id @default(cuid())
+  userId    String
+  action    String
+  resource  String
+  details   Json?
+  ipAddress String?
+  userAgent String?
+  createdAt DateTime @default(now())
+
+  @@map("audit_logs")
+  @@schema("audit")
+}
+
+// Medical Schema for patient and clinical data
+model Patient {
+  id                    String    @id @default(cuid())
+  medicalRecordNumber   String    @unique
+  nik                   String    @unique  // National ID
+  name                  String
+  dateOfBirth           DateTime
+  placeOfBirth          String?
+  gender                Gender
+  bloodType             BloodType?
+  religion              String?
+  maritalStatus         MaritalStatus?
+  occupation            String?
+  education             String?
+  phoneNumber           String?
+  email                 String?
+  address               String?
+  province              String?
+  regency               String?
+  district              String?
+  village               String?
+  postalCode            String?
+  emergencyContact      Json?     // {name, relationship, phone}
+  isActive              Boolean   @default(true)
+  isDeceased            Boolean   @default(false)
+  dateOfDeath           DateTime?
+  causeOfDeath          String?
+  centerId              String
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+
+  center                Center    @relation(fields: [centerId], references: [id], onDelete: Cascade)
+  medicalRecords        MedicalRecord[]
+  diagnoses             PatientDiagnosis[]
+  allergies             PatientAllergy[]
+  medications           PatientMedication[]
+  vitalSigns            VitalSign[]
+  laboratoryResults     LaboratoryResult[]
+  radiologyResults      RadiologyResult[]
+  procedures            PatientProcedure[]
+  consents              PatientConsent[]
+  visits                PatientVisit[]
+  insuranceInfos        PatientInsurance[]
+
+  @@map("patients")
+  @@schema("medical")
+}
+
+model MedicalRecord {
+  id                String           @id @default(cuid())
+  patientId         String
+  recordType        RecordType
+  recordNumber      String
+  providerId        String           // User ID of healthcare provider
+  chiefComplaint    String?
+  historyOfPresent  String?          // History of present illness
+  pastMedical       Json?            // Past medical history
+  surgicalHistory   Json?            // Surgical history
+  familyHistory     Json?            // Family history
+  socialHistory     Json?            // Social history
+  reviewOfSystems   Json?            // Review of systems
+  physicalExam      Json?            // Physical examination findings
+  assessment        String?          // Assessment
+  plan              String?          // Treatment plan
+  notes             String?          // Additional notes
+  isConfidential    Boolean          @default(false)
+  createdAt         DateTime         @default(now())
+  updatedAt         DateTime         @updatedAt
+
+  patient           Patient          @relation(fields: [patientId], references: [id], onDelete: Cascade)
+
+  @@map("medical_records")
+  @@schema("medical")
+}
+
+model PatientDiagnosis {
+  id                String           @id @default(cuid())
+  patientId         String
+  diagnosisCode     String           // ICD-10 code
+  diagnosisName     String
+  diagnosisType     DiagnosisType
+  severity          DiagnosisSeverity?
+  status            DiagnosisStatus
+  onsetDate         DateTime?
+  resolutionDate    DateTime?
+  notes             String?
+  providerId        String           // User ID
+  isPrimary         Boolean          @default(false)
+  createdAt         DateTime         @default(now())
+  updatedAt         DateTime         @updatedAt
+
+  patient           Patient          @relation(fields: [patientId], references: [id], onDelete: Cascade)
+
+  @@map("patient_diagnoses")
+  @@schema("medical")
+}
+
+model PatientAllergy {
+  id                String           @id @default(cuid())
+  patientId         String
+  allergenType      AllergenType
+  allergenName      String
+  reaction          String?
+  severity          AllergySeverity
+  status            AllergyStatus
+  onsetDate         DateTime?
+  notes             String?
+  providerId        String           // User ID
+  createdAt         DateTime         @default(now())
+  updatedAt         DateTime         @updatedAt
+
+  patient           Patient          @relation(fields: [patientId], references: [id], onDelete: Cascade)
+
+  @@map("patient_allergies")
+  @@schema("medical")
+}
+
+model PatientMedication {
+  id                String           @id @default(cuid())
+  patientId         String
+  medicationName    String
+  genericName       String?
+  brandName         String?
+  dosage            String?
+  frequency         String?
+  route             MedicationRoute
+  startDate         DateTime
+  endDate           DateTime?
+  isActive          Boolean          @default(true)
+  purpose           String?
+  instructions      String?
+  sideEffects       String?
+  prescribedBy      String           // User ID
+  createdAt         DateTime         @default(now())
+  updatedAt         DateTime         @updatedAt
+
+  patient           Patient          @relation(fields: [patientId], references: [id], onDelete: Cascade)
+
+  @@map("patient_medications")
+  @@schema("medical")
+}
+
+model VitalSign {
+  id                String           @id @default(cuid())
+  patientId         String
+  temperature       Float?           // Celsius
+  bloodPressureSystolic Int?        // mmHg
+  bloodPressureDiastolic Int?       // mmHg
+  heartRate         Int?             // bpm
+  respiratoryRate   Int?             // breaths per minute
+  oxygenSaturation  Float?           // percentage
+  height            Float?           // cm
+  weight            Float?           // kg
+  bmi               Float?           // calculated
+  painScale         Int?             // 0-10
+  bloodGlucose      Float?           // mg/dL
+  notes             String?
+  recordedBy        String           // User ID
+  recordedAt        DateTime         @default(now())
+
+  patient           Patient          @relation(fields: [patientId], references: [id], onDelete: Cascade)
+
+  @@map("vital_signs")
+  @@schema("medical")
+}
+
+model LaboratoryResult {
+  id                String           @id @default(cuid())
+  patientId         String
+  testType          String
+  testName          String
+  result            String
+  normalRange       String?
+  unit              String?
+  status            ResultStatus
+  notes             String?
+  orderedBy         String           // User ID
+  performedAt       DateTime?
+  createdAt         DateTime         @default(now())
+  updatedAt         DateTime         @updatedAt
+
+  patient           Patient          @relation(fields: [patientId], references: [id], onDelete: Cascade)
+
+  @@map("laboratory_results")
+  @@schema("medical")
+}
+
+model RadiologyResult {
+  id                String           @id @default(cuid())
+  patientId         String
+  examinationType   String
+  indication        String?
+  findings          String?
+  impression        String?
+  recommendation    String?
+  status            ResultStatus
+  radiologistId     String           // User ID
+  examinationDate   DateTime?
+  createdAt         DateTime         @default(now())
+  updatedAt         DateTime         @updatedAt
+
+  patient           Patient          @relation(fields: [patientId], references: [id], onDelete: Cascade)
+
+  @@map("radiology_results")
+  @@schema("medical")
+}
+
+model PatientProcedure {
+  id                String           @id @default(cuid())
+  patientId         String
+  procedureName     String
+  procedureCode     String?          // Procedure coding system
+  indication        String?
+  description       String?
+  startDate         DateTime
+  endDate           DateTime?
+  status            ProcedureStatus
+  complications     String?
+  outcome           String?
+  performedBy       String           // User ID
+  notes             String?
+  createdAt         DateTime         @default(now())
+  updatedAt         DateTime         @updatedAt
+
+  patient           Patient          @relation(fields: [patientId], references: [id], onDelete: Cascade)
+
+  @@map("patient_procedures")
+  @@schema("medical")
+}
+
+model PatientConsent {
+  id                String           @id @default(cuid())
+  patientId         String
+  consentType       ConsentType
+  description       String
+  isConsented       Boolean
+  consentDate       DateTime
+  expiredDate       DateTime?
+  guardianName     String?          // For minors or incapacitated
+  guardianRelation  String?          // Relationship to patient
+  providerId        String           // User ID who obtained consent
+  notes             String?
+  createdAt         DateTime         @default(now())
+  updatedAt         DateTime         @updatedAt
+
+  patient           Patient          @relation(fields: [patientId], references: [id], onDelete: Cascade)
+
+  @@map("patient_consents")
+  @@schema("medical")
+}
+
+model PatientVisit {
+  id                String           @id @default(cuid())
+  patientId         String
+  visitType         VisitType
+  visitDate         DateTime
+  dischargeDate     DateTime?
+  department        String?
+  chiefComplaint    String?
+  diagnosis         String?
+  treatment         String?
+  providerId        String           // User ID
+  status            VisitStatus
+  notes             String?
+  createdAt         DateTime         @default(now())
+  updatedAt         DateTime         @updatedAt
+
+  patient           Patient          @relation(fields: [patientId], references: [id], onDelete: Cascade)
+
+  @@map("patient_visits")
+  @@schema("medical")
+}
+
+model PatientInsurance {
+  id                String           @id @default(cuid())
+  patientId         String
+  insuranceProvider  String
+  policyNumber      String
+  memberNumber      String?
+  planType          String?
+  coverageType      String?
+  isActive          Boolean          @default(true)
+  effectiveDate     DateTime
+  expirationDate    DateTime?
+  notes             String?
+  createdAt         DateTime         @default(now())
+  updatedAt         DateTime         @updatedAt
+
+  patient           Patient          @relation(fields: [patientId], references: [id], onDelete: Cascade)
+
+  @@map("patient_insurances")
+  @@schema("medical")
+}
+
+// Enums for medical data
+enum Gender {
+  MALE
+  FEMALE
+  OTHER
+
+  @@map("genders")
+  @@schema("medical")
+}
+
+enum BloodType {
+  A_POSITIVE
+  A_NEGATIVE
+  B_POSITIVE
+  B_NEGATIVE
+  AB_POSITIVE
+  AB_NEGATIVE
+  O_POSITIVE
+  O_NEGATIVE
+
+  @@map("blood_types")
+  @@schema("medical")
+}
+
+enum MaritalStatus {
+  SINGLE
+  MARRIED
+  DIVORCED
+  WIDOWED
+  SEPARATED
+
+  @@map("marital_statuses")
+  @@schema("medical")
+}
+
+enum RecordType {
+  INITIAL
+  PROGRESS
+  DISCHARGE
+  CONSULTATION
+  EMERGENCY
+  FOLLOW_UP
+
+  @@map("record_types")
+  @@schema("medical")
+}
+
+enum DiagnosisType {
+  PRIMARY
+  SECONDARY
+  ADMITTING
+  DISCHARGE
+  COMPLICATION
+
+  @@map("diagnosis_types")
+  @@schema("medical")
+}
+
+enum DiagnosisSeverity {
+  MILD
+  MODERATE
+  SEVERE
+  CRITICAL
+
+  @@map("diagnosis_severities")
+  @@schema("medical")
+}
+
+enum DiagnosisStatus {
+  ACTIVE
+  RESOLVED
+  CHRONIC
+  RECURRING
+
+  @@map("diagnosis_statuses")
+  @@schema("medical")
+}
+
+enum AllergenType {
+  DRUG
+  FOOD
+  ENVIRONMENTAL
+  LATEX
+  OTHER
+
+  @@map("allergen_types")
+  @@schema("medical")
+}
+
+enum AllergySeverity {
+  MILD
+  MODERATE
+  SEVERE
+  ANAPHYLAXIS
+
+  @@map("allergy_severities")
+  @@schema("medical")
+}
+
+enum AllergyStatus {
+  ACTIVE
+  RESOLVED
+  UNKNOWN
+
+  @@map("allergy_statuses")
+  @@schema("medical")
+}
+
+enum MedicationRoute {
+  ORAL
+  INJECTION
+  INTRAVENOUS
+  TOPICAL
+  INHALATION
+  RECTAL
+  NASAL
+  OPHTHALMIC
+  OTIC
+
+  @@map("medication_routes")
+  @@schema("medical")
+}
+
+enum ResultStatus {
+  PENDING
+  COMPLETED
+  ABNORMAL
+  CRITICAL
+  CANCELLED
+
+  @@map("result_statuses")
+  @@schema("medical")
+}
+
+enum ProcedureStatus {
+  SCHEDULED
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+  COMPLICATION
+
+  @@map("procedure_statuses")
+  @@schema("medical")
+}
+
+enum ConsentType {
+  TREATMENT
+  SURGERY
+  ANESTHESIA
+  BLOOD_TRANSFUSION
+  RESEARCH
+  PHOTOGRAPHY
+  TELEHEALTH
+  PRIVACY
+
+  @@map("consent_types")
+  @@schema("medical")
+}
+
+enum VisitType {
+  OUTPATIENT
+  INPATIENT
+  EMERGENCY
+  DAY_CARE
+  HOME_VISIT
+  TELEHEALTH
+
+  @@map("visit_types")
+  @@schema("medical")
+}
+
+enum VisitStatus {
+  SCHEDULED
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+  NO_SHOW
+
+  @@map("visit_statuses")
+  @@schema("medical")
+}

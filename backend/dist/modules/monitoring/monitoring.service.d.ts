@@ -1,0 +1,63 @@
+import { PrismaService } from '@/database/prisma.service';
+export declare class MonitoringService {
+    private prisma;
+    private readonly logger;
+    constructor(prisma: PrismaService);
+    getSystemHealth(): Promise<any>;
+    createAlert(alertData: {
+        type: 'system' | 'performance' | 'security' | 'business';
+        severity: 'low' | 'medium' | 'high' | 'critical';
+        title: string;
+        message: string;
+        details?: any;
+        component?: string;
+        thresholds?: any;
+        actions?: string[];
+    }): Promise<any>;
+    acknowledgeAlert(alertId: string, userId: string, notes?: string): Promise<any>;
+    resolveAlert(alertId: string, userId: string, resolution: string): Promise<any>;
+    getAuditLogs(filters?: {
+        dateFrom?: string;
+        dateTo?: string;
+        userId?: string;
+        action?: string;
+        component?: string;
+        severity?: string;
+        page?: number;
+        limit?: number;
+    }): Promise<any>;
+    createAuditLog(logData: {
+        userId: string;
+        action: string;
+        component: string;
+        severity?: 'info' | 'warning' | 'error' | 'critical';
+        details?: any;
+        ipAddress?: string;
+        userAgent?: string;
+    }): Promise<any>;
+    getSystemMetrics(timeRange?: 'hour' | 'day' | 'week' | 'month'): Promise<any>;
+    private getDatabaseHealth;
+    private getAPIHealth;
+    private getIntegrationHealth;
+    private calculateOverallHealth;
+    private generateHealthRecommendations;
+    private getCPUUsage;
+    private getMemoryUsage;
+    private getDiskUsage;
+    private getNetworkIO;
+    private getAverageResponseTime;
+    private getP95ResponseTime;
+    private getP99ResponseTime;
+    private getErrorRate;
+    private getRequestsPerSecond;
+    private getDatabaseConnectionStats;
+    private getDatabaseQueryStats;
+    private sendAlertNotification;
+    private calculateStartDate;
+    private getRequestMetrics;
+    private getUserMetrics;
+    private getErrorMetrics;
+    private getPerformanceMetricsByTimeRange;
+    private getSecurityMetrics;
+    private calculateTrends;
+}

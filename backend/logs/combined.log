@@ -1,0 +1,910 @@
+{"context":"NestFactory","level":"info","message":"Starting Nest application...","service":"inamsos-backend","timestamp":"2025-11-17T15:07:35.124Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"AppModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T15:07:35.167Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"DatabaseModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T15:07:35.168Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"PassportModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T15:07:35.168Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"UsersModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T15:07:35.169Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"CentersModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T15:07:35.169Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"ThrottlerModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T15:07:35.170Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"JwtModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T15:07:35.171Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"ConfigHostModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T15:07:35.172Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"HealthModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T15:07:35.173Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T15:07:35.174Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T15:07:35.174Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"AuthModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T15:07:35.179Z","version":"1.0.0"}
+{"context":"RoutesResolver","level":"info","message":"HealthController {/api/v1/health}:","service":"inamsos-backend","timestamp":"2025-11-17T15:07:35.262Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/health, GET} route","service":"inamsos-backend","timestamp":"2025-11-17T15:07:35.267Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/health/detailed, GET} route","service":"inamsos-backend","timestamp":"2025-11-17T15:07:35.268Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/health/readiness, GET} route","service":"inamsos-backend","timestamp":"2025-11-17T15:07:35.269Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/health/liveness, GET} route","service":"inamsos-backend","timestamp":"2025-11-17T15:07:35.270Z","version":"1.0.0"}
+{"context":"RoutesResolver","level":"info","message":"AuthController {/api/v1/auth}:","service":"inamsos-backend","timestamp":"2025-11-17T15:07:35.270Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/register, POST} route","service":"inamsos-backend","timestamp":"2025-11-17T15:07:35.272Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/login, POST} route","service":"inamsos-backend","timestamp":"2025-11-17T15:07:35.273Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/refresh, POST} route","service":"inamsos-backend","timestamp":"2025-11-17T15:07:35.273Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/logout, POST} route","service":"inamsos-backend","timestamp":"2025-11-17T15:07:35.275Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/me, GET} route","service":"inamsos-backend","timestamp":"2025-11-17T15:07:35.276Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/verify-email, POST} route","service":"inamsos-backend","timestamp":"2025-11-17T15:07:35.276Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/test-roles, GET} route","service":"inamsos-backend","timestamp":"2025-11-17T15:07:35.277Z","version":"1.0.0"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started","service":"inamsos-backend","timestamp":"2025-11-17T15:07:35.282Z","version":"1.0.0"}
+{"level":"info","message":"🚀 INAMSOS Backend API running on port 3001","service":"inamsos-backend","timestamp":"2025-11-17T15:07:35.290Z","version":"1.0.0"}
+{"level":"info","message":"📚 API Documentation available at http://localhost:3001/api/docs","service":"inamsos-backend","timestamp":"2025-11-17T15:07:35.290Z","version":"1.0.0"}
+{"level":"info","message":"🏥 Environment: development","service":"inamsos-backend","timestamp":"2025-11-17T15:07:35.291Z","version":"1.0.0"}
+{"context":"NestFactory","level":"info","message":"Starting Nest application...","service":"inamsos-backend","timestamp":"2025-11-17T15:09:14.759Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"AppModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T15:09:14.800Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"DatabaseModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T15:09:14.801Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"PassportModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T15:09:14.802Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"UsersModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T15:09:14.802Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"CentersModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T15:09:14.803Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"ThrottlerModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T15:09:14.804Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"JwtModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T15:09:14.804Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"ConfigHostModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T15:09:14.805Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"HealthModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T15:09:14.806Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T15:09:14.807Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T15:09:14.807Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"AuthModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T15:09:14.811Z","version":"1.0.0"}
+{"context":"RoutesResolver","level":"info","message":"HealthController {/api/v1/health}:","service":"inamsos-backend","timestamp":"2025-11-17T15:09:14.880Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/health, GET} route","service":"inamsos-backend","timestamp":"2025-11-17T15:09:14.885Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/health/detailed, GET} route","service":"inamsos-backend","timestamp":"2025-11-17T15:09:14.886Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/health/readiness, GET} route","service":"inamsos-backend","timestamp":"2025-11-17T15:09:14.887Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/health/liveness, GET} route","service":"inamsos-backend","timestamp":"2025-11-17T15:09:14.887Z","version":"1.0.0"}
+{"context":"RoutesResolver","level":"info","message":"AuthController {/api/v1/auth}:","service":"inamsos-backend","timestamp":"2025-11-17T15:09:14.888Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/register, POST} route","service":"inamsos-backend","timestamp":"2025-11-17T15:09:14.890Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/login, POST} route","service":"inamsos-backend","timestamp":"2025-11-17T15:09:14.891Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/refresh, POST} route","service":"inamsos-backend","timestamp":"2025-11-17T15:09:14.892Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/logout, POST} route","service":"inamsos-backend","timestamp":"2025-11-17T15:09:14.894Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/me, GET} route","service":"inamsos-backend","timestamp":"2025-11-17T15:09:14.895Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/verify-email, POST} route","service":"inamsos-backend","timestamp":"2025-11-17T15:09:14.896Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/test-roles, GET} route","service":"inamsos-backend","timestamp":"2025-11-17T15:09:14.897Z","version":"1.0.0"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started","service":"inamsos-backend","timestamp":"2025-11-17T15:09:14.902Z","version":"1.0.0"}
+{"level":"info","message":"🚀 INAMSOS Backend API running on port 3001","service":"inamsos-backend","timestamp":"2025-11-17T15:09:14.911Z","version":"1.0.0"}
+{"level":"info","message":"📚 API Documentation available at http://localhost:3001/api/docs","service":"inamsos-backend","timestamp":"2025-11-17T15:09:14.911Z","version":"1.0.0"}
+{"level":"info","message":"🏥 Environment: development","service":"inamsos-backend","timestamp":"2025-11-17T15:09:14.912Z","version":"1.0.0"}
+{"context":"NestFactory","level":"info","message":"Starting Nest application...","service":"inamsos-backend","timestamp":"2025-11-17T15:14:31.864Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"AppModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T15:14:31.904Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"DatabaseModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T15:14:31.906Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"PassportModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T15:14:31.907Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"UsersModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T15:14:31.908Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"CentersModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T15:14:31.908Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"ThrottlerModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T15:14:31.909Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"JwtModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T15:14:31.910Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"ConfigHostModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T15:14:31.911Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"HealthModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T15:14:31.912Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T15:14:31.913Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T15:14:31.914Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"AuthModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T15:14:31.918Z","version":"1.0.0"}
+{"context":"RoutesResolver","level":"info","message":"HealthController {/api/v1/health}:","service":"inamsos-backend","timestamp":"2025-11-17T15:14:31.990Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/health, GET} route","service":"inamsos-backend","timestamp":"2025-11-17T15:14:31.995Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/health/detailed, GET} route","service":"inamsos-backend","timestamp":"2025-11-17T15:14:31.996Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/health/readiness, GET} route","service":"inamsos-backend","timestamp":"2025-11-17T15:14:31.997Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/health/liveness, GET} route","service":"inamsos-backend","timestamp":"2025-11-17T15:14:31.998Z","version":"1.0.0"}
+{"context":"RoutesResolver","level":"info","message":"AuthController {/api/v1/auth}:","service":"inamsos-backend","timestamp":"2025-11-17T15:14:31.999Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/register, POST} route","service":"inamsos-backend","timestamp":"2025-11-17T15:14:32.004Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/login, POST} route","service":"inamsos-backend","timestamp":"2025-11-17T15:14:32.005Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/refresh, POST} route","service":"inamsos-backend","timestamp":"2025-11-17T15:14:32.005Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/logout, POST} route","service":"inamsos-backend","timestamp":"2025-11-17T15:14:32.007Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/me, GET} route","service":"inamsos-backend","timestamp":"2025-11-17T15:14:32.009Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/verify-email, POST} route","service":"inamsos-backend","timestamp":"2025-11-17T15:14:32.011Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/test-roles, GET} route","service":"inamsos-backend","timestamp":"2025-11-17T15:14:32.012Z","version":"1.0.0"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started","service":"inamsos-backend","timestamp":"2025-11-17T15:14:32.018Z","version":"1.0.0"}
+{"level":"info","message":"🚀 INAMSOS Backend API running on port 3001","service":"inamsos-backend","timestamp":"2025-11-17T15:14:32.027Z","version":"1.0.0"}
+{"level":"info","message":"📚 API Documentation available at http://localhost:3001/api/docs","service":"inamsos-backend","timestamp":"2025-11-17T15:14:32.027Z","version":"1.0.0"}
+{"level":"info","message":"🏥 Environment: development","service":"inamsos-backend","timestamp":"2025-11-17T15:14:32.027Z","version":"1.0.0"}
+{"context":"NestFactory","level":"info","message":"Starting Nest application...","service":"inamsos-backend","timestamp":"2025-11-17T23:52:04.318Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"AppModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:52:04.356Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"DatabaseModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:52:04.357Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"PassportModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:52:04.359Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"UsersModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:52:04.360Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"CentersModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:52:04.360Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"ThrottlerModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:52:04.361Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"JwtModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:52:04.362Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"ConfigHostModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:52:04.363Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"HealthModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:52:04.365Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:52:04.365Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:52:04.366Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"AuthModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:52:04.371Z","version":"1.0.0"}
+{"context":"RoutesResolver","level":"info","message":"HealthController {/api/v1/health}:","service":"inamsos-backend","timestamp":"2025-11-17T23:52:04.449Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/health, GET} route","service":"inamsos-backend","timestamp":"2025-11-17T23:52:04.453Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/health/detailed, GET} route","service":"inamsos-backend","timestamp":"2025-11-17T23:52:04.454Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/health/readiness, GET} route","service":"inamsos-backend","timestamp":"2025-11-17T23:52:04.455Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/health/liveness, GET} route","service":"inamsos-backend","timestamp":"2025-11-17T23:52:04.456Z","version":"1.0.0"}
+{"context":"RoutesResolver","level":"info","message":"AuthController {/api/v1/auth}:","service":"inamsos-backend","timestamp":"2025-11-17T23:52:04.457Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/register, POST} route","service":"inamsos-backend","timestamp":"2025-11-17T23:52:04.459Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/login, POST} route","service":"inamsos-backend","timestamp":"2025-11-17T23:52:04.459Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/refresh, POST} route","service":"inamsos-backend","timestamp":"2025-11-17T23:52:04.460Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/logout, POST} route","service":"inamsos-backend","timestamp":"2025-11-17T23:52:04.462Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/me, GET} route","service":"inamsos-backend","timestamp":"2025-11-17T23:52:04.463Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/verify-email, POST} route","service":"inamsos-backend","timestamp":"2025-11-17T23:52:04.464Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/test-roles, GET} route","service":"inamsos-backend","timestamp":"2025-11-17T23:52:04.465Z","version":"1.0.0"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started","service":"inamsos-backend","timestamp":"2025-11-17T23:52:04.470Z","version":"1.0.0"}
+{"level":"info","message":"🚀 INAMSOS Backend API running on port 3001","service":"inamsos-backend","timestamp":"2025-11-17T23:52:04.478Z","version":"1.0.0"}
+{"level":"info","message":"📚 API Documentation available at http://localhost:3001/api/docs","service":"inamsos-backend","timestamp":"2025-11-17T23:52:04.479Z","version":"1.0.0"}
+{"level":"info","message":"🏥 Environment: development","service":"inamsos-backend","timestamp":"2025-11-17T23:52:04.479Z","version":"1.0.0"}
+{"context":"NestFactory","level":"info","message":"Starting Nest application...","service":"inamsos-backend","timestamp":"2025-11-17T23:52:09.225Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"AppModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:52:09.257Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"DatabaseModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:52:09.258Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"PassportModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:52:09.259Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"UsersModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:52:09.259Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"CentersModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:52:09.259Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"ThrottlerModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:52:09.260Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"JwtModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:52:09.261Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"ConfigHostModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:52:09.262Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"HealthModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:52:09.263Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:52:09.263Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:52:09.264Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"AuthModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:52:09.267Z","version":"1.0.0"}
+{"context":"RoutesResolver","level":"info","message":"HealthController {/api/v1/health}:","service":"inamsos-backend","timestamp":"2025-11-17T23:52:09.314Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/health, GET} route","service":"inamsos-backend","timestamp":"2025-11-17T23:52:09.318Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/health/detailed, GET} route","service":"inamsos-backend","timestamp":"2025-11-17T23:52:09.319Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/health/readiness, GET} route","service":"inamsos-backend","timestamp":"2025-11-17T23:52:09.320Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/health/liveness, GET} route","service":"inamsos-backend","timestamp":"2025-11-17T23:52:09.321Z","version":"1.0.0"}
+{"context":"RoutesResolver","level":"info","message":"AuthController {/api/v1/auth}:","service":"inamsos-backend","timestamp":"2025-11-17T23:52:09.321Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/register, POST} route","service":"inamsos-backend","timestamp":"2025-11-17T23:52:09.323Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/login, POST} route","service":"inamsos-backend","timestamp":"2025-11-17T23:52:09.324Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/refresh, POST} route","service":"inamsos-backend","timestamp":"2025-11-17T23:52:09.325Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/logout, POST} route","service":"inamsos-backend","timestamp":"2025-11-17T23:52:09.326Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/me, GET} route","service":"inamsos-backend","timestamp":"2025-11-17T23:52:09.327Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/verify-email, POST} route","service":"inamsos-backend","timestamp":"2025-11-17T23:52:09.328Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/test-roles, GET} route","service":"inamsos-backend","timestamp":"2025-11-17T23:52:09.329Z","version":"1.0.0"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started","service":"inamsos-backend","timestamp":"2025-11-17T23:52:09.335Z","version":"1.0.0"}
+{"level":"info","message":"🚀 INAMSOS Backend API running on port 3001","service":"inamsos-backend","timestamp":"2025-11-17T23:52:09.341Z","version":"1.0.0"}
+{"level":"info","message":"📚 API Documentation available at http://localhost:3001/api/docs","service":"inamsos-backend","timestamp":"2025-11-17T23:52:09.341Z","version":"1.0.0"}
+{"level":"info","message":"🏥 Environment: development","service":"inamsos-backend","timestamp":"2025-11-17T23:52:09.342Z","version":"1.0.0"}
+{"context":"NestFactory","level":"info","message":"Starting Nest application...","service":"inamsos-backend","timestamp":"2025-11-17T23:52:12.117Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"AppModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:52:12.159Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"DatabaseModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:52:12.160Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"PassportModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:52:12.161Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"UsersModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:52:12.162Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"CentersModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:52:12.162Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"ThrottlerModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:52:12.164Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"JwtModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:52:12.165Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"ConfigHostModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:52:12.166Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"HealthModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:52:12.168Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:52:12.168Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:52:12.169Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"AuthModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:52:12.175Z","version":"1.0.0"}
+{"context":"RoutesResolver","level":"info","message":"HealthController {/api/v1/health}:","service":"inamsos-backend","timestamp":"2025-11-17T23:52:12.240Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/health, GET} route","service":"inamsos-backend","timestamp":"2025-11-17T23:52:12.247Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/health/detailed, GET} route","service":"inamsos-backend","timestamp":"2025-11-17T23:52:12.248Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/health/readiness, GET} route","service":"inamsos-backend","timestamp":"2025-11-17T23:52:12.249Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/health/liveness, GET} route","service":"inamsos-backend","timestamp":"2025-11-17T23:52:12.250Z","version":"1.0.0"}
+{"context":"RoutesResolver","level":"info","message":"AuthController {/api/v1/auth}:","service":"inamsos-backend","timestamp":"2025-11-17T23:52:12.251Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/register, POST} route","service":"inamsos-backend","timestamp":"2025-11-17T23:52:12.253Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/login, POST} route","service":"inamsos-backend","timestamp":"2025-11-17T23:52:12.254Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/refresh, POST} route","service":"inamsos-backend","timestamp":"2025-11-17T23:52:12.255Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/logout, POST} route","service":"inamsos-backend","timestamp":"2025-11-17T23:52:12.257Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/me, GET} route","service":"inamsos-backend","timestamp":"2025-11-17T23:52:12.258Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/verify-email, POST} route","service":"inamsos-backend","timestamp":"2025-11-17T23:52:12.259Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/test-roles, GET} route","service":"inamsos-backend","timestamp":"2025-11-17T23:52:12.260Z","version":"1.0.0"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started","service":"inamsos-backend","timestamp":"2025-11-17T23:52:12.267Z","version":"1.0.0"}
+{"level":"info","message":"🚀 INAMSOS Backend API running on port 3001","service":"inamsos-backend","timestamp":"2025-11-17T23:52:12.277Z","version":"1.0.0"}
+{"level":"info","message":"📚 API Documentation available at http://localhost:3001/api/docs","service":"inamsos-backend","timestamp":"2025-11-17T23:52:12.277Z","version":"1.0.0"}
+{"level":"info","message":"🏥 Environment: development","service":"inamsos-backend","timestamp":"2025-11-17T23:52:12.277Z","version":"1.0.0"}
+{"context":"NestFactory","level":"info","message":"Starting Nest application...","service":"inamsos-backend","timestamp":"2025-11-17T23:53:00.016Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"AppModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:53:00.051Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"DatabaseModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:53:00.051Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"PassportModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:53:00.052Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"UsersModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:53:00.052Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"CentersModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:53:00.053Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"ThrottlerModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:53:00.054Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"JwtModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:53:00.054Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"ConfigHostModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:53:00.055Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"HealthModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:53:00.056Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:53:00.057Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:53:00.057Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"AuthModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:53:00.061Z","version":"1.0.0"}
+{"context":"RoutesResolver","level":"info","message":"HealthController {/api/v1/health}:","service":"inamsos-backend","timestamp":"2025-11-17T23:53:00.110Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/health, GET} route","service":"inamsos-backend","timestamp":"2025-11-17T23:53:00.115Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/health/detailed, GET} route","service":"inamsos-backend","timestamp":"2025-11-17T23:53:00.116Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/health/readiness, GET} route","service":"inamsos-backend","timestamp":"2025-11-17T23:53:00.117Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/health/liveness, GET} route","service":"inamsos-backend","timestamp":"2025-11-17T23:53:00.118Z","version":"1.0.0"}
+{"context":"RoutesResolver","level":"info","message":"AuthController {/api/v1/auth}:","service":"inamsos-backend","timestamp":"2025-11-17T23:53:00.119Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/register, POST} route","service":"inamsos-backend","timestamp":"2025-11-17T23:53:00.120Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/login, POST} route","service":"inamsos-backend","timestamp":"2025-11-17T23:53:00.121Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/refresh, POST} route","service":"inamsos-backend","timestamp":"2025-11-17T23:53:00.122Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/logout, POST} route","service":"inamsos-backend","timestamp":"2025-11-17T23:53:00.123Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/me, GET} route","service":"inamsos-backend","timestamp":"2025-11-17T23:53:00.124Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/verify-email, POST} route","service":"inamsos-backend","timestamp":"2025-11-17T23:53:00.125Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/test-roles, GET} route","service":"inamsos-backend","timestamp":"2025-11-17T23:53:00.126Z","version":"1.0.0"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started","service":"inamsos-backend","timestamp":"2025-11-17T23:53:00.130Z","version":"1.0.0"}
+{"level":"info","message":"🚀 INAMSOS Backend API running on port 3001","service":"inamsos-backend","timestamp":"2025-11-17T23:53:00.136Z","version":"1.0.0"}
+{"level":"info","message":"📚 API Documentation available at http://localhost:3001/api/docs","service":"inamsos-backend","timestamp":"2025-11-17T23:53:00.137Z","version":"1.0.0"}
+{"level":"info","message":"🏥 Environment: development","service":"inamsos-backend","timestamp":"2025-11-17T23:53:00.137Z","version":"1.0.0"}
+{"context":"NestFactory","level":"info","message":"Starting Nest application...","service":"inamsos-backend","timestamp":"2025-11-17T23:53:07.611Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"AppModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:53:07.644Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"DatabaseModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:53:07.645Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"PassportModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:53:07.646Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"UsersModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:53:07.646Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"CentersModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:53:07.646Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"ThrottlerModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:53:07.647Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"JwtModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:53:07.648Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"ConfigHostModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:53:07.649Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"HealthModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:53:07.650Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:53:07.650Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:53:07.651Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"AuthModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:53:07.655Z","version":"1.0.0"}
+{"context":"RoutesResolver","level":"info","message":"HealthController {/api/v1/health}:","service":"inamsos-backend","timestamp":"2025-11-17T23:53:07.712Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/health, GET} route","service":"inamsos-backend","timestamp":"2025-11-17T23:53:07.716Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/health/detailed, GET} route","service":"inamsos-backend","timestamp":"2025-11-17T23:53:07.717Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/health/readiness, GET} route","service":"inamsos-backend","timestamp":"2025-11-17T23:53:07.718Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/health/liveness, GET} route","service":"inamsos-backend","timestamp":"2025-11-17T23:53:07.719Z","version":"1.0.0"}
+{"context":"RoutesResolver","level":"info","message":"AuthController {/api/v1/auth}:","service":"inamsos-backend","timestamp":"2025-11-17T23:53:07.720Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/register, POST} route","service":"inamsos-backend","timestamp":"2025-11-17T23:53:07.722Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/login, POST} route","service":"inamsos-backend","timestamp":"2025-11-17T23:53:07.723Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/refresh, POST} route","service":"inamsos-backend","timestamp":"2025-11-17T23:53:07.724Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/logout, POST} route","service":"inamsos-backend","timestamp":"2025-11-17T23:53:07.725Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/me, GET} route","service":"inamsos-backend","timestamp":"2025-11-17T23:53:07.726Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/verify-email, POST} route","service":"inamsos-backend","timestamp":"2025-11-17T23:53:07.727Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/test-roles, GET} route","service":"inamsos-backend","timestamp":"2025-11-17T23:53:07.728Z","version":"1.0.0"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started","service":"inamsos-backend","timestamp":"2025-11-17T23:53:07.733Z","version":"1.0.0"}
+{"level":"info","message":"🚀 INAMSOS Backend API running on port 3001","service":"inamsos-backend","timestamp":"2025-11-17T23:53:07.740Z","version":"1.0.0"}
+{"level":"info","message":"📚 API Documentation available at http://localhost:3001/api/docs","service":"inamsos-backend","timestamp":"2025-11-17T23:53:07.740Z","version":"1.0.0"}
+{"level":"info","message":"🏥 Environment: development","service":"inamsos-backend","timestamp":"2025-11-17T23:53:07.741Z","version":"1.0.0"}
+{"context":"NestFactory","level":"info","message":"Starting Nest application...","service":"inamsos-backend","timestamp":"2025-11-17T23:53:10.833Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"AppModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:53:10.866Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"DatabaseModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:53:10.867Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"PassportModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:53:10.868Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"UsersModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:53:10.868Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"CentersModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:53:10.869Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"ThrottlerModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:53:10.870Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"JwtModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:53:10.871Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"ConfigHostModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:53:10.872Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"HealthModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:53:10.873Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:53:10.874Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:53:10.874Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"AuthModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:53:10.879Z","version":"1.0.0"}
+{"context":"RoutesResolver","level":"info","message":"HealthController {/api/v1/health}:","service":"inamsos-backend","timestamp":"2025-11-17T23:53:10.933Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/health, GET} route","service":"inamsos-backend","timestamp":"2025-11-17T23:53:10.939Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/health/detailed, GET} route","service":"inamsos-backend","timestamp":"2025-11-17T23:53:10.940Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/health/readiness, GET} route","service":"inamsos-backend","timestamp":"2025-11-17T23:53:10.941Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/health/liveness, GET} route","service":"inamsos-backend","timestamp":"2025-11-17T23:53:10.942Z","version":"1.0.0"}
+{"context":"RoutesResolver","level":"info","message":"AuthController {/api/v1/auth}:","service":"inamsos-backend","timestamp":"2025-11-17T23:53:10.943Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/register, POST} route","service":"inamsos-backend","timestamp":"2025-11-17T23:53:10.946Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/login, POST} route","service":"inamsos-backend","timestamp":"2025-11-17T23:53:10.946Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/refresh, POST} route","service":"inamsos-backend","timestamp":"2025-11-17T23:53:10.947Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/logout, POST} route","service":"inamsos-backend","timestamp":"2025-11-17T23:53:10.948Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/me, GET} route","service":"inamsos-backend","timestamp":"2025-11-17T23:53:10.949Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/verify-email, POST} route","service":"inamsos-backend","timestamp":"2025-11-17T23:53:10.950Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/test-roles, GET} route","service":"inamsos-backend","timestamp":"2025-11-17T23:53:10.950Z","version":"1.0.0"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started","service":"inamsos-backend","timestamp":"2025-11-17T23:53:10.955Z","version":"1.0.0"}
+{"level":"info","message":"🚀 INAMSOS Backend API running on port 3001","service":"inamsos-backend","timestamp":"2025-11-17T23:53:10.961Z","version":"1.0.0"}
+{"level":"info","message":"📚 API Documentation available at http://localhost:3001/api/docs","service":"inamsos-backend","timestamp":"2025-11-17T23:53:10.961Z","version":"1.0.0"}
+{"level":"info","message":"🏥 Environment: development","service":"inamsos-backend","timestamp":"2025-11-17T23:53:10.962Z","version":"1.0.0"}
+{"context":"NestFactory","level":"info","message":"Starting Nest application...","service":"inamsos-backend","timestamp":"2025-11-17T23:53:17.291Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"AppModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:53:17.329Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"DatabaseModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:53:17.330Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"PassportModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:53:17.330Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"UsersModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:53:17.331Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"CentersModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:53:17.331Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"ThrottlerModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:53:17.332Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"JwtModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:53:17.333Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"ConfigHostModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:53:17.333Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"HealthModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:53:17.335Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:53:17.335Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:53:17.336Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"AuthModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:53:17.340Z","version":"1.0.0"}
+{"context":"RoutesResolver","level":"info","message":"HealthController {/api/v1/health}:","service":"inamsos-backend","timestamp":"2025-11-17T23:53:17.394Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/health, GET} route","service":"inamsos-backend","timestamp":"2025-11-17T23:53:17.398Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/health/detailed, GET} route","service":"inamsos-backend","timestamp":"2025-11-17T23:53:17.400Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/health/readiness, GET} route","service":"inamsos-backend","timestamp":"2025-11-17T23:53:17.401Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/health/liveness, GET} route","service":"inamsos-backend","timestamp":"2025-11-17T23:53:17.402Z","version":"1.0.0"}
+{"context":"RoutesResolver","level":"info","message":"AuthController {/api/v1/auth}:","service":"inamsos-backend","timestamp":"2025-11-17T23:53:17.403Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/register, POST} route","service":"inamsos-backend","timestamp":"2025-11-17T23:53:17.405Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/login, POST} route","service":"inamsos-backend","timestamp":"2025-11-17T23:53:17.405Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/refresh, POST} route","service":"inamsos-backend","timestamp":"2025-11-17T23:53:17.406Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/logout, POST} route","service":"inamsos-backend","timestamp":"2025-11-17T23:53:17.407Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/me, GET} route","service":"inamsos-backend","timestamp":"2025-11-17T23:53:17.408Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/verify-email, POST} route","service":"inamsos-backend","timestamp":"2025-11-17T23:53:17.409Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/test-roles, GET} route","service":"inamsos-backend","timestamp":"2025-11-17T23:53:17.410Z","version":"1.0.0"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started","service":"inamsos-backend","timestamp":"2025-11-17T23:53:17.414Z","version":"1.0.0"}
+{"level":"info","message":"🚀 INAMSOS Backend API running on port 3001","service":"inamsos-backend","timestamp":"2025-11-17T23:53:17.421Z","version":"1.0.0"}
+{"level":"info","message":"📚 API Documentation available at http://localhost:3001/api/docs","service":"inamsos-backend","timestamp":"2025-11-17T23:53:17.422Z","version":"1.0.0"}
+{"level":"info","message":"🏥 Environment: development","service":"inamsos-backend","timestamp":"2025-11-17T23:53:17.422Z","version":"1.0.0"}
+{"context":"NestFactory","level":"info","message":"Starting Nest application...","service":"inamsos-backend","timestamp":"2025-11-17T23:53:22.230Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"AppModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:53:22.270Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"DatabaseModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:53:22.271Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"PassportModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:53:22.272Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"UsersModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:53:22.273Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"CentersModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:53:22.273Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"ThrottlerModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:53:22.275Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"JwtModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:53:22.275Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"ConfigHostModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:53:22.276Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"HealthModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:53:22.277Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:53:22.278Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:53:22.278Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"AuthModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:53:22.284Z","version":"1.0.0"}
+{"context":"RoutesResolver","level":"info","message":"HealthController {/api/v1/health}:","service":"inamsos-backend","timestamp":"2025-11-17T23:53:22.343Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/health, GET} route","service":"inamsos-backend","timestamp":"2025-11-17T23:53:22.347Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/health/detailed, GET} route","service":"inamsos-backend","timestamp":"2025-11-17T23:53:22.348Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/health/readiness, GET} route","service":"inamsos-backend","timestamp":"2025-11-17T23:53:22.349Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/health/liveness, GET} route","service":"inamsos-backend","timestamp":"2025-11-17T23:53:22.350Z","version":"1.0.0"}
+{"context":"RoutesResolver","level":"info","message":"AuthController {/api/v1/auth}:","service":"inamsos-backend","timestamp":"2025-11-17T23:53:22.351Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/register, POST} route","service":"inamsos-backend","timestamp":"2025-11-17T23:53:22.353Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/login, POST} route","service":"inamsos-backend","timestamp":"2025-11-17T23:53:22.354Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/refresh, POST} route","service":"inamsos-backend","timestamp":"2025-11-17T23:53:22.354Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/logout, POST} route","service":"inamsos-backend","timestamp":"2025-11-17T23:53:22.356Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/me, GET} route","service":"inamsos-backend","timestamp":"2025-11-17T23:53:22.357Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/verify-email, POST} route","service":"inamsos-backend","timestamp":"2025-11-17T23:53:22.358Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/resend-verification, POST} route","service":"inamsos-backend","timestamp":"2025-11-17T23:53:22.359Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/test-roles, GET} route","service":"inamsos-backend","timestamp":"2025-11-17T23:53:22.360Z","version":"1.0.0"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started","service":"inamsos-backend","timestamp":"2025-11-17T23:53:22.365Z","version":"1.0.0"}
+{"level":"info","message":"🚀 INAMSOS Backend API running on port 3001","service":"inamsos-backend","timestamp":"2025-11-17T23:53:22.373Z","version":"1.0.0"}
+{"level":"info","message":"📚 API Documentation available at http://localhost:3001/api/docs","service":"inamsos-backend","timestamp":"2025-11-17T23:53:22.373Z","version":"1.0.0"}
+{"level":"info","message":"🏥 Environment: development","service":"inamsos-backend","timestamp":"2025-11-17T23:53:22.373Z","version":"1.0.0"}
+{"context":"NestFactory","level":"info","message":"Starting Nest application...","service":"inamsos-backend","timestamp":"2025-11-17T23:54:10.085Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"AppModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:54:10.121Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"DatabaseModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:54:10.122Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"PassportModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:54:10.122Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"UsersModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:54:10.123Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"CentersModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:54:10.123Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"ThrottlerModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:54:10.124Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"JwtModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:54:10.124Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"ConfigHostModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:54:10.125Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"HealthModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:54:10.126Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:54:10.127Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:54:10.127Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"AuthModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:54:10.131Z","version":"1.0.0"}
+{"context":"RoutesResolver","level":"info","message":"HealthController {/api/v1/health}:","service":"inamsos-backend","timestamp":"2025-11-17T23:54:10.189Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/health, GET} route","service":"inamsos-backend","timestamp":"2025-11-17T23:54:10.196Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/health/detailed, GET} route","service":"inamsos-backend","timestamp":"2025-11-17T23:54:10.198Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/health/readiness, GET} route","service":"inamsos-backend","timestamp":"2025-11-17T23:54:10.200Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/health/liveness, GET} route","service":"inamsos-backend","timestamp":"2025-11-17T23:54:10.201Z","version":"1.0.0"}
+{"context":"RoutesResolver","level":"info","message":"AuthController {/api/v1/auth}:","service":"inamsos-backend","timestamp":"2025-11-17T23:54:10.202Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/register, POST} route","service":"inamsos-backend","timestamp":"2025-11-17T23:54:10.205Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/login, POST} route","service":"inamsos-backend","timestamp":"2025-11-17T23:54:10.207Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/refresh, POST} route","service":"inamsos-backend","timestamp":"2025-11-17T23:54:10.208Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/logout, POST} route","service":"inamsos-backend","timestamp":"2025-11-17T23:54:10.210Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/me, GET} route","service":"inamsos-backend","timestamp":"2025-11-17T23:54:10.212Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/verify-email, POST} route","service":"inamsos-backend","timestamp":"2025-11-17T23:54:10.213Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/resend-verification, POST} route","service":"inamsos-backend","timestamp":"2025-11-17T23:54:10.215Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/test-roles, GET} route","service":"inamsos-backend","timestamp":"2025-11-17T23:54:10.216Z","version":"1.0.0"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started","service":"inamsos-backend","timestamp":"2025-11-17T23:54:10.221Z","version":"1.0.0"}
+{"level":"info","message":"🚀 INAMSOS Backend API running on port 3001","service":"inamsos-backend","timestamp":"2025-11-17T23:54:10.232Z","version":"1.0.0"}
+{"level":"info","message":"📚 API Documentation available at http://localhost:3001/api/docs","service":"inamsos-backend","timestamp":"2025-11-17T23:54:10.233Z","version":"1.0.0"}
+{"level":"info","message":"🏥 Environment: development","service":"inamsos-backend","timestamp":"2025-11-17T23:54:10.233Z","version":"1.0.0"}
+{"context":"NestFactory","level":"info","message":"Starting Nest application...","service":"inamsos-backend","timestamp":"2025-11-17T23:56:52.053Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"AppModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:56:52.097Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"DatabaseModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:56:52.099Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"PassportModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:56:52.100Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"UsersModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:56:52.100Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"ThrottlerModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:56:52.103Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"JwtModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:56:52.104Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"ConfigHostModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:56:52.106Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"HealthModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:56:52.107Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:56:52.108Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:56:52.109Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"CentersModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:56:52.113Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"AuthModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:56:52.115Z","version":"1.0.0"}
+{"context":"RoutesResolver","level":"info","message":"HealthController {/api/v1/health}:","service":"inamsos-backend","timestamp":"2025-11-17T23:56:52.171Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/health, GET} route","service":"inamsos-backend","timestamp":"2025-11-17T23:56:52.175Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/health/detailed, GET} route","service":"inamsos-backend","timestamp":"2025-11-17T23:56:52.176Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/health/readiness, GET} route","service":"inamsos-backend","timestamp":"2025-11-17T23:56:52.177Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/health/liveness, GET} route","service":"inamsos-backend","timestamp":"2025-11-17T23:56:52.178Z","version":"1.0.0"}
+{"context":"RoutesResolver","level":"info","message":"AuthController {/api/v1/auth}:","service":"inamsos-backend","timestamp":"2025-11-17T23:56:52.179Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/register, POST} route","service":"inamsos-backend","timestamp":"2025-11-17T23:56:52.180Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/login, POST} route","service":"inamsos-backend","timestamp":"2025-11-17T23:56:52.181Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/refresh, POST} route","service":"inamsos-backend","timestamp":"2025-11-17T23:56:52.182Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/logout, POST} route","service":"inamsos-backend","timestamp":"2025-11-17T23:56:52.183Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/me, GET} route","service":"inamsos-backend","timestamp":"2025-11-17T23:56:52.184Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/verify-email, POST} route","service":"inamsos-backend","timestamp":"2025-11-17T23:56:52.185Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/resend-verification, POST} route","service":"inamsos-backend","timestamp":"2025-11-17T23:56:52.185Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/test-roles, GET} route","service":"inamsos-backend","timestamp":"2025-11-17T23:56:52.186Z","version":"1.0.0"}
+{"context":"RoutesResolver","level":"info","message":"CentersController {/api/v1/centers}:","service":"inamsos-backend","timestamp":"2025-11-17T23:56:52.186Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/centers, POST} route","service":"inamsos-backend","timestamp":"2025-11-17T23:56:52.187Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/centers, GET} route","service":"inamsos-backend","timestamp":"2025-11-17T23:56:52.188Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/centers/statistics, GET} route","service":"inamsos-backend","timestamp":"2025-11-17T23:56:52.188Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/centers/code/:code, GET} route","service":"inamsos-backend","timestamp":"2025-11-17T23:56:52.189Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/centers/:id, GET} route","service":"inamsos-backend","timestamp":"2025-11-17T23:56:52.189Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/centers/:id, PATCH} route","service":"inamsos-backend","timestamp":"2025-11-17T23:56:52.190Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/centers/:id/activate, PATCH} route","service":"inamsos-backend","timestamp":"2025-11-17T23:56:52.190Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/centers/:id/deactivate, PATCH} route","service":"inamsos-backend","timestamp":"2025-11-17T23:56:52.191Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/centers/:id, DELETE} route","service":"inamsos-backend","timestamp":"2025-11-17T23:56:52.192Z","version":"1.0.0"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started","service":"inamsos-backend","timestamp":"2025-11-17T23:56:52.197Z","version":"1.0.0"}
+{"level":"info","message":"🚀 INAMSOS Backend API running on port 3001","service":"inamsos-backend","timestamp":"2025-11-17T23:56:52.205Z","version":"1.0.0"}
+{"level":"info","message":"📚 API Documentation available at http://localhost:3001/api/docs","service":"inamsos-backend","timestamp":"2025-11-17T23:56:52.205Z","version":"1.0.0"}
+{"level":"info","message":"🏥 Environment: development","service":"inamsos-backend","timestamp":"2025-11-17T23:56:52.205Z","version":"1.0.0"}
+{"context":"NestFactory","level":"info","message":"Starting Nest application...","service":"inamsos-backend","timestamp":"2025-11-17T23:58:49.819Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"AppModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:58:49.853Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"DatabaseModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:58:49.854Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"PassportModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:58:49.855Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"UsersModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:58:49.855Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"ThrottlerModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:58:49.856Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"JwtModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:58:49.857Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"ConfigHostModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:58:49.858Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"HealthModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:58:49.859Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:58:49.860Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:58:49.860Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"CentersModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:58:49.864Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"AuthModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:58:49.865Z","version":"1.0.0"}
+{"context":"RoutesResolver","level":"info","message":"HealthController {/api/v1/health}:","service":"inamsos-backend","timestamp":"2025-11-17T23:58:49.913Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/health, GET} route","service":"inamsos-backend","timestamp":"2025-11-17T23:58:49.917Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/health/detailed, GET} route","service":"inamsos-backend","timestamp":"2025-11-17T23:58:49.918Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/health/readiness, GET} route","service":"inamsos-backend","timestamp":"2025-11-17T23:58:49.919Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/health/liveness, GET} route","service":"inamsos-backend","timestamp":"2025-11-17T23:58:49.920Z","version":"1.0.0"}
+{"context":"RoutesResolver","level":"info","message":"AuthController {/api/v1/auth}:","service":"inamsos-backend","timestamp":"2025-11-17T23:58:49.920Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/register, POST} route","service":"inamsos-backend","timestamp":"2025-11-17T23:58:49.922Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/login, POST} route","service":"inamsos-backend","timestamp":"2025-11-17T23:58:49.922Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/refresh, POST} route","service":"inamsos-backend","timestamp":"2025-11-17T23:58:49.923Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/logout, POST} route","service":"inamsos-backend","timestamp":"2025-11-17T23:58:49.924Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/me, GET} route","service":"inamsos-backend","timestamp":"2025-11-17T23:58:49.925Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/verify-email, POST} route","service":"inamsos-backend","timestamp":"2025-11-17T23:58:49.926Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/resend-verification, POST} route","service":"inamsos-backend","timestamp":"2025-11-17T23:58:49.926Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/test-roles, GET} route","service":"inamsos-backend","timestamp":"2025-11-17T23:58:49.927Z","version":"1.0.0"}
+{"context":"RoutesResolver","level":"info","message":"CentersController {/api/v1/centers}:","service":"inamsos-backend","timestamp":"2025-11-17T23:58:49.927Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/centers, POST} route","service":"inamsos-backend","timestamp":"2025-11-17T23:58:49.928Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/centers, GET} route","service":"inamsos-backend","timestamp":"2025-11-17T23:58:49.929Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/centers/statistics, GET} route","service":"inamsos-backend","timestamp":"2025-11-17T23:58:49.929Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/centers/code/:code, GET} route","service":"inamsos-backend","timestamp":"2025-11-17T23:58:49.930Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/centers/:id, GET} route","service":"inamsos-backend","timestamp":"2025-11-17T23:58:49.930Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/centers/:id, PATCH} route","service":"inamsos-backend","timestamp":"2025-11-17T23:58:49.931Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/centers/:id/activate, PATCH} route","service":"inamsos-backend","timestamp":"2025-11-17T23:58:49.932Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/centers/:id/deactivate, PATCH} route","service":"inamsos-backend","timestamp":"2025-11-17T23:58:49.932Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/centers/:id, DELETE} route","service":"inamsos-backend","timestamp":"2025-11-17T23:58:49.933Z","version":"1.0.0"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started","service":"inamsos-backend","timestamp":"2025-11-17T23:58:49.937Z","version":"1.0.0"}
+{"level":"info","message":"🚀 INAMSOS Backend API running on port 3001","service":"inamsos-backend","timestamp":"2025-11-17T23:58:49.944Z","version":"1.0.0"}
+{"level":"info","message":"📚 API Documentation available at http://localhost:3001/api/docs","service":"inamsos-backend","timestamp":"2025-11-17T23:58:49.944Z","version":"1.0.0"}
+{"level":"info","message":"🏥 Environment: development","service":"inamsos-backend","timestamp":"2025-11-17T23:58:49.944Z","version":"1.0.0"}
+{"context":"NestFactory","level":"info","message":"Starting Nest application...","service":"inamsos-backend","timestamp":"2025-11-17T23:58:57.048Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"AppModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:58:57.084Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"DatabaseModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:58:57.085Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"PassportModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:58:57.086Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"UsersModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:58:57.087Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"ThrottlerModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:58:57.088Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"JwtModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:58:57.089Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"ConfigHostModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:58:57.091Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"HealthModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:58:57.092Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:58:57.093Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:58:57.094Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"CentersModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:58:57.098Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"AuthModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:58:57.100Z","version":"1.0.0"}
+{"context":"RoutesResolver","level":"info","message":"HealthController {/api/v1/health}:","service":"inamsos-backend","timestamp":"2025-11-17T23:58:57.150Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/health, GET} route","service":"inamsos-backend","timestamp":"2025-11-17T23:58:57.155Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/health/detailed, GET} route","service":"inamsos-backend","timestamp":"2025-11-17T23:58:57.156Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/health/readiness, GET} route","service":"inamsos-backend","timestamp":"2025-11-17T23:58:57.157Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/health/liveness, GET} route","service":"inamsos-backend","timestamp":"2025-11-17T23:58:57.158Z","version":"1.0.0"}
+{"context":"RoutesResolver","level":"info","message":"AuthController {/api/v1/auth}:","service":"inamsos-backend","timestamp":"2025-11-17T23:58:57.159Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/register, POST} route","service":"inamsos-backend","timestamp":"2025-11-17T23:58:57.161Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/login, POST} route","service":"inamsos-backend","timestamp":"2025-11-17T23:58:57.161Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/refresh, POST} route","service":"inamsos-backend","timestamp":"2025-11-17T23:58:57.162Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/logout, POST} route","service":"inamsos-backend","timestamp":"2025-11-17T23:58:57.164Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/me, GET} route","service":"inamsos-backend","timestamp":"2025-11-17T23:58:57.165Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/verify-email, POST} route","service":"inamsos-backend","timestamp":"2025-11-17T23:58:57.166Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/resend-verification, POST} route","service":"inamsos-backend","timestamp":"2025-11-17T23:58:57.167Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/test-roles, GET} route","service":"inamsos-backend","timestamp":"2025-11-17T23:58:57.168Z","version":"1.0.0"}
+{"context":"RoutesResolver","level":"info","message":"CentersController {/api/v1/centers}:","service":"inamsos-backend","timestamp":"2025-11-17T23:58:57.168Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/centers, POST} route","service":"inamsos-backend","timestamp":"2025-11-17T23:58:57.169Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/centers, GET} route","service":"inamsos-backend","timestamp":"2025-11-17T23:58:57.170Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/centers/statistics, GET} route","service":"inamsos-backend","timestamp":"2025-11-17T23:58:57.171Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/centers/code/:code, GET} route","service":"inamsos-backend","timestamp":"2025-11-17T23:58:57.171Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/centers/:id, GET} route","service":"inamsos-backend","timestamp":"2025-11-17T23:58:57.171Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/centers/:id, PATCH} route","service":"inamsos-backend","timestamp":"2025-11-17T23:58:57.172Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/centers/:id/activate, PATCH} route","service":"inamsos-backend","timestamp":"2025-11-17T23:58:57.173Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/centers/:id/deactivate, PATCH} route","service":"inamsos-backend","timestamp":"2025-11-17T23:58:57.174Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/centers/:id, DELETE} route","service":"inamsos-backend","timestamp":"2025-11-17T23:58:57.175Z","version":"1.0.0"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started","service":"inamsos-backend","timestamp":"2025-11-17T23:58:57.179Z","version":"1.0.0"}
+{"level":"info","message":"🚀 INAMSOS Backend API running on port 3001","service":"inamsos-backend","timestamp":"2025-11-17T23:58:57.188Z","version":"1.0.0"}
+{"level":"info","message":"📚 API Documentation available at http://localhost:3001/api/docs","service":"inamsos-backend","timestamp":"2025-11-17T23:58:57.188Z","version":"1.0.0"}
+{"level":"info","message":"🏥 Environment: development","service":"inamsos-backend","timestamp":"2025-11-17T23:58:57.188Z","version":"1.0.0"}
+{"context":"NestFactory","level":"info","message":"Starting Nest application...","service":"inamsos-backend","timestamp":"2025-11-17T23:59:07.399Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"AppModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:59:07.435Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"DatabaseModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:59:07.435Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"PassportModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:59:07.436Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"UsersModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:59:07.437Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"ThrottlerModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:59:07.438Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"JwtModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:59:07.438Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"ConfigHostModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:59:07.440Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"HealthModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:59:07.440Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:59:07.441Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:59:07.442Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"CentersModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:59:07.445Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"AuthModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:59:07.446Z","version":"1.0.0"}
+{"context":"RoutesResolver","level":"info","message":"HealthController {/api/v1/health}:","service":"inamsos-backend","timestamp":"2025-11-17T23:59:07.497Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/health, GET} route","service":"inamsos-backend","timestamp":"2025-11-17T23:59:07.501Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/health/detailed, GET} route","service":"inamsos-backend","timestamp":"2025-11-17T23:59:07.502Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/health/readiness, GET} route","service":"inamsos-backend","timestamp":"2025-11-17T23:59:07.503Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/health/liveness, GET} route","service":"inamsos-backend","timestamp":"2025-11-17T23:59:07.504Z","version":"1.0.0"}
+{"context":"RoutesResolver","level":"info","message":"AuthController {/api/v1/auth}:","service":"inamsos-backend","timestamp":"2025-11-17T23:59:07.504Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/register, POST} route","service":"inamsos-backend","timestamp":"2025-11-17T23:59:07.506Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/login, POST} route","service":"inamsos-backend","timestamp":"2025-11-17T23:59:07.506Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/refresh, POST} route","service":"inamsos-backend","timestamp":"2025-11-17T23:59:07.507Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/logout, POST} route","service":"inamsos-backend","timestamp":"2025-11-17T23:59:07.508Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/me, GET} route","service":"inamsos-backend","timestamp":"2025-11-17T23:59:07.509Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/verify-email, POST} route","service":"inamsos-backend","timestamp":"2025-11-17T23:59:07.510Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/resend-verification, POST} route","service":"inamsos-backend","timestamp":"2025-11-17T23:59:07.510Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/test-roles, GET} route","service":"inamsos-backend","timestamp":"2025-11-17T23:59:07.511Z","version":"1.0.0"}
+{"context":"RoutesResolver","level":"info","message":"CentersController {/api/v1/centers}:","service":"inamsos-backend","timestamp":"2025-11-17T23:59:07.511Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/centers, POST} route","service":"inamsos-backend","timestamp":"2025-11-17T23:59:07.512Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/centers, GET} route","service":"inamsos-backend","timestamp":"2025-11-17T23:59:07.513Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/centers/statistics, GET} route","service":"inamsos-backend","timestamp":"2025-11-17T23:59:07.513Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/centers/code/:code, GET} route","service":"inamsos-backend","timestamp":"2025-11-17T23:59:07.514Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/centers/:id, GET} route","service":"inamsos-backend","timestamp":"2025-11-17T23:59:07.514Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/centers/:id, PATCH} route","service":"inamsos-backend","timestamp":"2025-11-17T23:59:07.514Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/centers/:id/activate, PATCH} route","service":"inamsos-backend","timestamp":"2025-11-17T23:59:07.515Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/centers/:id/deactivate, PATCH} route","service":"inamsos-backend","timestamp":"2025-11-17T23:59:07.515Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/centers/:id, DELETE} route","service":"inamsos-backend","timestamp":"2025-11-17T23:59:07.516Z","version":"1.0.0"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started","service":"inamsos-backend","timestamp":"2025-11-17T23:59:07.521Z","version":"1.0.0"}
+{"level":"info","message":"🚀 INAMSOS Backend API running on port 3001","service":"inamsos-backend","timestamp":"2025-11-17T23:59:07.528Z","version":"1.0.0"}
+{"level":"info","message":"📚 API Documentation available at http://localhost:3001/api/docs","service":"inamsos-backend","timestamp":"2025-11-17T23:59:07.528Z","version":"1.0.0"}
+{"level":"info","message":"🏥 Environment: development","service":"inamsos-backend","timestamp":"2025-11-17T23:59:07.529Z","version":"1.0.0"}
+{"context":"NestFactory","level":"info","message":"Starting Nest application...","service":"inamsos-backend","timestamp":"2025-11-17T23:59:25.844Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"AppModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:59:25.884Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"DatabaseModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:59:25.885Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"PassportModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:59:25.886Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"UsersModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:59:25.886Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"ThrottlerModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:59:25.888Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"JwtModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:59:25.889Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"ConfigHostModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:59:25.890Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"HealthModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:59:25.891Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:59:25.892Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:59:25.893Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"CentersModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:59:25.896Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"AuthModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-17T23:59:25.897Z","version":"1.0.0"}
+{"context":"RoutesResolver","level":"info","message":"HealthController {/api/v1/health}:","service":"inamsos-backend","timestamp":"2025-11-17T23:59:25.947Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/health, GET} route","service":"inamsos-backend","timestamp":"2025-11-17T23:59:25.952Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/health/detailed, GET} route","service":"inamsos-backend","timestamp":"2025-11-17T23:59:25.953Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/health/readiness, GET} route","service":"inamsos-backend","timestamp":"2025-11-17T23:59:25.954Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/health/liveness, GET} route","service":"inamsos-backend","timestamp":"2025-11-17T23:59:25.954Z","version":"1.0.0"}
+{"context":"RoutesResolver","level":"info","message":"AuthController {/api/v1/auth}:","service":"inamsos-backend","timestamp":"2025-11-17T23:59:25.955Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/register, POST} route","service":"inamsos-backend","timestamp":"2025-11-17T23:59:25.957Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/login, POST} route","service":"inamsos-backend","timestamp":"2025-11-17T23:59:25.958Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/refresh, POST} route","service":"inamsos-backend","timestamp":"2025-11-17T23:59:25.958Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/logout, POST} route","service":"inamsos-backend","timestamp":"2025-11-17T23:59:25.959Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/me, GET} route","service":"inamsos-backend","timestamp":"2025-11-17T23:59:25.960Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/verify-email, POST} route","service":"inamsos-backend","timestamp":"2025-11-17T23:59:25.961Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/resend-verification, POST} route","service":"inamsos-backend","timestamp":"2025-11-17T23:59:25.962Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/test-roles, GET} route","service":"inamsos-backend","timestamp":"2025-11-17T23:59:25.963Z","version":"1.0.0"}
+{"context":"RoutesResolver","level":"info","message":"CentersController {/api/v1/centers}:","service":"inamsos-backend","timestamp":"2025-11-17T23:59:25.963Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/centers, POST} route","service":"inamsos-backend","timestamp":"2025-11-17T23:59:25.963Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/centers, GET} route","service":"inamsos-backend","timestamp":"2025-11-17T23:59:25.964Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/centers/statistics, GET} route","service":"inamsos-backend","timestamp":"2025-11-17T23:59:25.965Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/centers/code/:code, GET} route","service":"inamsos-backend","timestamp":"2025-11-17T23:59:25.965Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/centers/:id, GET} route","service":"inamsos-backend","timestamp":"2025-11-17T23:59:25.966Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/centers/:id, PATCH} route","service":"inamsos-backend","timestamp":"2025-11-17T23:59:25.966Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/centers/:id/activate, PATCH} route","service":"inamsos-backend","timestamp":"2025-11-17T23:59:25.967Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/centers/:id/deactivate, PATCH} route","service":"inamsos-backend","timestamp":"2025-11-17T23:59:25.967Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/centers/:id, DELETE} route","service":"inamsos-backend","timestamp":"2025-11-17T23:59:25.968Z","version":"1.0.0"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started","service":"inamsos-backend","timestamp":"2025-11-17T23:59:25.973Z","version":"1.0.0"}
+{"level":"info","message":"🚀 INAMSOS Backend API running on port 3001","service":"inamsos-backend","timestamp":"2025-11-17T23:59:25.982Z","version":"1.0.0"}
+{"level":"info","message":"📚 API Documentation available at http://localhost:3001/api/docs","service":"inamsos-backend","timestamp":"2025-11-17T23:59:25.982Z","version":"1.0.0"}
+{"level":"info","message":"🏥 Environment: development","service":"inamsos-backend","timestamp":"2025-11-17T23:59:25.982Z","version":"1.0.0"}
+{"context":"NestFactory","level":"info","message":"Starting Nest application...","service":"inamsos-backend","timestamp":"2025-11-18T00:00:09.753Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"AppModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-18T00:00:09.793Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"DatabaseModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-18T00:00:09.793Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"PassportModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-18T00:00:09.794Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"ThrottlerModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-18T00:00:09.796Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"JwtModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-18T00:00:09.796Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"ConfigHostModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-18T00:00:09.798Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"HealthModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-18T00:00:09.799Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-18T00:00:09.801Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-18T00:00:09.802Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"UsersModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-18T00:00:09.805Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"CentersModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-18T00:00:09.805Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"AuthModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-18T00:00:09.806Z","version":"1.0.0"}
+{"context":"RoutesResolver","level":"info","message":"HealthController {/api/v1/health}:","service":"inamsos-backend","timestamp":"2025-11-18T00:00:09.865Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/health, GET} route","service":"inamsos-backend","timestamp":"2025-11-18T00:00:09.870Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/health/detailed, GET} route","service":"inamsos-backend","timestamp":"2025-11-18T00:00:09.871Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/health/readiness, GET} route","service":"inamsos-backend","timestamp":"2025-11-18T00:00:09.872Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/health/liveness, GET} route","service":"inamsos-backend","timestamp":"2025-11-18T00:00:09.873Z","version":"1.0.0"}
+{"context":"RoutesResolver","level":"info","message":"AuthController {/api/v1/auth}:","service":"inamsos-backend","timestamp":"2025-11-18T00:00:09.873Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/register, POST} route","service":"inamsos-backend","timestamp":"2025-11-18T00:00:09.875Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/login, POST} route","service":"inamsos-backend","timestamp":"2025-11-18T00:00:09.876Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/refresh, POST} route","service":"inamsos-backend","timestamp":"2025-11-18T00:00:09.877Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/logout, POST} route","service":"inamsos-backend","timestamp":"2025-11-18T00:00:09.879Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/me, GET} route","service":"inamsos-backend","timestamp":"2025-11-18T00:00:09.880Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/verify-email, POST} route","service":"inamsos-backend","timestamp":"2025-11-18T00:00:09.881Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/resend-verification, POST} route","service":"inamsos-backend","timestamp":"2025-11-18T00:00:09.882Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/test-roles, GET} route","service":"inamsos-backend","timestamp":"2025-11-18T00:00:09.883Z","version":"1.0.0"}
+{"context":"RoutesResolver","level":"info","message":"UsersController {/api/v1/users}:","service":"inamsos-backend","timestamp":"2025-11-18T00:00:09.884Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/users/profile, GET} route","service":"inamsos-backend","timestamp":"2025-11-18T00:00:09.884Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/users/profile, PATCH} route","service":"inamsos-backend","timestamp":"2025-11-18T00:00:09.885Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/users/change-password, POST} route","service":"inamsos-backend","timestamp":"2025-11-18T00:00:09.886Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/users/deactivate-account, POST} route","service":"inamsos-backend","timestamp":"2025-11-18T00:00:09.886Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/users/center/:centerId, GET} route","service":"inamsos-backend","timestamp":"2025-11-18T00:00:09.887Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/users/statistics, GET} route","service":"inamsos-backend","timestamp":"2025-11-18T00:00:09.888Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/users/:id, GET} route","service":"inamsos-backend","timestamp":"2025-11-18T00:00:09.888Z","version":"1.0.0"}
+{"context":"RoutesResolver","level":"info","message":"CentersController {/api/v1/centers}:","service":"inamsos-backend","timestamp":"2025-11-18T00:00:09.889Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/centers, POST} route","service":"inamsos-backend","timestamp":"2025-11-18T00:00:09.889Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/centers, GET} route","service":"inamsos-backend","timestamp":"2025-11-18T00:00:09.890Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/centers/statistics, GET} route","service":"inamsos-backend","timestamp":"2025-11-18T00:00:09.891Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/centers/code/:code, GET} route","service":"inamsos-backend","timestamp":"2025-11-18T00:00:09.892Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/centers/:id, GET} route","service":"inamsos-backend","timestamp":"2025-11-18T00:00:09.892Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/centers/:id, PATCH} route","service":"inamsos-backend","timestamp":"2025-11-18T00:00:09.893Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/centers/:id/activate, PATCH} route","service":"inamsos-backend","timestamp":"2025-11-18T00:00:09.894Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/centers/:id/deactivate, PATCH} route","service":"inamsos-backend","timestamp":"2025-11-18T00:00:09.895Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/centers/:id, DELETE} route","service":"inamsos-backend","timestamp":"2025-11-18T00:00:09.896Z","version":"1.0.0"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started","service":"inamsos-backend","timestamp":"2025-11-18T00:00:09.902Z","version":"1.0.0"}
+{"level":"info","message":"🚀 INAMSOS Backend API running on port 3001","service":"inamsos-backend","timestamp":"2025-11-18T00:00:09.910Z","version":"1.0.0"}
+{"level":"info","message":"📚 API Documentation available at http://localhost:3001/api/docs","service":"inamsos-backend","timestamp":"2025-11-18T00:00:09.911Z","version":"1.0.0"}
+{"level":"info","message":"🏥 Environment: development","service":"inamsos-backend","timestamp":"2025-11-18T00:00:09.911Z","version":"1.0.0"}
+{"context":"NestFactory","level":"info","message":"Starting Nest application...","service":"inamsos-backend","timestamp":"2025-11-18T00:34:22.195Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"AppModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-18T00:34:22.232Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"DatabaseModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-18T00:34:22.233Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"PassportModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-18T00:34:22.233Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"ThrottlerModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-18T00:34:22.234Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"JwtModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-18T00:34:22.235Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"ConfigHostModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-18T00:34:22.236Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"HealthModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-18T00:34:22.236Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-18T00:34:22.237Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-18T00:34:22.238Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"UsersModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-18T00:34:22.241Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"CentersModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-18T00:34:22.241Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"AuthModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-18T00:34:22.242Z","version":"1.0.0"}
+{"context":"RoutesResolver","level":"info","message":"HealthController {/api/v1/health}:","service":"inamsos-backend","timestamp":"2025-11-18T00:34:22.293Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/health, GET} route","service":"inamsos-backend","timestamp":"2025-11-18T00:34:22.298Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/health/detailed, GET} route","service":"inamsos-backend","timestamp":"2025-11-18T00:34:22.299Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/health/readiness, GET} route","service":"inamsos-backend","timestamp":"2025-11-18T00:34:22.299Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/health/liveness, GET} route","service":"inamsos-backend","timestamp":"2025-11-18T00:34:22.300Z","version":"1.0.0"}
+{"context":"RoutesResolver","level":"info","message":"AuthController {/api/v1/auth}:","service":"inamsos-backend","timestamp":"2025-11-18T00:34:22.300Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/register, POST} route","service":"inamsos-backend","timestamp":"2025-11-18T00:34:22.302Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/login, POST} route","service":"inamsos-backend","timestamp":"2025-11-18T00:34:22.302Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/refresh, POST} route","service":"inamsos-backend","timestamp":"2025-11-18T00:34:22.302Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/logout, POST} route","service":"inamsos-backend","timestamp":"2025-11-18T00:34:22.303Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/me, GET} route","service":"inamsos-backend","timestamp":"2025-11-18T00:34:22.304Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/verify-email, POST} route","service":"inamsos-backend","timestamp":"2025-11-18T00:34:22.305Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/resend-verification, POST} route","service":"inamsos-backend","timestamp":"2025-11-18T00:34:22.305Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/test-roles, GET} route","service":"inamsos-backend","timestamp":"2025-11-18T00:34:22.306Z","version":"1.0.0"}
+{"context":"RoutesResolver","level":"info","message":"UsersController {/api/v1/users}:","service":"inamsos-backend","timestamp":"2025-11-18T00:34:22.306Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/users/profile, GET} route","service":"inamsos-backend","timestamp":"2025-11-18T00:34:22.306Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/users/profile, PATCH} route","service":"inamsos-backend","timestamp":"2025-11-18T00:34:22.307Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/users/change-password, POST} route","service":"inamsos-backend","timestamp":"2025-11-18T00:34:22.307Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/users/deactivate-account, POST} route","service":"inamsos-backend","timestamp":"2025-11-18T00:34:22.308Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/users/center/:centerId, GET} route","service":"inamsos-backend","timestamp":"2025-11-18T00:34:22.308Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/users/statistics, GET} route","service":"inamsos-backend","timestamp":"2025-11-18T00:34:22.308Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/users/:id, GET} route","service":"inamsos-backend","timestamp":"2025-11-18T00:34:22.309Z","version":"1.0.0"}
+{"context":"RoutesResolver","level":"info","message":"CentersController {/api/v1/centers}:","service":"inamsos-backend","timestamp":"2025-11-18T00:34:22.309Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/centers, POST} route","service":"inamsos-backend","timestamp":"2025-11-18T00:34:22.309Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/centers, GET} route","service":"inamsos-backend","timestamp":"2025-11-18T00:34:22.310Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/centers/statistics, GET} route","service":"inamsos-backend","timestamp":"2025-11-18T00:34:22.310Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/centers/code/:code, GET} route","service":"inamsos-backend","timestamp":"2025-11-18T00:34:22.310Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/centers/:id, GET} route","service":"inamsos-backend","timestamp":"2025-11-18T00:34:22.311Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/centers/:id, PATCH} route","service":"inamsos-backend","timestamp":"2025-11-18T00:34:22.311Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/centers/:id/activate, PATCH} route","service":"inamsos-backend","timestamp":"2025-11-18T00:34:22.311Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/centers/:id/deactivate, PATCH} route","service":"inamsos-backend","timestamp":"2025-11-18T00:34:22.312Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/centers/:id, DELETE} route","service":"inamsos-backend","timestamp":"2025-11-18T00:34:22.312Z","version":"1.0.0"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started","service":"inamsos-backend","timestamp":"2025-11-18T00:34:22.317Z","version":"1.0.0"}
+{"level":"info","message":"🚀 INAMSOS Backend API running on port 3001","service":"inamsos-backend","timestamp":"2025-11-18T00:34:22.324Z","version":"1.0.0"}
+{"level":"info","message":"📚 API Documentation available at http://localhost:3001/api/docs","service":"inamsos-backend","timestamp":"2025-11-18T00:34:22.324Z","version":"1.0.0"}
+{"level":"info","message":"🏥 Environment: development","service":"inamsos-backend","timestamp":"2025-11-18T00:34:22.324Z","version":"1.0.0"}
+{"context":"NestFactory","level":"info","message":"Starting Nest application...","service":"inamsos-backend","timestamp":"2025-11-18T00:35:38.562Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"AppModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-18T00:35:38.597Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"DatabaseModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-18T00:35:38.598Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"PassportModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-18T00:35:38.599Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"ThrottlerModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-18T00:35:38.600Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"JwtModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-18T00:35:38.600Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"ConfigHostModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-18T00:35:38.601Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"HealthModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-18T00:35:38.602Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-18T00:35:38.603Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-18T00:35:38.603Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"UsersModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-18T00:35:38.606Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"CentersModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-18T00:35:38.607Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"AuthModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-18T00:35:38.608Z","version":"1.0.0"}
+{"context":"RoutesResolver","level":"info","message":"HealthController {/api/v1/health}:","service":"inamsos-backend","timestamp":"2025-11-18T00:35:38.657Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/health, GET} route","service":"inamsos-backend","timestamp":"2025-11-18T00:35:38.663Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/health/detailed, GET} route","service":"inamsos-backend","timestamp":"2025-11-18T00:35:38.663Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/health/readiness, GET} route","service":"inamsos-backend","timestamp":"2025-11-18T00:35:38.664Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/health/liveness, GET} route","service":"inamsos-backend","timestamp":"2025-11-18T00:35:38.665Z","version":"1.0.0"}
+{"context":"RoutesResolver","level":"info","message":"AuthController {/api/v1/auth}:","service":"inamsos-backend","timestamp":"2025-11-18T00:35:38.665Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/register, POST} route","service":"inamsos-backend","timestamp":"2025-11-18T00:35:38.667Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/login, POST} route","service":"inamsos-backend","timestamp":"2025-11-18T00:35:38.667Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/refresh, POST} route","service":"inamsos-backend","timestamp":"2025-11-18T00:35:38.668Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/logout, POST} route","service":"inamsos-backend","timestamp":"2025-11-18T00:35:38.668Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/me, GET} route","service":"inamsos-backend","timestamp":"2025-11-18T00:35:38.669Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/verify-email, POST} route","service":"inamsos-backend","timestamp":"2025-11-18T00:35:38.670Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/resend-verification, POST} route","service":"inamsos-backend","timestamp":"2025-11-18T00:35:38.670Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/test-roles, GET} route","service":"inamsos-backend","timestamp":"2025-11-18T00:35:38.671Z","version":"1.0.0"}
+{"context":"RoutesResolver","level":"info","message":"UsersController {/api/v1/users}:","service":"inamsos-backend","timestamp":"2025-11-18T00:35:38.671Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/users/profile, GET} route","service":"inamsos-backend","timestamp":"2025-11-18T00:35:38.671Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/users/profile, PATCH} route","service":"inamsos-backend","timestamp":"2025-11-18T00:35:38.672Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/users/change-password, POST} route","service":"inamsos-backend","timestamp":"2025-11-18T00:35:38.673Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/users/deactivate-account, POST} route","service":"inamsos-backend","timestamp":"2025-11-18T00:35:38.673Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/users/center/:centerId, GET} route","service":"inamsos-backend","timestamp":"2025-11-18T00:35:38.674Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/users/statistics, GET} route","service":"inamsos-backend","timestamp":"2025-11-18T00:35:38.674Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/users/:id, GET} route","service":"inamsos-backend","timestamp":"2025-11-18T00:35:38.674Z","version":"1.0.0"}
+{"context":"RoutesResolver","level":"info","message":"CentersController {/api/v1/centers}:","service":"inamsos-backend","timestamp":"2025-11-18T00:35:38.674Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/centers, POST} route","service":"inamsos-backend","timestamp":"2025-11-18T00:35:38.675Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/centers, GET} route","service":"inamsos-backend","timestamp":"2025-11-18T00:35:38.676Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/centers/statistics, GET} route","service":"inamsos-backend","timestamp":"2025-11-18T00:35:38.676Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/centers/code/:code, GET} route","service":"inamsos-backend","timestamp":"2025-11-18T00:35:38.676Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/centers/:id, GET} route","service":"inamsos-backend","timestamp":"2025-11-18T00:35:38.676Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/centers/:id, PATCH} route","service":"inamsos-backend","timestamp":"2025-11-18T00:35:38.677Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/centers/:id/activate, PATCH} route","service":"inamsos-backend","timestamp":"2025-11-18T00:35:38.677Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/centers/:id/deactivate, PATCH} route","service":"inamsos-backend","timestamp":"2025-11-18T00:35:38.677Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/centers/:id, DELETE} route","service":"inamsos-backend","timestamp":"2025-11-18T00:35:38.678Z","version":"1.0.0"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started","service":"inamsos-backend","timestamp":"2025-11-18T00:35:38.682Z","version":"1.0.0"}
+{"level":"info","message":"🚀 INAMSOS Backend API running on port 3001","service":"inamsos-backend","timestamp":"2025-11-18T00:35:38.688Z","version":"1.0.0"}
+{"level":"info","message":"📚 API Documentation available at http://localhost:3001/api/docs","service":"inamsos-backend","timestamp":"2025-11-18T00:35:38.689Z","version":"1.0.0"}
+{"level":"info","message":"🏥 Environment: development","service":"inamsos-backend","timestamp":"2025-11-18T00:35:38.689Z","version":"1.0.0"}
+{"context":"NestFactory","level":"info","message":"Starting Nest application...","service":"inamsos-backend","timestamp":"2025-11-18T00:40:31.451Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"AppModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-18T00:40:31.491Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"DatabaseModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-18T00:40:31.492Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"PassportModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-18T00:40:31.493Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"ThrottlerModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-18T00:40:31.494Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"JwtModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-18T00:40:31.495Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"ConfigHostModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-18T00:40:31.496Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"HealthModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-18T00:40:31.497Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-18T00:40:31.498Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-18T00:40:31.499Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"UsersModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-18T00:40:31.502Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"CentersModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-18T00:40:31.503Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"AuthModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-18T00:40:31.504Z","version":"1.0.0"}
+{"context":"RoutesResolver","level":"info","message":"HealthController {/api/v1/health}:","service":"inamsos-backend","timestamp":"2025-11-18T00:40:31.572Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/health, GET} route","service":"inamsos-backend","timestamp":"2025-11-18T00:40:31.577Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/health/detailed, GET} route","service":"inamsos-backend","timestamp":"2025-11-18T00:40:31.578Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/health/readiness, GET} route","service":"inamsos-backend","timestamp":"2025-11-18T00:40:31.579Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/health/liveness, GET} route","service":"inamsos-backend","timestamp":"2025-11-18T00:40:31.579Z","version":"1.0.0"}
+{"context":"RoutesResolver","level":"info","message":"AuthController {/api/v1/auth}:","service":"inamsos-backend","timestamp":"2025-11-18T00:40:31.580Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/register, POST} route","service":"inamsos-backend","timestamp":"2025-11-18T00:40:31.582Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/login, POST} route","service":"inamsos-backend","timestamp":"2025-11-18T00:40:31.582Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/refresh, POST} route","service":"inamsos-backend","timestamp":"2025-11-18T00:40:31.583Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/logout, POST} route","service":"inamsos-backend","timestamp":"2025-11-18T00:40:31.584Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/me, GET} route","service":"inamsos-backend","timestamp":"2025-11-18T00:40:31.585Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/verify-email, POST} route","service":"inamsos-backend","timestamp":"2025-11-18T00:40:31.586Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/resend-verification, POST} route","service":"inamsos-backend","timestamp":"2025-11-18T00:40:31.586Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/test-roles, GET} route","service":"inamsos-backend","timestamp":"2025-11-18T00:40:31.587Z","version":"1.0.0"}
+{"context":"RoutesResolver","level":"info","message":"UsersController {/api/v1/users}:","service":"inamsos-backend","timestamp":"2025-11-18T00:40:31.587Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/users/profile, GET} route","service":"inamsos-backend","timestamp":"2025-11-18T00:40:31.588Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/users/profile, PATCH} route","service":"inamsos-backend","timestamp":"2025-11-18T00:40:31.588Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/users/change-password, POST} route","service":"inamsos-backend","timestamp":"2025-11-18T00:40:31.589Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/users/deactivate-account, POST} route","service":"inamsos-backend","timestamp":"2025-11-18T00:40:31.589Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/users/center/:centerId, GET} route","service":"inamsos-backend","timestamp":"2025-11-18T00:40:31.589Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/users/statistics, GET} route","service":"inamsos-backend","timestamp":"2025-11-18T00:40:31.590Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/users/:id, GET} route","service":"inamsos-backend","timestamp":"2025-11-18T00:40:31.590Z","version":"1.0.0"}
+{"context":"RoutesResolver","level":"info","message":"CentersController {/api/v1/centers}:","service":"inamsos-backend","timestamp":"2025-11-18T00:40:31.590Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/centers, POST} route","service":"inamsos-backend","timestamp":"2025-11-18T00:40:31.591Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/centers, GET} route","service":"inamsos-backend","timestamp":"2025-11-18T00:40:31.592Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/centers/statistics, GET} route","service":"inamsos-backend","timestamp":"2025-11-18T00:40:31.592Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/centers/code/:code, GET} route","service":"inamsos-backend","timestamp":"2025-11-18T00:40:31.592Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/centers/:id, GET} route","service":"inamsos-backend","timestamp":"2025-11-18T00:40:31.593Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/centers/:id, PATCH} route","service":"inamsos-backend","timestamp":"2025-11-18T00:40:31.593Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/centers/:id/activate, PATCH} route","service":"inamsos-backend","timestamp":"2025-11-18T00:40:31.594Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/centers/:id/deactivate, PATCH} route","service":"inamsos-backend","timestamp":"2025-11-18T00:40:31.595Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/centers/:id, DELETE} route","service":"inamsos-backend","timestamp":"2025-11-18T00:40:31.595Z","version":"1.0.0"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started","service":"inamsos-backend","timestamp":"2025-11-18T00:40:31.602Z","version":"1.0.0"}
+{"level":"info","message":"🚀 INAMSOS Backend API running on port 3001","service":"inamsos-backend","timestamp":"2025-11-18T00:40:31.610Z","version":"1.0.0"}
+{"level":"info","message":"📚 API Documentation available at http://localhost:3001/api/docs","service":"inamsos-backend","timestamp":"2025-11-18T00:40:31.610Z","version":"1.0.0"}
+{"level":"info","message":"🏥 Environment: development","service":"inamsos-backend","timestamp":"2025-11-18T00:40:31.611Z","version":"1.0.0"}
+{"context":"NestFactory","level":"info","message":"Starting Nest application...","service":"inamsos-backend","timestamp":"2025-11-18T00:48:34.449Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"AppModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-18T00:48:34.505Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"DatabaseModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-18T00:48:34.506Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"PassportModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-18T00:48:34.507Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"ThrottlerModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-18T00:48:34.509Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"JwtModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-18T00:48:34.509Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"ConfigHostModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-18T00:48:34.510Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"HealthModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-18T00:48:34.511Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-18T00:48:34.512Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-18T00:48:34.513Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"UsersModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-18T00:48:34.517Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"CentersModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-18T00:48:34.517Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"AuthModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-18T00:48:34.524Z","version":"1.0.0"}
+{"context":"RoutesResolver","level":"info","message":"HealthController {/api/v1/health}:","service":"inamsos-backend","timestamp":"2025-11-18T00:48:34.579Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/health, GET} route","service":"inamsos-backend","timestamp":"2025-11-18T00:48:34.585Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/health/detailed, GET} route","service":"inamsos-backend","timestamp":"2025-11-18T00:48:34.586Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/health/readiness, GET} route","service":"inamsos-backend","timestamp":"2025-11-18T00:48:34.587Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/health/liveness, GET} route","service":"inamsos-backend","timestamp":"2025-11-18T00:48:34.588Z","version":"1.0.0"}
+{"context":"RoutesResolver","level":"info","message":"AuthController {/api/v1/auth}:","service":"inamsos-backend","timestamp":"2025-11-18T00:48:34.588Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/register, POST} route","service":"inamsos-backend","timestamp":"2025-11-18T00:48:34.590Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/login, POST} route","service":"inamsos-backend","timestamp":"2025-11-18T00:48:34.590Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/refresh, POST} route","service":"inamsos-backend","timestamp":"2025-11-18T00:48:34.591Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/logout, POST} route","service":"inamsos-backend","timestamp":"2025-11-18T00:48:34.592Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/me, GET} route","service":"inamsos-backend","timestamp":"2025-11-18T00:48:34.593Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/verify-email, POST} route","service":"inamsos-backend","timestamp":"2025-11-18T00:48:34.593Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/resend-verification, POST} route","service":"inamsos-backend","timestamp":"2025-11-18T00:48:34.594Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/test-roles, GET} route","service":"inamsos-backend","timestamp":"2025-11-18T00:48:34.595Z","version":"1.0.0"}
+{"context":"RoutesResolver","level":"info","message":"UsersController {/api/v1/users}:","service":"inamsos-backend","timestamp":"2025-11-18T00:48:34.595Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/users/profile, GET} route","service":"inamsos-backend","timestamp":"2025-11-18T00:48:34.595Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/users/profile, PATCH} route","service":"inamsos-backend","timestamp":"2025-11-18T00:48:34.597Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/users/change-password, POST} route","service":"inamsos-backend","timestamp":"2025-11-18T00:48:34.597Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/users/deactivate-account, POST} route","service":"inamsos-backend","timestamp":"2025-11-18T00:48:34.598Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/users/center/:centerId, GET} route","service":"inamsos-backend","timestamp":"2025-11-18T00:48:34.599Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/users/statistics, GET} route","service":"inamsos-backend","timestamp":"2025-11-18T00:48:34.599Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/users/:id, GET} route","service":"inamsos-backend","timestamp":"2025-11-18T00:48:34.600Z","version":"1.0.0"}
+{"context":"RoutesResolver","level":"info","message":"CentersController {/api/v1/centers}:","service":"inamsos-backend","timestamp":"2025-11-18T00:48:34.600Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/centers, POST} route","service":"inamsos-backend","timestamp":"2025-11-18T00:48:34.601Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/centers, GET} route","service":"inamsos-backend","timestamp":"2025-11-18T00:48:34.602Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/centers/statistics, GET} route","service":"inamsos-backend","timestamp":"2025-11-18T00:48:34.602Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/centers/code/:code, GET} route","service":"inamsos-backend","timestamp":"2025-11-18T00:48:34.602Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/centers/:id, GET} route","service":"inamsos-backend","timestamp":"2025-11-18T00:48:34.603Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/centers/:id, PATCH} route","service":"inamsos-backend","timestamp":"2025-11-18T00:48:34.603Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/centers/:id/activate, PATCH} route","service":"inamsos-backend","timestamp":"2025-11-18T00:48:34.603Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/centers/:id/deactivate, PATCH} route","service":"inamsos-backend","timestamp":"2025-11-18T00:48:34.604Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/centers/:id, DELETE} route","service":"inamsos-backend","timestamp":"2025-11-18T00:48:34.604Z","version":"1.0.0"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started","service":"inamsos-backend","timestamp":"2025-11-18T00:48:34.610Z","version":"1.0.0"}
+{"level":"info","message":"🚀 INAMSOS Backend API running on port 3001","service":"inamsos-backend","timestamp":"2025-11-18T00:48:34.619Z","version":"1.0.0"}
+{"level":"info","message":"📚 API Documentation available at http://localhost:3001/api/docs","service":"inamsos-backend","timestamp":"2025-11-18T00:48:34.619Z","version":"1.0.0"}
+{"level":"info","message":"🏥 Environment: development","service":"inamsos-backend","timestamp":"2025-11-18T00:48:34.619Z","version":"1.0.0"}
+{"context":"NestFactory","level":"info","message":"Starting Nest application...","service":"inamsos-backend","timestamp":"2025-11-18T00:50:17.749Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"AppModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-18T00:50:17.816Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"DatabaseModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-18T00:50:17.818Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"PassportModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-18T00:50:17.819Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"ThrottlerModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-18T00:50:17.821Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"JwtModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-18T00:50:17.821Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"ConfigHostModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-18T00:50:17.822Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"HealthModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-18T00:50:17.824Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-18T00:50:17.825Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-18T00:50:17.826Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"UsersModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-18T00:50:17.830Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"CentersModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-18T00:50:17.831Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"AuthModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-18T00:50:17.832Z","version":"1.0.0"}
+{"context":"RoutesResolver","level":"info","message":"HealthController {/api/v1/health}:","service":"inamsos-backend","timestamp":"2025-11-18T00:50:17.912Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/health, GET} route","service":"inamsos-backend","timestamp":"2025-11-18T00:50:17.919Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/health/detailed, GET} route","service":"inamsos-backend","timestamp":"2025-11-18T00:50:17.920Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/health/readiness, GET} route","service":"inamsos-backend","timestamp":"2025-11-18T00:50:17.921Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/health/liveness, GET} route","service":"inamsos-backend","timestamp":"2025-11-18T00:50:17.922Z","version":"1.0.0"}
+{"context":"RoutesResolver","level":"info","message":"AuthController {/api/v1/auth}:","service":"inamsos-backend","timestamp":"2025-11-18T00:50:17.923Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/register, POST} route","service":"inamsos-backend","timestamp":"2025-11-18T00:50:17.925Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/login, POST} route","service":"inamsos-backend","timestamp":"2025-11-18T00:50:17.926Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/refresh, POST} route","service":"inamsos-backend","timestamp":"2025-11-18T00:50:17.927Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/logout, POST} route","service":"inamsos-backend","timestamp":"2025-11-18T00:50:17.928Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/me, GET} route","service":"inamsos-backend","timestamp":"2025-11-18T00:50:17.929Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/verify-email, POST} route","service":"inamsos-backend","timestamp":"2025-11-18T00:50:17.930Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/resend-verification, POST} route","service":"inamsos-backend","timestamp":"2025-11-18T00:50:17.931Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/test-roles, GET} route","service":"inamsos-backend","timestamp":"2025-11-18T00:50:17.932Z","version":"1.0.0"}
+{"context":"RoutesResolver","level":"info","message":"UsersController {/api/v1/users}:","service":"inamsos-backend","timestamp":"2025-11-18T00:50:17.932Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/users/profile, GET} route","service":"inamsos-backend","timestamp":"2025-11-18T00:50:17.933Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/users/profile, PATCH} route","service":"inamsos-backend","timestamp":"2025-11-18T00:50:17.934Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/users/change-password, POST} route","service":"inamsos-backend","timestamp":"2025-11-18T00:50:17.934Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/users/deactivate-account, POST} route","service":"inamsos-backend","timestamp":"2025-11-18T00:50:17.935Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/users/center/:centerId, GET} route","service":"inamsos-backend","timestamp":"2025-11-18T00:50:17.935Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/users/statistics, GET} route","service":"inamsos-backend","timestamp":"2025-11-18T00:50:17.936Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/users/:id, GET} route","service":"inamsos-backend","timestamp":"2025-11-18T00:50:17.937Z","version":"1.0.0"}
+{"context":"RoutesResolver","level":"info","message":"CentersController {/api/v1/centers}:","service":"inamsos-backend","timestamp":"2025-11-18T00:50:17.937Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/centers, POST} route","service":"inamsos-backend","timestamp":"2025-11-18T00:50:17.938Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/centers, GET} route","service":"inamsos-backend","timestamp":"2025-11-18T00:50:17.938Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/centers/statistics, GET} route","service":"inamsos-backend","timestamp":"2025-11-18T00:50:17.939Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/centers/code/:code, GET} route","service":"inamsos-backend","timestamp":"2025-11-18T00:50:17.939Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/centers/:id, GET} route","service":"inamsos-backend","timestamp":"2025-11-18T00:50:17.940Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/centers/:id, PATCH} route","service":"inamsos-backend","timestamp":"2025-11-18T00:50:17.940Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/centers/:id/activate, PATCH} route","service":"inamsos-backend","timestamp":"2025-11-18T00:50:17.941Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/centers/:id/deactivate, PATCH} route","service":"inamsos-backend","timestamp":"2025-11-18T00:50:17.942Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/centers/:id, DELETE} route","service":"inamsos-backend","timestamp":"2025-11-18T00:50:17.942Z","version":"1.0.0"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started","service":"inamsos-backend","timestamp":"2025-11-18T00:50:17.949Z","version":"1.0.0"}
+{"level":"info","message":"🚀 INAMSOS Backend API running on port 3001","service":"inamsos-backend","timestamp":"2025-11-18T00:50:17.966Z","version":"1.0.0"}
+{"level":"info","message":"📚 API Documentation available at http://localhost:3001/api/docs","service":"inamsos-backend","timestamp":"2025-11-18T00:50:17.967Z","version":"1.0.0"}
+{"level":"info","message":"🏥 Environment: development","service":"inamsos-backend","timestamp":"2025-11-18T00:50:17.967Z","version":"1.0.0"}
+{"context":"NestFactory","level":"info","message":"Starting Nest application...","service":"inamsos-backend","timestamp":"2025-11-18T00:50:26.386Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"AppModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-18T00:50:26.464Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"DatabaseModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-18T00:50:26.467Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"PassportModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-18T00:50:26.468Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"ThrottlerModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-18T00:50:26.472Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"JwtModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-18T00:50:26.472Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"ConfigHostModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-18T00:50:26.474Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"HealthModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-18T00:50:26.475Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-18T00:50:26.476Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-18T00:50:26.477Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"UsersModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-18T00:50:26.483Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"CentersModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-18T00:50:26.484Z","version":"1.0.0"}
+{"context":"InstanceLoader","level":"info","message":"AuthModule dependencies initialized","service":"inamsos-backend","timestamp":"2025-11-18T00:50:26.485Z","version":"1.0.0"}
+{"context":"RoutesResolver","level":"info","message":"HealthController {/api/v1/health}:","service":"inamsos-backend","timestamp":"2025-11-18T00:50:26.580Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/health, GET} route","service":"inamsos-backend","timestamp":"2025-11-18T00:50:26.586Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/health/detailed, GET} route","service":"inamsos-backend","timestamp":"2025-11-18T00:50:26.587Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/health/readiness, GET} route","service":"inamsos-backend","timestamp":"2025-11-18T00:50:26.587Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/health/liveness, GET} route","service":"inamsos-backend","timestamp":"2025-11-18T00:50:26.588Z","version":"1.0.0"}
+{"context":"RoutesResolver","level":"info","message":"AuthController {/api/v1/auth}:","service":"inamsos-backend","timestamp":"2025-11-18T00:50:26.589Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/register, POST} route","service":"inamsos-backend","timestamp":"2025-11-18T00:50:26.591Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/login, POST} route","service":"inamsos-backend","timestamp":"2025-11-18T00:50:26.592Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/refresh, POST} route","service":"inamsos-backend","timestamp":"2025-11-18T00:50:26.593Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/logout, POST} route","service":"inamsos-backend","timestamp":"2025-11-18T00:50:26.594Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/me, GET} route","service":"inamsos-backend","timestamp":"2025-11-18T00:50:26.595Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/verify-email, POST} route","service":"inamsos-backend","timestamp":"2025-11-18T00:50:26.596Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/resend-verification, POST} route","service":"inamsos-backend","timestamp":"2025-11-18T00:50:26.597Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/auth/test-roles, GET} route","service":"inamsos-backend","timestamp":"2025-11-18T00:50:26.597Z","version":"1.0.0"}
+{"context":"RoutesResolver","level":"info","message":"UsersController {/api/v1/users}:","service":"inamsos-backend","timestamp":"2025-11-18T00:50:26.599Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/users/profile, GET} route","service":"inamsos-backend","timestamp":"2025-11-18T00:50:26.599Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/users/profile, PATCH} route","service":"inamsos-backend","timestamp":"2025-11-18T00:50:26.600Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/users/change-password, POST} route","service":"inamsos-backend","timestamp":"2025-11-18T00:50:26.601Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/users/deactivate-account, POST} route","service":"inamsos-backend","timestamp":"2025-11-18T00:50:26.601Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/users/center/:centerId, GET} route","service":"inamsos-backend","timestamp":"2025-11-18T00:50:26.602Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/users/statistics, GET} route","service":"inamsos-backend","timestamp":"2025-11-18T00:50:26.603Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/users/:id, GET} route","service":"inamsos-backend","timestamp":"2025-11-18T00:50:26.603Z","version":"1.0.0"}
+{"context":"RoutesResolver","level":"info","message":"CentersController {/api/v1/centers}:","service":"inamsos-backend","timestamp":"2025-11-18T00:50:26.604Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/centers, POST} route","service":"inamsos-backend","timestamp":"2025-11-18T00:50:26.604Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/centers, GET} route","service":"inamsos-backend","timestamp":"2025-11-18T00:50:26.605Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/centers/statistics, GET} route","service":"inamsos-backend","timestamp":"2025-11-18T00:50:26.606Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/centers/code/:code, GET} route","service":"inamsos-backend","timestamp":"2025-11-18T00:50:26.606Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/centers/:id, GET} route","service":"inamsos-backend","timestamp":"2025-11-18T00:50:26.606Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/centers/:id, PATCH} route","service":"inamsos-backend","timestamp":"2025-11-18T00:50:26.607Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/centers/:id/activate, PATCH} route","service":"inamsos-backend","timestamp":"2025-11-18T00:50:26.607Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/centers/:id/deactivate, PATCH} route","service":"inamsos-backend","timestamp":"2025-11-18T00:50:26.607Z","version":"1.0.0"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/v1/centers/:id, DELETE} route","service":"inamsos-backend","timestamp":"2025-11-18T00:50:26.608Z","version":"1.0.0"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started","service":"inamsos-backend","timestamp":"2025-11-18T00:50:26.613Z","version":"1.0.0"}
+{"level":"info","message":"🚀 INAMSOS Backend API running on port 3001","service":"inamsos-backend","timestamp":"2025-11-18T00:50:26.635Z","version":"1.0.0"}
+{"level":"info","message":"📚 API Documentation available at http://localhost:3001/api/docs","service":"inamsos-backend","timestamp":"2025-11-18T00:50:26.636Z","version":"1.0.0"}
+{"level":"info","message":"🏥 Environment: development","service":"inamsos-backend","timestamp":"2025-11-18T00:50:26.636Z","version":"1.0.0"}

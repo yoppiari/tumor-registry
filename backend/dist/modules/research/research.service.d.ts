@@ -1,0 +1,85 @@
+import { PrismaService } from '@/database/prisma.service';
+import { ResearchRequestStatus, StudyType, EthicsStatus } from '@prisma/client';
+export declare class ResearchService {
+    private prisma;
+    private readonly logger;
+    constructor(prisma: PrismaService);
+    createResearchRequest(requestData: {
+        title: string;
+        description: string;
+        principalInvestigatorId: string;
+        studyType: StudyType;
+        objectives: string;
+        methodology: string;
+        inclusionCriteria: string;
+        exclusionCriteria: string;
+        sampleSize: number;
+        duration: number;
+        requiresEthicsApproval: boolean;
+        dataRequested: string;
+        confidentialityRequirements?: string;
+        fundingSource?: string;
+        collaborators?: string;
+    }): Promise<any>;
+    updateResearchRequest(requestId: string, updateData: {
+        title?: string;
+        description?: string;
+        objectives?: string;
+        methodology?: string;
+        inclusionCriteria?: string;
+        exclusionCriteria?: string;
+        sampleSize?: number;
+        duration?: number;
+        dataRequested?: string;
+        confidentialityRequirements?: string;
+        fundingSource?: string;
+        collaborators?: string;
+        status?: ResearchRequestStatus;
+        ethicsStatus?: EthicsStatus;
+        reviewComments?: string;
+        approvedBy?: string;
+        approvedDate?: Date;
+        rejectionReason?: string;
+    }): Promise<any>;
+    getResearchRequests(filters?: {
+        status?: ResearchRequestStatus;
+        studyType?: StudyType;
+        principalInvestigatorId?: string;
+        ethicsStatus?: EthicsStatus;
+        dateFrom?: Date;
+        dateTo?: Date;
+        page?: number;
+        limit?: number;
+    }): Promise<{
+        requests: any;
+        total: any;
+        page: number;
+        totalPages: number;
+    }>;
+    getResearchRequestById(requestId: string): Promise<any>;
+    approveResearchRequest(requestId: string, approvedBy: string, comments?: string): Promise<any>;
+    rejectResearchRequest(requestId: string, rejectionReason: string, reviewedBy: string): Promise<any>;
+    requestEthicsReview(requestId: string): Promise<any>;
+    approveEthics(requestId: string, approvedBy: string, ethicsNumber?: string): Promise<any>;
+    exportResearchData(requestId: string, exportFormat: 'json' | 'csv' | 'excel', requestedBy: string): Promise<{
+        exportId: any;
+        requestId: string;
+        format: "json" | "excel" | "csv";
+        dataCount: number;
+        status: string;
+        exportDate: any;
+    }>;
+    getResearchStatistics(centerId?: string): Promise<any>;
+    private validateResearchRequest;
+    private getStudyTypeDisplay;
+    private getStatusDisplay;
+    private getEthicsStatusDisplay;
+    private calculateDaysSince;
+    private getReviewStatus;
+    private countEligiblePatients;
+    private canExportData;
+    private getEligiblePatientsData;
+    private getRequestsByTypeStatistics;
+    private getRequestsByMonthStatistics;
+    private getAverageReviewTime;
+}

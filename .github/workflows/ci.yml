@@ -1,0 +1,106 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_PASSWORD: test
+          POSTGRES_DB: inamsos_test
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+
+    - name: Install Backend Dependencies
+      run: |
+        cd backend
+        npm ci
+
+    - name: Install Frontend Dependencies
+      run: |
+        cd frontend
+        npm ci
+
+    - name: Run Backend Tests
+      run: |
+        cd backend
+        npm run test
+      env:
+        DATABASE_URL: postgresql://postgres:test@localhost:5432/inamsos_test
+        JWT_SECRET: test_secret
+        JWT_REFRESH_SECRET: test_refresh_secret
+
+    - name: Run Frontend Tests
+      run: |
+        cd frontend
+        npm run test
+
+    - name: Run Backend Linting
+      run: |
+        cd backend
+        npm run lint
+
+    - name: Run Frontend Linting
+      run: |
+        cd frontend
+        npm run lint
+
+    - name: Type Check Frontend
+      run: |
+        cd frontend
+        npm run type-check
+
+  security:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Run Security Audit
+      run: |
+        cd backend && npm audit --audit-level high
+        cd ../frontend && npm audit --audit-level high
+
+  build:
+    runs-on: ubuntu-latest
+    needs: [test, security]
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+
+    - name: Build Backend
+      run: |
+        cd backend
+        npm ci
+        npm run build
+
+    - name: Build Frontend
+      run: |
+        cd frontend
+        npm ci
+        npm run build

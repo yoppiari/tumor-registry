@@ -1,0 +1,1906 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>INAMSOS - Design Direction Showcase</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: #f8fafc;
+            color: #052e16;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 100%;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        .nav-header {
+            background: white;
+            border-bottom: 1px solid #e5e7eb;
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #10b981;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            color: #64748b;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: #10b981;
+        }
+
+        /* Screen Navigation */
+        .screen-nav {
+            background: #f0fdf4;
+            padding: 1rem 2rem;
+            border-bottom: 1px solid #dcfce7;
+        }
+
+        .screen-nav-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .screen-btn {
+            padding: 0.5rem 1rem;
+            background: white;
+            border: 2px solid #dcfce7;
+            border-radius: 6px;
+            color: #052e16;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .screen-btn:hover {
+            border-color: #10b981;
+            background: #10b981;
+            color: white;
+        }
+
+        .screen-btn.active {
+            background: #10b981;
+            border-color: #10b981;
+            color: white;
+        }
+
+        .direction-nav {
+            margin-left: auto;
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .direction-btn {
+            padding: 0.5rem;
+            background: white;
+            border: 1px solid #dcfce7;
+            border-radius: 4px;
+            color: #052e16;
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .direction-btn:hover {
+            background: #f0fdf4;
+        }
+
+        .direction-btn.active {
+            background: #10b981;
+            color: white;
+            border-color: #10b981;
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 2rem;
+        }
+
+        .screen-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: none;
+        }
+
+        .screen-container.active {
+            display: block;
+        }
+
+        /* Direction Grid */
+        .direction-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(1200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .direction-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .direction-header {
+            background: #10b981;
+            color: white;
+            padding: 1rem 1.5rem;
+            font-weight: 600;
+            font-size: 1.125rem;
+        }
+
+        .direction-subtitle {
+            font-size: 0.875rem;
+            opacity: 0.9;
+            margin-top: 0.25rem;
+        }
+
+        .direction-content {
+            padding: 2rem;
+            min-height: 600px;
+        }
+
+        /* Common Styles */
+        .dashboard-layout {
+            display: flex;
+            height: 600px;
+        }
+
+        .sidebar {
+            width: 280px;
+            background: #f0fdf4;
+            border-right: 1px solid #dcfce7;
+            padding: 1.5rem;
+        }
+
+        .main-content-area {
+            flex: 1;
+            padding: 1.5rem;
+            overflow-y: auto;
+        }
+
+        .nav-item {
+            display: block;
+            padding: 0.75rem 1rem;
+            margin-bottom: 0.5rem;
+            border-radius: 6px;
+            color: #052e16;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .nav-item:hover {
+            background: #dcfce7;
+        }
+
+        .nav-item.active {
+            background: #10b981;
+            color: white;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 0.875rem;
+        }
+
+        .btn-primary {
+            background: #10b981;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #059669;
+        }
+
+        .btn-secondary {
+            background: #e5e7eb;
+            color: #374151;
+        }
+
+        .btn-secondary:hover {
+            background: #d1d5db;
+        }
+
+        .card {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .card-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            font-size: 0.875rem;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 6px;
+            font-size: 0.875rem;
+            transition: border-color 0.2s;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #10b981;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+
+        .progress-bar {
+            height: 8px;
+            background: #e5e7eb;
+            border-radius: 4px;
+            margin-bottom: 0.5rem;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: #10b981;
+            border-radius: 4px;
+            transition: width 0.3s;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: #f0fdf4;
+            border: 1px solid #dcfce7;
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #10b981;
+        }
+
+        .stat-label {
+            font-size: 0.875rem;
+            color: #64748b;
+            margin-top: 0.25rem;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 1rem;
+        }
+
+        .table th, .table td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .table th {
+            background: #f0fdf4;
+            font-weight: 600;
+            font-size: 0.875rem;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .badge-success {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .badge-warning {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .badge-error {
+            background: #fef2f2;
+            color: #991b1b;
+        }
+
+        .modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            max-width: 500px;
+            width: 90%;
+            z-index: 1000;
+        }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
+
+        /* Direction-Specific Styles */
+        .direction-1 .main-content-area {
+            background: white;
+        }
+
+        .direction-2 .sidebar {
+            width: 200px;
+        }
+
+        .direction-2 .card {
+            border-left: 4px solid #10b981;
+        }
+
+        .direction-3 .stats-grid {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        .direction-3 .stat-card {
+            background: white;
+            border-top: 3px solid #10b981;
+        }
+
+        .direction-3 .form-input {
+            border-radius: 8px;
+            padding: 1rem;
+        }
+
+        .direction-4 .main-content-area {
+            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+        }
+
+        .direction-4 .card {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .direction-5 .stats-grid {
+            grid-template-columns: repeat(4, 1fr);
+        }
+
+        .direction-5 .stat-card {
+            background: white;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            border: none;
+        }
+
+        .direction-6 .main-content-area {
+            padding: 2rem;
+        }
+
+        .direction-6 .card {
+            border-radius: 12px;
+            background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%);
+        }
+
+        /* Instructions */
+        .instructions {
+            background: #f0fdf4;
+            border: 1px solid #dcfce7;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .instructions h3 {
+            color: #10b981;
+            margin-bottom: 1rem;
+        }
+
+        .instructions ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .instructions li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #dcfce7;
+        }
+
+        .instructions li:last-child {
+            border-bottom: none;
+        }
+
+        .floating-action {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: #10b981;
+            color: white;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .floating-action:hover {
+            transform: scale(1.1);
+            background: #059669;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .screen-nav-content {
+                flex-wrap: wrap;
+            }
+
+            .direction-nav {
+                width: 100%;
+                margin-left: 0;
+                margin-top: 1rem;
+            }
+
+            .direction-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .dashboard-layout {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                height: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Header -->
+    <nav class="nav-header">
+        <div class="nav-content">
+            <div class="logo">🏥 INAMSOS</div>
+            <div class="nav-links">
+                <a href="#" class="nav-link">Dashboard</a>
+                <a href="#" class="nav-link">Data Entry</a>
+                <a href="#" class="nav-link">Research</a>
+                <a href="#" class="nav-link">Analytics</a>
+                <a href="#" class="nav-link">Settings</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Screen Navigation -->
+    <div class="screen-nav">
+        <div class="screen-nav-content">
+            <button class="screen-btn active" onclick="showScreen('data-entry')">📝 Data Entry</button>
+            <button class="screen-btn" onclick="showScreen('research')">🔬 Research Discovery</button>
+            <button class="screen-btn" onclick="showScreen('approval')">✅ Approval Workflow</button>
+            <button class="screen-btn" onclick="showScreen('leadership')">📊 Leadership Dashboard</button>
+
+            <div class="direction-nav">
+                <button class="direction-btn active" onclick="showDirection(1)">Direction 1</button>
+                <button class="direction-btn" onclick="showDirection(2)">Direction 2</button>
+                <button class="direction-btn" onclick="showDirection(3)">Direction 3</button>
+                <button class="direction-btn" onclick="showDirection(4)">Direction 4</button>
+                <button class="direction-btn" onclick="showDirection(5)">Direction 5</button>
+                <button class="direction-btn" onclick="showDirection(6)">Direction 6</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Instructions -->
+    <div class="main-content">
+        <div class="instructions">
+            <h3>🎨 Design Direction Explorer</h3>
+            <ul>
+                <li><strong>Screen Navigation:</strong> Klik tombol screen untuk melihat interface yang berbeda</li>
+                <li><strong>Direction Navigation:</strong> Setiap screen punya 6 design variations yang berbeda</li>
+                <li><strong>Interactive Elements:</strong> Hover dan klik buttons, forms, dan cards untuk melihat interactions</li>
+                <li><strong>WhatsApp Inspiration:</strong> Perhatikan real-time feedback dan clean aesthetics</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Data Entry Screen -->
+    <div id="data-entry" class="screen-container active">
+        <div class="main-content">
+            <div class="direction-grid">
+                <!-- Direction 1: Classic Medical -->
+                <div class="direction-card direction-1">
+                    <div class="direction-header">
+                        Direction 1: Classic Medical
+                        <div class="direction-subtitle">Professional, clean, traditional healthcare</div>
+                    </div>
+                    <div class="direction-content">
+                        <div class="dashboard-layout">
+                            <div class="sidebar">
+                                <div style="font-weight: 600; margin-bottom: 1rem; color: #10b981;">📋 Forms</div>
+                                <a href="#" class="nav-item active">New Patient</a>
+                                <a href="#" class="nav-item">Patient List</a>
+                                <a href="#" class="nav-item">Draft Entries</a>
+                                <div style="font-weight: 600; margin: 1.5rem 0 1rem; color: #10b981;">📊 Today</div>
+                                <a href="#" class="nav-item">5 Completed</a>
+                                <a href="#" class="nav-item">2 Pending</a>
+                            </div>
+                            <div class="main-content-area">
+                                <h2 style="margin-bottom: 1.5rem;">🏥 New Patient Registration</h2>
+
+                                <div class="card">
+                                    <div class="card-title">📋 Patient Information</div>
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label class="form-label">Patient ID</label>
+                                            <input type="text" class="form-input" placeholder="Auto-generated" readonly>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Registration Date</label>
+                                            <input type="date" class="form-input" value="2025-11-17">
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label class="form-label">Full Name</label>
+                                            <input type="text" class="form-input" placeholder="Enter patient name">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Date of Birth</label>
+                                            <input type="date" class="form-input">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="card">
+                                    <div class="card-title">🎯 Tumor Information</div>
+                                    <div class="form-group">
+                                        <label class="form-label">Tumor Type</label>
+                                        <select class="form-input">
+                                            <option>Select tumor type</option>
+                                            <option>Breast Cancer</option>
+                                            <option>Lung Cancer</option>
+                                            <option>Colorectal Cancer</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label class="form-label">Stage</label>
+                                            <select class="form-input">
+                                                <option>Select stage</option>
+                                                <option>Stage I</option>
+                                                <option>Stage II</option>
+                                                <option>Stage III</option>
+                                                <option>Stage IV</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Grade</label>
+                                            <select class="form-input">
+                                                <option>Select grade</option>
+                                                <option>Grade 1</option>
+                                                <option>Grade 2</option>
+                                                <option>Grade 3</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+                                    <button class="btn btn-primary" style="flex: 1;">💾 Save Patient</button>
+                                    <button class="btn btn-secondary">Cancel</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Direction 2: Minimal Modern -->
+                <div class="direction-card direction-2">
+                    <div class="direction-header">
+                        Direction 2: Minimal Modern
+                        <div class="direction-subtitle">Clean, spacious, WhatsApp-inspired</div>
+                    </div>
+                    <div class="direction-content">
+                        <div style="padding: 2rem;">
+                            <div style="display: flex; align-items: center; margin-bottom: 2rem;">
+                                <div style="background: #10b981; color: white; padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.875rem;">
+                                    New Entry
+                                </div>
+                                <div style="margin-left: auto; color: #64748b; font-size: 0.875rem;">
+                                    Last saved: 2 minutes ago
+                                </div>
+                            </div>
+
+                            <div style="background: #f0fdf4; border-radius: 12px; padding: 1rem; margin-bottom: 2rem;">
+                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                    <div>
+                                        <div style="font-weight: 600;">👤 Patient Details</div>
+                                        <div style="font-size: 0.875rem; color: #64748b;">Basic information</div>
+                                    </div>
+                                    <div style="color: #10b981; font-weight: 600;">75% Complete</div>
+                                </div>
+                                <div class="progress-bar" style="margin-top: 1rem;">
+                                    <div class="progress-fill" style="width: 75%;"></div>
+                                </div>
+                            </div>
+
+                            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem;">
+                                <div class="form-group">
+                                    <label class="form-label">First Name</label>
+                                    <input type="text" class="form-input" placeholder="First name">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Last Name</label>
+                                    <input type="text" class="form-input" placeholder="Last name">
+                                </div>
+                            </div>
+
+                            <div class="card" style="margin: 1.5rem 0;">
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                                    <div>
+                                        <div style="font-weight: 600;">📷 Medical Imaging</div>
+                                        <div style="font-size: 0.875rem; color: #64748b;">Upload patient scans</div>
+                                    </div>
+                                    <span class="badge badge-success">✓ Auto-validated</span>
+                                </div>
+
+                                <div style="border: 2px dashed #dcfce7; border-radius: 8px; padding: 2rem; text-align: center; background: #f0fdf4;">
+                                    <div style="font-size: 2rem; margin-bottom: 0.5rem;">📸</div>
+                                    <div style="color: #64748b; font-size: 0.875rem;">Drop images here or click to upload</div>
+                                    <button class="btn btn-secondary" style="margin-top: 1rem;">Browse Files</button>
+                                </div>
+                            </div>
+
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <button class="btn btn-secondary">← Previous</button>
+                                <div style="display: flex; gap: 0.5rem;">
+                                    <button class="btn btn-secondary">Save Draft</button>
+                                    <button class="btn btn-primary">Complete Entry →</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Direction 3: Card-Based -->
+                <div class="direction-card direction-3">
+                    <div class="direction-header">
+                        Direction 3: Card-Based
+                        <div class="direction-subtitle">Modular, scannable, mobile-friendly</div>
+                    </div>
+                    <div class="direction-content">
+                        <div style="padding: 2rem;">
+                            <div class="stats-grid" style="margin-bottom: 2rem;">
+                                <div class="stat-card">
+                                    <div class="stat-number">12</div>
+                                    <div class="stat-label">Entries Today</div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-number">98.5%</div>
+                                    <div class="stat-label">Data Quality</div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-number">3</div>
+                                    <div class="stat-label">Pending Review</div>
+                                </div>
+                            </div>
+
+                            <h2 style="margin-bottom: 1.5rem;">📋 Quick Entry Cards</h2>
+
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem;">
+                                <div class="card">
+                                    <div class="card-title">👤 Patient Info</div>
+                                    <div class="form-group">
+                                        <label class="form-label">Name</label>
+                                        <input type="text" class="form-input" placeholder="Full name">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Age</label>
+                                        <input type="number" class="form-input" placeholder="Age">
+                                    </div>
+                                </div>
+
+                                <div class="card">
+                                    <div class="card-title">🎯 Diagnosis</div>
+                                    <div class="form-group">
+                                        <label class="form-label">Primary Site</label>
+                                        <select class="form-input">
+                                            <option>Select location</option>
+                                            <option>Breast</option>
+                                            <option>Lung</option>
+                                            <option>Colon</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Histology</label>
+                                        <select class="form-input">
+                                            <option>Select type</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="card">
+                                    <div class="card-title">📅 Date Info</div>
+                                    <div class="form-group">
+                                        <label class="form-label">Diagnosis Date</label>
+                                        <input type="date" class="form-input">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Treatment Start</label>
+                                        <input type="date" class="form-input">
+                                    </div>
+                                </div>
+
+                                <div class="card">
+                                    <div class="card-title">📊 Stage & Grade</div>
+                                    <div class="form-group">
+                                        <label class="form-label">TNM Stage</label>
+                                        <input type="text" class="form-input" placeholder="e.g., T2N0M0">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Grade</label>
+                                        <select class="form-input">
+                                            <option>Select grade</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div style="margin-top: 2rem; text-align: center;">
+                                <button class="btn btn-primary" style="margin-right: 1rem;">✅ Submit Entry</button>
+                                <button class="btn btn-secondary">💾 Save Draft</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Direction 4: Conversational -->
+                <div class="direction-card direction-4">
+                    <div class="direction-header">
+                        Direction 4: Conversational
+                        <div class="direction-subtitle">WhatsApp-style, step-by-step guidance</div>
+                    </div>
+                    <div class="direction-content">
+                        <div style="height: 600px; display: flex; flex-direction: column;">
+                            <!-- Chat Header -->
+                            <div style="background: #10b981; color: white; padding: 1rem; text-align: center;">
+                                <div style="font-weight: 600;">🏥 New Patient Registration</div>
+                                <div style="font-size: 0.875rem; opacity: 0.9;">Let me guide you through the process</div>
+                            </div>
+
+                            <!-- Chat Messages -->
+                            <div style="flex: 1; overflow-y: auto; padding: 1rem; background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);">
+                                <div style="margin-bottom: 1rem;">
+                                    <div style="background: white; padding: 1rem; border-radius: 18px 18px 18px 4px; max-width: 70%; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                                        <div style="font-weight: 600; margin-bottom: 0.5rem;">👋 Welcome!</div>
+                                        <div style="font-size: 0.875rem; color: #64748b;">I'll help you register a new patient. Let's start with basic information.</div>
+                                    </div>
+                                </div>
+
+                                <div style="margin-bottom: 1rem;">
+                                    <div style="background: #10b981; color: white; padding: 1rem; border-radius: 18px 18px 4px 18px; max-width: 70%; margin-left: auto; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                                        <div>Ready to start!</div>
+                                    </div>
+                                </div>
+
+                                <div style="margin-bottom: 1rem;">
+                                    <div style="background: white; padding: 1rem; border-radius: 18px 18px 18px 4px; max-width: 70%; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                                        <div style="font-weight: 600; margin-bottom: 0.5rem;">📋 Patient Name</div>
+                                        <div style="font-size: 0.875rem; color: #64748b; margin-bottom: 1rem;">What's the patient's full name?</div>
+                                        <input type="text" class="form-input" placeholder="Enter full name" style="width: 100%;">
+                                    </div>
+                                </div>
+
+                                <div style="margin-bottom: 1rem;">
+                                    <div style="background: white; padding: 1rem; border-radius: 18px 18px 18px 4px; max-width: 70%; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                                        <div style="font-weight: 600; margin-bottom: 0.5rem;">🎂 Date of Birth</div>
+                                        <div style="font-size: 0.875rem; color: #64748b; margin-bottom: 1rem;">When was the patient born?</div>
+                                        <input type="date" class="form-input" style="width: 100%;">
+                                    </div>
+                                </div>
+
+                                <div style="margin-bottom: 1rem;">
+                                    <div style="background: white; padding: 1rem; border-radius: 18px 18px 18px 4px; max-width: 70%; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                                        <div style="font-weight: 600; margin-bottom: 0.5rem;">🎯 Tumor Type</div>
+                                        <div style="font-size: 0.875rem; color: #64748b; margin-bottom: 1rem;">What type of tumor?</div>
+                                        <select class="form-input" style="width: 100%;">
+                                            <option>Select tumor type</option>
+                                            <option>Breast Cancer</option>
+                                            <option>Lung Cancer</option>
+                                            <option>Colorectal Cancer</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div style="margin-bottom: 1rem;">
+                                    <div style="background: #dcfce7; border-left: 4px solid #10b981; padding: 1rem; border-radius: 4px; margin-top: 1rem;">
+                                        <div style="font-weight: 600; color: #166534;">💡 Tip</div>
+                                        <div style="font-size: 0.875rem; color: #14532d;">If you're unsure about any field, you can save as draft and complete later.</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Chat Input -->
+                            <div style="background: white; border-top: 1px solid #e5e7eb; padding: 1rem;">
+                                <div style="display: flex; gap: 1rem;">
+                                    <button class="btn btn-secondary" style="flex: 1;">💾 Save Draft</button>
+                                    <button class="btn btn-primary" style="flex: 2;">Continue →</button>
+                                    <button class="btn btn-primary">✅ Complete</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Direction 5: Data-Centric -->
+                <div class="direction-card direction-5">
+                    <div class="direction-header">
+                        Direction 5: Data-Centric
+                        <div class="direction-subtitle">Information-rich, table-focused, professional</div>
+                    </div>
+                    <div class="direction-content">
+                        <div style="padding: 2rem;">
+                            <div style="display: flex; justify-content: between; align-items: center; margin-bottom: 2rem;">
+                                <div>
+                                    <h2 style="margin-bottom: 0.5rem;">📊 Patient Data Entry</h2>
+                                    <div style="color: #64748b; font-size: 0.875rem;">Batch entry mode • Auto-save enabled</div>
+                                </div>
+                                <div style="display: flex; gap: 1rem;">
+                                    <button class="btn btn-secondary">📥 Import CSV</button>
+                                    <button class="btn btn-primary">➕ Add Patient</button>
+                                </div>
+                            </div>
+
+                            <div class="stats-grid" style="margin-bottom: 2rem;">
+                                <div class="stat-card">
+                                    <div class="stat-number">156</div>
+                                    <div class="stat-label">Total Entries</div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-number">12</div>
+                                    <div class="stat-label">This Week</div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-number">99.2%</div>
+                                    <div class="stat-label">Completion</div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-number">0</div>
+                                    <div class="stat-label">Errors</div>
+                                </div>
+                            </div>
+
+                            <div class="card">
+                                <div class="card-title">📋 Patient Entry Form</div>
+
+                                <table class="table" style="margin-top: 1rem;">
+                                    <thead>
+                                        <tr>
+                                            <th>Field</th>
+                                            <th>Value</th>
+                                            <th>Status</th>
+                                            <th>Validation</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><strong>Patient ID</strong></td>
+                                            <td>PT-2025-001</td>
+                                            <td><span class="badge badge-success">✓ Valid</span></td>
+                                            <td>Auto-generated</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Full Name</strong></td>
+                                            <td><input type="text" class="form-input" value="" placeholder="Enter patient name"></td>
+                                            <td><span class="badge badge-warning">⚠ Required</span></td>
+                                            <td>Cannot be empty</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Date of Birth</strong></td>
+                                            <td><input type="date" class="form-input"></td>
+                                            <td><span class="badge badge-warning">⚠ Required</span></td>
+                                            <td>Must be valid date</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Tumor Type</strong></td>
+                                            <td>
+                                                <select class="form-input">
+                                                    <option>Select type</option>
+                                                    <option>Breast Cancer</option>
+                                                    <option>Lung Cancer</option>
+                                                </select>
+                                            </td>
+                                            <td><span class="badge badge-warning">⚠ Required</span></td>
+                                            <td>Must select type</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Stage</strong></td>
+                                            <td>
+                                                <select class="form-input">
+                                                    <option>Select stage</option>
+                                                    <option>Stage I</option>
+                                                    <option>Stage II</option>
+                                                </select>
+                                            </td>
+                                            <td><span class="badge badge-success">✓ Valid</span></td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                                <div style="margin-top: 1.5rem; display: flex; justify-content: space-between; align-items: center;">
+                                    <div style="color: #64748b; font-size: 0.875rem;">
+                                        Last auto-saved: 30 seconds ago
+                                    </div>
+                                    <div style="display: flex; gap: 1rem;">
+                                        <button class="btn btn-secondary">🔍 Validate All</button>
+                                        <button class="btn btn-primary">💾 Save Patient</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Direction 6: Workflow-Oriented -->
+                <div class="direction-card direction-6">
+                    <div class="direction-header">
+                        Direction 6: Workflow-Oriented
+                        <div class="direction-subtitle">Step-by-step, guided process, clear progression</div>
+                    </div>
+                    <div class="direction-content">
+                        <div style="padding: 2rem;">
+                            <!-- Progress Steps -->
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 3rem; position: relative;">
+                                <div style="flex: 1; text-align: center; position: relative;">
+                                    <div style="background: #10b981; color: white; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 0.5rem;">1</div>
+                                    <div style="font-weight: 600; color: #10b981;">Patient Info</div>
+                                    <div style="font-size: 0.75rem; color: #64748b;">Basic details</div>
+                                </div>
+                                <div style="flex: 1; text-align: center; position: relative;">
+                                    <div style="background: #10b981; color: white; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 0.5rem;">2</div>
+                                    <div style="font-weight: 600; color: #10b981;">Diagnosis</div>
+                                    <div style="font-size: 0.75rem; color: #64748b;">Tumor details</div>
+                                </div>
+                                <div style="flex: 1; text-align: center; position: relative;">
+                                    <div style="background: #e5e7eb; color: #64748b; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 0.5rem;">3</div>
+                                    <div style="font-weight: 600; color: #64748b;">Treatment</div>
+                                    <div style="font-size: 0.75rem; color: #64748b;">Care plan</div>
+                                </div>
+                                <div style="flex: 1; text-align: center; position: relative;">
+                                    <div style="background: #e5e7eb; color: #64748b; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 0.5rem;">4</div>
+                                    <div style="font-weight: 600; color: #64748b;">Review</div>
+                                    <div style="font-size: 0.75rem; color: #64748b;">Final check</div>
+                                </div>
+                            </div>
+
+                            <div style="background: #f0fdf4; border: 1px solid #dcfce7; border-radius: 8px; padding: 1rem; margin-bottom: 2rem;">
+                                <div style="display: flex; align-items: center; justify-content: space-between;">
+                                    <div>
+                                        <div style="font-weight: 600; color: #10b981;">✅ Step 1: Patient Information</div>
+                                        <div style="font-size: 0.875rem; color: #64748b;">All required fields completed</div>
+                                    </div>
+                                    <div style="display: flex; align-items: center; gap: 1rem;">
+                                        <div style="text-align: right;">
+                                            <div style="font-weight: 600;">50%</div>
+                                            <div style="font-size: 0.75rem; color: #64748b;">Complete</div>
+                                        </div>
+                                        <button class="btn btn-primary">Next Step →</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card">
+                                <div class="card-title">📋 Step 1: Patient Information</div>
+
+                                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem;">
+                                    <div>
+                                        <h4 style="margin-bottom: 1rem; color: #10b981;">👤 Personal Details</h4>
+                                        <div class="form-group">
+                                            <label class="form-label">First Name *</label>
+                                            <input type="text" class="form-input" placeholder="First name">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Last Name *</label>
+                                            <input type="text" class="form-input" placeholder="Last name">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Date of Birth *</label>
+                                            <input type="date" class="form-input">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Gender *</label>
+                                            <select class="form-input">
+                                                <option>Select gender</option>
+                                                <option>Male</option>
+                                                <option>Female</option>
+                                                <option>Other</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <h4 style="margin-bottom: 1rem; color: #10b981;">📍 Contact Information</h4>
+                                        <div class="form-group">
+                                            <label class="form-label">Phone Number</label>
+                                            <input type="tel" class="form-input" placeholder="+62">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Email Address</label>
+                                            <input type="email" class="form-input" placeholder="email@example.com">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Address</label>
+                                            <input type="text" class="form-input" placeholder="Street address">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">City</label>
+                                            <input type="text" class="form-input" placeholder="City">
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <h4 style="margin-bottom: 1rem; color: #10b981;">🏥 Medical Details</h4>
+                                        <div class="form-group">
+                                            <label class="form-label">Patient ID</label>
+                                            <input type="text" class="form-input" value="PT-2025-001" readonly>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Registration Date *</label>
+                                            <input type="date" class="form-input" value="2025-11-17">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Referring Doctor</label>
+                                            <input type="text" class="form-input" placeholder="Doctor name">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Medical Record Number</label>
+                                            <input type="text" class="form-input" placeholder="MRN">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div style="margin-top: 2rem; padding-top: 1rem; border-top: 1px solid #e5e7eb; display: flex; justify-content: space-between; align-items: center;">
+                                    <div>
+                                        <div style="font-size: 0.875rem; color: #64748b;">Required fields marked with *</div>
+                                    </div>
+                                    <div style="display: flex; gap: 1rem;">
+                                        <button class="btn btn-secondary">← Previous</button>
+                                        <button class="btn btn-primary">Next Step: Diagnosis →</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Research Discovery Screen -->
+    <div id="research" class="screen-container">
+        <div class="main-content">
+            <div class="direction-grid">
+                <!-- Direction 1: Explorer -->
+                <div class="direction-card direction-1">
+                    <div class="direction-header">
+                        Direction 1: Data Explorer
+                        <div class="direction-subtitle">Powerful search, advanced filtering</div>
+                    </div>
+                    <div class="direction-content">
+                        <div class="dashboard-layout">
+                            <div class="sidebar">
+                                <div style="font-weight: 600; margin-bottom: 1rem; color: #10b981;">🔍 Research</div>
+                                <a href="#" class="nav-item active">Dataset Browser</a>
+                                <a href="#" class="nav-item">My Requests</a>
+                                <a href="#" class="nav-item">Saved Searches</a>
+                                <div style="font-weight: 600; margin: 1.5rem 0 1rem; color: #10b981;">📊 Filters</div>
+                                <a href="#" class="nav-item">Tumor Type</a>
+                                <a href="#" class="nav-item">Date Range</a>
+                                <a href="#" class="nav-item">Location</a>
+                                <a href="#" class="nav-item">Stage</a>
+                            </div>
+                            <div class="main-content-area">
+                                <h2 style="margin-bottom: 1.5rem;">🔬 Research Data Discovery</h2>
+
+                                <div class="card" style="margin-bottom: 1.5rem;">
+                                    <div class="card-title">📊 Search & Filter</div>
+                                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 1rem;">
+                                        <div class="form-group">
+                                            <label class="form-label">Tumor Type</label>
+                                            <select class="form-input">
+                                                <option>All Types</option>
+                                                <option>Breast Cancer</option>
+                                                <option>Lung Cancer</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Date Range</label>
+                                            <select class="form-input">
+                                                <option>Last 30 Days</option>
+                                                <option>Last 90 Days</option>
+                                                <option>Last Year</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Location</label>
+                                            <select class="form-input">
+                                                <option>All Regions</option>
+                                                <option>Jakarta</option>
+                                                <option>Surabaya</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div style="display: flex; gap: 1rem;">
+                                        <button class="btn btn-primary" style="flex: 1;">🔍 Search</button>
+                                        <button class="btn btn-secondary">Clear Filters</button>
+                                    </div>
+                                </div>
+
+                                <div class="stats-grid" style="margin-bottom: 1.5rem;">
+                                    <div class="stat-card">
+                                        <div class="stat-number">15,234</div>
+                                        <div class="stat-label">Total Records</div>
+                                    </div>
+                                    <div class="stat-card">
+                                        <div class="stat-number">23</div>
+                                        <div class="stat-label">Centers</div>
+                                    </div>
+                                    <div class="stat-card">
+                                        <div class="stat-number">89.5%</div>
+                                        <div class="stat-label">Data Quality</div>
+                                    </div>
+                                    <div class="stat-card">
+                                        <div class="stat-number">142</div>
+                                        <div class="stat-label">Available Studies</div>
+                                    </div>
+                                </div>
+
+                                <div class="card">
+                                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                                        <div class="card-title">📋 Dataset Results</div>
+                                        <button class="btn btn-primary">📊 Request Dataset</button>
+                                    </div>
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>Dataset Name</th>
+                                                <th>Records</th>
+                                                <th>Quality</th>
+                                                <th>Available</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td><strong>Breast Cancer 2020-2024</strong></td>
+                                                <td>3,456</td>
+                                                <td><span class="badge badge-success">95%</span></td>
+                                                <td>Yes</td>
+                                                <td><button class="btn btn-primary" style="font-size: 0.75rem;">Request</button></td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Lung Cancer National Registry</strong></td>
+                                                <td>8,901</td>
+                                                <td><span class="badge badge-success">92%</span></td>
+                                                <td>Yes</td>
+                                                <td><button class="btn btn-primary" style="font-size: 0.75rem;">Request</button></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Direction 2: Visual Analytics -->
+                <div class="direction-card direction-2">
+                    <div class="direction-header">
+                        Direction 2: Visual Analytics
+                        <div class="direction-subtitle">Map-based, geographic insights</div>
+                    </div>
+                    <div class="direction-content">
+                        <div style="padding: 2rem;">
+                            <h2 style="margin-bottom: 1.5rem;">🗺️ Geographic Cancer Distribution</h2>
+
+                            <!-- Map Visualization -->
+                            <div class="card" style="height: 400px; background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%); display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem; position: relative;">
+                                <div style="text-align: center; color: #10b981;">
+                                    <div style="font-size: 3rem; margin-bottom: 1rem;">🗺️</div>
+                                    <div style="font-weight: 600; font-size: 1.25rem;">Indonesia Cancer Map</div>
+                                    <div style="color: #64748b; margin-top: 0.5rem;">Interactive geographic visualization</div>
+                                </div>
+                                <!-- Legend -->
+                                <div style="position: absolute; top: 1rem; right: 1rem; background: white; padding: 1rem; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                                    <div style="font-weight: 600; margin-bottom: 0.5rem;">Density Legend</div>
+                                    <div style="display: flex; align-items: center; margin-bottom: 0.25rem;">
+                                        <div style="width: 12px; height: 12px; background: #10b981; border-radius: 50%; margin-right: 0.5rem;"></div>
+                                        <span style="font-size: 0.75rem;">High Density</span>
+                                    </div>
+                                    <div style="display: flex; align-items: center; margin-bottom: 0.25rem;">
+                                        <div style="width: 12px; height: 12px; background: #34d399; border-radius: 50%; margin-right: 0.5rem;"></div>
+                                        <span style="font-size: 0.75rem;">Medium Density</span>
+                                    </div>
+                                    <div style="display: flex; align-items: center;">
+                                        <div style="width: 12px; height: 12px; background: #86efac; border-radius: 50%; margin-right: 0.5rem;"></div>
+                                        <span style="font-size: 0.75rem;">Low Density</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Stats Cards -->
+                            <div class="stats-grid" style="margin-bottom: 1.5rem;">
+                                <div class="stat-card">
+                                    <div class="stat-number">32</div>
+                                    <div class="stat-label">Active Centers</div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-number">18</div>
+                                    <div class="stat-label">Provinces</div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-number">127K</div>
+                                    <div class="stat-label">Total Cases</div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-number">89%</div>
+                                    <div class="stat-label">Coverage</div>
+                                </div>
+                            </div>
+
+                            <!-- Region Details -->
+                            <div class="card">
+                                <div class="card-title">📊 Regional Breakdown</div>
+                                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem;">
+                                    <div>
+                                        <h4 style="margin-bottom: 1rem; color: #10b981;">Top 5 Regions</h4>
+                                        <div style="space-y: 0.5rem;">
+                                            <div style="display: flex; justify-content: space-between; padding: 0.75rem; background: #f0fdf4; border-radius: 6px;">
+                                                <span>Jakarta</span>
+                                                <strong>45,231</strong>
+                                            </div>
+                                            <div style="display: flex; justify-content: space-between; padding: 0.75rem; background: #f0fdf4; border-radius: 6px;">
+                                                <span>West Java</span>
+                                                <strong>32,145</strong>
+                                            </div>
+                                            <div style="display: flex; justify-content: space-between; padding: 0.75rem; background: #f0fdf4; border-radius: 6px;">
+                                                <span>East Java</span>
+                                                <strong>28,967</strong>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <h4 style="margin-bottom: 1rem; color: #10b981;">Tumor Distribution</h4>
+                                        <div style="margin-bottom: 1rem;">
+                                            <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                                                <span>Breast Cancer</span>
+                                                <span style="font-weight: 600;">34%</span>
+                                            </div>
+                                            <div class="progress-bar">
+                                                <div class="progress-fill" style="width: 34%;"></div>
+                                            </div>
+                                        </div>
+                                        <div style="margin-bottom: 1rem;">
+                                            <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                                                <span>Lung Cancer</span>
+                                                <span style="font-weight: 600;">28%</span>
+                                            </div>
+                                            <div class="progress-bar">
+                                                <div class="progress-fill" style="width: 28%;"></div>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                                                <span>Colorectal</span>
+                                                <span style="font-weight: 600;">18%</span>
+                                            </div>
+                                            <div class="progress-bar">
+                                                <div class="progress-fill" style="width: 18%;"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Direction 3: Research-Focused -->
+                <div class="direction-card direction-3">
+                    <div class="direction-header">
+                        Direction 3: Research Hub
+                        <div class="direction-subtitle">Study-focused, collaboration tools</div>
+                    </div>
+                    <div class="direction-content">
+                        <div style="padding: 2rem;">
+                            <h2 style="margin-bottom: 1.5rem;">🔬 Research Center</h2>
+
+                            <!-- Active Studies -->
+                            <div class="card" style="margin-bottom: 1.5rem;">
+                                <div class="card-title">📚 Active Research Studies</div>
+                                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem;">
+                                    <div style="border: 1px solid #e5e7eb; border-radius: 8px; padding: 1rem;">
+                                        <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem;">
+                                            <div>
+                                                <div style="font-weight: 600; color: #10b981;">Breast Cancer Patterns</div>
+                                                <div style="font-size: 0.875rem; color: #64748b;">Multi-center analysis</div>
+                                            </div>
+                                            <span class="badge badge-success">Active</span>
+                                        </div>
+                                        <div style="font-size: 0.875rem; color: #64748b; margin-bottom: 1rem;">
+                                            Analyzing treatment response patterns across 15 centers
+                                        </div>
+                                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                                            <div style="font-size: 0.75rem; color: #64748b;">
+                                                <div>👥 12 Researchers</div>
+                                                <div>📊 45K Records</div>
+                                            </div>
+                                            <button class="btn btn-primary" style="font-size: 0.75rem;">View Study</button>
+                                        </div>
+                                    </div>
+
+                                    <div style="border: 1px solid #e5e7eb; border-radius: 8px; padding: 1rem;">
+                                        <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem;">
+                                            <div>
+                                                <div style="font-weight: 600; color: #10b981;">Regional Disparities</div>
+                                                <div style="font-size: 0.875rem; color: #64748b;">Geographic analysis</div>
+                                            </div>
+                                            <span class="badge badge-warning">Review</span>
+                                        </div>
+                                        <div style="font-size: 0.875rem; color: #64748b; margin-bottom: 1rem;">
+                                            Investigating access-to-care disparities in rural vs urban areas
+                                        </div>
+                                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                                            <div style="font-size: 0.75rem; color: #64748b;">
+                                                <div>👥 8 Researchers</div>
+                                                <div>📊 89K Records</div>
+                                            </div>
+                                            <button class="btn btn-primary" style="font-size: 0.75rem;">View Study</button>
+                                        </div>
+                                    </div>
+
+                                    <div style="border: 1px solid #e5e7eb; border-radius: 8px; padding: 1rem;">
+                                        <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem;">
+                                            <div>
+                                                <div style="font-weight: 600; color: #10b981;">Treatment Outcomes</div>
+                                                <div style="font-size: 0.875rem; color: #64748b;">5-year survival study</div>
+                                            </div>
+                                            <span class="badge badge-success">Active</span>
+                                        </div>
+                                        <div style="font-size: 0.875rem; color: #64748b; margin-bottom: 1rem;">
+                                            Longitudinal analysis of treatment effectiveness across protocols
+                                        </div>
+                                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                                            <div style="font-size: 0.75rem; color: #64748b;">
+                                                <div>👥 15 Researchers</div>
+                                                <div>📊 23K Records</div>
+                                            </div>
+                                            <button class="btn btn-primary" style="font-size: 0.75rem;">View Study</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div style="text-align: center; margin-top: 1rem;">
+                                    <button class="btn btn-secondary">➕ Create New Study</button>
+                                </div>
+                            </div>
+
+                            <!-- Data Requests -->
+                            <div class="card">
+                                <div class="card-title">📊 My Data Requests</div>
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Dataset</th>
+                                            <th>Purpose</th>
+                                            <th>Status</th>
+                                            <th>Submitted</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Lung Cancer Registry</td>
+                                            <td>Treatment Analysis</td>
+                                            <td><span class="badge badge-success">Approved</span></td>
+                                            <td>2025-11-15</td>
+                                            <td><button class="btn btn-primary" style="font-size: 0.75rem;">Download</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Pediatric Cases</td>
+                                            <td>Survival Study</td>
+                                            <td><span class="badge badge-warning">Under Review</span></td>
+                                            <td>2025-11-17</td>
+                                            <td><button class="btn btn-secondary" style="font-size: 0.75rem;">Check Status</button></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Directions 4-6 for Research -->
+                <div class="direction-card direction-4">
+                    <div class="direction-header">
+                        Direction 4: Quick Insights
+                        <div class="direction-subtitle">Fast access, dashboard-style</div>
+                    </div>
+                    <div class="direction-content">
+                        <!-- Research quick access interface -->
+                    </div>
+                </div>
+
+                <div class="direction-card direction-5">
+                    <div class="direction-header">
+                        Direction 5: Advanced Analytics
+                        <div class="direction-subtitle">Power tools, expert users</div>
+                    </div>
+                    <div class="direction-content">
+                        <!-- Advanced analytics interface -->
+                    </div>
+                </div>
+
+                <div class="direction-card direction-6">
+                    <div class="direction-header">
+                        Direction 6: Collaboration Hub
+                        <div class="direction-subtitle">Team-focused, social features</div>
+                    </div>
+                    <div class="direction-content">
+                        <!-- Collaboration features -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Approval Workflow Screen -->
+    <div id="approval" class="screen-container">
+        <div class="main-content">
+            <div class="direction-grid">
+                <!-- Direction 1: Approval Dashboard -->
+                <div class="direction-card direction-1">
+                    <div class="direction-header">
+                        Direction 1: Approval Dashboard
+                        <div class="direction-subtitle">Clear workflows, status tracking</div>
+                    </div>
+                    <div class="direction-content">
+                        <div class="dashboard-layout">
+                            <div class="sidebar">
+                                <div style="font-weight: 600; margin-bottom: 1rem; color: #10b981;">⚖️ Approvals</div>
+                                <a href="#" class="nav-item active">Pending Requests</a>
+                                <a href="#" class="nav-item">My Approvals</a>
+                                <a href="#" class="nav-item">All Requests</a>
+                                <div style="font-weight: 600; margin: 1.5rem 0 1rem; color: #10b981;">📊 Status</div>
+                                <a href="#" class="nav-item">5 Pending</a>
+                                <a href="#" class="nav-item">12 Approved</a>
+                                <a href="#" class="nav-item">3 Rejected</a>
+                            </div>
+                            <div class="main-content-area">
+                                <h2 style="margin-bottom: 1.5rem;">✅ Data Access Approvals</h2>
+
+                                <div class="stats-grid" style="margin-bottom: 1.5rem;">
+                                    <div class="stat-card">
+                                        <div class="stat-number">5</div>
+                                        <div class="stat-label">Pending Review</div>
+                                    </div>
+                                    <div class="stat-card">
+                                        <div class="stat-number">12</div>
+                                        <div class="stat-label">Approved</div>
+                                    </div>
+                                    <div class="stat-card">
+                                        <div class="stat-number">3</div>
+                                        <div class="stat-label">Rejected</div>
+                                    </div>
+                                    <div class="stat-card">
+                                        <div class="stat-number">48h</div>
+                                        <div class="stat-label">Avg Time</div>
+                                    </div>
+                                </div>
+
+                                <div class="card">
+                                    <div class="card-title">📋 Pending Requests</div>
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>Researcher</th>
+                                                <th>Dataset</th>
+                                                <th>Purpose</th>
+                                                <th>Submitted</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td><strong>Dr. Sarah Chen</strong></td>
+                                                <td>Breast Cancer 2019-2024</td>
+                                                <td>Treatment efficacy study</td>
+                                                <td>2025-11-15</td>
+                                                <td>
+                                                    <button class="btn btn-primary" style="font-size: 0.75rem; margin-right: 0.5rem;">✅ Approve</button>
+                                                    <button class="btn btn-secondary" style="font-size: 0.75rem;">❌ Reject</button>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Dr. Ahmad Rahman</strong></td>
+                                                <td>Regional Disparities</td>
+                                                <td>Healthcare access analysis</td>
+                                                <td>2025-11-16</td>
+                                                <td>
+                                                    <button class="btn btn-primary" style="font-size: 0.75rem; margin-right: 0.5rem;">✅ Approve</button>
+                                                    <button class="btn btn-secondary" style="font-size: 0.75rem;">❌ Reject</button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Direction 2: Workflow-Focused -->
+                <div class="direction-card direction-2">
+                    <div class="direction-header">
+                        Direction 2: Workflow Manager
+                        <div class="direction-subtitle">Step-by-step approval process</div>
+                    </div>
+                    <div class="direction-content">
+                        <!-- Workflow-focused approval interface -->
+                    </div>
+                </div>
+
+                <!-- Direction 3: Quick Review -->
+                <div class="direction-card direction-3">
+                    <div class="direction-header">
+                        Direction 3: Quick Review
+                        <div class="direction-subtitle">Rapid decision-making tools</div>
+                    </div>
+                    <div class="direction-content">
+                        <!-- Quick review interface -->
+                    </div>
+                </div>
+
+                <!-- Directions 4-6 for Approval -->
+                <div class="direction-card direction-4">
+                    <div class="direction-header">
+                        Direction 4: Compliance-Focused
+                        <div class="direction-subtitle">Privacy-first, security checks</div>
+                    </div>
+                    <div class="direction-content">
+                        <!-- Compliance-focused interface -->
+                    </div>
+                </div>
+
+                <div class="direction-card direction-5">
+                    <div class="direction-header">
+                        Direction 5: Batch Operations
+                        <div class="direction-subtitle">Bulk approval, efficiency tools</div>
+                    </div>
+                    <div class="direction-content">
+                        <!-- Batch operations interface -->
+                    </div>
+                </div>
+
+                <div class="direction-card direction-6">
+                    <div class="direction-header">
+                        Direction 6: Audit Trail
+                        <div class="direction-subtitle">Complete audit, compliance tracking</div>
+                    </div>
+                    <div class="direction-content">
+                        <!-- Audit trail interface -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Leadership Dashboard Screen -->
+    <div id="leadership" class="screen-container">
+        <div class="main-content">
+            <div class="direction-grid">
+                <!-- Direction 1: Strategic Overview -->
+                <div class="direction-card direction-1">
+                    <div class="direction-header">
+                        Direction 1: Strategic Overview
+                        <div class="direction-subtitle">High-level insights, decision support</div>
+                    </div>
+                    <div class="direction-content">
+                        <div class="dashboard-layout">
+                            <div class="sidebar">
+                                <div style="font-weight: 600; margin-bottom: 1rem; color: #10b981;">📊 Intelligence</div>
+                                <a href="#" class="nav-item active">National Overview</a>
+                                <a href="#" class="nav-item">Regional Analysis</a>
+                                <a href="#" class="nav-item">Trend Analysis</a>
+                                <a href="#" class="nav-item">Impact Reports</a>
+                                <div style="font-weight: 600; margin: 1.5rem 0 1rem; color: #10b981;">⚡ Quick Actions</div>
+                                <a href="#" class="nav-item">Generate Report</a>
+                                <a href="#" class="nav-item">Export Data</a>
+                                <a href="#" class="nav-item">Schedule Briefing</a>
+                            </div>
+                            <div class="main-content-area">
+                                <h2 style="margin-bottom: 1.5rem;">🏥 National Cancer Intelligence Dashboard</h2>
+
+                                <div class="stats-grid" style="margin-bottom: 2rem;">
+                                    <div class="stat-card">
+                                        <div class="stat-number">127,543</div>
+                                        <div class="stat-label">Total Cases</div>
+                                    </div>
+                                    <div class="stat-card">
+                                        <div class="stat-number">32</div>
+                                        <div class="stat-label">Active Centers</div>
+                                    </div>
+                                    <div class="stat-card">
+                                        <div class="stat-number">89%</div>
+                                        <div class="stat-label">Data Quality</div>
+                                    </div>
+                                    <div class="stat-card">
+                                        <div class="stat-number">+15%</div>
+                                        <div class="stat-label">Growth Rate</div>
+                                    </div>
+                                </div>
+
+                                <!-- Trend Visualization -->
+                                <div class="card" style="margin-bottom: 1.5rem;">
+                                    <div class="card-title">📈 Cancer Trend Analysis</div>
+                                    <div style="height: 300px; background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%); display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
+                                        <div style="text-align: center;">
+                                            <div style="font-size: 2rem; margin-bottom: 0.5rem;">📊</div>
+                                            <div style="font-weight: 600; font-size: 1rem;">Trend Visualization</div>
+                                            <div style="font-size: 0.875rem; color: #64748b;">Interactive chart showing cancer patterns</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Regional Performance -->
+                                <div class="card">
+                                    <div class="card-title">🗺️ Regional Performance Metrics</div>
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>Region</th>
+                                                <th>Cases</th>
+                                                <th>Quality</th>
+                                                <th>Growth</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td><strong>Jakarta</strong></td>
+                                                <td>45,231</td>
+                                                <td><span class="badge badge-success">95%</span></td>
+                                                <td>↑ 12%</td>
+                                                <td><span class="badge badge-success">Excellent</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>West Java</strong></td>
+                                                <td>32,145</td>
+                                                <td><span class="badge badge-success">92%</span></td>
+                                                <td>↑ 8%</td>
+                                                <td><span class="badge badge-success">Good</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>East Java</strong></td>
+                                                <td>28,967</td>
+                                                <td><span class="badge badge-warning">87%</span></td>
+                                                <td>↑ 5%</td>
+                                                <td><span class="badge badge-warning">Needs Attention</span></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Direction 2: Policy-Focused -->
+                <div class="direction-card direction-2">
+                    <div class="direction-header">
+                        Direction 2: Policy Dashboard
+                        <div class="direction-subtitle">Evidence-based policy support tools</div>
+                    </div>
+                    <div class="direction-content">
+                        <!-- Policy-focused dashboard -->
+                    </div>
+                </div>
+
+                <!-- Direction 3: Impact Metrics -->
+                <div class="direction-card direction-3">
+                    <div class="direction-header">
+                        Direction 3: Impact Metrics
+                        <div class="direction-subtitle">Outcomes, ROI, health impact</div>
+                    </div>
+                    <div class="direction-content">
+                        <!-- Impact metrics interface -->
+                    </div>
+                </div>
+
+                <!-- Directions 4-6 for Leadership -->
+                <div class="direction-card direction-4">
+                    <div class="direction-header">
+                        Direction 4: International View
+                        <div class="direction-subtitle">Global comparison, WHO standards</div>
+                    </div>
+                    <div class="direction-content">
+                        <!-- International comparison interface -->
+                    </div>
+                </div>
+
+                <div class="direction-card direction-5">
+                    <div class="direction-header">
+                        Direction 5: Predictive Analytics
+                        <div class="direction-subtitle">Forecasting, trend prediction</div>
+                    </div>
+                    <div class="direction-content">
+                        <!-- Predictive analytics interface -->
+                    </div>
+                </div>
+
+                <div class="direction-card direction-6">
+                    <div class="direction-header">
+                        Direction 6: Executive Briefing
+                        <div class="direction-subtitle">C-level insights, board-ready reports</div>
+                    </div>
+                    <div class="direction-content">
+                        <!-- Executive briefing interface -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Action Button -->
+    <div class="floating-action" onclick="showHelp()">
+        <span>?</span>
+    </div>
+
+    <script>
+        let currentScreen = 'data-entry';
+        let currentDirection = 1;
+
+        function showScreen(screenName) {
+            // Hide all screens
+            document.querySelectorAll('.screen-container').forEach(screen => {
+                screen.classList.remove('active');
+            });
+
+            // Show selected screen
+            document.getElementById(screenName).classList.add('active');
+
+            // Update nav buttons
+            document.querySelectorAll('.screen-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            currentScreen = screenName;
+        }
+
+        function showDirection(direction) {
+            // Update direction buttons
+            document.querySelectorAll('.direction-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            // Hide all directions in current screen
+            const currentScreenElement = document.getElementById(currentScreen);
+            currentScreenElement.querySelectorAll('.direction-card').forEach(card => {
+                card.style.display = 'none';
+            });
+
+            // Show selected direction
+            const directions = currentScreenElement.querySelectorAll('.direction-card');
+            if (directions[direction - 1]) {
+                directions[direction - 1].style.display = 'block';
+            }
+
+            currentDirection = direction;
+        }
+
+        function showHelp() {
+            alert(`🎨 INAMSOS Design Explorer\n\nNavigation:\n• Click screen buttons to switch between Data Entry, Research, Approval, and Leadership interfaces\n• Click direction buttons to explore different design approaches (1-6)\n• Hover and click interactive elements to see behaviors\n\nScreens:\n• Data Entry: WhatsApp-inspired medical forms\n• Research: Geographic visualization and dataset discovery\n• Approval: Workflow management and compliance\n• Leadership: Strategic intelligence and policy insights\n\nDesign Directions:\n1. Classic Medical: Traditional healthcare interface\n2. Minimal Modern: Clean, spacious design\n3. Card-Based: Modular, scannable layout\n4. Conversational: WhatsApp-style step-by-step\n5. Data-Centric: Table-focused, information-rich\n6. Workflow-Oriented: Guided process flows\n\nShortcuts:\n• Press 1-6 to quickly switch directions\n• Click ? button anytime for help`);
+        }
+
+        // Initialize first direction as visible
+        document.addEventListener('DOMContentLoaded', function() {
+            showDirection(1);
+        });
+
+        // Add keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            if (e.key >= '1' && e.key <= '6') {
+                const event = { target: document.querySelectorAll('.direction-btn')[parseInt(e.key) - 1] };
+                if (event.target) {
+                    showDirection(parseInt(e.key));
+                }
+            }
+        });
+
+        // Add some interactivity to elements
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('btn')) {
+                e.target.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    e.target.style.transform = '';
+                }, 100);
+            }
+        });
+    </script>
+</body>
+</html>

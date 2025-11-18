@@ -1,0 +1,129 @@
+# BMad Method Workflow Status
+# Project: inamsos - Database Tumor Nasional
+# Generated: 2025-11-17
+# Track: bmad-method
+# Field Type: greenfield
+
+project:
+  name: inamsos
+  description: Database Tumor Nasional untuk kolegium Indonesia
+  user_name: Yoppi
+  generated: 2025-11-17
+  track: bmad-method
+  field_type: greenfield
+  communication_language: Indonesia
+  document_output_language: Indonesia
+  user_skill_level: intermediate
+
+discovery_workflows:
+  brainstorm_requested: true
+  research_requested: true
+  product_brief_requested: true
+
+workflow_path:
+  method_name: "BMad Method"
+  track: "bmad-method"
+  field_type: "greenfield"
+  description: "Complete product and system design methodology for greenfield projects"
+
+phases:
+  - phase: 0
+    name: "Discovery (Selected)"
+    status: pending
+    workflows:
+      - id: "brainstorm-project"
+        name: "Brainstorm Project"
+        agent: "analyst"
+        command: "brainstorm-project"
+        status: "/home/yopi/Projects/inamsos/docs/bmm-brainstorming-session-2025-11-17.md"
+        completed: "2025-11-17"
+        included_by: "user_choice"
+
+      - id: "research"
+        name: "Research"
+        agent: "analyst"
+        command: "research"
+        status: pending
+        included_by: "user_choice"
+
+      - id: "product-brief"
+        name: "Product Brief"
+        agent: "analyst"
+        command: "product-brief"
+        status: "/home/yopi/Projects/inamsos/docs/bmm-product-brief-inamsos-2025-11-17.md"
+        completed: "2025-11-17"
+        included_by: "user_choice"
+
+  - phase: 1
+    name: "Planning"
+    status: in_progress
+    workflows:
+      - id: "prd"
+        name: "Product Requirements Document"
+        agent: "pm"
+        command: "prd"
+        status: "/home/yopi/Projects/inamsos/docs/prd.md"
+        completed: "2025-11-17"
+        required: true
+
+      - id: "create-design"
+        name: "UX Design"
+        agent: "ux-designer"
+        command: "create-design"
+        status: "/home/yopi/Projects/inamsos/docs/ux-design-specification.md"
+        completed: "2025-11-17"
+        conditional: "if_has_ui"
+
+      - id: "create-epics-and-stories"
+        name: "Create Epics and Stories"
+        agent: "pm"
+        command: "create-epics-and-stories"
+        status: "/home/yopi/Projects/inamsos/docs/epics.md"
+        completed: "2025-11-17"
+        required: true
+
+  - phase: 2
+    name: "Solutioning"
+    status: completed
+    workflows:
+      - id: "create-architecture"
+        name: "Create Architecture"
+        agent: "architect"
+        command: "architecture"
+        status: "/home/yopi/Projects/inamsos/docs/architecture.md"
+        completed: "2025-11-17"
+        required: true
+
+      - id: "test-design"
+        name: "Test Design"
+        agent: "tea"
+        command: "test-design"
+        status: "/home/yopi/Projects/inamsos/docs/test-design-system.md"
+        completed: "2025-11-18"
+        recommended: true
+
+      - id: "implementation-readiness"
+        name: "Implementation Readiness"
+        agent: "architect"
+        command: "implementation-readiness"
+        status: "/home/yopi/Projects/inamsos/docs/implementation-readiness-report-2025-11-18.md"
+        completed: "2025-11-18"
+        required: true
+
+  - phase: 3
+    name: "Implementation"
+    status: in_progress
+    workflows:
+      - id: "sprint-planning"
+        name: "Sprint Planning"
+        agent: "sm"
+        command: "sprint-planning"
+        status: "/home/yopi/Projects/inamsos/docs/sprint-plan.md"
+        completed: "2025-11-17"
+        required: true
+
+current_status:
+  phase: 3
+  next_workflow: "IMPLEMENTATION"
+  next_agent: "dev"
+  next_command: "START DEVELOPMENT"

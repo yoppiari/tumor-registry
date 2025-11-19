@@ -1,7 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
-import { PatientProvider } from '@/contexts/PatientContext';
+import { usePatient, PatientProvider } from '@/contexts/PatientContext';
 import { Patient } from '@/types/patient';
 import PatientSearch from '@/components/patients/PatientSearch';
 import PatientList from '@/components/patients/PatientList';
@@ -9,26 +8,29 @@ import PatientDetail from '@/components/patients/PatientDetail';
 import PatientChatEntry from '@/components/patients/PatientChatEntry';
 
 function PatientManagementContent() {
-  const [patients, setPatients] = useState<Patient[]>([]);
-  const [selectedPatient, setSelectedPatient] = useState<Patient | null>(null);
+  const {
+    patients,
+    currentPatient,
+    isLoading,
+    fetchPatients,
+    selectPatient,
+    setCurrentPatient
+  } = usePatient();
+
   const [showChatEntry, setShowChatEntry] = useState(false);
-  const [loading, setLoading] = useState(true);
 
   const handlePatientsFound = (foundPatients: Patient[]) => {
-    setPatients(foundPatients);
-    if (selectedPatient && !foundPatients.find(p => p.id === selectedPatient.id)) {
-      setSelectedPatient(null);
-    }
+    // Patients are already managed by the context
   };
 
   const handleSelectPatient = (patient: Patient) => {
-    setSelectedPatient(patient);
+    selectPatient(patient);
     setShowChatEntry(false);
   };
 
   const handleShowChatEntry = () => {
     setShowChatEntry(true);
-    setSelectedPatient(null);
+    setCurrentPatient(null);
   };
 
   const handleShowListView = () => {
@@ -98,15 +100,15 @@ function PatientManagementContent() {
               <PatientList
                 patients={patients}
                 onSelectPatient={handleSelectPatient}
-                isLoading={loading}
+                isLoading={isLoading}
               />
             </div>
 
             {/* Right Column - Patient Detail */}
             <div className="lg:col-span-1">
-              {selectedPatient ? (
+              {currentPatient ? (
                 <PatientDetail
-                  patient={selectedPatient}
+                  patient={currentPatient}
                   onEdit={(patient) => {
                     // Handle edit functionality
                     console.log('Edit patient:', patient);

@@ -25,12 +25,12 @@ export function Layout({ children }: LayoutProps) {
 
   const navigation = [
     { name: 'Dashboard', href: '/dashboard', icon: '📊' },
-    { name: 'Data Pasien', href: '/patients', icon: '👥', roles: ['data_entry', 'researcher', 'admin', 'national_stakeholder'] },
-    { name: 'Analisis', href: '/analytics', icon: '📈', roles: ['researcher', 'admin', 'national_stakeholder'] },
-    { name: 'Laporan', href: '/reports', icon: '📋', roles: ['researcher', 'admin', 'national_stakeholder'] },
-    { name: 'Pengguna', href: '/users', icon: '👤', roles: ['admin', 'national_stakeholder'] },
-    { name: 'Pusat Layanan', href: '/centers', icon: '🏥', roles: ['admin', 'national_stakeholder'] },
-    { name: 'Pengaturan', href: '/settings', icon: '⚙️' },
+    { name: 'Data Pasien', href: '/patients', icon: '👥', roles: ['data_entry', 'doctor', 'nurse', 'researcher', 'admin', 'super_admin'] },
+    { name: 'Penelitian', href: '/research', icon: '🔬', roles: ['researcher', 'admin', 'super_admin'] },
+    { name: 'Analytics', href: '/analytics', icon: '📈', roles: ['researcher', 'admin', 'super_admin', 'national_stakeholder'] },
+    { name: 'Administrasi', href: '/admin', icon: '⚙️', roles: ['admin', 'super_admin'] },
+    { name: 'Laporan', href: '/reports', icon: '📋', roles: ['researcher', 'admin', 'super_admin', 'national_stakeholder'] },
+    { name: 'Pengaturan', href: '/settings', icon: '🔧' },
   ];
 
   // Filter navigation items based on user role
@@ -42,8 +42,11 @@ export function Layout({ children }: LayoutProps) {
   const getRoleLabel = (role: string) => {
     const roleLabels: Record<string, string> = {
       data_entry: 'Data Entry',
+      doctor: 'Dokter',
+      nurse: 'Perawat',
       researcher: 'Peneliti',
       admin: 'Administrator',
+      super_admin: 'Super Admin',
       national_stakeholder: 'Stakeholder Nasional',
     };
     return roleLabels[role] || role;

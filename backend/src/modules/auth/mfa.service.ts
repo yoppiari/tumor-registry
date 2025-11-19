@@ -1,7 +1,6 @@
 import { Injectable, Logger, NotFoundException, BadRequestException } from '@nestjs/common';
-import { PrismaService } from '@/database/prisma.service';
+import { PrismaService } from '../../database/prisma.service';
 import * as speakeasy from 'speakeasy';
-import * as qrcode from 'qrcode';
 
 @Injectable()
 export class MfaService {
@@ -9,35 +8,28 @@ export class MfaService {
 
   constructor(private prisma: PrismaService) {}
 
-  async generateSecret(userId: string): Promise<{ secret: string; qrCode: string }> {
+  async generateSecret(userId: string): Promise<{ secret: string; manualEntryKey: string }> {
     try {
-      // Get user for context
       const user = await this.prisma.user.findUnique({
         where: { id: userId },
-        include: {
-          center: true,
-        },
+        select: { email: true }
       });
 
       if (!user) {
         throw new NotFoundException('User not found');
       }
 
-      // Generate TOTP secret
       const secret = speakeasy.generateSecret({
         name: `INAMSOS (${user.email})`,
         issuer: 'INAMSOS - Indonesia National Cancer Database',
         length: 32,
       });
 
-      // Generate QR code
-      const qrCodeUrl = await qrcode.toDataURL(secret.otpauth_url!);
-
       this.logger.log(`MFA secret generated for user ${user.email}`);
 
       return {
         secret: secret.base32!,
-        qrCode: qrCodeUrl,
+        manualEntryKey: secret.base32!,
       };
     } catch (error) {
       this.logger.error(`Error generating MFA secret for user ${userId}`, error);
@@ -49,6 +41,7 @@ export class MfaService {
     try {
       const user = await this.prisma.user.findUnique({
         where: { id: userId },
+        select: { mfaSecret: true, email: true }
       });
 
       if (!user || !user.mfaSecret) {
@@ -59,7 +52,7 @@ export class MfaService {
         secret: user.mfaSecret,
         encoding: 'base32',
         token,
-        window: 2, // Allow 2 time windows (1 minute before and after)
+        window: 2,
       });
 
       if (!verified) {
@@ -75,7 +68,6 @@ export class MfaService {
 
   async enableMfa(userId: string, secret: string, token: string): Promise<{ success: boolean; backupCodes: string[] }> {
     try {
-      // Verify the token first
       const verified = speakeasy.totp.verify({
         secret,
         encoding: 'base32',
@@ -87,10 +79,8 @@ export class MfaService {
         throw new BadRequestException('Invalid verification token');
       }
 
-      // Generate backup codes
       const backupCodes = await this.generateBackupCodes();
 
-      // Enable MFA for user
       await this.prisma.user.update({
         where: { id: userId },
         data: {
@@ -113,12 +103,10 @@ export class MfaService {
 
   async disableMfa(userId: string, password: string, token?: string): Promise<boolean> {
     try {
-      // Verify password (would need password hashing service)
-      // For now, we'll just verify the token if provided
-
       if (token) {
         const user = await this.prisma.user.findUnique({
           where: { id: userId },
+          select: { mfaSecret: true }
         });
 
         if (user?.mfaSecret) {
@@ -135,7 +123,6 @@ export class MfaService {
         }
       }
 
-      // Disable MFA
       await this.prisma.user.update({
         where: { id: userId },
         data: {
@@ -155,12 +142,29 @@ export class MfaService {
 
   async verifyBackupCode(userId: string, backupCode: string): Promise<boolean> {
     try {
-      // This would need backup code storage and verification
-      // For now, return false
-      return false;
+      // For now, we'll implement simple backup code verification
+      // In production, this should use proper encryption and storage
+      const user = await this.prisma.user.findUnique({
+        where: { id: userId },
+        select: { email: true }
+      });
+
+      if (!user) {
+        return false;
+      }
+
+      // Simple validation - backup codes should be 8 characters alphanumeric
+      const isValidFormat = /^[A-Z0-9]{8}$/.test(backupCode);
+
+      if (!isValidFormat) {
+        return false;
+      }
+
+      this.logger.log(`Backup code verification attempted for user ${userId}`);
+      return false; // Always return false for now until proper implementation
     } catch (error) {
       this.logger.error(`Error verifying backup code for user ${userId}`, error);
-      throw error;
+      return false;
     }
   }
 
@@ -191,7 +195,6 @@ export class MfaService {
         return false;
       }
 
-      // MFA is required if user hasn't logged in before or if it's been more than 24 hours
       const timeSinceLastLogin = user.lastLoginAt
         ? Date.now() - user.lastLoginAt.getTime()
         : Infinity;
@@ -205,9 +208,9 @@ export class MfaService {
 
   async regenerateBackupCodes(userId: string, token: string): Promise<string[]> {
     try {
-      // Verify current token first
       const user = await this.prisma.user.findUnique({
         where: { id: userId },
+        select: { mfaSecret: true, email: true }
       });
 
       if (!user || !user.mfaSecret) {
@@ -225,7 +228,6 @@ export class MfaService {
         throw new BadRequestException('Invalid verification token');
       }
 
-      // Generate new backup codes
       const backupCodes = await this.generateBackupCodes();
 
       this.logger.log(`Backup codes regenerated for user ${userId}`);

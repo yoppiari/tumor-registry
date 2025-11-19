@@ -1,204 +1,239 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
-import { DatabaseService } from '../../database/database.service';
+import { Injectable, NotFoundException, ConflictException } from '@nestjs/common';
+import { PrismaService } from '../../database/prisma.service';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UsersService {
-  constructor(private databaseService: DatabaseService) {}
+  constructor(private prisma: PrismaService) {}
 
-  async create(userData: any) {
-    const { passwordHash, role, centerId, ...userFields } = userData;
+  async create(userData: {
+    email: string;
+    name: string;
+    kolegiumId?: string;
+    passwordHash: string;
+    phone?: string;
+    nik?: string;
+    role?: string;
+    centerId?: string;
+  }) {
+    const { email, name, kolegiumId, passwordHash, phone, nik, role = 'STAFF', centerId } = userData;
+
+    // Check if user already exists
+    const existingUser = await this.prisma.user.findUnique({
+      where: { email },
+    });
+
+    if (existingUser) {
+      throw new ConflictException('User with this email already exists');
+    }
 
     // Get or create center
     let userCenterId = centerId;
     if (!centerId) {
       // Create default center for new users
-      const center = await this.databaseService.client.$queryRaw`
-        INSERT INTO system.centers (id, name, code, province, is_active, created_at, updated_at)
-        VALUES (
-          gen_random_uuid(),
-          'Default Center',
-          'DEFAULT',
-          'DKI Jakarta',
-          true,
-          NOW(),
-          NOW()
-        )
-        RETURNING id, name, code, province
-      `;
-      userCenterId = center[0]?.id;
+      const center = await this.prisma.center.create({
+        data: {
+          name: 'Default Center',
+          code: 'DEFAULT',
+          province: 'DKI Jakarta',
+        },
+      });
+      userCenterId = center.id;
+    }
+
+    // Get role
+    const userRole = await this.prisma.role.findUnique({
+      where: { code: role },
+    });
+
+    if (!userRole) {
+      throw new NotFoundException(`Role ${role} not found`);
     }
 
     // Create user
-    const user = await this.databaseService.client.$queryRaw`
-      INSERT INTO system.users (id, email, name, kolegium_id, password_hash, phone, nik, is_active, is_email_verified, center_id, created_at, updated_at)
-      VALUES (
-        gen_random_uuid(),
-        ${userData.email},
-        ${userData.name},
-        ${userData.kolegiumId},
-        ${passwordHash},
-        ${userData.phone || null},
-        ${userData.nik || null},
-        true,
-        false,
-        ${userCenterId},
-        NOW(),
-        NOW()
-      )
-      RETURNING id, email, name, kolegium_id, is_active, is_email_verified, center_id
-    `;
+    const user = await this.prisma.user.create({
+      data: {
+        email,
+        name,
+        kolegiumId,
+        passwordHash,
+        phone,
+        nik,
+        centerId: userCenterId,
+        userRoles: {
+          create: {
+            roleId: userRole.id,
+            isActive: true,
+          },
+        },
+      },
+      include: {
+        center: true,
+        userRoles: {
+          include: {
+            role: true,
+          },
+        },
+      },
+    });
 
-    const createdUser = user[0];
-
-    // Assign default role
-    await this.databaseService.client.$queryRaw`
-      INSERT INTO system.user_roles (id, user_id, role_id, is_active, created_at)
-      VALUES (
-        gen_random_uuid(),
-        ${createdUser.id},
-        (SELECT id FROM system.roles WHERE code = ${role}),
-        true,
-        NOW()
-      )
-    `;
-
-    return this.findById(createdUser.id);
+    return this.findById(user.id);
   }
 
   async findById(id: string) {
-    const users = await this.databaseService.client.$queryRaw`
-      SELECT
-        u.*,
-        c.name as center_name,
-        c.code as center_code,
-        r.name as role_name,
-        r.code as role_code
-      FROM system.users u
-      LEFT JOIN system.centers c ON u.center_id = c.id
-      LEFT JOIN system.user_roles ur ON u.id = ur.user_id
-      LEFT JOIN system.roles r ON ur.role_id = r.id
-      WHERE u.id = ${id} AND ur.is_active = true
-      LIMIT 1
-    `;
+    const user = await this.prisma.user.findUnique({
+      where: { id },
+      include: {
+        center: true,
+        userRoles: {
+          where: { isActive: true },
+          include: {
+            role: true,
+          },
+        },
+      },
+    });
 
-    return users[0] || null;
+    return user;
   }
 
   async findByEmail(email: string) {
-    const users = await this.databaseService.client.$queryRaw`
-      SELECT
-        u.*,
-        c.name as center_name,
-        r.name as role_name,
-        r.code as role_code
-      FROM system.users u
-      LEFT JOIN system.centers c ON u.center_id = c.id
-      LEFT JOIN system.user_roles ur ON u.id = ur.user_id
-      LEFT JOIN system.roles r ON ur.role_id = r.id
-      WHERE u.email = ${email} AND ur.is_active = true
-      LIMIT 1
-    `;
-
-    return users[0] || null;
-  }
-
-  async update(id: string, updateData: any) {
-    const updates = [];
-    const values = [];
-
-    Object.entries(updateData).forEach(([key, value]) => {
-      if (value !== undefined) {
-        updates.push(`${key} = $${updates.length + 1}`);
-        values.push(value);
-      }
+    const user = await this.prisma.user.findUnique({
+      where: { email },
+      include: {
+        center: true,
+        userRoles: {
+          where: { isActive: true },
+          include: {
+            role: true,
+          },
+        },
+      },
     });
 
-    if (updates.length === 0) {
-      return this.findById(id);
-    }
+    return user;
+  }
 
-    updates.push('updated_at = NOW()');
-    values.push(id);
+  async update(id: string, updateData: Partial<{
+    name: string;
+    phone: string;
+    nik: string;
+    isActive: boolean;
+    isEmailVerified: boolean;
+    mfaEnabled: boolean;
+    mfaSecret: string;
+    lastLoginAt: Date;
+  }>) {
+    const user = await this.prisma.user.update({
+      where: { id },
+      data: updateData,
+      include: {
+        center: true,
+        userRoles: {
+          where: { isActive: true },
+          include: {
+            role: true,
+          },
+        },
+      },
+    });
 
-    const query = `
-      UPDATE system.users
-      SET ${updates.join(', ')}
-      WHERE id = $${updates.length + 1}
-      RETURNING *
-    `;
-
-    const users = await this.databaseService.client.$queryRaw(query, ...values);
-    return users[0];
+    return user;
   }
 
   async getUserRole(userId: string) {
-    const roles = await this.databaseService.client.$queryRaw`
-      SELECT r.code as role_code, r.name as role_name
-      FROM system.roles r
-      JOIN system.user_roles ur ON r.id = ur.role_id
-      WHERE ur.user_id = ${userId} AND ur.is_active = true
-      LIMIT 1
-    `;
+    const userRole = await this.prisma.userRole.findFirst({
+      where: {
+        userId,
+        isActive: true,
+      },
+      include: {
+        role: true,
+      },
+    });
 
-    return roles[0]?.role_code || 'STAFF';
+    return userRole?.role.code || 'STAFF';
   }
 
   async findAll() {
-    const users = await this.databaseService.client.$queryRaw`
-      SELECT
-        u.id,
-        u.email,
-        u.name,
-        u.is_active,
-        u.is_email_verified,
-        u.created_at,
-        c.name as center_name,
-        r.name as role_name
-      FROM system.users u
-      LEFT JOIN system.centers c ON u.center_id = c.id
-      LEFT JOIN system.user_roles ur ON u.id = ur.user_id
-      LEFT JOIN system.roles r ON ur.role_id = r.id
-      WHERE ur.is_active = true
-      ORDER BY u.created_at DESC
-    `;
+    const users = await this.prisma.user.findMany({
+      select: {
+        id: true,
+        email: true,
+        name: true,
+        isActive: true,
+        isEmailVerified: true,
+        createdAt: true,
+        center: {
+          select: {
+            name: true,
+          },
+        },
+        userRoles: {
+          where: { isActive: true },
+          select: {
+            role: {
+              select: {
+                name: true,
+              },
+            },
+          },
+        },
+      },
+      orderBy: {
+        createdAt: 'desc',
+      },
+    });
 
     return users;
   }
 
   async updateRole(userId: string, roleCode: string) {
+    // Get new role
+    const newRole = await this.prisma.role.findUnique({
+      where: { code: roleCode },
+    });
+
+    if (!newRole) {
+      throw new NotFoundException(`Role ${roleCode} not found`);
+    }
+
     // Deactivate existing roles
-    await this.databaseService.client.$queryRaw`
-      UPDATE system.user_roles
-      SET is_active = false, updated_at = NOW()
-      WHERE user_id = ${userId}
-    `;
+    await this.prisma.userRole.updateMany({
+      where: { userId },
+      data: { isActive: false },
+    });
 
     // Assign new role
-    await this.databaseService.client.$queryRaw`
-      INSERT INTO system.user_roles (id, user_id, role_id, is_active, created_at)
-      SELECT
-        gen_random_uuid(),
-        ${userId},
-        r.id,
-        true,
-        NOW()
-      FROM system.roles r
-      WHERE r.code = ${roleCode}
-    `;
+    await this.prisma.userRole.create({
+      data: {
+        userId,
+        roleId: newRole.id,
+        isActive: true,
+      },
+    });
 
     // Log audit
-    await this.databaseService.client.$queryRaw`
-      INSERT INTO audit.audit_logs (id, user_id, action, resource, details, created_at)
-      VALUES (
-        gen_random_uuid(),
-        ${userId},
-        'ROLE_UPDATE',
-        'user',
-        jsonb_build_object('old_role', 'updated', 'new_role', ${roleCode}),
-        NOW()
-      )
-    `;
+    await this.prisma.auditLog.create({
+      data: {
+        userId,
+        action: 'ROLE_UPDATE',
+        resource: 'user',
+        details: {
+          old_role: 'updated',
+          new_role: roleCode,
+        },
+      },
+    });
 
     return this.findById(userId);
+  }
+
+  async validatePassword(plainPassword: string, hashedPassword: string): Promise<boolean> {
+    return bcrypt.compare(plainPassword, hashedPassword);
+  }
+
+  async hashPassword(plainPassword: string): Promise<string> {
+    return bcrypt.hash(plainPassword, 12);
   }
 }

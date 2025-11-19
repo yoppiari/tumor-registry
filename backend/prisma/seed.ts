@@ -350,12 +350,128 @@ async function seedDefaultCenter() {
   }
 }
 
+async function seedDemoUsers() {
+  console.log('👥 Creating demo users...');
+
+  try {
+    const defaultCenter = await prisma.center.findFirst({
+      where: { code: 'DEFAULT' }
+    });
+
+    if (!defaultCenter) {
+      throw new Error('Default center not found');
+    }
+
+    const demoUsers = [
+      {
+        email: 'admin@inamsos.go.id',
+        name: 'System Administrator',
+        password: 'admin123',
+        role: 'SYSTEM_ADMIN',
+        kolegiumId: 'ADMIN001',
+      },
+      {
+        email: 'national.admin@inamsos.go.id',
+        name: 'National Administrator',
+        password: 'national123',
+        role: 'NATIONAL_ADMIN',
+        kolegiumId: 'NATIONAL001',
+      },
+      {
+        email: 'center.admin@inamsos.go.id',
+        name: 'Center Administrator',
+        password: 'center123',
+        role: 'CENTER_ADMIN',
+        kolegiumId: 'CENTER001',
+      },
+      {
+        email: 'researcher@inamsos.go.id',
+        name: 'Cancer Researcher',
+        password: 'research123',
+        role: 'RESEARCHER',
+        kolegiumId: 'RESEARCH001',
+      },
+      {
+        email: 'medical.officer@inamsos.go.id',
+        name: 'Medical Officer',
+        password: 'medical123',
+        role: 'MEDICAL_OFFICER',
+        kolegiumId: 'MEDICAL001',
+      },
+      {
+        email: 'staff@inamsos.go.id',
+        name: 'Data Entry Staff',
+        password: 'staff123',
+        role: 'DATA_ENTRY',
+        kolegiumId: null,
+      },
+    ];
+
+    for (const demoUser of demoUsers) {
+      // Check if user already exists
+      const existingUser = await prisma.user.findUnique({
+        where: { email: demoUser.email }
+      });
+
+      if (existingUser) {
+        console.log(`✅ Demo user already exists: ${demoUser.email}`);
+        continue;
+      }
+
+      // Hash password
+      const passwordHash = await require('bcrypt').hash(demoUser.password, 12);
+
+      // Create user
+      const user = await prisma.user.create({
+        data: {
+          email: demoUser.email,
+          name: demoUser.name,
+          passwordHash,
+          kolegiumId: demoUser.kolegiumId,
+          isEmailVerified: true,
+          isActive: true,
+          centerId: defaultCenter.id,
+        },
+      });
+
+      // Assign role
+      if (demoUser.role) {
+        const role = await prisma.role.findUnique({ where: { code: demoUser.role } });
+        if (role) {
+          await prisma.userRole.create({
+            data: {
+              userId: user.id,
+              roleId: role.id,
+              isActive: true,
+            },
+          });
+        }
+      }
+
+      console.log(`✅ Demo user created: ${demoUser.email} (${demoUser.role})`);
+    }
+
+    console.log('\n📊 Demo Users Created:');
+    console.log('🔹 admin@inamsos.go.id / admin123 (System Admin)');
+    console.log('🔹 national.admin@inamsos.go.id / national123 (National Admin)');
+    console.log('🔹 center.admin@inamsos.go.id / center123 (Center Admin)');
+    console.log('🔹 researcher@inamsos.go.id / research123 (Researcher)');
+    console.log('🔹 medical.officer@inamsos.go.id / medical123 (Medical Officer)');
+    console.log('🔹 staff@inamsos.go.id / staff123 (Data Entry Staff)');
+
+  } catch (error) {
+    console.error('❌ Error creating demo users:', error);
+    throw error;
+  }
+}
+
 async function main() {
   try {
     console.log('🚀 Starting database seeding...');
 
     await seedDefaultCenter();
     await seedRolesAndPermissions();
+    await seedDemoUsers();
 
     console.log('\n✅ Database seeding completed successfully!');
 

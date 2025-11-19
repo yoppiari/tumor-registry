@@ -1,5 +1,5 @@
 import { Injectable, Logger, NotFoundException, ConflictException } from '@nestjs/common';
-import { PrismaService } from '@/database/prisma.service';
+import { PrismaService } from '../../database/prisma.service';
 import { Center } from '@prisma/client';
 
 @Injectable()

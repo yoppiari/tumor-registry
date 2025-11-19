@@ -420,7 +420,7 @@ export class PatientsService {
 
     return this.update(id, {
       isDeceased: true,
-      dateOfDeath,
+      dateOfDeath: dateOfDeath.toISOString(),
       causeOfDeath,
       treatmentStatus: 'deceased'
     }, updatedBy || 'system');

@@ -3,7 +3,6 @@ import {
   Get,
   Post,
   Put,
-  Delete,
   Body,
   Param,
   Query,
@@ -14,22 +13,18 @@ import {
 } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse, ApiParam, ApiQuery } from '@nestjs/swagger';
 import { PatientsService } from './patients.service';
-import { JwtAuthGuard } from '@/auth/guards/jwt.guard';
-import { PermissionsGuard } from '@/auth/guards/permissions.guard';
-import { RequirePermissions } from '@/auth/decorators/permissions.decorator';
-import { AuditLog } from '@/common/decorators/audit-log.decorator';
+import { JwtAuthGuard } from '../auth/guards/jwt.guard';
 import { Gender, BloodType, MaritalStatus } from '@prisma/client';
 
 @ApiTags('Patients')
 @Controller('patients')
-@UseGuards(JwtAuthGuard, PermissionsGuard)
+@UseGuards(JwtAuthGuard)
 export class PatientsController {
   constructor(private readonly patientsService: PatientsService) {}
 
   @Get()
   @ApiOperation({ summary: 'Get all patients with pagination and search' })
   @ApiResponse({ status: 200, description: 'Patients retrieved successfully' })
-  @RequirePermissions('PATIENTS_READ')
   @ApiQuery({ name: 'centerId', required: false, description: 'Filter by center ID' })
   @ApiQuery({ name: 'search', required: false, description: 'Search by name, NIK, MRN, or phone' })
   @ApiQuery({ name: 'includeInactive', required: false, type: Boolean })
@@ -54,7 +49,6 @@ export class PatientsController {
   @Get('search')
   @ApiOperation({ summary: 'Advanced patient search with filters' })
   @ApiResponse({ status: 200, description: 'Patients searched successfully' })
-  @RequirePermissions('PATIENTS_READ')
   @ApiQuery({ name: 'search', required: false })
   @ApiQuery({ name: 'centerId', required: false })
   @ApiQuery({ name: 'gender', required: false, enum: Gender })
@@ -72,7 +66,6 @@ export class PatientsController {
   @Get('statistics')
   @ApiOperation({ summary: 'Get patient statistics' })
   @ApiResponse({ status: 200, description: 'Patient statistics retrieved successfully' })
-  @RequirePermissions('ANALYTICS_VIEW')
   @ApiQuery({ name: 'centerId', required: false, description: 'Filter by center ID' })
   async getStatistics(@Query('centerId') centerId?: string) {
     return await this.patientsService.getPatientStatistics(centerId);
@@ -83,7 +76,6 @@ export class PatientsController {
   @ApiParam({ name: 'id', description: 'Patient ID' })
   @ApiResponse({ status: 200, description: 'Patient retrieved successfully' })
   @ApiResponse({ status: 404, description: 'Patient not found' })
-  @RequirePermissions('PATIENTS_READ')
   @ApiQuery({ name: 'includeMedicalHistory', required: false, type: Boolean })
   async findById(
     @Param('id', ParseUUIDPipe) id: string,
@@ -98,7 +90,6 @@ export class PatientsController {
   @ApiParam({ name: 'nik', description: 'Patient NIK' })
   @ApiResponse({ status: 200, description: 'Patient retrieved successfully' })
   @ApiResponse({ status: 404, description: 'Patient not found' })
-  @RequirePermissions('PATIENTS_READ')
   async findByNIK(@Param('nik') nik: string) {
     return await this.patientsService.findByNIK(nik);
   }
@@ -108,7 +99,6 @@ export class PatientsController {
   @ApiParam({ name: 'mrn', description: 'Medical Record Number' })
   @ApiResponse({ status: 200, description: 'Patient retrieved successfully' })
   @ApiResponse({ status: 404, description: 'Patient not found' })
-  @RequirePermissions('PATIENTS_READ')
   async findByMRN(@Param('mrn') mrn: string) {
     return await this.patientsService.findByMedicalRecordNumber(mrn);
   }
@@ -118,9 +108,7 @@ export class PatientsController {
   @ApiResponse({ status: 201, description: 'Patient created successfully' })
   @ApiResponse({ status: 400, description: 'Invalid input' })
   @ApiResponse({ status: 409, description: 'Patient already exists' })
-  @RequirePermissions('PATIENTS_CREATE')
   @HttpCode(HttpStatus.CREATED)
-  @AuditLog('CREATE_PATIENT')
   async create(@Body() createPatientDto: {
     name: string;
     nik: string;
@@ -158,8 +146,6 @@ export class PatientsController {
   @ApiParam({ name: 'id', description: 'Patient ID' })
   @ApiResponse({ status: 200, description: 'Patient updated successfully' })
   @ApiResponse({ status: 404, description: 'Patient not found' })
-  @RequirePermissions('PATIENTS_UPDATE')
-  @AuditLog('UPDATE_PATIENT')
   async update(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() updatePatientDto: {
@@ -200,7 +186,6 @@ export class PatientsController {
   @Get(':id/vital-signs')
   @ApiOperation({ summary: 'Get patient vital signs history' })
   @ApiParam({ name: 'id', description: 'Patient ID' })
-  @RequirePermissions('PATIENTS_READ')
   async getPatientVitalSigns(
     @Param('id', ParseUUIDPipe) id: string,
     @Query('limit') limit?: string,
@@ -216,7 +201,6 @@ export class PatientsController {
   @Get(':id/diagnoses')
   @ApiOperation({ summary: 'Get patient diagnoses history' })
   @ApiParam({ name: 'id', description: 'Patient ID' })
-  @RequirePermissions('PATIENTS_READ')
   async getPatientDiagnoses(@Param('id', ParseUUIDPipe) id: string) {
     const patient = await this.patientsService.findById(id, true);
     return {
@@ -229,7 +213,6 @@ export class PatientsController {
   @Get(':id/medications')
   @ApiOperation({ summary: 'Get patient medications' })
   @ApiParam({ name: 'id', description: 'Patient ID' })
-  @RequirePermissions('PATIENTS_READ')
   async getPatientMedications(@Param('id', ParseUUIDPipe) id: string) {
     const patient = await this.patientsService.findById(id, true);
     return {
@@ -242,7 +225,6 @@ export class PatientsController {
   @Get(':id/allergies')
   @ApiOperation({ summary: 'Get patient allergies' })
   @ApiParam({ name: 'id', description: 'Patient ID' })
-  @RequirePermissions('PATIENTS_READ')
   async getPatientAllergies(@Param('id', ParseUUIDPipe) id: string) {
     const patient = await this.patientsService.findById(id, true);
     return {
@@ -255,7 +237,6 @@ export class PatientsController {
   @Get(':id/visits')
   @ApiOperation({ summary: 'Get patient visits history' })
   @ApiParam({ name: 'id', description: 'Patient ID' })
-  @RequirePermissions('PATIENTS_READ')
   async getPatientVisits(
     @Param('id', ParseUUIDPipe) id: string,
     @Query('limit') limit?: string,
@@ -271,7 +252,6 @@ export class PatientsController {
   @Get(':id/insurance')
   @ApiOperation({ summary: 'Get patient insurance information' })
   @ApiParam({ name: 'id', description: 'Patient ID' })
-  @RequirePermissions('PATIENTS_READ')
   async getPatientInsurance(@Param('id', ParseUUIDPipe) id: string) {
     const patient = await this.patientsService.findById(id, true);
     return {

@@ -1,15 +1,12 @@
 import { Injectable, UnauthorizedException, ConflictException, BadRequestException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
 import { UsersService } from '../users/users.service';
-import { User } from '../users/entities/user.entity';
 import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
-import * as bcrypt from 'bcrypt';
 import { EmailService } from './email.service';
+import { PrismaService } from '../../database/prisma.service';
+import * as bcrypt from 'bcrypt';
 import { speakeasy } from 'speakeasy';
-import { DatabaseService } from '../../database/database.service';
 
 @Injectable()
 export class AuthService {
@@ -17,7 +14,7 @@ export class AuthService {
     private usersService: UsersService,
     private jwtService: JwtService,
     private emailService: EmailService,
-    private databaseService: DatabaseService,
+    private prisma: PrismaService,
   ) {}
 
   async register(registerDto: RegisterDto) {
@@ -184,7 +181,7 @@ export class AuthService {
         await this.usersService.update(user.id, { isEmailVerified: true });
 
         // Send welcome email
-        await this.emailService.sendWelcomeEmail(user.email, user.name, user.role);
+        await this.emailService.sendWelcomeEmail(user.email, user.name, await this.usersService.getUserRole(user.id));
 
         return { message: 'Email verified successfully' };
       } else {
@@ -198,7 +195,7 @@ export class AuthService {
   async refreshToken(refreshToken: string) {
     try {
       const payload = this.jwtService.verify(refreshToken, {
-        secret: process.env.JWT_REFRESH_SECRET,
+        secret: process.env.JWT_REFRESH_SECRET || process.env.JWT_SECRET,
       });
 
       const user = await this.usersService.findById(payload.userId);
@@ -219,7 +216,7 @@ export class AuthService {
     }
   }
 
-  private async validateUser(email: string, password: string): Promise<User> {
+  private async validateUser(email: string, password: string) {
     const user = await this.usersService.findByEmail(email);
     if (!user) {
       throw new UnauthorizedException('Invalid credentials');
@@ -240,7 +237,7 @@ export class AuthService {
     return user;
   }
 
-  private async generateTokens(user: User) {
+  private async generateTokens(user: any) {
     const payload = {
       sub: user.id,
       email: user.email,
@@ -249,7 +246,7 @@ export class AuthService {
 
     const accessToken = this.jwtService.sign(payload);
     const refreshToken = this.jwtService.sign(payload, {
-      secret: process.env.JWT_REFRESH_SECRET,
+      secret: process.env.JWT_REFRESH_SECRET || process.env.JWT_SECRET,
       expiresIn: '7d',
     });
 

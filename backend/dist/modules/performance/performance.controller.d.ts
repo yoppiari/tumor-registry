@@ -1,7 +1,16 @@
+import { Response } from 'express';
 import { PerformanceService } from './performance.service';
+import { RedisService } from './redis.service';
+import { PerformanceMonitorService } from './performance-monitor.service';
+import { StreamingService } from './streaming.service';
+import { DatabasePerformanceService } from './database-performance.service';
 export declare class PerformanceController {
     private readonly performanceService;
-    constructor(performanceService: PerformanceService);
+    private readonly redisService;
+    private readonly performanceMonitor;
+    private readonly streamingService;
+    private readonly databasePerformance;
+    constructor(performanceService: PerformanceService, redisService: RedisService, performanceMonitor: PerformanceMonitorService, streamingService: StreamingService, databasePerformance: DatabasePerformanceService);
     getDatabaseOptimizationRecommendations(): Promise<any>;
     getApplicationPerformanceMetrics(): Promise<any>;
     implementCachingStrategy(): Promise<any>;
@@ -110,4 +119,106 @@ export declare class PerformanceController {
         }[];
     }>;
     private calculateOptimizationProgress;
+    getCacheInfo(): Promise<{
+        connected: boolean;
+        memory: string;
+        keys: number;
+        hits: number;
+        misses: number;
+        hitRate: number;
+    }>;
+    clearCache(pattern?: string): Promise<{
+        message: string;
+        pattern: string;
+        deletedCount: number;
+    }>;
+    getPerformanceMetrics(queryName?: string): Promise<{
+        queryMetrics: import("./performance-monitor.service").QueryPerformanceData[] | {
+            queryName: string;
+            metrics: import("./performance-monitor.service").QueryPerformanceData[];
+        }[];
+        systemMetrics: import("./performance-monitor.service").PerformanceMetrics[];
+        summary: {
+            totalQueries: number;
+            avgQueryTime: number;
+            errorRate: number;
+            slowQueries: number;
+            memoryUsage: NodeJS.MemoryUsage;
+            timestamp: Date;
+        };
+        timestamp: Date;
+    }>;
+    getPrometheusMetrics(): Promise<string>;
+    getHealthStatus(): Promise<{
+        timestamp: Date;
+        status: string;
+        components: {
+            monitoring: string;
+            redis: string;
+            database: "healthy" | "unhealthy" | "degraded";
+            api: string;
+        };
+        alerts: string[];
+    }>;
+    streamPatients(res: Response, centerId?: string, format?: string): Promise<void>;
+    getDatabaseMetrics(): Promise<import("./database-performance.service").DatabasePerformanceMetrics>;
+    getSlowQueries(limit?: number): Promise<import("./database-performance.service").SlowQuery[]>;
+    getDatabaseRecommendations(): Promise<{
+        category: string;
+        priority: "low" | "medium" | "high" | "critical";
+        title: string;
+        description: string;
+        impact: string;
+        effort: string;
+        actions: string[];
+    }[]>;
+    triggerDatabaseMaintenance(maintenanceConfig: {
+        tasks: string[];
+        schedule?: string;
+    }): Promise<{
+        message: string;
+        tasks: string[];
+        scheduledAt: Date;
+        estimatedDuration: string;
+    }>;
+    getRealTimeAnalytics(): Promise<{
+        timestamp: Date;
+        responseTime: number;
+        performance: {
+            system: import("./performance-monitor.service").PerformanceMetrics[];
+            cache: {
+                connected: boolean;
+                memory: string;
+                keys: number;
+                hits: number;
+                misses: number;
+                hitRate: number;
+            };
+            queries: import("./performance-monitor.service").QueryPerformanceData[] | {
+                queryName: string;
+                metrics: import("./performance-monitor.service").QueryPerformanceData[];
+            }[];
+            database: import("./database-performance.service").DatabasePerformanceMetrics;
+        };
+        health: {
+            status: string;
+            score: number;
+        };
+    }>;
+    warmCache(warmConfig: {
+        dataTypes: string[];
+        centerId?: string;
+        timeRange?: string;
+    }): Promise<{
+        message: string;
+        entriesCount: number;
+        estimatedDuration: string;
+        dataTypes: string[];
+    }>;
+    getPerformanceAlerts(): Promise<{
+        timestamp: Date;
+        totalAlerts: number;
+        alerts: any[];
+    }>;
+    exportMetrics(format: string, hours: number, res: Response): Promise<void>;
 }

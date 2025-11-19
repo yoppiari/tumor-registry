@@ -1,0 +1,343 @@
+# Alert Rules for INAMSOS Tumor Registry
+# Production-grade alerting rules for critical system components
+
+groups:
+  - name: inamsos_alerts
+    rules:
+      # Application Health Alerts
+      - alert: ApplicationDown
+        expr: up{job="inamsos-backend"} == 0
+        for: 1m
+        labels:
+          severity: critical
+          service: backend
+          component: application
+        annotations:
+          summary: "INAMSOS Backend Application is Down"
+          description: "The INAMSOS backend application has been down for more than 1 minute. This affects all cancer registry operations."
+          runbook_url: "https://wiki.kemenkes.go.id/inamsos/runbooks/application-down"
+
+      - alert: HighErrorRate
+        expr: rate(http_requests_total{status=~"5.."}[5m]) > 0.1
+        for: 5m
+        labels:
+          severity: warning
+          service: backend
+          component: application
+        annotations:
+          summary: "High Error Rate in INAMSOS Application"
+          description: "The error rate is {{ $value }} errors per second over the last 5 minutes. This may indicate a critical issue in the application."
+
+      - alert: HighResponseTime
+        expr: histogram_quantile(0.95, rate(http_request_duration_seconds_bucket[5m])) > 2
+        for: 10m
+        labels:
+          severity: warning
+          service: backend
+          component: application
+        annotations:
+          summary: "High Response Time in INAMSOS Application"
+          description: "The 95th percentile response time is {{ $value }} seconds, which exceeds the acceptable threshold."
+
+      - alert: DatabaseConnectionFailure
+        expr: pg_up{job="postgres-exporter"} == 0
+        for: 1m
+        labels:
+          severity: critical
+          service: database
+          component: postgresql
+        annotations:
+          summary: "PostgreSQL Database Connection Failure"
+          description: "Cannot connect to the PostgreSQL database. This affects all data operations in the cancer registry."
+
+      - alert: DatabaseHighConnections
+        expr: pg_stat_activity_count > 80
+        for: 5m
+        labels:
+          severity: warning
+          service: database
+          component: postgresql
+        annotations:
+          summary: "High Database Connection Count"
+          description: "PostgreSQL has {{ $value }} active connections, which is close to the maximum limit."
+
+      - alert: DatabaseDiskSpaceHigh
+        expr: (pg_database_size_bytes / 1024 / 1024 / 1024) > 50
+        for: 15m
+        labels:
+          severity: warning
+          service: database
+          component: postgresql
+        annotations:
+          summary: "Database Disk Space Usage High"
+          description: "PostgreSQL database size is {{ $value }}GB. Consider archiving old data or increasing storage."
+
+      - alert: RedisDown
+        expr: up{job="redis-exporter"} == 0
+        for: 1m
+        labels:
+          severity: critical
+          service: cache
+          component: redis
+        annotations:
+          summary: "Redis Cache is Down"
+          description: "Redis cache service is not responding. This may affect application performance and session management."
+
+      - alert: RedisHighMemoryUsage
+        expr: (redis_memory_used_bytes / redis_memory_max_bytes) > 0.9
+        for: 10m
+        labels:
+          severity: warning
+          service: cache
+          component: redis
+        annotations:
+          summary: "Redis High Memory Usage"
+          description: "Redis memory usage is {{ $value | humanizePercentage }}. This may lead to performance degradation."
+
+      - alert: NginxDown
+        expr: up{job="nginx-exporter"} == 0
+        for: 1m
+        labels:
+          severity: critical
+          service: webserver
+          component: nginx
+        annotations:
+          summary: "Nginx Web Server is Down"
+          description: "Nginx reverse proxy is not responding. This affects all external access to the INAMSOS system."
+
+      - alert: HighCPUUsage
+        expr: 100 - (avg by(instance) (rate(node_cpu_seconds_total{mode="idle"}[5m])) * 100) > 80
+        for: 10m
+        labels:
+          severity: warning
+          service: system
+          component: cpu
+        annotations:
+          summary: "High CPU Usage"
+          description: "CPU usage is {{ $value }}% on {{ $labels.instance }}. This may indicate performance issues."
+
+      - alert: HighMemoryUsage
+        expr: (1 - (node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes)) * 100 > 85
+        for: 10m
+        labels:
+          severity: warning
+          service: system
+          component: memory
+        annotations:
+          summary: "High Memory Usage"
+          description: "Memory usage is {{ $value }}% on {{ $labels.instance }}. This may lead to performance degradation."
+
+      - alert: DiskSpaceLow
+        expr: (node_filesystem_avail_bytes / node_filesystem_size_bytes) * 100 < 10
+        for: 5m
+        labels:
+          severity: critical
+          service: system
+          component: disk
+        annotations:
+          summary: "Low Disk Space"
+          description: "Disk space is {{ $value }}% full on {{ $labels.instance }}:{{ $labels.mountpoint }}. Immediate attention required."
+
+      - alert: SSLCertificateExpiring
+        expr: probe_ssl_earliest_cert_expiry - time() < 86400 * 30
+        for: 1h
+        labels:
+          severity: warning
+          service: security
+          component: ssl
+        annotations:
+          summary: "SSL Certificate Expiring Soon"
+          description: "SSL certificate for {{ $labels.instance }} will expire in {{ $value | humanizeDuration }}. Please renew the certificate."
+
+      - alert: ContainerDown
+        expr: time() - container_start_time_seconds > 300
+        for: 1m
+        labels:
+          severity: critical
+          service: containers
+          component: docker
+        annotations:
+          summary: "Container Down"
+          description: "Container {{ $labels.name }} has been down for more than 5 minutes on {{ $labels.instance }}."
+
+      - alert: ContainerHighCPUUsage
+        expr: rate(container_cpu_usage_seconds_total{name!=""}[5m]) > 0.8
+        for: 10m
+        labels:
+          severity: warning
+          service: containers
+          component: docker
+        annotations:
+          summary: "Container High CPU Usage"
+          description: "Container {{ $labels.name }} is using {{ $value | humanizePercentage }} of CPU."
+
+      - alert: HighHTTPRate
+        expr: rate(http_requests_total[5m]) > 100
+        for: 5m
+        labels:
+          severity: warning
+          service: application
+          component: http
+        annotations:
+          summary: "High HTTP Request Rate"
+          description: "HTTP request rate is {{ $value }} requests/second. This may indicate unusual traffic patterns."
+
+      - alert: UnauthorizedAccessAttempts
+        expr: rate(http_requests_total{status="401"}[5m]) > 5
+        for: 2m
+        labels:
+          severity: warning
+          service: security
+          component: authentication
+        annotations:
+          summary: "High Number of Unauthorized Access Attempts"
+          description: "There are {{ $value }} unauthorized access attempts per second. This may indicate a security threat."
+
+      - alert: DataBackupFailed
+        expr: backup_success == 0
+        for: 1m
+        labels:
+          severity: critical
+          service: backup
+          component: database
+        annotations:
+          summary: "Database Backup Failed"
+          description: "The last database backup failed. This puts cancer registry data at risk."
+
+      - alert: PatientDataSyncFailure
+        expr: patient_sync_success == 0
+        for: 5m
+        labels:
+          severity: warning
+          service: application
+          component: data-sync
+        annotations:
+          summary: "Patient Data Synchronization Failed"
+          description: "Patient data synchronization has been failing for more than 5 minutes."
+
+      - alert: QueueLengthHigh
+        expr: bull_queue_length > 1000
+        for: 10m
+        labels:
+          severity: warning
+          service: application
+          component: queue
+        annotations:
+          summary: "High Queue Length"
+          description: "Queue length is {{ $value }} items. This may indicate processing bottlenecks."
+
+      - alert: MinIOStorageHigh
+        expr: (minio_disk_free_bytes / minio_disk_total_bytes) * 100 < 15
+        for: 5m
+        labels:
+          severity: warning
+          service: storage
+          component: minio
+        annotations:
+          summary: "MinIO Storage Low"
+          description: "MinIO storage has only {{ $value }}% free space available."
+
+      - alert: FileUploadFailure
+        expr: rate(file_upload_failures_total[5m]) > 0.1
+        for: 5m
+        labels:
+          severity: warning
+          service: application
+          component: file-upload
+        annotations:
+          summary: "High File Upload Failure Rate"
+          description: "File upload failure rate is {{ $value }} failures per second."
+
+      - alert: ReportGenerationFailure
+        expr: rate(report_generation_failures_total[5m]) > 0.05
+        for: 5m
+        labels:
+          severity: warning
+          service: application
+          component: reporting
+        annotations:
+          summary: "Report Generation Failures"
+          description: "Report generation failure rate is {{ $value }} failures per second."
+
+      - alert: DataQualityIssue
+        expr: data_quality_score < 0.95
+        for: 15m
+        labels:
+          severity: warning
+          service: application
+          component: data-quality
+        annotations:
+          summary: "Data Quality Issue Detected"
+          description: "Data quality score is {{ $value }}, which is below the acceptable threshold."
+
+  - name: infrastructure_alerts
+    rules:
+      # Infrastructure-specific alerts
+      - alert: NetworkLatencyHigh
+        expr: probe_duration_seconds > 0.5
+        for: 5m
+        labels:
+          severity: warning
+          service: network
+          component: connectivity
+        annotations:
+          summary: "High Network Latency"
+          description: "Network latency to {{ $labels.instance }} is {{ $value }} seconds."
+
+      - alert: DNSResolutionFailure
+        expr: probe_dns_lookup_time_seconds == 0
+        for: 2m
+        labels:
+          severity: critical
+          service: network
+          component: dns
+        annotations:
+          summary: "DNS Resolution Failure"
+          description: "DNS resolution failed for {{ $labels.instance }}."
+
+      - alert: ServiceDiscoveryFailure
+        expr: up == 0
+        for: 2m
+        labels:
+          severity: critical
+          service: infrastructure
+          component: service-discovery
+        annotations:
+          summary: "Service Discovery Failure"
+          description: "Cannot discover service {{ $labels.job }} on {{ $labels.instance }}."
+
+  - name: business_alerts
+    rules:
+      # Business-specific alerts for cancer registry
+      - alert: PatientRegistrationFailure
+        expr: rate(patient_registration_failures_total[5m]) > 0.1
+        for: 5m
+        labels:
+          severity: warning
+          service: business
+          component: patient-registration
+        annotations:
+          summary: "Patient Registration Failures"
+          description: "Patient registration failure rate is {{ $value }} failures per second."
+
+      - alert: CancerDataEntryFailure
+        expr: rate(cancer_data_entry_failures_total[5m]) > 0.05
+        for: 5m
+        labels:
+          severity: warning
+          service: business
+          component: data-entry
+        annotations:
+          summary: "Cancer Data Entry Failures"
+          description: "Cancer data entry failure rate is {{ $value }} failures per second."
+
+      - alert: ReportGenerationTimeout
+        expr: report_generation_duration_seconds > 300
+        for: 1m
+        labels:
+          severity: warning
+          service: business
+          component: reporting
+        annotations:
+          summary: "Report Generation Timeout"
+          description: "Report generation is taking more than 5 minutes to complete."

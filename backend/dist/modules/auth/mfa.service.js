@@ -14,7 +14,6 @@ exports.MfaService = void 0;
 const common_1 = require("@nestjs/common");
 const prisma_service_1 = require("../../database/prisma.service");
 const speakeasy = require("speakeasy");
-const qrcode = require("qrcode");
 let MfaService = MfaService_1 = class MfaService {
     constructor(prisma) {
         this.prisma = prisma;
@@ -24,9 +23,7 @@ let MfaService = MfaService_1 = class MfaService {
         try {
             const user = await this.prisma.user.findUnique({
                 where: { id: userId },
-                include: {
-                    center: true,
-                },
+                select: { email: true }
             });
             if (!user) {
                 throw new common_1.NotFoundException('User not found');
@@ -36,11 +33,10 @@ let MfaService = MfaService_1 = class MfaService {
                 issuer: 'INAMSOS - Indonesia National Cancer Database',
                 length: 32,
             });
-            const qrCodeUrl = await qrcode.toDataURL(secret.otpauth_url);
             this.logger.log(`MFA secret generated for user ${user.email}`);
             return {
                 secret: secret.base32,
-                qrCode: qrCodeUrl,
+                manualEntryKey: secret.base32,
             };
         }
         catch (error) {
@@ -52,6 +48,7 @@ let MfaService = MfaService_1 = class MfaService {
         try {
             const user = await this.prisma.user.findUnique({
                 where: { id: userId },
+                select: { mfaSecret: true, email: true }
             });
             if (!user || !user.mfaSecret) {
                 throw new common_1.NotFoundException('MFA not set up for user');
@@ -107,6 +104,7 @@ let MfaService = MfaService_1 = class MfaService {
             if (token) {
                 const user = await this.prisma.user.findUnique({
                     where: { id: userId },
+                    select: { mfaSecret: true }
                 });
                 if (user?.mfaSecret) {
                     const verified = speakeasy.totp.verify({
@@ -137,11 +135,23 @@ let MfaService = MfaService_1 = class MfaService {
     }
     async verifyBackupCode(userId, backupCode) {
         try {
+            const user = await this.prisma.user.findUnique({
+                where: { id: userId },
+                select: { email: true }
+            });
+            if (!user) {
+                return false;
+            }
+            const isValidFormat = /^[A-Z0-9]{8}$/.test(backupCode);
+            if (!isValidFormat) {
+                return false;
+            }
+            this.logger.log(`Backup code verification attempted for user ${userId}`);
             return false;
         }
         catch (error) {
             this.logger.error(`Error verifying backup code for user ${userId}`, error);
-            throw error;
+            return false;
         }
     }
     async generateBackupCodes() {
@@ -180,6 +190,7 @@ let MfaService = MfaService_1 = class MfaService {
         try {
             const user = await this.prisma.user.findUnique({
                 where: { id: userId },
+                select: { mfaSecret: true, email: true }
             });
             if (!user || !user.mfaSecret) {
                 throw new common_1.NotFoundException('MFA not set up for user');

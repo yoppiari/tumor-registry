@@ -1,26 +1,10 @@
 import { ResearchService } from './research.service';
-import { StudyType } from '@prisma/client';
+import { EnhancedCreateResearchRequestDto, EnhancedSearchResearchDto } from './dto/enhanced-research-request.dto';
 export declare class ResearchController {
     private readonly researchService;
     constructor(researchService: ResearchService);
-    createResearchRequest(createResearchRequestDto: {
-        title: string;
-        description: string;
-        principalInvestigatorId: string;
-        studyType: StudyType;
-        objectives: string;
-        methodology: string;
-        inclusionCriteria: string;
-        exclusionCriteria: string;
-        sampleSize: number;
-        duration: number;
-        requiresEthicsApproval: boolean;
-        dataRequested: string;
-        confidentialityRequirements?: string;
-        fundingSource?: string;
-        collaborators?: string;
-    }): Promise<any>;
-    searchResearchRequests(searchQuery: any): Promise<{
+    createResearchRequest(createResearchRequestDto: EnhancedCreateResearchRequestDto): Promise<any>;
+    searchResearchRequests(searchQuery: EnhancedSearchResearchDto): Promise<{
         requests: any;
         total: any;
         page: number;
@@ -60,7 +44,7 @@ export declare class ResearchController {
     }): Promise<{
         exportId: any;
         requestId: string;
-        format: "json" | "excel" | "csv";
+        format: "csv" | "excel" | "json";
         dataCount: number;
         status: string;
         exportDate: any;

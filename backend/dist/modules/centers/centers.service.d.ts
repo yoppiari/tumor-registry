@@ -1,4 +1,4 @@
-import { PrismaService } from '@/database/prisma.service';
+import { PrismaService } from '../../database/prisma.service';
 import { Center } from '@prisma/client';
 export declare class CentersService {
     private prisma;

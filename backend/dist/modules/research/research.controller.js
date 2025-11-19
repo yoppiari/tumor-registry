@@ -17,9 +17,11 @@ const common_1 = require("@nestjs/common");
 const swagger_1 = require("@nestjs/swagger");
 const research_service_1 = require("./research.service");
 const jwt_guard_1 = require("../auth/guards/jwt.guard");
-const permissions_guard_1 = require("@/auth/guards/permissions.guard");
-const permissions_decorator_1 = require("@/auth/decorators/permissions.decorator");
-const audit_log_decorator_1 = require("@/common/decorators/audit-log.decorator");
+const enhanced_permissions_guard_1 = require("../auth/guards/enhanced-permissions.guard");
+const enhanced_throttler_guard_1 = require("../auth/guards/enhanced-throttler.guard");
+const permissions_decorator_1 = require("../auth/decorators/permissions.decorator");
+const audit_log_decorator_1 = require("../../common/decorators/audit-log.decorator");
+const enhanced_research_request_dto_1 = require("./dto/enhanced-research-request.dto");
 const client_1 = require("@prisma/client");
 let ResearchController = class ResearchController {
     constructor(researchService) {
@@ -29,14 +31,7 @@ let ResearchController = class ResearchController {
         return await this.researchService.createResearchRequest(createResearchRequestDto);
     }
     async searchResearchRequests(searchQuery) {
-        const data = { ...searchQuery };
-        if (searchQuery.dateFrom) {
-            data.dateFrom = new Date(searchQuery.dateFrom);
-        }
-        if (searchQuery.dateTo) {
-            data.dateTo = new Date(searchQuery.dateTo);
-        }
-        return await this.researchService.getResearchRequests(data);
+        return await this.researchService.getResearchRequests(searchQuery);
     }
     async getResearchRequestById(requestId) {
         return await this.researchService.getResearchRequestById(requestId);
@@ -161,9 +156,9 @@ __decorate([
     (0, permissions_decorator_1.RequirePermissions)('RESEARCH_CREATE'),
     (0, common_1.HttpCode)(common_1.HttpStatus.CREATED),
     (0, audit_log_decorator_1.AuditLog)('CREATE_RESEARCH_REQUEST'),
-    __param(0, (0, common_1.Body)()),
+    __param(0, (0, common_1.Body)(new common_1.ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }))),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
+    __metadata("design:paramtypes", [enhanced_research_request_dto_1.EnhancedCreateResearchRequestDto]),
     __metadata("design:returntype", Promise)
 ], ResearchController.prototype, "createResearchRequest", null);
 __decorate([
@@ -179,9 +174,9 @@ __decorate([
     (0, swagger_1.ApiQuery)({ name: 'dateTo', required: false }),
     (0, swagger_1.ApiQuery)({ name: 'page', required: false, type: Number }),
     (0, swagger_1.ApiQuery)({ name: 'limit', required: false, type: Number }),
-    __param(0, (0, common_1.Query)()),
+    __param(0, (0, common_1.Query)(new common_1.ValidationPipe({ transform: true, whitelist: true }))),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
+    __metadata("design:paramtypes", [enhanced_research_request_dto_1.EnhancedSearchResearchDto]),
     __metadata("design:returntype", Promise)
 ], ResearchController.prototype, "searchResearchRequests", null);
 __decorate([
@@ -363,7 +358,7 @@ __decorate([
 exports.ResearchController = ResearchController = __decorate([
     (0, swagger_1.ApiTags)('Research Management'),
     (0, common_1.Controller)('research'),
-    (0, common_1.UseGuards)(jwt_guard_1.JwtAuthGuard, permissions_guard_1.PermissionsGuard),
+    (0, common_1.UseGuards)(jwt_guard_1.JwtAuthGuard, enhanced_permissions_guard_1.EnhancedPermissionsGuard, enhanced_throttler_guard_1.EnhancedThrottlerGuard),
     __metadata("design:paramtypes", [research_service_1.ResearchService])
 ], ResearchController);
 //# sourceMappingURL=research.controller.js.map

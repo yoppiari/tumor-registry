@@ -17,9 +17,6 @@ const common_1 = require("@nestjs/common");
 const swagger_1 = require("@nestjs/swagger");
 const patients_service_1 = require("./patients.service");
 const jwt_guard_1 = require("../auth/guards/jwt.guard");
-const permissions_guard_1 = require("@/auth/guards/permissions.guard");
-const permissions_decorator_1 = require("@/auth/decorators/permissions.decorator");
-const audit_log_decorator_1 = require("@/common/decorators/audit-log.decorator");
 const client_1 = require("@prisma/client");
 let PatientsController = class PatientsController {
     constructor(patientsService) {
@@ -111,7 +108,6 @@ __decorate([
     (0, common_1.Get)(),
     (0, swagger_1.ApiOperation)({ summary: 'Get all patients with pagination and search' }),
     (0, swagger_1.ApiResponse)({ status: 200, description: 'Patients retrieved successfully' }),
-    (0, permissions_decorator_1.RequirePermissions)('PATIENTS_READ'),
     (0, swagger_1.ApiQuery)({ name: 'centerId', required: false, description: 'Filter by center ID' }),
     (0, swagger_1.ApiQuery)({ name: 'search', required: false, description: 'Search by name, NIK, MRN, or phone' }),
     (0, swagger_1.ApiQuery)({ name: 'includeInactive', required: false, type: Boolean }),
@@ -130,7 +126,6 @@ __decorate([
     (0, common_1.Get)('search'),
     (0, swagger_1.ApiOperation)({ summary: 'Advanced patient search with filters' }),
     (0, swagger_1.ApiResponse)({ status: 200, description: 'Patients searched successfully' }),
-    (0, permissions_decorator_1.RequirePermissions)('PATIENTS_READ'),
     (0, swagger_1.ApiQuery)({ name: 'search', required: false }),
     (0, swagger_1.ApiQuery)({ name: 'centerId', required: false }),
     (0, swagger_1.ApiQuery)({ name: 'gender', required: false, enum: client_1.Gender }),
@@ -150,7 +145,6 @@ __decorate([
     (0, common_1.Get)('statistics'),
     (0, swagger_1.ApiOperation)({ summary: 'Get patient statistics' }),
     (0, swagger_1.ApiResponse)({ status: 200, description: 'Patient statistics retrieved successfully' }),
-    (0, permissions_decorator_1.RequirePermissions)('ANALYTICS_VIEW'),
     (0, swagger_1.ApiQuery)({ name: 'centerId', required: false, description: 'Filter by center ID' }),
     __param(0, (0, common_1.Query)('centerId')),
     __metadata("design:type", Function),
@@ -163,7 +157,6 @@ __decorate([
     (0, swagger_1.ApiParam)({ name: 'id', description: 'Patient ID' }),
     (0, swagger_1.ApiResponse)({ status: 200, description: 'Patient retrieved successfully' }),
     (0, swagger_1.ApiResponse)({ status: 404, description: 'Patient not found' }),
-    (0, permissions_decorator_1.RequirePermissions)('PATIENTS_READ'),
     (0, swagger_1.ApiQuery)({ name: 'includeMedicalHistory', required: false, type: Boolean }),
     __param(0, (0, common_1.Param)('id', common_1.ParseUUIDPipe)),
     __param(1, (0, common_1.Query)('includeMedicalHistory')),
@@ -177,7 +170,6 @@ __decorate([
     (0, swagger_1.ApiParam)({ name: 'nik', description: 'Patient NIK' }),
     (0, swagger_1.ApiResponse)({ status: 200, description: 'Patient retrieved successfully' }),
     (0, swagger_1.ApiResponse)({ status: 404, description: 'Patient not found' }),
-    (0, permissions_decorator_1.RequirePermissions)('PATIENTS_READ'),
     __param(0, (0, common_1.Param)('nik')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
@@ -189,7 +181,6 @@ __decorate([
     (0, swagger_1.ApiParam)({ name: 'mrn', description: 'Medical Record Number' }),
     (0, swagger_1.ApiResponse)({ status: 200, description: 'Patient retrieved successfully' }),
     (0, swagger_1.ApiResponse)({ status: 404, description: 'Patient not found' }),
-    (0, permissions_decorator_1.RequirePermissions)('PATIENTS_READ'),
     __param(0, (0, common_1.Param)('mrn')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
@@ -201,9 +192,7 @@ __decorate([
     (0, swagger_1.ApiResponse)({ status: 201, description: 'Patient created successfully' }),
     (0, swagger_1.ApiResponse)({ status: 400, description: 'Invalid input' }),
     (0, swagger_1.ApiResponse)({ status: 409, description: 'Patient already exists' }),
-    (0, permissions_decorator_1.RequirePermissions)('PATIENTS_CREATE'),
     (0, common_1.HttpCode)(common_1.HttpStatus.CREATED),
-    (0, audit_log_decorator_1.AuditLog)('CREATE_PATIENT'),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
@@ -215,8 +204,6 @@ __decorate([
     (0, swagger_1.ApiParam)({ name: 'id', description: 'Patient ID' }),
     (0, swagger_1.ApiResponse)({ status: 200, description: 'Patient updated successfully' }),
     (0, swagger_1.ApiResponse)({ status: 404, description: 'Patient not found' }),
-    (0, permissions_decorator_1.RequirePermissions)('PATIENTS_UPDATE'),
-    (0, audit_log_decorator_1.AuditLog)('UPDATE_PATIENT'),
     __param(0, (0, common_1.Param)('id', common_1.ParseUUIDPipe)),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
@@ -227,7 +214,6 @@ __decorate([
     (0, common_1.Get)(':id/vital-signs'),
     (0, swagger_1.ApiOperation)({ summary: 'Get patient vital signs history' }),
     (0, swagger_1.ApiParam)({ name: 'id', description: 'Patient ID' }),
-    (0, permissions_decorator_1.RequirePermissions)('PATIENTS_READ'),
     __param(0, (0, common_1.Param)('id', common_1.ParseUUIDPipe)),
     __param(1, (0, common_1.Query)('limit')),
     __metadata("design:type", Function),
@@ -238,7 +224,6 @@ __decorate([
     (0, common_1.Get)(':id/diagnoses'),
     (0, swagger_1.ApiOperation)({ summary: 'Get patient diagnoses history' }),
     (0, swagger_1.ApiParam)({ name: 'id', description: 'Patient ID' }),
-    (0, permissions_decorator_1.RequirePermissions)('PATIENTS_READ'),
     __param(0, (0, common_1.Param)('id', common_1.ParseUUIDPipe)),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
@@ -248,7 +233,6 @@ __decorate([
     (0, common_1.Get)(':id/medications'),
     (0, swagger_1.ApiOperation)({ summary: 'Get patient medications' }),
     (0, swagger_1.ApiParam)({ name: 'id', description: 'Patient ID' }),
-    (0, permissions_decorator_1.RequirePermissions)('PATIENTS_READ'),
     __param(0, (0, common_1.Param)('id', common_1.ParseUUIDPipe)),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
@@ -258,7 +242,6 @@ __decorate([
     (0, common_1.Get)(':id/allergies'),
     (0, swagger_1.ApiOperation)({ summary: 'Get patient allergies' }),
     (0, swagger_1.ApiParam)({ name: 'id', description: 'Patient ID' }),
-    (0, permissions_decorator_1.RequirePermissions)('PATIENTS_READ'),
     __param(0, (0, common_1.Param)('id', common_1.ParseUUIDPipe)),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
@@ -268,7 +251,6 @@ __decorate([
     (0, common_1.Get)(':id/visits'),
     (0, swagger_1.ApiOperation)({ summary: 'Get patient visits history' }),
     (0, swagger_1.ApiParam)({ name: 'id', description: 'Patient ID' }),
-    (0, permissions_decorator_1.RequirePermissions)('PATIENTS_READ'),
     __param(0, (0, common_1.Param)('id', common_1.ParseUUIDPipe)),
     __param(1, (0, common_1.Query)('limit')),
     __metadata("design:type", Function),
@@ -279,7 +261,6 @@ __decorate([
     (0, common_1.Get)(':id/insurance'),
     (0, swagger_1.ApiOperation)({ summary: 'Get patient insurance information' }),
     (0, swagger_1.ApiParam)({ name: 'id', description: 'Patient ID' }),
-    (0, permissions_decorator_1.RequirePermissions)('PATIENTS_READ'),
     __param(0, (0, common_1.Param)('id', common_1.ParseUUIDPipe)),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
@@ -288,7 +269,7 @@ __decorate([
 exports.PatientsController = PatientsController = __decorate([
     (0, swagger_1.ApiTags)('Patients'),
     (0, common_1.Controller)('patients'),
-    (0, common_1.UseGuards)(jwt_guard_1.JwtAuthGuard, permissions_guard_1.PermissionsGuard),
+    (0, common_1.UseGuards)(jwt_guard_1.JwtAuthGuard),
     __metadata("design:paramtypes", [patients_service_1.PatientsService])
 ], PatientsController);
 //# sourceMappingURL=patients.controller.js.map

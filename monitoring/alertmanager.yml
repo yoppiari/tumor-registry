@@ -1,0 +1,359 @@
+# Alertmanager Configuration for INAMSOS Tumor Registry
+# Production alert routing and notification configuration
+
+global:
+  # Default SMTP configuration
+  smtp_smarthost: 'smtp.kemenkes.go.id:587'
+  smtp_from: 'alerts@inamsos.kemenkes.go.id'
+  smtp_auth_username: 'alerts@inamsos.kemenkes.go.id'
+  smtp_auth_password: 'smtp_password_2025'
+  smtp_require_tls: true
+
+  # Default templates
+  templates:
+    - '/etc/alertmanager/templates/*.tmpl'
+
+# Route configuration
+route:
+  group_by: ['cluster', 'alertname', 'service', 'severity']
+  group_wait: 10s
+  group_interval: 30s
+  repeat_interval: 12h
+  receiver: 'default'
+  routes:
+    # Critical alerts - immediate notification
+    - match:
+        severity: critical
+      receiver: 'critical-alerts'
+      group_wait: 0s
+      repeat_interval: 15m
+      routes:
+        # Database and infrastructure critical alerts
+        - match_re:
+            service: '(database|system|webserver|cache)'
+          receiver: 'infrastructure-critical'
+          repeat_interval: 5m
+        # Application critical alerts
+        - match:
+            service: backend
+          receiver: 'application-critical'
+          repeat_interval: 10m
+        # Security critical alerts
+        - match:
+            component: ssl
+          receiver: 'security-alerts'
+          repeat_interval: 6h
+
+    # Warning alerts - standard notification
+    - match:
+        severity: warning
+      receiver: 'warning-alerts'
+      group_wait: 30s
+      repeat_interval: 4h
+      routes:
+        # Performance warnings
+        - match_re:
+            component: '(cpu|memory|disk|network)'
+          receiver: 'performance-warnings'
+          repeat_interval: 6h
+        # Business logic warnings
+        - match:
+            service: business
+          receiver: 'business-warnings'
+          repeat_interval: 8h
+
+    # Security alerts - immediate notification
+    - match:
+        service: security
+      receiver: 'security-alerts'
+      group_wait: 0s
+      repeat_interval: 1h
+
+    # Backup alerts - specific routing
+    - match:
+        service: backup
+      receiver: 'backup-alerts'
+      group_wait: 1m
+      repeat_interval: 2h
+
+# Inhibition rules to prevent alert spam
+inhibit_rules:
+  # Inhibit warnings if there's a critical alert for the same service
+  - source_match:
+      severity: 'critical'
+    target_match:
+      severity: 'warning'
+    equal: ['service', 'instance']
+
+  # Inhibit application alerts if database is down
+  - source_match:
+      service: 'database'
+      severity: 'critical'
+    target_match:
+      service: 'backend'
+    equal: ['cluster']
+
+  # Inhibit all alerts if the system is down
+  - source_match:
+      service: 'system'
+      component: 'cpu'
+      severity: 'critical'
+    target_match_re:
+      service: '.*'
+    equal: ['instance']
+
+# Notification receivers
+receivers:
+  # Default receiver
+  - name: 'default'
+    email_configs:
+      - to: 'admin@inamsos.kemenkes.go.id'
+        subject: '[INAMSOS] {{ .GroupLabels.alertname }}'
+        body: |
+          {{ range .Alerts }}
+          Alert: {{ .Annotations.summary }}
+          Description: {{ .Annotations.description }}
+          Severity: {{ .Labels.severity }}
+          Service: {{ .Labels.service }}
+          Component: {{ .Labels.component }}
+          Instance: {{ .Labels.instance }}
+          Timestamp: {{ .StartsAt }}
+          {{ end }}
+        require_tls: true
+
+  # Critical alerts receiver
+  - name: 'critical-alerts'
+    email_configs:
+      - to: 'oncall@inamsos.kemenkes.go.id'
+        subject: '[CRITICAL] INAMSOS Alert: {{ .GroupLabels.alertname }}'
+        body: |
+          🚨 CRITICAL ALERT 🚨
+
+          Cluster: {{ .GroupLabels.cluster }}
+          Alert: {{ .GroupLabels.alertname }}
+
+          {{ range .Alerts }}
+          Summary: {{ .Annotations.summary }}
+          Description: {{ .Annotations.description }}
+
+          Service: {{ .Labels.service }}
+          Component: {{ .Labels.component }}
+          Instance: {{ .Labels.instance }}
+          Severity: {{ .Labels.severity }}
+
+          Started: {{ .StartsAt }}
+          {{ if .EndsAt }}Ends: {{ .EndsAt }}{{ end }}
+
+          Runbook: {{ .Annotations.runbook_url }}
+
+          ---
+          {{ end }}
+
+          Immediate action required. Check the monitoring dashboard for details.
+        require_tls: true
+
+    # Slack notification for critical alerts
+    slack_configs:
+      - api_url: 'https://hooks.slack.com/services/YOUR/SLACK/WEBHOOK'
+        channel: '#inamsos-alerts-critical'
+        title: '🚨 CRITICAL: {{ .GroupLabels.alertname }}'
+        text: |
+          Cluster: {{ .GroupLabels.cluster }}
+          {{ range .Alerts }}
+          {{ .Annotations.summary }}
+          {{ .Annotations.description }}
+          {{ end }}
+        send_resolved: true
+
+    # PagerDuty for critical alerts
+    pagerduty_configs:
+      - service_key: 'your-pagerduty-service-key'
+        description: '{{ .GroupLabels.alertname }}: {{ range .Alerts }}{{ .Annotations.summary }}{{ end }}'
+        severity: 'critical'
+        details:
+          cluster: '{{ .GroupLabels.cluster }}'
+          service: '{{ range .Alerts }}{{ .Labels.service }}{{ end }}'
+          component: '{{ range .Alerts }}{{ .Labels.component }}{{ end }}'
+
+  # Infrastructure critical receiver
+  - name: 'infrastructure-critical'
+    email_configs:
+      - to: 'infra-team@kemenkes.go.id,oncall@inamsos.kemenkes.go.id'
+        subject: '[INFRA CRITICAL] INAMSOS Infrastructure Alert: {{ .GroupLabels.alertname }}'
+        body: |
+          🔧 INFRASTRUCTURE CRITICAL ALERT
+
+          Alert: {{ .GroupLabels.alertname }}
+          Service: {{ .GroupLabels.service }}
+
+          {{ range .Alerts }}
+          {{ .Annotations.summary }}
+          {{ .Annotations.description }}
+
+          Instance: {{ .Labels.instance }}
+          Component: {{ .Labels.component }}
+
+          Started: {{ .StartsAt }}
+          {{ end }}
+        require_tls: true
+
+    slack_configs:
+      - api_url: 'https://hooks.slack.com/services/YOUR/SLACK/WEBHOOK'
+        channel: '#inamsos-infra'
+        title: '🔧 Infrastructure Critical: {{ .GroupLabels.alertname }}'
+        send_resolved: true
+
+  # Application critical receiver
+  - name: 'application-critical'
+    email_configs:
+      - to: 'dev-team@inamsos.kemenkes.go.id,oncall@inamsos.kemenkes.go.id'
+        subject: '[APP CRITICAL] INAMSOS Application Alert: {{ .GroupLabels.alertname }}'
+        body: |
+          💻 APPLICATION CRITICAL ALERT
+
+          Alert: {{ .GroupLabels.alertname }}
+
+          {{ range .Alerts }}
+          {{ .Annotations.summary }}
+          {{ .Annotations.description }}
+
+          Component: {{ .Labels.component }}
+          Instance: {{ .Labels.instance }}
+
+          Started: {{ .StartsAt }}
+          Runbook: {{ .Annotations.runbook_url }}
+          {{ end }}
+        require_tls: true
+
+    slack_configs:
+      - api_url: 'https://hooks.slack.com/services/YOUR/SLACK/WEBHOOK'
+        channel: '#inamsos-app'
+        title: '💻 Application Critical: {{ .GroupLabels.alertname }}'
+        send_resolved: true
+
+  # Security alerts receiver
+  - name: 'security-alerts'
+    email_configs:
+      - to: 'security-team@kemenkes.go.id,admin@inamsos.kemenkes.go.id'
+        subject: '[SECURITY] INAMSOS Security Alert: {{ .GroupLabels.alertname }}'
+        body: |
+          🔒 SECURITY ALERT
+
+          Alert: {{ .GroupLabels.alertname }}
+
+          {{ range .Alerts }}
+          {{ .Annotations.summary }}
+          {{ .Annotations.description }}
+
+          Component: {{ .Labels.component }}
+          Instance: {{ .Labels.instance }}
+
+          Started: {{ .StartsAt }}
+          {{ end }}
+
+          Please investigate immediately.
+        require_tls: true
+
+    slack_configs:
+      - api_url: 'https://hooks.slack.com/services/YOUR/SLACK/WEBHOOK'
+        channel: '#inamsos-security'
+        title: '🔒 Security Alert: {{ .GroupLabels.alertname }}'
+        send_resolved: true
+
+  # Warning alerts receiver
+  - name: 'warning-alerts'
+    email_configs:
+      - to: 'ops-team@inamsos.kemenkes.go.id'
+        subject: '[WARNING] INAMSOS Alert: {{ .GroupLabels.alertname }}'
+        body: |
+          ⚠️ WARNING ALERT
+
+          Alert: {{ .GroupLabels.alertname }}
+
+          {{ range .Alerts }}
+          {{ .Annotations.summary }}
+          {{ .Annotations.description }}
+
+          Service: {{ .Labels.service }}
+          Component: {{ .Labels.component }}
+          Started: {{ .StartsAt }}
+          {{ end }}
+        require_tls: true
+
+  # Performance warnings receiver
+  - name: 'performance-warnings'
+    email_configs:
+      - to: 'perf-team@inamsos.kemenkes.go.id'
+        subject: '[PERF] INAMSOS Performance Alert: {{ .GroupLabels.alertname }}'
+        body: |
+          📊 PERFORMANCE WARNING
+
+          Alert: {{ .GroupLabels.alertname }}
+
+          {{ range .Alerts }}
+          {{ .Annotations.summary }}
+          {{ .Annotations.description }}
+
+          Instance: {{ .Labels.instance }}
+          Component: {{ .Labels.component }}
+          Started: {{ .StartsAt }}
+          {{ end }}
+        require_tls: true
+
+  # Business warnings receiver
+  - name: 'business-warnings'
+    email_configs:
+      - to: 'business-team@inamsos.kemenkes.go.id,ops-team@inamsos.kemenkes.go.id'
+        subject: '[BUSINESS] INAMSOS Business Alert: {{ .GroupLabels.alertname }}'
+        body: |
+          🏥 BUSINESS WARNING
+
+          Alert: {{ .GroupLabels.alertname }}
+
+          {{ range .Alerts }}
+          {{ .Annotations.summary }}
+          {{ .Annotations.description }}
+
+          Component: {{ .Labels.component }}
+          Started: {{ .StartsAt }}
+          {{ end }}
+        require_tls: true
+
+  # Backup alerts receiver
+  - name: 'backup-alerts'
+    email_configs:
+      - to: 'backup-team@inamsos.kemenkes.go.id,ops-team@inamsos.kemenkes.go.id'
+        subject: '[BACKUP] INAMSOS Backup Alert: {{ .GroupLabels.alertname }}'
+        body: |
+          💾 BACKUP ALERT
+
+          Alert: {{ .GroupLabels.alertname }}
+
+          {{ range .Alerts }}
+          {{ .Annotations.summary }}
+          {{ .Annotations.description }}
+
+          Component: {{ .Labels.component }}
+          Started: {{ .StartsAt }}
+          {{ end }}
+        require_tls: true
+
+# Time intervals for different alert routing
+time_intervals:
+  - name: 'business-hours'
+    time_intervals:
+      - times:
+          - start_time: '08:00'
+            end_time: '17:00'
+        weekdays: ['monday:friday']
+        location: 'Asia/Jakarta'
+
+  - name: 'after-hours'
+    time_intervals:
+      - times:
+          - start_time: '17:01'
+            end_time: '07:59'
+        weekdays: ['monday:friday']
+        location: 'Asia/Jakarta'
+      - weekdays: ['saturday', 'sunday']
+        location: 'Asia/Jakarta'

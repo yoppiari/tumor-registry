@@ -1,0 +1,43 @@
+import { OnModuleInit, OnModuleDestroy } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
+export declare class RedisService implements OnModuleInit, OnModuleDestroy {
+    private configService;
+    private readonly logger;
+    private redis;
+    private readonly defaultTTL;
+    constructor(configService: ConfigService);
+    onModuleInit(): Promise<void>;
+    onModuleDestroy(): Promise<void>;
+    set(key: string, value: any, ttl?: number): Promise<boolean>;
+    get<T>(key: string): Promise<T | null>;
+    del(key: string): Promise<boolean>;
+    exists(key: string): Promise<boolean>;
+    increment(key: string, value?: number): Promise<number>;
+    setByPattern(pattern: string, data: any, ttl?: number): Promise<void>;
+    getByPattern<T>(pattern: string): Promise<T[]>;
+    deleteByPattern(pattern: string): Promise<number>;
+    cacheDashboardData(dashboardId: string, data: any, ttl?: number): Promise<void>;
+    getCachedDashboardData(dashboardId: string): Promise<any>;
+    cacheAnalyticsQuery(queryHash: string, result: any, ttl?: number): Promise<void>;
+    getCachedAnalyticsQuery(queryHash: string): Promise<any>;
+    cacheCenterMetrics(centerId: string, metrics: any, ttl?: number): Promise<void>;
+    getCachedCenterMetrics(centerId: string): Promise<any>;
+    cacheTrendAnalysis(cancerType: string, trendData: any, ttl?: number): Promise<void>;
+    getCachedTrendAnalysis(cancerType: string): Promise<any>;
+    cacheNationalIntelligence(data: any, ttl?: number): Promise<void>;
+    getCachedNationalIntelligence(): Promise<any>;
+    invalidateCenterCache(centerId: string): Promise<void>;
+    invalidatePatientCache(patientId: string): Promise<void>;
+    invalidateAllAnalyticsCache(): Promise<void>;
+    getCacheStats(): Promise<any>;
+    getCacheMetrics(): Promise<any>;
+    incrementCounter(counterName: string, value?: number, ttl?: number): Promise<number>;
+    addToSortedSet(setName: string, score: number, member: string): Promise<number>;
+    getTopFromSortedSet(setName: string, count?: number): Promise<Array<{
+        score: number;
+        member: string;
+    }>>;
+    isHealthy(): Promise<boolean>;
+    private parseRedisInfo;
+    private logAnalyticsEvent;
+}

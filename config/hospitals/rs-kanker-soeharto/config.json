@@ -1,0 +1,41 @@
+{
+  "hospitalId": "rs-kanker-soeharto",
+  "hospitalName": "RS Kanker Soeharto",
+  "location": "Surabaya",
+  "hospitalType": "Cancer Hospital",
+  "region": "Indonesia",
+  "timezone": "Asia/Jakarta",
+  "deploymentDate": "Wed Nov 19 03:35:55 PM WIB 2025",
+  "deploymentPhase": "pilot",
+  "status": "deployment-ready",
+  "contact": {
+    "phone": "+62-21-5555-1234",
+    "email": "contact@inamsos.go.id"
+  },
+  "features": {
+    "patientRegistration": true,
+    "medicalRecords": true,
+    "diagnosisManagement": true,
+    "treatmentPlanning": true,
+    "analytics": true,
+    "research": true,
+    "reporting": true,
+    "dataExport": true
+  },
+  "api": {
+    "baseUrl": "http://localhost:3001/api/v1",
+    "documentation": "http://localhost:3001/api/v1/docs",
+    "healthCheck": "http://localhost:3001/api/v1/health"
+  },
+  "frontend": {
+    "url": "http://localhost:3000",
+    "login": "http://localhost:3000/login",
+    "dashboard": "http://localhost:3000/dashboard"
+  },
+  "pilotMetrics": {
+    "targetPatients": 500,
+    "targetRecords": 1000,
+    "trainingStaff": 50,
+    "goLiveDate": "2025-12-01"
+  }
+}

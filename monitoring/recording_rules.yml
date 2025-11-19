@@ -1,0 +1,222 @@
+# Recording Rules for INAMSOS Tumor Registry
+# Pre-computed metrics for better dashboard performance
+
+groups:
+  - name: inamos_recording_rules
+    interval: 30s
+    rules:
+      # Application Performance Rules
+      - record: instance:node_cpu_utilisation:rate5m
+        expr: 100 - (avg by(instance) (rate(node_cpu_seconds_total{mode="idle"}[5m])) * 100)
+
+      - record: instance:node_memory_utilisation:ratio
+        expr: 1 - (node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes)
+
+      - record: instance:node_disk_utilisation:ratio
+        expr: (node_filesystem_size_bytes - node_filesystem_free_bytes) / node_filesystem_size_bytes
+
+      - record: instance:node_network_receive_bytes:rate5m
+        expr: rate(node_network_receive_bytes_total[5m])
+
+      - record: instance:node_network_transmit_bytes:rate5m
+        expr: rate(node_network_transmit_bytes_total[5m])
+
+      # Database Performance Rules
+      - record: postgres:connections:percentage
+        expr: (pg_stat_activity_count / pg_settings_max_connections) * 100
+
+      - record: postgres:db_size:bytes
+        expr: pg_database_size_bytes
+
+      - record: postgres:transaction_rate:5m
+        expr: rate(pg_stat_database_xact_commit_total[5m]) + rate(pg_stat_database_xact_rollback_total[5m])
+
+      - record: postgres:query_duration:seconds:quantile_95
+        expr: histogram_quantile(0.95, rate(pg_stat_statements_mean_time_seconds_bucket[5m]))
+
+      # Redis Performance Rules
+      - record: redis:memory_usage:percentage
+        expr: (redis_memory_used_bytes / redis_memory_max_bytes) * 100
+
+      - record: redis:hit_rate:5m
+        expr: rate(redis_keyspace_hits_total[5m]) / (rate(redis_keyspace_hits_total[5m]) + rate(redis_keyspace_misses_total[5m]))
+
+      - record: redis:operations_rate:5m
+        expr: rate(redis_commands_processed_total[5m])
+
+      # HTTP Performance Rules
+      - record: http_requests:rate5m
+        expr: rate(http_requests_total[5m])
+
+      - record: http_requests_duration_seconds:quantile_95
+        expr: histogram_quantile(0.95, rate(http_request_duration_seconds_bucket[5m]))
+
+      - record: http_requests_duration_seconds:quantile_50
+        expr: histogram_quantile(0.50, rate(http_request_duration_seconds_bucket[5m]))
+
+      - record: http_requests:error_rate:5m
+        expr: rate(http_requests_total{status=~"5.."}[5m]) / rate(http_requests_total[5m])
+
+      # Container Performance Rules
+      - record: container:cpu_utilisation:rate5m
+        expr: rate(container_cpu_usage_seconds_total{name!=""}[5m]) * 100
+
+      - record: container:memory_utilisation:bytes
+        expr: container_memory_usage_bytes{name!=""}
+
+      - record: container:network_receive_bytes:rate5m
+        expr: rate(container_network_receive_bytes_total[5m])
+
+      - record: container:network_transmit_bytes:rate5m
+        expr: rate(container_network_transmit_bytes_total[5m])
+
+      # Nginx Performance Rules
+      - record: nginx:connections:active
+        expr: nginx_connections_active
+
+      - record: nginx:connections:reading
+        expr: nginx_connections_reading
+
+      - record: nginx:connections:writing
+        expr: nginx_connections_writing
+
+      - record: nginx:request_rate:5m
+        expr: rate(nginx_http_requests_total[5m])
+
+      - record: nginx:response_duration_seconds:quantile_95
+        expr: histogram_quantile(0.95, rate(nginx_http_request_duration_seconds_bucket[5m]))
+
+      # File Storage Rules
+      - record: minio:disk_usage:percentage
+        expr: (1 - (minio_disk_free_bytes / minio_disk_total_bytes)) * 100
+
+      - record: minio:objects_total
+        expr: minio_s3_objects_total
+
+      - record: minio:operations_rate:5m
+        expr: rate(minio_s3_requests_total[5m])
+
+      # Business Metrics Rules
+      - record: patient:registrations:daily
+        expr: increase(patient_registrations_total[1d])
+
+      - record: patient:registrations:weekly
+        expr: increase(patient_registrations_total[7d])
+
+      - record: cancer_cases:diagnosed:daily
+        expr: increase(cancer_cases_diagnosed_total[1d])
+
+      - record: cancer_cases:diagnosed:weekly
+        expr: increase(cancer_cases_diagnosed_total[7d])
+
+      - record: reports:generated:daily
+        expr: increase(reports_generated_total[1d])
+
+      - record: file_uploads:daily
+        expr: increase(file_uploads_total[1d])
+
+      - record: data_exports:daily
+        expr: increase(data_exports_total[1d])
+
+      # Queue Processing Rules
+      - record: bull:queue:processing_rate:5m
+        expr: rate(bull_queue_processed_total[5m])
+
+      - record: bull:queue:failure_rate:5m
+        expr: rate(bull_queue_failed_total[5m]) / rate(bull_queue_processed_total[5m])
+
+      - record: bull:queue:wait_time:seconds:quantile_95
+        expr: histogram_quantile(0.95, rate(bull_queue_wait_time_seconds_bucket[5m]))
+
+      # Security Metrics Rules
+      - record: security:auth_failures:rate5m
+        expr: rate(authentication_failures_total[5m])
+
+      - record: security:unauthorized_access:rate5m
+        expr: rate(http_requests_total{status="401"}[5m])
+
+      - record: security:forbidden_access:rate5m
+        expr: rate(http_requests_total{status="403"}[5m])
+
+      # SSL Certificate Rules
+      - record: ssl:certificate_expiry_days
+        expr: (probe_ssl_earliest_cert_expiry - time()) / 86400
+
+      # System Health Rules
+      - record: health:services_up:count
+        expr: sum(up)
+
+      - record: health:services_down:count
+        expr: sum(up == 0)
+
+      - record: health:availability_percentage
+        expr: (sum(up) / count(up)) * 100
+
+      # Resource Utilization Aggregates
+      - record: cluster:cpu_utilisation:avg5m
+        expr: avg(instance:node_cpu_utilisation:rate5m)
+
+      - record: cluster:memory_utilisation:avg5m
+        expr: avg(instance:node_memory_utilisation:ratio)
+
+      - record: cluster:disk_utilisation:avg5m
+        expr: avg(instance:node_disk_utilisation:ratio)
+
+      - record: cluster:network_receive_bytes:rate5m
+        expr: sum(instance:node_network_receive_bytes:rate5m)
+
+      - record: cluster:network_transmit_bytes:rate5m
+        expr: sum(instance:node_network_transmit_bytes:rate5m)
+
+      # Application-specific aggregates
+      - record: application:error_rate:avg5m
+        expr: sum(rate(http_requests_total{status=~"5.."}[5m])) / sum(rate(http_requests_total[5m]))
+
+      - record: application:response_time:quantile_95
+        expr: histogram_quantile(0.95, sum(rate(http_request_duration_seconds_bucket[5m])) by (le))
+
+      - record: application:request_rate:total5m
+        expr: sum(rate(http_requests_total[5m]))
+
+      # Data Quality Rules
+      - record: data_quality:validation_score
+        expr: data_quality_score
+
+      - record: data_quality:completeness_percentage
+        expr: data_completeness_percentage
+
+      - record: data_quality:accuracy_percentage
+        expr: data_accuracy_percentage
+
+      # Backup and Recovery Rules
+      - record: backup:size_bytes:daily
+        expr: backup_size_bytes
+
+      - record: backup:duration_seconds:last
+        expr: backup_duration_seconds
+
+      - record: backup:success_rate:7d
+        expr: sum(backup_success) / count(backup_success) * 100
+
+      # Performance Baselines
+      - record: performance:baseline_response_time:seconds
+        expr: 0.5  # 500ms baseline
+
+      - record: performance:baseline_cpu_utilisation:percentage
+        expr: 70   # 70% baseline
+
+      - record: performance:baseline_memory_utilisation:percentage
+        expr: 80   # 80% baseline
+
+      - record: performance:baseline_disk_utilisation:percentage
+        expr: 85   # 85% baseline
+
+      # SLA Metrics
+      - record: sla:uptime_percentage:30d
+        expr: (sum(up) * 100) / count(up)
+
+      - record: sla:error_rate_percentage:24h
+        expr: (sum(rate(http_requests_total{status=~"5.."}[24h])) / sum(rate(http_requests_total[24h]))) * 100
+
+      - record: sla:response_time_sla:24h
+        expr: histogram_quantile(0.95, sum(rate(http_request_duration_seconds_bucket[24h])) by (le))

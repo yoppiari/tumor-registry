@@ -9,14 +9,14 @@ const nextConfig = {
     NEXT_PUBLIC_APP_NAME: process.env.NEXT_PUBLIC_APP_NAME || 'INAMSOS',
     NEXT_PUBLIC_VERSION: process.env.NEXT_PUBLIC_VERSION || '1.0.0',
   },
-  experimental: {
-    appDir: true,
-  },
-  webpack: (config) => {
+  webpack: (config, { isServer }) => {
     config.resolve.alias = {
       ...config.resolve.alias,
       '@': './src',
     };
+    if (!isServer) {
+      config.resolve.fallback.fs = false;
+    }
     return config;
   },
   async rewrites() {
@@ -27,12 +27,6 @@ const nextConfig = {
         destination: `${apiUrl}/api/:path*`,
       },
     ];
-  },
-  webpack: (config, { isServer }) => {
-    if (!isServer) {
-      config.resolve.fallback.fs = false;
-    }
-    return config;
   },
 };
 

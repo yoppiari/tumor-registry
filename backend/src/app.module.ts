@@ -11,10 +11,11 @@ import { AuthModule } from './modules/auth/auth.module';
 import { UsersModule } from './modules/users/users.module';
 import { CentersModule } from './modules/centers/centers.module';
 import { PatientsModule } from './modules/patients/patients.module';
-import { AnalyticsModule } from './modules/analytics/analytics.module';
-import { SystemAdministrationModule } from './modules/system-administration/system-administration.module';
-import { ReportsModule } from './modules/reports/reports.module';
-import { BackupModule } from './modules/backup/backup.module';
+// Temporarily commented out problematic modules
+// import { AnalyticsModule } from './modules/analytics/analytics.module';
+// import { SystemAdministrationModule } from './modules/system-administration/system-administration.module';
+// import { ReportsModule } from './modules/reports/reports.module';
+// import { BackupModule } from './modules/backup/backup.module';
 import { HttpExceptionFilter, ValidationExceptionFilter } from './common/filters/http-exception.filter';
 import { SecurityMiddleware } from './modules/auth/middleware/security.middleware';
 
@@ -43,10 +44,10 @@ import { SecurityMiddleware } from './modules/auth/middleware/security.middlewar
     UsersModule,
     CentersModule,
     PatientsModule,
-    AnalyticsModule,
-    SystemAdministrationModule,
-    ReportsModule,
-    BackupModule,
+    // AnalyticsModule,
+    // SystemAdministrationModule,
+    // ReportsModule,
+    // BackupModule,
   ],
   controllers: [],
   providers: [

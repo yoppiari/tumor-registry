@@ -11,7 +11,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
-var _a, _b;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.DiagnosisController = void 0;
 const common_1 = require("@nestjs/common");
@@ -220,7 +219,7 @@ __decorate([
     __param(4, (0, common_1.Query)('page')),
     __param(5, (0, common_1.Query)('limit')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, typeof (_a = typeof client_1.DiagnosisType !== "undefined" && client_1.DiagnosisType) === "function" ? _a : Object, typeof (_b = typeof client_1.DiagnosisStatus !== "undefined" && client_1.DiagnosisStatus) === "function" ? _b : Object, String, String, String]),
+    __metadata("design:paramtypes", [String, String, String, String, String, String]),
     __metadata("design:returntype", Promise)
 ], DiagnosisController.prototype, "findByPatientId", null);
 __decorate([

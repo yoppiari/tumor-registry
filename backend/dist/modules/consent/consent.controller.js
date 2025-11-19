@@ -11,7 +11,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
-var _a, _b;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ConsentController = void 0;
 const common_1 = require("@nestjs/common");
@@ -166,7 +165,7 @@ __decorate([
     __param(3, (0, common_1.Query)('page')),
     __param(4, (0, common_1.Query)('limit')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, typeof (_a = typeof client_1.ConsentType !== "undefined" && client_1.ConsentType) === "function" ? _a : Object, String, String, String]),
+    __metadata("design:paramtypes", [String, String, String, String, String]),
     __metadata("design:returntype", Promise)
 ], ConsentController.prototype, "findByPatientId", null);
 __decorate([
@@ -205,7 +204,7 @@ __decorate([
     __param(1, (0, common_1.Query)('consentType')),
     __param(2, (0, common_1.Query)('requireActive')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, typeof (_b = typeof client_1.ConsentType !== "undefined" && client_1.ConsentType) === "function" ? _b : Object, String]),
+    __metadata("design:paramtypes", [String, String, String]),
     __metadata("design:returntype", Promise)
 ], ConsentController.prototype, "checkConsent", null);
 __decorate([

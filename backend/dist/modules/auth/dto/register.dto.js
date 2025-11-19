@@ -48,7 +48,7 @@ __decorate([
     (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.MinLength)(16),
-    MaxLength(16),
+    (0, class_validator_1.MaxLength)(16),
     __metadata("design:type", String)
 ], RegisterDto.prototype, "nik", void 0);
 //# sourceMappingURL=register.dto.js.map

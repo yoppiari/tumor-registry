@@ -1,11 +1,11 @@
-import { PrismaService } from '@/database/prisma.service';
+import { PrismaService } from '../../database/prisma.service';
 export declare class MfaService {
     private prisma;
     private readonly logger;
     constructor(prisma: PrismaService);
     generateSecret(userId: string): Promise<{
         secret: string;
-        qrCode: string;
+        manualEntryKey: string;
     }>;
     verifyToken(userId: string, token: string): Promise<boolean>;
     enableMfa(userId: string, secret: string, token: string): Promise<{

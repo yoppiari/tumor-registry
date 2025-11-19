@@ -10,6 +10,8 @@ exports.ResearchModule = void 0;
 const common_1 = require("@nestjs/common");
 const research_controller_1 = require("./research.controller");
 const research_service_1 = require("./research.service");
+const research_controller_sprint3_1 = require("./research.controller.sprint3");
+const research_service_sprint3_1 = require("./research.service.sprint3");
 const database_module_1 = require("../../database/database.module");
 const auth_module_1 = require("../auth/auth.module");
 let ResearchModule = class ResearchModule {
@@ -18,9 +20,9 @@ exports.ResearchModule = ResearchModule;
 exports.ResearchModule = ResearchModule = __decorate([
     (0, common_1.Module)({
         imports: [database_module_1.DatabaseModule, auth_module_1.AuthModule],
-        controllers: [research_controller_1.ResearchController],
-        providers: [research_service_1.ResearchService],
-        exports: [research_service_1.ResearchService],
+        controllers: [research_controller_1.ResearchController, research_controller_sprint3_1.ResearchSprint3Controller],
+        providers: [research_service_1.ResearchService, research_service_sprint3_1.ResearchSprint3Service],
+        exports: [research_service_1.ResearchService, research_service_sprint3_1.ResearchSprint3Service],
     })
 ], ResearchModule);
 //# sourceMappingURL=research.module.js.map

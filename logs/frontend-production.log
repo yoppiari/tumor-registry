@@ -1,0 +1,58 @@
+
+> inamsos-frontend@1.0.0 dev
+> next dev
+
+ ⚠ Port 3000 is in use, trying 3001 instead.
+ ⚠ Port 3001 is in use, trying 3002 instead.
+   ▲ Next.js 14.0.3
+   - Local:        http://localhost:3002
+   - Environments: .env.local
+
+ ✓ Ready in 2.4s
+ ○ Compiling / ...
+ ⨯ ./src/app/providers.tsx:6:0
+Module not found: Can't resolve '@/contexts/AuthContext'
+[0m [90m 4 |[39m [36mimport[39m { [33mReactQueryDevtools[39m } [36mfrom[39m [32m'@tanstack/react-query-devtools'[39m[33m;[39m[0m
+[0m [90m 5 |[39m [36mimport[39m { [33mToaster[39m } [36mfrom[39m [32m'react-hot-toast'[39m[33m;[39m[0m
+[0m[31m[1m>[22m[39m[90m 6 |[39m [36mimport[39m { [33mAuthProvider[39m } [36mfrom[39m [32m'@/contexts/AuthContext'[39m[33m;[39m[0m
+[0m [90m 7 |[39m[0m
+[0m [90m 8 |[39m [36mfunction[39m makeQueryClient() {[0m
+[0m [90m 9 |[39m   [36mreturn[39m [36mnew[39m [33mQueryClient[39m({[0m
+
+https://nextjs.org/docs/messages/module-not-found
+ ⨯ ./src/app/providers.tsx:6:0
+Module not found: Can't resolve '@/contexts/AuthContext'
+[0m [90m 4 |[39m [36mimport[39m { [33mReactQueryDevtools[39m } [36mfrom[39m [32m'@tanstack/react-query-devtools'[39m[33m;[39m[0m
+[0m [90m 5 |[39m [36mimport[39m { [33mToaster[39m } [36mfrom[39m [32m'react-hot-toast'[39m[33m;[39m[0m
+[0m[31m[1m>[22m[39m[90m 6 |[39m [36mimport[39m { [33mAuthProvider[39m } [36mfrom[39m [32m'@/contexts/AuthContext'[39m[33m;[39m[0m
+[0m [90m 7 |[39m[0m
+[0m [90m 8 |[39m [36mfunction[39m makeQueryClient() {[0m
+[0m [90m 9 |[39m   [36mreturn[39m [36mnew[39m [33mQueryClient[39m({[0m
+
+https://nextjs.org/docs/messages/module-not-found
+ ⨯ ./src/app/providers.tsx:6:0
+Module not found: Can't resolve '@/contexts/AuthContext'
+[0m [90m 4 |[39m [36mimport[39m { [33mReactQueryDevtools[39m } [36mfrom[39m [32m'@tanstack/react-query-devtools'[39m[33m;[39m[0m
+[0m [90m 5 |[39m [36mimport[39m { [33mToaster[39m } [36mfrom[39m [32m'react-hot-toast'[39m[33m;[39m[0m
+[0m[31m[1m>[22m[39m[90m 6 |[39m [36mimport[39m { [33mAuthProvider[39m } [36mfrom[39m [32m'@/contexts/AuthContext'[39m[33m;[39m[0m
+[0m [90m 7 |[39m[0m
+[0m [90m 8 |[39m [36mfunction[39m makeQueryClient() {[0m
+[0m [90m 9 |[39m   [36mreturn[39m [36mnew[39m [33mQueryClient[39m({[0m
+
+https://nextjs.org/docs/messages/module-not-found
+ ⚠ ./src/app/layout.tsx
+Attempted import error: 'Providers' is not exported from './providers' (imported as 'Providers').
+
+Import trace for requested module:
+./src/app/layout.tsx
+ ⚠ Found a change in next.config.js. Restarting the server to apply the changes...
+ ⚠ Port 3000 is in use, trying 3001 instead.
+ ⚠ Port 3001 is in use, trying 3002 instead.
+   ▲ Next.js 14.0.3
+   - Local:        http://localhost:3002
+   - Environments: .env.local
+
+ ⚠ Invalid next.config.js options detected: 
+ ⚠     Unrecognized key(s) in object: 'appDir' at "experimental"
+ ⚠ See more info here: https://nextjs.org/docs/messages/invalid-next-config
+[?25h

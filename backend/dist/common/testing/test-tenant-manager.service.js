@@ -9,7 +9,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var TestTenantManager_1;
-var _a;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TestTenantManager = void 0;
 const common_1 = require("@nestjs/common");
@@ -156,6 +155,6 @@ let TestTenantManager = TestTenantManager_1 = class TestTenantManager {
 exports.TestTenantManager = TestTenantManager;
 exports.TestTenantManager = TestTenantManager = TestTenantManager_1 = __decorate([
     (0, common_1.Injectable)(),
-    __metadata("design:paramtypes", [typeof (_a = typeof prisma_service_1.PrismaService !== "undefined" && prisma_service_1.PrismaService) === "function" ? _a : Object])
+    __metadata("design:paramtypes", [prisma_service_1.PrismaService])
 ], TestTenantManager);
 //# sourceMappingURL=test-tenant-manager.service.js.map

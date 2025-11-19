@@ -13,7 +13,21 @@ export declare class ConsentController {
         guardianName?: string;
         guardianRelation?: string;
         notes?: string;
-    }): Promise<PatientConsent>;
+    }): Promise<{
+        description: string;
+        id: string;
+        createdAt: Date;
+        updatedAt: Date;
+        patientId: string;
+        notes: string | null;
+        providerId: string;
+        consentType: import(".prisma/client").$Enums.ConsentType;
+        isConsented: boolean;
+        consentDate: Date;
+        expiredDate: Date | null;
+        guardianName: string | null;
+        guardianRelation: string | null;
+    }>;
     findByPatientId(patientId: string, consentType?: ConsentType, includeExpired?: string, page?: string, limit?: string): Promise<{
         consents: any[];
         total: number;
@@ -35,8 +49,36 @@ export declare class ConsentController {
         guardianName?: string;
         guardianRelation?: string;
         notes?: string;
-    }): Promise<PatientConsent>;
-    revokeConsent(id: string, reason: string): Promise<PatientConsent>;
+    }): Promise<{
+        description: string;
+        id: string;
+        createdAt: Date;
+        updatedAt: Date;
+        patientId: string;
+        notes: string | null;
+        providerId: string;
+        consentType: import(".prisma/client").$Enums.ConsentType;
+        isConsented: boolean;
+        consentDate: Date;
+        expiredDate: Date | null;
+        guardianName: string | null;
+        guardianRelation: string | null;
+    }>;
+    revokeConsent(id: string, reason: string): Promise<{
+        description: string;
+        id: string;
+        createdAt: Date;
+        updatedAt: Date;
+        patientId: string;
+        notes: string | null;
+        providerId: string;
+        consentType: import(".prisma/client").$Enums.ConsentType;
+        isConsented: boolean;
+        consentDate: Date;
+        expiredDate: Date | null;
+        guardianName: string | null;
+        guardianRelation: string | null;
+    }>;
     createTreatmentConsent(createConsentDto: {
         patientId: string;
         description: string;
@@ -46,7 +88,21 @@ export declare class ConsentController {
         guardianName?: string;
         guardianRelation?: string;
         notes?: string;
-    }): Promise<PatientConsent>;
+    }): Promise<{
+        description: string;
+        id: string;
+        createdAt: Date;
+        updatedAt: Date;
+        patientId: string;
+        notes: string | null;
+        providerId: string;
+        consentType: import(".prisma/client").$Enums.ConsentType;
+        isConsented: boolean;
+        consentDate: Date;
+        expiredDate: Date | null;
+        guardianName: string | null;
+        guardianRelation: string | null;
+    }>;
     createSurgeryConsent(createConsentDto: {
         patientId: string;
         description: string;
@@ -56,7 +112,21 @@ export declare class ConsentController {
         guardianName?: string;
         guardianRelation?: string;
         notes?: string;
-    }): Promise<PatientConsent>;
+    }): Promise<{
+        description: string;
+        id: string;
+        createdAt: Date;
+        updatedAt: Date;
+        patientId: string;
+        notes: string | null;
+        providerId: string;
+        consentType: import(".prisma/client").$Enums.ConsentType;
+        isConsented: boolean;
+        consentDate: Date;
+        expiredDate: Date | null;
+        guardianName: string | null;
+        guardianRelation: string | null;
+    }>;
     createAnesthesiaConsent(createConsentDto: {
         patientId: string;
         description: string;
@@ -66,7 +136,21 @@ export declare class ConsentController {
         guardianName?: string;
         guardianRelation?: string;
         notes?: string;
-    }): Promise<PatientConsent>;
+    }): Promise<{
+        description: string;
+        id: string;
+        createdAt: Date;
+        updatedAt: Date;
+        patientId: string;
+        notes: string | null;
+        providerId: string;
+        consentType: import(".prisma/client").$Enums.ConsentType;
+        isConsented: boolean;
+        consentDate: Date;
+        expiredDate: Date | null;
+        guardianName: string | null;
+        guardianRelation: string | null;
+    }>;
     createBloodTransfusionConsent(createConsentDto: {
         patientId: string;
         description: string;
@@ -76,7 +160,21 @@ export declare class ConsentController {
         guardianName?: string;
         guardianRelation?: string;
         notes?: string;
-    }): Promise<PatientConsent>;
+    }): Promise<{
+        description: string;
+        id: string;
+        createdAt: Date;
+        updatedAt: Date;
+        patientId: string;
+        notes: string | null;
+        providerId: string;
+        consentType: import(".prisma/client").$Enums.ConsentType;
+        isConsented: boolean;
+        consentDate: Date;
+        expiredDate: Date | null;
+        guardianName: string | null;
+        guardianRelation: string | null;
+    }>;
     createResearchConsent(createConsentDto: {
         patientId: string;
         description: string;
@@ -86,7 +184,21 @@ export declare class ConsentController {
         guardianName?: string;
         guardianRelation?: string;
         notes?: string;
-    }): Promise<PatientConsent>;
+    }): Promise<{
+        description: string;
+        id: string;
+        createdAt: Date;
+        updatedAt: Date;
+        patientId: string;
+        notes: string | null;
+        providerId: string;
+        consentType: import(".prisma/client").$Enums.ConsentType;
+        isConsented: boolean;
+        consentDate: Date;
+        expiredDate: Date | null;
+        guardianName: string | null;
+        guardianRelation: string | null;
+    }>;
     createPhotographyConsent(createConsentDto: {
         patientId: string;
         description: string;
@@ -96,7 +208,21 @@ export declare class ConsentController {
         guardianName?: string;
         guardianRelation?: string;
         notes?: string;
-    }): Promise<PatientConsent>;
+    }): Promise<{
+        description: string;
+        id: string;
+        createdAt: Date;
+        updatedAt: Date;
+        patientId: string;
+        notes: string | null;
+        providerId: string;
+        consentType: import(".prisma/client").$Enums.ConsentType;
+        isConsented: boolean;
+        consentDate: Date;
+        expiredDate: Date | null;
+        guardianName: string | null;
+        guardianRelation: string | null;
+    }>;
     createTelehealthConsent(createConsentDto: {
         patientId: string;
         description: string;
@@ -106,7 +232,21 @@ export declare class ConsentController {
         guardianName?: string;
         guardianRelation?: string;
         notes?: string;
-    }): Promise<PatientConsent>;
+    }): Promise<{
+        description: string;
+        id: string;
+        createdAt: Date;
+        updatedAt: Date;
+        patientId: string;
+        notes: string | null;
+        providerId: string;
+        consentType: import(".prisma/client").$Enums.ConsentType;
+        isConsented: boolean;
+        consentDate: Date;
+        expiredDate: Date | null;
+        guardianName: string | null;
+        guardianRelation: string | null;
+    }>;
     createPrivacyConsent(createConsentDto: {
         patientId: string;
         description: string;
@@ -116,5 +256,19 @@ export declare class ConsentController {
         guardianName?: string;
         guardianRelation?: string;
         notes?: string;
-    }): Promise<PatientConsent>;
+    }): Promise<{
+        description: string;
+        id: string;
+        createdAt: Date;
+        updatedAt: Date;
+        patientId: string;
+        notes: string | null;
+        providerId: string;
+        consentType: import(".prisma/client").$Enums.ConsentType;
+        isConsented: boolean;
+        consentDate: Date;
+        expiredDate: Date | null;
+        guardianName: string | null;
+        guardianRelation: string | null;
+    }>;
 }

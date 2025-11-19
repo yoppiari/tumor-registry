@@ -13,12 +13,11 @@ const passport_1 = require("@nestjs/passport");
 const config_1 = require("@nestjs/config");
 const auth_controller_1 = require("./auth.controller");
 const auth_service_1 = require("./auth.service");
-const jwt_strategy_1 = require("./strategies/jwt.strategy");
-const local_strategy_1 = require("./strategies/local.strategy");
-const users_module_1 = require("../users/users.module");
-const database_module_1 = require("../database/database.module");
-const email_service_1 = require("./email.service");
 const mfa_service_1 = require("./mfa.service");
+const encryption_service_1 = require("./services/encryption.service");
+const users_module_1 = require("../users/users.module");
+const database_module_1 = require("../../database/database.module");
+const jwt_refresh_strategy_1 = require("./strategies/jwt-refresh.strategy");
 let AuthModule = class AuthModule {
 };
 exports.AuthModule = AuthModule;
@@ -43,12 +42,11 @@ exports.AuthModule = AuthModule = __decorate([
         controllers: [auth_controller_1.AuthController],
         providers: [
             auth_service_1.AuthService,
-            jwt_strategy_1.JwtStrategy,
-            local_strategy_1.LocalStrategy,
-            email_service_1.EmailService,
             mfa_service_1.MfaService,
+            encryption_service_1.EncryptionService,
+            jwt_refresh_strategy_1.JwtRefreshStrategy,
         ],
-        exports: [auth_service_1.AuthService, email_service_1.EmailService],
+        exports: [auth_service_1.AuthService, encryption_service_1.EncryptionService],
     })
 ], AuthModule);
 //# sourceMappingURL=auth.module.js.map

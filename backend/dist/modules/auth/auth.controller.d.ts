@@ -9,12 +9,12 @@ export declare class AuthController {
     constructor(authService: AuthService, mfaService: MfaService);
     register(registerDto: RegisterDto): Promise<{
         user: {
-            id: any;
-            email: any;
-            name: any;
-            isActive: any;
-            isEmailVerified: any;
-            mfaEnabled: any;
+            id: string;
+            email: string;
+            name: string;
+            isActive: boolean;
+            isEmailVerified: boolean;
+            mfaEnabled: boolean;
             role: string;
         };
         message: string;
@@ -30,11 +30,11 @@ export declare class AuthController {
         accessToken: string;
         refreshToken: string;
         user: {
-            id: any;
-            email: any;
-            name: any;
-            role: any;
-            centerId: any;
+            id: string;
+            email: string;
+            name: string;
+            role: string;
+            centerId: string;
         };
         tempToken?: undefined;
         message?: undefined;
@@ -43,11 +43,11 @@ export declare class AuthController {
         accessToken: string;
         refreshToken: string;
         user: {
-            id: any;
-            email: any;
-            name: any;
-            role: any;
-            centerId: any;
+            id: string;
+            email: string;
+            name: string;
+            role: string;
+            centerId: string;
         };
     }>;
     verifyEmail(token: string): Promise<{
@@ -55,6 +55,7 @@ export declare class AuthController {
     }>;
     refreshToken(refreshToken: string): Promise<{
         accessToken: string;
+        refreshToken: string;
     }>;
     getProfile(req: Request): Promise<Express.User>;
     logout(req: Request): Promise<{
@@ -62,7 +63,7 @@ export declare class AuthController {
     }>;
     setupMfa(req: Request): Promise<{
         secret: string;
-        qrCode: string;
+        manualEntryKey: string;
     }>;
     enableMfa(req: Request, secret: string, token: string): Promise<{
         success: boolean;

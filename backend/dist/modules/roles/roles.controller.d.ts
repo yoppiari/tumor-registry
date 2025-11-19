@@ -13,13 +13,25 @@ export declare class RolesController {
         description?: string;
         level: number;
         permissionCodes?: string[];
-    }): Promise<Role>;
+    }): Promise<{
+        description: string | null;
+        name: string;
+        id: string;
+        code: string;
+        level: number;
+    }>;
     update(id: string, updateRoleDto: {
         name?: string;
         description?: string;
         level?: number;
         permissionCodes?: string[];
-    }): Promise<Role>;
+    }): Promise<{
+        description: string | null;
+        name: string;
+        id: string;
+        code: string;
+        level: number;
+    }>;
     updateRolePermissions(id: string, updatePermissionsDto: {
         permissionCodes: string[];
     }): Promise<{

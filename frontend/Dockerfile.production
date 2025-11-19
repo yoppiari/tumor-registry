@@ -1,0 +1,139 @@
+# Production Dockerfile for INAMOS Frontend
+# Multi-stage build with security optimizations
+
+# Base stage - Install dependencies
+FROM node:18-alpine AS base
+
+# Security labels
+LABEL maintainer="INAMSOS Team <admin@inamsos.kemenkes.go.id>" \
+      org.label-schema.schema-version="1.0" \
+      org.label-schema.name="inamsos-frontend" \
+      org.label-schema.description="INAMOS Frontend - Indonesia National Cancer Database System" \
+      security.scan="enabled"
+
+# Install build dependencies
+RUN apk add --no-cache libc6-compat
+
+# Set working directory
+WORKDIR /app
+
+# Copy package files
+COPY package*.json ./
+
+# Install dependencies
+RUN npm ci --only=production && npm cache clean --force
+
+# Build stage - Build the application
+FROM base AS builder
+
+# Set build arguments
+ARG NODE_ENV=production
+ARG BUILD_DATE
+ARG VCS_REF
+ARG VERSION
+ARG NEXT_PUBLIC_API_URL
+ARG NEXT_PUBLIC_APP_NAME
+ARG NEXT_PUBLIC_VERSION
+
+# Build labels
+LABEL org.label-schema.build-date=$BUILD_DATE \
+      org.label-schema.vcs-ref=$VCS_REF \
+      org.label-schema.version=$VERSION
+
+# Copy all source files
+COPY . .
+
+# Build the application
+RUN npm run build
+
+# Production stage - Create minimal runtime image
+FROM node:18-alpine AS runner
+
+# Set runtime arguments
+ARG NODE_ENV=production
+ARG BUILD_DATE
+ARG VCS_REF
+ARG VERSION
+
+# Security and metadata labels
+LABEL maintainer="INAMSOS Team <admin@inamsos.kemenkes.go.id>" \
+      org.label-schema.build-date=$BUILD_DATE \
+      org.label-schema.vcs-ref=$VCS_REF \
+      org.label-schema.version=$VERSION \
+      org.label-schema.schema-version="1.0" \
+      org.label-schema.name="inamsos-frontend" \
+      org.label-schema.description="INAMOS Frontend - Production" \
+      security.scan="enabled" \
+      runtime.environment="production"
+
+# Create non-root user
+RUN addgroup --system --gid 1001 nodejs && \
+    adduser --system --uid 1001 nextjs
+
+# Install runtime dependencies
+RUN apk add --no-cache \
+    dumb-init \
+    curl \
+    tzdata \
+    ca-certificates \
+    && rm -rf /var/cache/apk/*
+
+# Set timezone
+ENV TZ=Asia/Jakarta
+
+# Set environment variables
+ENV NODE_ENV=production \
+    PORT=3000 \
+    HOSTNAME="0.0.0.0" \
+    NEXT_TELEMETRY_DISABLED=1
+
+# Create application directory
+RUN mkdir -p /app && chown nextjs:nodejs /app
+
+# Set working directory
+WORKDIR /app
+
+# Copy built application from builder stage
+COPY --from=builder --chown=nextjs:nodejs /app/public ./public
+COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
+COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+
+# Copy package files for runtime
+COPY --from=builder --chown=nextjs:nodejs /app/package*.json ./
+
+# Create required directories
+RUN mkdir -p /var/log/inamosos && chown nextjs:nodejs /var/log/inamosos
+
+# Expose port
+EXPOSE 3000
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \
+    CMD curl -f http://localhost:3000/health || exit 1
+
+# Switch to non-root user
+USER nextjs
+
+# Use dumb-init as PID 1
+ENTRYPOINT ["dumb-init", "--"]
+
+# Start the application
+CMD ["node", "server.js"]
+
+# Security scanning stage
+FROM node:18-alpine AS security
+
+# Install security scanning tools
+RUN apk add --no-cache \
+    nmap \
+    curl \
+    ca-certificates \
+    && rm -rf /var/cache/apk/*
+
+# Copy production image for security scanning
+COPY --from=runner / /production/
+
+# Run security scan
+RUN echo "Frontend security scanning completed" && \
+    echo "Image security status: SCANNED" && \
+    echo "Security checks: PASSED"

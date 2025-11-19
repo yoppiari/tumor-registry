@@ -2,7 +2,17 @@ import { CentersService } from './centers.service';
 export declare class CentersController {
     private readonly centersService;
     constructor(centersService: CentersService);
-    findAll(includeInactive?: string): Promise<Center[]>;
+    findAll(includeInactive?: string): Promise<{
+        name: string;
+        id: string;
+        isActive: boolean;
+        createdAt: Date;
+        updatedAt: Date;
+        code: string;
+        province: string;
+        regency: string | null;
+        address: string | null;
+    }[]>;
     getStatistics(): Promise<any>;
     findById(id: string, includeUsers?: string): Promise<any>;
     getCenterUsers(id: string): Promise<any[]>;
@@ -12,15 +22,55 @@ export declare class CentersController {
         province: string;
         regency?: string;
         address?: string;
-    }): Promise<Center>;
+    }): Promise<{
+        name: string;
+        id: string;
+        isActive: boolean;
+        createdAt: Date;
+        updatedAt: Date;
+        code: string;
+        province: string;
+        regency: string | null;
+        address: string | null;
+    }>;
     update(id: string, updateCenterDto: {
         name?: string;
         province?: string;
         regency?: string;
         address?: string;
         isActive?: boolean;
-    }): Promise<Center>;
-    activate(id: string): Promise<Center>;
-    deactivate(id: string): Promise<Center>;
+    }): Promise<{
+        name: string;
+        id: string;
+        isActive: boolean;
+        createdAt: Date;
+        updatedAt: Date;
+        code: string;
+        province: string;
+        regency: string | null;
+        address: string | null;
+    }>;
+    activate(id: string): Promise<{
+        name: string;
+        id: string;
+        isActive: boolean;
+        createdAt: Date;
+        updatedAt: Date;
+        code: string;
+        province: string;
+        regency: string | null;
+        address: string | null;
+    }>;
+    deactivate(id: string): Promise<{
+        name: string;
+        id: string;
+        isActive: boolean;
+        createdAt: Date;
+        updatedAt: Date;
+        code: string;
+        province: string;
+        regency: string | null;
+        address: string | null;
+    }>;
     delete(id: string): Promise<void>;
 }

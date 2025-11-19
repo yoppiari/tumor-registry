@@ -8,22 +8,21 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var _a;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AuthService = void 0;
 const common_1 = require("@nestjs/common");
 const jwt_1 = require("@nestjs/jwt");
 const users_service_1 = require("../users/users.service");
-const bcrypt = require("bcrypt");
 const email_service_1 = require("./email.service");
+const prisma_service_1 = require("../../database/prisma.service");
+const bcrypt = require("bcrypt");
 const speakeasy_1 = require("speakeasy");
-const database_service_1 = require("../../database/database.service");
 let AuthService = class AuthService {
-    constructor(usersService, jwtService, emailService, databaseService) {
+    constructor(usersService, jwtService, emailService, prisma) {
         this.usersService = usersService;
         this.jwtService = jwtService;
         this.emailService = emailService;
-        this.databaseService = databaseService;
+        this.prisma = prisma;
     }
     async register(registerDto) {
         const { email, name, kolegiumId, password, phone, nik } = registerDto;
@@ -141,7 +140,7 @@ let AuthService = class AuthService {
             }
             if (user.email === payload.email) {
                 await this.usersService.update(user.id, { isEmailVerified: true });
-                await this.emailService.sendWelcomeEmail(user.email, user.name, user.role);
+                await this.emailService.sendWelcomeEmail(user.email, user.name, await this.usersService.getUserRole(user.id));
                 return { message: 'Email verified successfully' };
             }
             else {
@@ -155,22 +154,68 @@ let AuthService = class AuthService {
     async refreshToken(refreshToken) {
         try {
             const payload = this.jwtService.verify(refreshToken, {
-                secret: process.env.JWT_REFRESH_SECRET,
+                secret: process.env.JWT_REFRESH_SECRET || process.env.JWT_SECRET,
             });
             const user = await this.usersService.findById(payload.userId);
             if (!user || !user.isActive) {
                 throw new common_1.UnauthorizedException('Invalid refresh token');
             }
-            const accessToken = this.jwtService.sign({
-                sub: user.id,
-                email: user.email,
-                role: await this.usersService.getUserRole(user.id),
+            const storedToken = await this.prisma.refreshToken.findFirst({
+                where: {
+                    userId: user.id,
+                    token: refreshToken,
+                    expiresAt: { gt: new Date() },
+                    isRevoked: false,
+                },
             });
-            return { accessToken };
+            if (!storedToken) {
+                throw new common_1.UnauthorizedException('Refresh token not found or expired');
+            }
+            const tokens = await this.generateTokens(user);
+            await this.prisma.refreshToken.update({
+                where: { id: storedToken.id },
+                data: { isRevoked: true },
+            });
+            await this.storeRefreshToken(user.id, tokens.refreshToken);
+            return {
+                accessToken: tokens.accessToken,
+                refreshToken: tokens.refreshToken,
+            };
         }
         catch (error) {
             throw new common_1.UnauthorizedException('Invalid refresh token');
         }
+    }
+    async validateRefreshToken(userId, refreshToken) {
+        const user = await this.usersService.findById(userId);
+        if (!user || !user.isActive) {
+            return null;
+        }
+        const storedToken = await this.prisma.refreshToken.findFirst({
+            where: {
+                userId,
+                token: refreshToken,
+                expiresAt: { gt: new Date() },
+                isRevoked: false,
+            },
+        });
+        return storedToken ? user : null;
+    }
+    async logout(userId, refreshToken) {
+        await this.prisma.refreshToken.updateMany({
+            where: {
+                userId,
+                isRevoked: false,
+            },
+            data: { isRevoked: true },
+        });
+        return { message: 'Logged out successfully' };
+    }
+    async revokeAllUserTokens(userId) {
+        await this.prisma.refreshToken.updateMany({
+            where: { userId },
+            data: { isRevoked: true },
+        });
     }
     async validateUser(email, password) {
         const user = await this.usersService.findByEmail(email);
@@ -188,17 +233,40 @@ let AuthService = class AuthService {
         return user;
     }
     async generateTokens(user) {
+        const userRole = await this.usersService.getUserRole(user.id);
+        const userPermissions = await this.usersService.getUserPermissions(user.id);
         const payload = {
             sub: user.id,
             email: user.email,
-            role: await this.usersService.getUserRole(user.id),
+            role: userRole,
+            permissions: userPermissions,
+            centerId: user.centerId,
         };
-        const accessToken = this.jwtService.sign(payload);
-        const refreshToken = this.jwtService.sign(payload, {
-            secret: process.env.JWT_REFRESH_SECRET,
-            expiresIn: '7d',
+        const accessToken = this.jwtService.sign(payload, {
+            expiresIn: process.env.JWT_EXPIRES_IN || '15m',
         });
+        const refreshToken = this.jwtService.sign({ sub: user.id, email: user.email }, {
+            secret: process.env.JWT_REFRESH_SECRET || process.env.JWT_SECRET,
+            expiresIn: process.env.JWT_REFRESH_EXPIRES_IN || '7d',
+        });
+        await this.storeRefreshToken(user.id, refreshToken);
         return { accessToken, refreshToken };
+    }
+    async storeRefreshToken(userId, refreshToken) {
+        const expiresAt = new Date();
+        expiresAt.setDate(expiresAt.getDate() + 7);
+        await this.prisma.refreshToken.deleteMany({
+            where: {
+                expiresAt: { lt: new Date() },
+            },
+        });
+        await this.prisma.refreshToken.create({
+            data: {
+                userId,
+                token: refreshToken,
+                expiresAt,
+            },
+        });
     }
     async validateKolegiumId(kolegiumId) {
         return kolegiumId && kolegiumId.length >= 10;
@@ -226,6 +294,7 @@ exports.AuthService = AuthService = __decorate([
     (0, common_1.Injectable)(),
     __metadata("design:paramtypes", [users_service_1.UsersService,
         jwt_1.JwtService,
-        email_service_1.EmailService, typeof (_a = typeof database_service_1.DatabaseService !== "undefined" && database_service_1.DatabaseService) === "function" ? _a : Object])
+        email_service_1.EmailService,
+        prisma_service_1.PrismaService])
 ], AuthService);
 //# sourceMappingURL=auth.service.js.map

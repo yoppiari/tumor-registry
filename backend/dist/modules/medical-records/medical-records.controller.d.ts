@@ -18,7 +18,27 @@ export declare class MedicalRecordsController {
         plan?: string;
         notes?: string;
         isConfidential?: boolean;
-    }): Promise<MedicalRecord>;
+    }): Promise<{
+        id: string;
+        createdAt: Date;
+        updatedAt: Date;
+        patientId: string;
+        notes: string | null;
+        providerId: string;
+        chiefComplaint: string | null;
+        recordType: import(".prisma/client").$Enums.RecordType;
+        recordNumber: string;
+        historyOfPresent: string | null;
+        pastMedical: import("@prisma/client/runtime/library").JsonValue | null;
+        surgicalHistory: import("@prisma/client/runtime/library").JsonValue | null;
+        familyHistory: import("@prisma/client/runtime/library").JsonValue | null;
+        socialHistory: import("@prisma/client/runtime/library").JsonValue | null;
+        reviewOfSystems: import("@prisma/client/runtime/library").JsonValue | null;
+        physicalExam: import("@prisma/client/runtime/library").JsonValue | null;
+        assessment: string | null;
+        plan: string | null;
+        isConfidential: boolean;
+    }>;
     searchMedicalRecords(searchQuery: any): Promise<{
         records: any[];
         total: number;
@@ -33,7 +53,27 @@ export declare class MedicalRecordsController {
         totalPages: number;
     }>;
     findById(id: string): Promise<any>;
-    findByRecordNumber(recordNumber: string): Promise<MedicalRecord>;
+    findByRecordNumber(recordNumber: string): Promise<{
+        id: string;
+        createdAt: Date;
+        updatedAt: Date;
+        patientId: string;
+        notes: string | null;
+        providerId: string;
+        chiefComplaint: string | null;
+        recordType: import(".prisma/client").$Enums.RecordType;
+        recordNumber: string;
+        historyOfPresent: string | null;
+        pastMedical: import("@prisma/client/runtime/library").JsonValue | null;
+        surgicalHistory: import("@prisma/client/runtime/library").JsonValue | null;
+        familyHistory: import("@prisma/client/runtime/library").JsonValue | null;
+        socialHistory: import("@prisma/client/runtime/library").JsonValue | null;
+        reviewOfSystems: import("@prisma/client/runtime/library").JsonValue | null;
+        physicalExam: import("@prisma/client/runtime/library").JsonValue | null;
+        assessment: string | null;
+        plan: string | null;
+        isConfidential: boolean;
+    }>;
     updateMedicalRecord(id: string, updateRecordDto: {
         chiefComplaint?: string;
         historyOfPresent?: string;
@@ -47,7 +87,27 @@ export declare class MedicalRecordsController {
         plan?: string;
         notes?: string;
         isConfidential?: boolean;
-    }): Promise<MedicalRecord>;
+    }): Promise<{
+        id: string;
+        createdAt: Date;
+        updatedAt: Date;
+        patientId: string;
+        notes: string | null;
+        providerId: string;
+        chiefComplaint: string | null;
+        recordType: import(".prisma/client").$Enums.RecordType;
+        recordNumber: string;
+        historyOfPresent: string | null;
+        pastMedical: import("@prisma/client/runtime/library").JsonValue | null;
+        surgicalHistory: import("@prisma/client/runtime/library").JsonValue | null;
+        familyHistory: import("@prisma/client/runtime/library").JsonValue | null;
+        socialHistory: import("@prisma/client/runtime/library").JsonValue | null;
+        reviewOfSystems: import("@prisma/client/runtime/library").JsonValue | null;
+        physicalExam: import("@prisma/client/runtime/library").JsonValue | null;
+        assessment: string | null;
+        plan: string | null;
+        isConfidential: boolean;
+    }>;
     createInitialVisitRecord(createRecordDto: {
         patientId: string;
         chiefComplaint: string;
@@ -61,7 +121,27 @@ export declare class MedicalRecordsController {
         assessment?: string;
         plan?: string;
         notes?: string;
-    }): Promise<MedicalRecord>;
+    }): Promise<{
+        id: string;
+        createdAt: Date;
+        updatedAt: Date;
+        patientId: string;
+        notes: string | null;
+        providerId: string;
+        chiefComplaint: string | null;
+        recordType: import(".prisma/client").$Enums.RecordType;
+        recordNumber: string;
+        historyOfPresent: string | null;
+        pastMedical: import("@prisma/client/runtime/library").JsonValue | null;
+        surgicalHistory: import("@prisma/client/runtime/library").JsonValue | null;
+        familyHistory: import("@prisma/client/runtime/library").JsonValue | null;
+        socialHistory: import("@prisma/client/runtime/library").JsonValue | null;
+        reviewOfSystems: import("@prisma/client/runtime/library").JsonValue | null;
+        physicalExam: import("@prisma/client/runtime/library").JsonValue | null;
+        assessment: string | null;
+        plan: string | null;
+        isConfidential: boolean;
+    }>;
     createProgressNote(createRecordDto: {
         patientId: string;
         chiefComplaint?: string;
@@ -69,14 +149,54 @@ export declare class MedicalRecordsController {
         plan?: string;
         notes?: string;
         isConfidential?: boolean;
-    }): Promise<MedicalRecord>;
+    }): Promise<{
+        id: string;
+        createdAt: Date;
+        updatedAt: Date;
+        patientId: string;
+        notes: string | null;
+        providerId: string;
+        chiefComplaint: string | null;
+        recordType: import(".prisma/client").$Enums.RecordType;
+        recordNumber: string;
+        historyOfPresent: string | null;
+        pastMedical: import("@prisma/client/runtime/library").JsonValue | null;
+        surgicalHistory: import("@prisma/client/runtime/library").JsonValue | null;
+        familyHistory: import("@prisma/client/runtime/library").JsonValue | null;
+        socialHistory: import("@prisma/client/runtime/library").JsonValue | null;
+        reviewOfSystems: import("@prisma/client/runtime/library").JsonValue | null;
+        physicalExam: import("@prisma/client/runtime/library").JsonValue | null;
+        assessment: string | null;
+        plan: string | null;
+        isConfidential: boolean;
+    }>;
     createDischargeSummary(createRecordDto: {
         patientId: string;
         assessment?: string;
         plan?: string;
         notes?: string;
         isConfidential?: boolean;
-    }): Promise<MedicalRecord>;
+    }): Promise<{
+        id: string;
+        createdAt: Date;
+        updatedAt: Date;
+        patientId: string;
+        notes: string | null;
+        providerId: string;
+        chiefComplaint: string | null;
+        recordType: import(".prisma/client").$Enums.RecordType;
+        recordNumber: string;
+        historyOfPresent: string | null;
+        pastMedical: import("@prisma/client/runtime/library").JsonValue | null;
+        surgicalHistory: import("@prisma/client/runtime/library").JsonValue | null;
+        familyHistory: import("@prisma/client/runtime/library").JsonValue | null;
+        socialHistory: import("@prisma/client/runtime/library").JsonValue | null;
+        reviewOfSystems: import("@prisma/client/runtime/library").JsonValue | null;
+        physicalExam: import("@prisma/client/runtime/library").JsonValue | null;
+        assessment: string | null;
+        plan: string | null;
+        isConfidential: boolean;
+    }>;
     createConsultationRecord(createRecordDto: {
         patientId: string;
         chiefComplaint?: string;
@@ -85,7 +205,27 @@ export declare class MedicalRecordsController {
         plan?: string;
         notes?: string;
         isConfidential?: boolean;
-    }): Promise<MedicalRecord>;
+    }): Promise<{
+        id: string;
+        createdAt: Date;
+        updatedAt: Date;
+        patientId: string;
+        notes: string | null;
+        providerId: string;
+        chiefComplaint: string | null;
+        recordType: import(".prisma/client").$Enums.RecordType;
+        recordNumber: string;
+        historyOfPresent: string | null;
+        pastMedical: import("@prisma/client/runtime/library").JsonValue | null;
+        surgicalHistory: import("@prisma/client/runtime/library").JsonValue | null;
+        familyHistory: import("@prisma/client/runtime/library").JsonValue | null;
+        socialHistory: import("@prisma/client/runtime/library").JsonValue | null;
+        reviewOfSystems: import("@prisma/client/runtime/library").JsonValue | null;
+        physicalExam: import("@prisma/client/runtime/library").JsonValue | null;
+        assessment: string | null;
+        plan: string | null;
+        isConfidential: boolean;
+    }>;
     createEmergencyRecord(createRecordDto: {
         patientId: string;
         chiefComplaint: string;
@@ -94,5 +234,25 @@ export declare class MedicalRecordsController {
         plan?: string;
         notes?: string;
         isConfidential?: boolean;
-    }): Promise<MedicalRecord>;
+    }): Promise<{
+        id: string;
+        createdAt: Date;
+        updatedAt: Date;
+        patientId: string;
+        notes: string | null;
+        providerId: string;
+        chiefComplaint: string | null;
+        recordType: import(".prisma/client").$Enums.RecordType;
+        recordNumber: string;
+        historyOfPresent: string | null;
+        pastMedical: import("@prisma/client/runtime/library").JsonValue | null;
+        surgicalHistory: import("@prisma/client/runtime/library").JsonValue | null;
+        familyHistory: import("@prisma/client/runtime/library").JsonValue | null;
+        socialHistory: import("@prisma/client/runtime/library").JsonValue | null;
+        reviewOfSystems: import("@prisma/client/runtime/library").JsonValue | null;
+        physicalExam: import("@prisma/client/runtime/library").JsonValue | null;
+        assessment: string | null;
+        plan: string | null;
+        isConfidential: boolean;
+    }>;
 }

@@ -203,17 +203,77 @@ export class AuthService {
         throw new UnauthorizedException('Invalid refresh token');
       }
 
-      // Generate new access token
-      const accessToken = this.jwtService.sign({
-        sub: user.id,
-        email: user.email,
-        role: await this.usersService.getUserRole(user.id),
+      // Check if refresh token is stored and valid
+      const storedToken = await this.prisma.refreshToken.findFirst({
+        where: {
+          userId: user.id,
+          token: refreshToken,
+          expiresAt: { gt: new Date() },
+          isRevoked: false,
+        },
       });
 
-      return { accessToken };
+      if (!storedToken) {
+        throw new UnauthorizedException('Refresh token not found or expired');
+      }
+
+      // Generate new tokens
+      const tokens = await this.generateTokens(user);
+
+      // Revoke old refresh token and create new one
+      await this.prisma.refreshToken.update({
+        where: { id: storedToken.id },
+        data: { isRevoked: true },
+      });
+
+      // Store new refresh token
+      await this.storeRefreshToken(user.id, tokens.refreshToken);
+
+      return {
+        accessToken: tokens.accessToken,
+        refreshToken: tokens.refreshToken,
+      };
     } catch (error) {
       throw new UnauthorizedException('Invalid refresh token');
     }
+  }
+
+  async validateRefreshToken(userId: string, refreshToken: string) {
+    const user = await this.usersService.findById(userId);
+    if (!user || !user.isActive) {
+      return null;
+    }
+
+    const storedToken = await this.prisma.refreshToken.findFirst({
+      where: {
+        userId,
+        token: refreshToken,
+        expiresAt: { gt: new Date() },
+        isRevoked: false,
+      },
+    });
+
+    return storedToken ? user : null;
+  }
+
+  async logout(userId: string, refreshToken: string) {
+    // Revoke all refresh tokens for the user
+    await this.prisma.refreshToken.updateMany({
+      where: {
+        userId,
+        isRevoked: false,
+      },
+      data: { isRevoked: true },
+    });
+
+    return { message: 'Logged out successfully' };
+  }
+
+  async revokeAllUserTokens(userId: string) {
+    await this.prisma.refreshToken.updateMany({
+      where: { userId },
+      data: { isRevoked: true },
+    });
   }
 
   private async validateUser(email: string, password: string) {
@@ -238,19 +298,54 @@ export class AuthService {
   }
 
   private async generateTokens(user: any) {
+    const userRole = await this.usersService.getUserRole(user.id);
+    const userPermissions = await this.usersService.getUserPermissions(user.id);
+
     const payload = {
       sub: user.id,
       email: user.email,
-      role: await this.usersService.getUserRole(user.id),
+      role: userRole,
+      permissions: userPermissions,
+      centerId: user.centerId,
     };
 
-    const accessToken = this.jwtService.sign(payload);
-    const refreshToken = this.jwtService.sign(payload, {
-      secret: process.env.JWT_REFRESH_SECRET || process.env.JWT_SECRET,
-      expiresIn: '7d',
+    const accessToken = this.jwtService.sign(payload, {
+      expiresIn: process.env.JWT_EXPIRES_IN || '15m',
     });
 
+    const refreshToken = this.jwtService.sign(
+      { sub: user.id, email: user.email },
+      {
+        secret: process.env.JWT_REFRESH_SECRET || process.env.JWT_SECRET,
+        expiresIn: process.env.JWT_REFRESH_EXPIRES_IN || '7d',
+      }
+    );
+
+    // Store refresh token in database
+    await this.storeRefreshToken(user.id, refreshToken);
+
     return { accessToken, refreshToken };
+  }
+
+  private async storeRefreshToken(userId: string, refreshToken: string) {
+    const expiresAt = new Date();
+    expiresAt.setDate(expiresAt.getDate() + 7); // 7 days
+
+    // Clean up expired tokens first
+    await this.prisma.refreshToken.deleteMany({
+      where: {
+        expiresAt: { lt: new Date() },
+      },
+    });
+
+    // Store new refresh token
+    await this.prisma.refreshToken.create({
+      data: {
+        userId,
+        token: refreshToken,
+        expiresAt,
+      },
+    });
   }
 
   private async validateKolegiumId(kolegiumId: string): Promise<boolean> {

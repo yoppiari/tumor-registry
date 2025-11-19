@@ -11,18 +11,21 @@ import {
   HttpStatus,
   HttpCode,
   ParseUUIDPipe,
+  ValidationPipe,
 } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse, ApiParam, ApiQuery } from '@nestjs/swagger';
 import { ResearchService } from './research.service';
-import { JwtAuthGuard } from '@/auth/guards/jwt.guard';
-import { PermissionsGuard } from '@/auth/guards/permissions.guard';
-import { RequirePermissions } from '@/auth/decorators/permissions.decorator';
-import { AuditLog } from '@/common/decorators/audit-log.decorator';
+import { JwtAuthGuard } from '../auth/guards/jwt.guard';
+import { EnhancedPermissionsGuard } from '../auth/guards/enhanced-permissions.guard';
+import { EnhancedThrottlerGuard } from '../auth/guards/enhanced-throttler.guard';
+import { RequirePermissions } from '../auth/decorators/permissions.decorator';
+import { AuditLog } from '../../common/decorators/audit-log.decorator';
+import { EnhancedCreateResearchRequestDto, EnhancedUpdateResearchRequestDto, EnhancedSearchResearchDto, EnhancedApprovalDto } from './dto/enhanced-research-request.dto';
 import { ResearchRequestStatus, StudyType, EthicsStatus } from '@prisma/client';
 
 @ApiTags('Research Management')
 @Controller('research')
-@UseGuards(JwtAuthGuard, PermissionsGuard)
+@UseGuards(JwtAuthGuard, EnhancedPermissionsGuard, EnhancedThrottlerGuard)
 export class ResearchController {
   constructor(private readonly researchService: ResearchService) {}
 
@@ -33,23 +36,10 @@ export class ResearchController {
   @RequirePermissions('RESEARCH_CREATE')
   @HttpCode(HttpStatus.CREATED)
   @AuditLog('CREATE_RESEARCH_REQUEST')
-  async createResearchRequest(@Body() createResearchRequestDto: {
-    title: string;
-    description: string;
-    principalInvestigatorId: string;
-    studyType: StudyType;
-    objectives: string;
-    methodology: string;
-    inclusionCriteria: string;
-    exclusionCriteria: string;
-    sampleSize: number;
-    duration: number;
-    requiresEthicsApproval: boolean;
-    dataRequested: string;
-    confidentialityRequirements?: string;
-    fundingSource?: string;
-    collaborators?: string;
-  }) {
+  async createResearchRequest(
+    @Body(new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }))
+    createResearchRequestDto: EnhancedCreateResearchRequestDto
+  ) {
     return await this.researchService.createResearchRequest(createResearchRequestDto);
   }
 
@@ -65,15 +55,11 @@ export class ResearchController {
   @ApiQuery({ name: 'dateTo', required: false })
   @ApiQuery({ name: 'page', required: false, type: Number })
   @ApiQuery({ name: 'limit', required: false, type: Number })
-  async searchResearchRequests(@Query() searchQuery: any) {
-    const data: any = { ...searchQuery };
-    if (searchQuery.dateFrom) {
-      data.dateFrom = new Date(searchQuery.dateFrom);
-    }
-    if (searchQuery.dateTo) {
-      data.dateTo = new Date(searchQuery.dateTo);
-    }
-    return await this.researchService.getResearchRequests(data);
+  async searchResearchRequests(
+    @Query(new ValidationPipe({ transform: true, whitelist: true }))
+    searchQuery: EnhancedSearchResearchDto
+  ) {
+    return await this.researchService.getResearchRequests(searchQuery);
   }
 
   @Get('requests/:requestId')

@@ -5,14 +5,17 @@ import {
   UseGuards,
   HttpCode,
   HttpStatus,
+  ValidationPipe,
 } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse, ApiQuery } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../auth/guards/jwt.guard';
+import { EnhancedThrottlerGuard } from '../auth/guards/enhanced-throttler.guard';
 import { AnalyticsService } from './analytics.service';
+import { ExecutiveDashboardQueryDto, EnhancedAnalyticsQueryDto } from './dto/enhanced-analytics.dto';
 
 @ApiTags('Analytics')
 @Controller('analytics')
-@UseGuards(JwtAuthGuard)
+@UseGuards(JwtAuthGuard, EnhancedThrottlerGuard)
 export class AnalyticsController {
   constructor(private readonly analyticsService: AnalyticsService) {}
 
@@ -23,10 +26,10 @@ export class AnalyticsController {
   @ApiQuery({ name: 'timeRange', required: false, description: 'Time range (7d, 30d, 90d, 1y)' })
   @HttpCode(HttpStatus.OK)
   async getDashboard(
-    @Query('centerId') centerId?: string,
-    @Query('timeRange') timeRange?: string,
+    @Query(new ValidationPipe({ transform: true, whitelist: true }))
+    query: ExecutiveDashboardQueryDto
   ) {
-    return await this.analyticsService.getDashboardData(centerId, timeRange);
+    return await this.analyticsService.getDashboardData(query.centerId, query.timeRange);
   }
 
   @Get('cancer-stats')

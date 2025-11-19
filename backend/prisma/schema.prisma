@@ -1,70 +1,84 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
   previewFeatures = ["multiSchema"]
 }
 
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
-  schemas  = ["system", "audit", "medical"]
+  schemas  = ["audit", "medical", "system"]
 }
 
-// System Schema for multi-tenant architecture
 model Center {
-  id            String   @id @default(cuid())
-  name          String
-  code          String   @unique
-  province      String
-  regency       String?
-  address       String?
-  isActive      Boolean  @default(true)
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
-
-  users         User[]
-patients      Patient[]
+  id        String    @id @default(cuid())
+  name      String
+  code      String    @unique
+  province  String
+  regency   String?
+  address   String?
+  isActive  Boolean   @default(true)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  patients  Patient[]
+  users     User[]
+  analyticsMetrics AnalyticsPerformanceMetric[]
+  benchmarks CenterBenchmark[]
+  reportTemplates ReportTemplate[]
+  systemConfigurations SystemConfiguration[]
+  externalIntegrations ExternalIntegration[]
+  performanceMetrics PerformanceMetric[]
+  scheduledTasks ScheduledTask[]
 
   @@map("centers")
   @@schema("system")
 }
 
 model User {
-  id            String   @id @default(cuid())
-  email         String   @unique
-  name          String
-  kolegiumId     String?  // Kolegium member ID
-  passwordHash  String
-  phone         String?
-  nik           String?  // National ID
-  isActive      Boolean  @default(true)
-  isEmailVerified Boolean @default(false)
-  mfaEnabled    Boolean  @default(false)
-  mfaSecret     String?
-  lastLoginAt   DateTime?
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
-
-  centerId      String
-  center        Center   @relation(fields: [centerId], references: [id], onDelete: Cascade)
-
-  userRoles     UserRole[]
+  id                        String                  @id @default(cuid())
+  email                     String                  @unique
+  name                      String
+  kolegiumId                String?
+  passwordHash              String
+  phone                     String?
+  nik                       String?
+  isActive                  Boolean                 @default(true)
+  isEmailVerified           Boolean                 @default(false)
+  mfaEnabled                Boolean                 @default(false)
+  mfaSecret                 String?
+  lastLoginAt               DateTime?
+  createdAt                 DateTime                @default(now())
+  updatedAt                 DateTime                @updatedAt
+  centerId                  String
+  createdDataAccess         DataAccessSession[]     @relation("DataAccessCreator")
+  dataAccessSessions        DataAccessSession[]     @relation("DataAccessUser")
+  researchApprovals         ResearchApproval[]      @relation("ResearchApprover")
+  createdApprovals          ResearchApproval[]      @relation("ResearchApprovalCreator")
+  delegatedApprovals        ResearchApproval[]      @relation("ResearchDelegatedApprover")
+  collaborations            ResearchCollaboration[] @relation("ResearchCollaborator")
+  createdCollaborations     ResearchCollaboration[] @relation("ResearchCollaborationCreator")
+  createdImpactMetrics      ResearchImpactMetric[]  @relation("ImpactMetricCreator")
+  verifiedImpactMetrics     ResearchImpactMetric[]  @relation("ImpactMetricVerifier")
+  createdPublications       ResearchPublication[]   @relation("PublicationCreator")
+  researchRequestsAsCreator ResearchRequest[]       @relation("ResearchCreator")
+  researchRequestsAsPI      ResearchRequest[]       @relation("ResearchInvestigator")
+  userRoles                 UserRole[]
+  userActivity              UserActivityLog[]       @relation("UserActivity")
+  securityEvents            SecurityEvent[]         @relation("SecurityEvents")
+  apiUsage                  ApiUsage[]              @relation("ApiUsage")
+  center                    Center                  @relation(fields: [centerId], references: [id], onDelete: Cascade)
 
   @@map("users")
   @@schema("system")
 }
 
 model Role {
-  id          String @id @default(cuid())
-  name        String @unique
-  code        String @unique
+  id          String           @id @default(cuid())
+  name        String           @unique
+  code        String           @unique
   description String?
-  level       Int    // 1: User, 2: Center Admin, 3: National Admin, 4: System Admin
-
-  userRoles   UserRole[]
+  level       Int
   permissions RolePermission[]
+  userRoles   UserRole[]
 
   @@map("roles")
   @@schema("system")
@@ -76,9 +90,8 @@ model UserRole {
   roleId    String
   isActive  Boolean  @default(true)
   createdAt DateTime @default(now())
-
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   role      Role     @relation(fields: [roleId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([userId, roleId])
   @@map("user_roles")
@@ -86,13 +99,12 @@ model UserRole {
 }
 
 model Permission {
-  id          String   @id @default(cuid())
-  name        String   @unique
-  code        String   @unique
-  resource    String
-  action      String
-  description String?
-
+  id              String           @id @default(cuid())
+  name            String           @unique
+  code            String           @unique
+  resource        String
+  action          String
+  description     String?
   rolePermissions RolePermission[]
 
   @@map("permissions")
@@ -100,20 +112,18 @@ model Permission {
 }
 
 model RolePermission {
-  id           String @id @default(cuid())
+  id           String     @id @default(cuid())
   roleId       String
   permissionId String
-  createdAt    DateTime @default(now())
-
-  role         Role       @relation(fields: [roleId], references: [id], onDelete: Cascade)
+  createdAt    DateTime   @default(now())
   permission   Permission @relation(fields: [permissionId], references: [id], onDelete: Cascade)
+  role         Role       @relation(fields: [roleId], references: [id], onDelete: Cascade)
 
   @@unique([roleId, permissionId])
   @@map("role_permissions")
   @@schema("system")
 }
 
-// Audit Schema for compliance
 model AuditLog {
   id        String   @id @default(cuid())
   userId    String
@@ -128,301 +138,538 @@ model AuditLog {
   @@schema("audit")
 }
 
-// Medical Schema for patient and clinical data
 model Patient {
-  id                    String    @id @default(cuid())
-  medicalRecordNumber   String    @unique
-  nik                   String    @unique  // National ID
-  name                  String
-  dateOfBirth           DateTime
-  placeOfBirth          String?
-  gender                Gender
-  bloodType             BloodType?
-  religion              String?
-  maritalStatus         MaritalStatus?
-  occupation            String?
-  education             String?
-  phoneNumber           String?
-  email                 String?
-  address               String?
-  province              String?
-  regency               String?
-  district              String?
-  village               String?
-  postalCode            String?
-  emergencyContact      Json?     // {name, relationship, phone}
-  isActive              Boolean   @default(true)
-  isDeceased            Boolean   @default(false)
-  dateOfDeath           DateTime?
-  causeOfDeath          String?
-  centerId              String
-  createdAt             DateTime  @default(now())
-  updatedAt             DateTime  @updatedAt
-
-  center                Center    @relation(fields: [centerId], references: [id], onDelete: Cascade)
-  medicalRecords        MedicalRecord[]
-  diagnoses             PatientDiagnosis[]
-  allergies             PatientAllergy[]
-  medications           PatientMedication[]
-  vitalSigns            VitalSign[]
-  laboratoryResults     LaboratoryResult[]
-  radiologyResults      RadiologyResult[]
-  procedures            PatientProcedure[]
-  consents              PatientConsent[]
-  visits                PatientVisit[]
-  insuranceInfos        PatientInsurance[]
+  id                  String              @id @default(cuid())
+  medicalRecordNumber String              @unique
+  nik                 String              @unique
+  name                String
+  dateOfBirth         DateTime
+  placeOfBirth        String?
+  gender              Gender
+  bloodType           BloodType?
+  religion            String?
+  maritalStatus       MaritalStatus?
+  occupation          String?
+  education           String?
+  phoneNumber         String?
+  email               String?
+  address             String?
+  province            String?
+  regency             String?
+  district            String?
+  village             String?
+  postalCode          String?
+  emergencyContact    Json?
+  isActive            Boolean             @default(true)
+  isDeceased          Boolean             @default(false)
+  dateOfDeath         DateTime?
+  causeOfDeath        String?
+  centerId            String
+  createdAt           DateTime            @default(now())
+  updatedAt           DateTime            @updatedAt
+  laboratoryResults   LaboratoryResult[]
+  medicalRecords      MedicalRecord[]
+  allergies           PatientAllergy[]
+  consents            PatientConsent[]
+  diagnoses           PatientDiagnosis[]
+  insuranceInfos      PatientInsurance[]
+  medications         PatientMedication[]
+  procedures          PatientProcedure[]
+  visits              PatientVisit[]
+  center              Center              @relation(fields: [centerId], references: [id], onDelete: Cascade)
+  radiologyResults    RadiologyResult[]
+  vitalSigns          VitalSign[]
 
   @@map("patients")
   @@schema("medical")
 }
 
 model MedicalRecord {
-  id                String           @id @default(cuid())
-  patientId         String
-  recordType        RecordType
-  recordNumber      String
-  providerId        String           // User ID of healthcare provider
-  chiefComplaint    String?
-  historyOfPresent  String?          // History of present illness
-  pastMedical       Json?            // Past medical history
-  surgicalHistory   Json?            // Surgical history
-  familyHistory     Json?            // Family history
-  socialHistory     Json?            // Social history
-  reviewOfSystems   Json?            // Review of systems
-  physicalExam      Json?            // Physical examination findings
-  assessment        String?          // Assessment
-  plan              String?          // Treatment plan
-  notes             String?          // Additional notes
-  isConfidential    Boolean          @default(false)
-  createdAt         DateTime         @default(now())
-  updatedAt         DateTime         @updatedAt
-
-  patient           Patient          @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  id               String     @id @default(cuid())
+  patientId        String
+  recordType       RecordType
+  recordNumber     String
+  providerId       String
+  chiefComplaint   String?
+  historyOfPresent String?
+  pastMedical      Json?
+  surgicalHistory  Json?
+  familyHistory    Json?
+  socialHistory    Json?
+  reviewOfSystems  Json?
+  physicalExam     Json?
+  assessment       String?
+  plan             String?
+  notes            String?
+  isConfidential   Boolean    @default(false)
+  createdAt        DateTime   @default(now())
+  updatedAt        DateTime   @updatedAt
+  patient          Patient    @relation(fields: [patientId], references: [id], onDelete: Cascade)
 
   @@map("medical_records")
   @@schema("medical")
 }
 
 model PatientDiagnosis {
-  id                String           @id @default(cuid())
-  patientId         String
-  diagnosisCode     String           // ICD-10 code
-  diagnosisName     String
-  diagnosisType     DiagnosisType
-  severity          DiagnosisSeverity?
-  status            DiagnosisStatus
-  onsetDate         DateTime?
-  resolutionDate    DateTime?
-  notes             String?
-  providerId        String           // User ID
-  isPrimary         Boolean          @default(false)
-  createdAt         DateTime         @default(now())
-  updatedAt         DateTime         @updatedAt
-
-  patient           Patient          @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  id             String             @id @default(cuid())
+  patientId      String
+  diagnosisCode  String
+  diagnosisName  String
+  diagnosisType  DiagnosisType
+  severity       DiagnosisSeverity?
+  status         DiagnosisStatus
+  onsetDate      DateTime?
+  resolutionDate DateTime?
+  notes          String?
+  providerId     String
+  isPrimary      Boolean            @default(false)
+  createdAt      DateTime           @default(now())
+  updatedAt      DateTime           @updatedAt
+  patient        Patient            @relation(fields: [patientId], references: [id], onDelete: Cascade)
 
   @@map("patient_diagnoses")
   @@schema("medical")
 }
 
 model PatientAllergy {
-  id                String           @id @default(cuid())
-  patientId         String
-  allergenType      AllergenType
-  allergenName      String
-  reaction          String?
-  severity          AllergySeverity
-  status            AllergyStatus
-  onsetDate         DateTime?
-  notes             String?
-  providerId        String           // User ID
-  createdAt         DateTime         @default(now())
-  updatedAt         DateTime         @updatedAt
-
-  patient           Patient          @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  id           String          @id @default(cuid())
+  patientId    String
+  allergenType AllergenType
+  allergenName String
+  reaction     String?
+  severity     AllergySeverity
+  status       AllergyStatus
+  onsetDate    DateTime?
+  notes        String?
+  providerId   String
+  createdAt    DateTime        @default(now())
+  updatedAt    DateTime        @updatedAt
+  patient      Patient         @relation(fields: [patientId], references: [id], onDelete: Cascade)
 
   @@map("patient_allergies")
   @@schema("medical")
 }
 
 model PatientMedication {
-  id                String           @id @default(cuid())
-  patientId         String
-  medicationName    String
-  genericName       String?
-  brandName         String?
-  dosage            String?
-  frequency         String?
-  route             MedicationRoute
-  startDate         DateTime
-  endDate           DateTime?
-  isActive          Boolean          @default(true)
-  purpose           String?
-  instructions      String?
-  sideEffects       String?
-  prescribedBy      String           // User ID
-  createdAt         DateTime         @default(now())
-  updatedAt         DateTime         @updatedAt
-
-  patient           Patient          @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  id             String          @id @default(cuid())
+  patientId      String
+  medicationName String
+  genericName    String?
+  brandName      String?
+  dosage         String?
+  frequency      String?
+  route          MedicationRoute
+  startDate      DateTime
+  endDate        DateTime?
+  isActive       Boolean         @default(true)
+  purpose        String?
+  instructions   String?
+  sideEffects    String?
+  prescribedBy   String
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  patient        Patient         @relation(fields: [patientId], references: [id], onDelete: Cascade)
 
   @@map("patient_medications")
   @@schema("medical")
 }
 
 model VitalSign {
-  id                String           @id @default(cuid())
-  patientId         String
-  temperature       Float?           // Celsius
-  bloodPressureSystolic Int?        // mmHg
-  bloodPressureDiastolic Int?       // mmHg
-  heartRate         Int?             // bpm
-  respiratoryRate   Int?             // breaths per minute
-  oxygenSaturation  Float?           // percentage
-  height            Float?           // cm
-  weight            Float?           // kg
-  bmi               Float?           // calculated
-  painScale         Int?             // 0-10
-  bloodGlucose      Float?           // mg/dL
-  notes             String?
-  recordedBy        String           // User ID
-  recordedAt        DateTime         @default(now())
-
-  patient           Patient          @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  id                     String   @id @default(cuid())
+  patientId              String
+  temperature            Float?
+  bloodPressureSystolic  Int?
+  bloodPressureDiastolic Int?
+  heartRate              Int?
+  respiratoryRate        Int?
+  oxygenSaturation       Float?
+  height                 Float?
+  weight                 Float?
+  bmi                    Float?
+  painScale              Int?
+  bloodGlucose           Float?
+  notes                  String?
+  recordedBy             String
+  recordedAt             DateTime @default(now())
+  patient                Patient  @relation(fields: [patientId], references: [id], onDelete: Cascade)
 
   @@map("vital_signs")
   @@schema("medical")
 }
 
 model LaboratoryResult {
-  id                String           @id @default(cuid())
-  patientId         String
-  testType          String
-  testName          String
-  result            String
-  normalRange       String?
-  unit              String?
-  status            ResultStatus
-  notes             String?
-  orderedBy         String           // User ID
-  performedAt       DateTime?
-  createdAt         DateTime         @default(now())
-  updatedAt         DateTime         @updatedAt
-
-  patient           Patient          @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  id          String       @id @default(cuid())
+  patientId   String
+  testType    String
+  testName    String
+  result      String
+  normalRange String?
+  unit        String?
+  status      ResultStatus
+  notes       String?
+  orderedBy   String
+  performedAt DateTime?
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  patient     Patient      @relation(fields: [patientId], references: [id], onDelete: Cascade)
 
   @@map("laboratory_results")
   @@schema("medical")
 }
 
 model RadiologyResult {
-  id                String           @id @default(cuid())
-  patientId         String
-  examinationType   String
-  indication        String?
-  findings          String?
-  impression        String?
-  recommendation    String?
-  status            ResultStatus
-  radiologistId     String           // User ID
-  examinationDate   DateTime?
-  createdAt         DateTime         @default(now())
-  updatedAt         DateTime         @updatedAt
-
-  patient           Patient          @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  id              String       @id @default(cuid())
+  patientId       String
+  examinationType String
+  indication      String?
+  findings        String?
+  impression      String?
+  recommendation  String?
+  status          ResultStatus
+  radiologistId   String
+  examinationDate DateTime?
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+  patient         Patient      @relation(fields: [patientId], references: [id], onDelete: Cascade)
 
   @@map("radiology_results")
   @@schema("medical")
 }
 
 model PatientProcedure {
-  id                String           @id @default(cuid())
-  patientId         String
-  procedureName     String
-  procedureCode     String?          // Procedure coding system
-  indication        String?
-  description       String?
-  startDate         DateTime
-  endDate           DateTime?
-  status            ProcedureStatus
-  complications     String?
-  outcome           String?
-  performedBy       String           // User ID
-  notes             String?
-  createdAt         DateTime         @default(now())
-  updatedAt         DateTime         @updatedAt
-
-  patient           Patient          @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  id            String          @id @default(cuid())
+  patientId     String
+  procedureName String
+  procedureCode String?
+  indication    String?
+  description   String?
+  startDate     DateTime
+  endDate       DateTime?
+  status        ProcedureStatus
+  complications String?
+  outcome       String?
+  performedBy   String
+  notes         String?
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+  patient       Patient         @relation(fields: [patientId], references: [id], onDelete: Cascade)
 
   @@map("patient_procedures")
   @@schema("medical")
 }
 
 model PatientConsent {
-  id                String           @id @default(cuid())
-  patientId         String
-  consentType       ConsentType
-  description       String
-  isConsented       Boolean
-  consentDate       DateTime
-  expiredDate       DateTime?
-  guardianName     String?          // For minors or incapacitated
-  guardianRelation  String?          // Relationship to patient
-  providerId        String           // User ID who obtained consent
-  notes             String?
-  createdAt         DateTime         @default(now())
-  updatedAt         DateTime         @updatedAt
-
-  patient           Patient          @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  id               String      @id @default(cuid())
+  patientId        String
+  consentType      ConsentType
+  description      String
+  isConsented      Boolean
+  consentDate      DateTime
+  expiredDate      DateTime?
+  guardianName     String?
+  guardianRelation String?
+  providerId       String
+  notes            String?
+  createdAt        DateTime    @default(now())
+  updatedAt        DateTime    @updatedAt
+  patient          Patient     @relation(fields: [patientId], references: [id], onDelete: Cascade)
 
   @@map("patient_consents")
   @@schema("medical")
 }
 
 model PatientVisit {
-  id                String           @id @default(cuid())
-  patientId         String
-  visitType         VisitType
-  visitDate         DateTime
-  dischargeDate     DateTime?
-  department        String?
-  chiefComplaint    String?
-  diagnosis         String?
-  treatment         String?
-  providerId        String           // User ID
-  status            VisitStatus
-  notes             String?
-  createdAt         DateTime         @default(now())
-  updatedAt         DateTime         @updatedAt
-
-  patient           Patient          @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  id             String      @id @default(cuid())
+  patientId      String
+  visitType      VisitType
+  visitDate      DateTime
+  dischargeDate  DateTime?
+  department     String?
+  chiefComplaint String?
+  diagnosis      String?
+  treatment      String?
+  providerId     String
+  status         VisitStatus
+  notes          String?
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
+  patient        Patient     @relation(fields: [patientId], references: [id], onDelete: Cascade)
 
   @@map("patient_visits")
   @@schema("medical")
 }
 
 model PatientInsurance {
-  id                String           @id @default(cuid())
+  id                String    @id @default(cuid())
   patientId         String
-  insuranceProvider  String
+  insuranceProvider String
   policyNumber      String
   memberNumber      String?
   planType          String?
   coverageType      String?
-  isActive          Boolean          @default(true)
+  isActive          Boolean   @default(true)
   effectiveDate     DateTime
   expirationDate    DateTime?
   notes             String?
-  createdAt         DateTime         @default(now())
-  updatedAt         DateTime         @updatedAt
-
-  patient           Patient          @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+  patient           Patient   @relation(fields: [patientId], references: [id], onDelete: Cascade)
 
   @@map("patient_insurances")
   @@schema("medical")
 }
 
-// Enums for medical data
+model ResearchRequest {
+  id                          String                  @id @default(cuid())
+  title                       String
+  description                 String
+  principalInvestigatorId     String
+  studyType                   StudyType
+  objectives                  String
+  methodology                 String
+  inclusionCriteria           String
+  exclusionCriteria           String
+  sampleSize                  Int
+  duration                    Int
+  requiresEthicsApproval      Boolean                 @default(false)
+  dataRequested               String
+  confidentialityRequirements String?
+  fundingSource               String?
+  collaborators               String?
+  status                      ResearchRequestStatus   @default(PENDING_REVIEW)
+  ethicsStatus                EthicsStatus            @default(NOT_REQUIRED)
+  ethicsApprovalNumber        String?
+  ethicsApprovalDate          DateTime?
+  priority                    ResearchPriority        @default(MEDIUM)
+  expectedOutcomes            String?
+  riskAssessment              String?
+  dataRetentionPeriod         Int?
+  submittedAt                 DateTime                @default(now())
+  reviewedAt                  DateTime?
+  approvedAt                  DateTime?
+  rejectedAt                  DateTime?
+  completedAt                 DateTime?
+  expiresAt                   DateTime?
+  notes                       String?
+  createdBy                   String
+  createdAt                   DateTime                @default(now())
+  updatedAt                   DateTime                @updatedAt
+  dataAccessSessions          DataAccessSession[]
+  approvals                   ResearchApproval[]
+  collaborations              ResearchCollaboration[]
+  impactMetrics               ResearchImpactMetric[]
+  publications                ResearchPublication[]
+  impactAnalyses              ResearchImpactAnalysis[]
+  creator                     User                    @relation("ResearchCreator", fields: [createdBy], references: [id])
+  principalInvestigator       User                    @relation("ResearchInvestigator", fields: [principalInvestigatorId], references: [id])
+
+  @@map("research_requests")
+  @@schema("medical")
+}
+
+model ResearchApproval {
+  id                String          @id @default(cuid())
+  researchRequestId String
+  approverId        String
+  level             ApprovalLevel
+  status            ApprovalStatus
+  comments          String?
+  conditions        String?
+  approvedAt        DateTime?
+  reviewedAt        DateTime        @default(now())
+  expiresAt         DateTime?
+  isFinal           Boolean         @default(false)
+  delegationAllowed Boolean         @default(false)
+  delegatedToId     String?
+  createdBy         String
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
+  approver          User            @relation("ResearchApprover", fields: [approverId], references: [id])
+  creator           User            @relation("ResearchApprovalCreator", fields: [createdBy], references: [id])
+  delegatedTo       User?           @relation("ResearchDelegatedApprover", fields: [delegatedToId], references: [id])
+  researchRequest   ResearchRequest @relation(fields: [researchRequestId], references: [id], onDelete: Cascade)
+
+  @@map("research_approvals")
+  @@schema("medical")
+}
+
+model ResearchCollaboration {
+  id                 String              @id @default(cuid())
+  researchRequestId  String
+  collaboratorId     String
+  role               CollaborationRole
+  responsibilities   String?
+  affiliation        String?
+  email              String?
+  phone              String?
+  status             CollaborationStatus @default(PENDING)
+  invitedAt          DateTime?
+  acceptedAt         DateTime?
+  declinedAt         DateTime?
+  contributionLevel  String?
+  expertise          String?
+  conflictOfInterest String?
+  dataAccessLevel    DataAccessLevel     @default(LIMITED)
+  createdBy          String
+  createdAt          DateTime            @default(now())
+  updatedAt          DateTime            @updatedAt
+  collaborator       User                @relation("ResearchCollaborator", fields: [collaboratorId], references: [id])
+  creator            User                @relation("ResearchCollaborationCreator", fields: [createdBy], references: [id])
+  researchRequest    ResearchRequest     @relation(fields: [researchRequestId], references: [id], onDelete: Cascade)
+
+  @@map("research_collaborations")
+  @@schema("medical")
+}
+
+model DataAccessSession {
+  id                  String           @id @default(cuid())
+  researchRequestId   String
+  userId              String
+  sessionType         SessionType
+  accessLevel         DataAccessLevel
+  ipAddress           String?
+  userAgent           String?
+  startTime           DateTime         @default(now())
+  endTime             DateTime?
+  duration            Int?
+  dataAccessed        String?
+  queriesExecuted     String?
+  purpose             String?
+  complianceStatus    ComplianceStatus @default(COMPLIANT)
+  violationReason     String?
+  automatedMonitoring Boolean          @default(true)
+  approvalReference   String?
+  createdBy           String
+  createdAt           DateTime         @default(now())
+  updatedAt           DateTime         @updatedAt
+  creator             User             @relation("DataAccessCreator", fields: [createdBy], references: [id])
+  researchRequest     ResearchRequest  @relation(fields: [researchRequestId], references: [id], onDelete: Cascade)
+  user                User             @relation("DataAccessUser", fields: [userId], references: [id])
+
+  @@map("data_access_sessions")
+  @@schema("medical")
+}
+
+model ResearchPublication {
+  id                    String            @id @default(cuid())
+  researchRequestId     String
+  title                 String
+  abstract              String?
+  authors               String
+  journal               String?
+  publicationDate       DateTime?
+  volume                String?
+  issue                 String?
+  pages                 String?
+  doi                   String?
+  pmid                  String?
+  publicationType       PublicationType
+  status                PublicationStatus @default(DRAFT)
+  peerReviewStatus      PeerReviewStatus  @default(PENDING)
+  citationCount         Int               @default(0)
+  downloadCount         Int               @default(0)
+  openAccess            Boolean           @default(false)
+  license               String?
+  keywords              String?
+  fundingAcknowledged   Boolean           @default(false)
+  dataAvailability      String?
+  ethicalConsiderations String?
+  limitations           String?
+  conflictsOfInterest   String?
+  createdBy             String
+  createdAt             DateTime          @default(now())
+  updatedAt             DateTime          @updatedAt
+  creator               User              @relation("PublicationCreator", fields: [createdBy], references: [id])
+  researchRequest       ResearchRequest   @relation(fields: [researchRequestId], references: [id], onDelete: Cascade)
+
+  @@map("research_publications")
+  @@schema("medical")
+}
+
+model ResearchImpactMetric {
+  id                String           @id @default(cuid())
+  researchRequestId String
+  metricType        ImpactMetricType
+  value             Float
+  unit              String?
+  description       String?
+  date              DateTime
+  source            String?
+  methodology       String?
+  baseline          Float?
+  target            Float?
+  category          String?
+  tags              String?
+  isVerified        Boolean          @default(false)
+  verificationDate  DateTime?
+  verifiedBy        String?
+  notes             String?
+  createdBy         String
+  createdAt         DateTime         @default(now())
+  updatedAt         DateTime         @updatedAt
+  creator           User             @relation("ImpactMetricCreator", fields: [createdBy], references: [id])
+  researchRequest   ResearchRequest  @relation(fields: [researchRequestId], references: [id], onDelete: Cascade)
+  verifier          User?            @relation("ImpactMetricVerifier", fields: [verifiedBy], references: [id])
+
+  @@map("research_impact_metrics")
+  @@schema("medical")
+}
+
+model CancerGeographicData {
+  id                    String      @id @default(cuid())
+  province              String
+  regency               String?
+  district              String?
+  cancerType            String
+  stage                 String?
+  year                  Int
+  month                 Int?
+  count                 Int
+  population            Int?
+  incidenceRate         Float?
+  mortalityRate         Float?
+  ageStandardizedRate   Float?
+  gender                Gender?
+  ageGroup              String?
+  socioeconomicLevel    String?
+  urbanRural            String?
+  coordinates           Json?
+  dataQuality           DataQuality @default(STANDARD)
+  reportingCompleteness Float?
+  lastUpdated           DateTime    @default(now())
+  createdBy             String
+  createdAt             DateTime    @default(now())
+  updatedAt             DateTime    @updatedAt
+
+  @@map("cancer_geographic_data")
+  @@schema("medical")
+}
+
+model CancerAggregateStats {
+  id                   String   @id @default(cuid())
+  cancerType           String
+  year                 Int
+  totalCases           Int
+  maleCases            Int
+  femaleCases          Int
+  ageGroup_0_14        Int
+  ageGroup_15_24       Int
+  ageGroup_25_44       Int
+  ageGroup_45_64       Int
+  ageGroup_65_plus     Int
+  earlyStage           Int
+  lateStage            Int
+  mortalityRate        Float
+  survivalRate         Float
+  mostAffectedProvince String?
+  trendDirection       String?
+  trendPercent         Float?
+  lastUpdated          DateTime @default(now())
+
+  @@map("cancer_aggregate_stats")
+  @@schema("medical")
+}
+
 enum Gender {
   MALE
   FEMALE
@@ -602,4 +849,1938 @@ enum VisitStatus {
 
   @@map("visit_statuses")
   @@schema("medical")
+}
+
+enum StudyType {
+  OBSERVATIONAL
+  INTERVENTIONAL
+  CASE_CONTROL
+  COHORT
+  CROSS_SECTIONAL
+  CASE_SERIES
+  META_ANALYSIS
+  SYSTEMATIC_REVIEW
+  QUALITATIVE
+  MIXED_METHODS
+
+  @@map("study_types")
+  @@schema("medical")
+}
+
+enum ResearchRequestStatus {
+  DRAFT
+  PENDING_REVIEW
+  UNDER_REVIEW
+  ETHICS_REVIEW
+  APPROVED
+  REJECTED
+  CONDITIONS_MET
+  IN_PROGRESS
+  COMPLETED
+  SUSPENDED
+  CANCELLED
+  EXPIRED
+
+  @@map("research_request_statuses")
+  @@schema("medical")
+}
+
+enum EthicsStatus {
+  NOT_REQUIRED
+  PENDING
+  APPROVED
+  REJECTED
+  RESUBMITTED
+  EXEMPTED
+  WAIVED
+
+  @@map("ethics_statuses")
+  @@schema("medical")
+}
+
+enum ResearchPriority {
+  LOW
+  MEDIUM
+  HIGH
+  CRITICAL
+
+  @@map("research_priorities")
+  @@schema("medical")
+}
+
+enum ApprovalLevel {
+  CENTER_DIRECTOR
+  ETHICS_COMMITTEE
+  DATA_STEWARD
+  PRIVACY_OFFICER
+  NATIONAL_ADMIN
+  SYSTEM_ADMIN
+
+  @@map("approval_levels")
+  @@schema("medical")
+}
+
+enum ApprovalStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  CONDITIONS
+  DELEGATED
+  EXPIRED
+
+  @@map("approval_statuses")
+  @@schema("medical")
+}
+
+enum CollaborationRole {
+  PRINCIPAL_INVESTIGATOR
+  CO_INVESTIGATOR
+  STATISTICIAN
+  DATA_ANALYST
+  CLINICAL_COORDINATOR
+  RESEARCH_ASSISTANT
+  ETHICS_ADVISOR
+  SUBJECT_MATTER_EXPERT
+  CONSULTANT
+  STUDENT_RESEARCHER
+
+  @@map("collaboration_roles")
+  @@schema("medical")
+}
+
+enum CollaborationStatus {
+  PENDING
+  ACCEPTED
+  DECLINED
+  ACTIVE
+  COMPLETED
+  SUSPENDED
+  TERMINATED
+
+  @@map("collaboration_statuses")
+  @@schema("medical")
+}
+
+enum DataAccessLevel {
+  LIMITED
+  AGGREGATE_ONLY
+  DEIDENTIFIED
+  LIMITED_IDENTIFIABLE
+  FULL_ACCESS
+
+  @@map("data_access_levels")
+  @@schema("medical")
+}
+
+enum SessionType {
+  QUERY
+  EXPORT
+  ANALYSIS
+  VISUALIZATION
+  REPORT_GENERATION
+  DATA_VALIDATION
+
+  @@map("session_types")
+  @@schema("medical")
+}
+
+enum ComplianceStatus {
+  COMPLIANT
+  WARNING
+  VIOLATION
+  SUSPENDED
+  INVESTIGATION
+
+  @@map("compliance_statuses")
+  @@schema("medical")
+}
+
+enum PublicationType {
+  JOURNAL_ARTICLE
+  CONFERENCE_PAPER
+  BOOK_CHAPTER
+  THESIS
+  DISSERTATION
+  TECHNICAL_REPORT
+  PREPRINT
+  DATA_PAPER
+  REVIEW_ARTICLE
+  EDITORIAL
+
+  @@map("publication_types")
+  @@schema("medical")
+}
+
+enum PublicationStatus {
+  DRAFT
+  SUBMITTED
+  UNDER_REVIEW
+  ACCEPTED
+  PUBLISHED
+  REJECTED
+  WITHDRAWN
+  IN_PRESS
+
+  @@map("publication_statuses")
+  @@schema("medical")
+}
+
+enum PeerReviewStatus {
+  PENDING
+  UNDER_REVIEW
+  MAJOR_REVISION
+  MINOR_REVISION
+  ACCEPTED
+  REJECTED
+  REVISE_AND_RESUBMIT
+
+  @@map("peer_review_statuses")
+  @@schema("medical")
+}
+
+enum ImpactMetricType {
+  PUBLICATIONS
+  CITATIONS
+  POLICY_IMPACT
+  CLINICAL_GUIDELINES
+  PATENTS
+  GRANT_FUNDING
+  MEDIA_COVERAGE
+  PATIENT_OUTCOMES
+  SCREENING_RATES
+  SURVIVAL_IMPROVEMENT
+  COST_SAVINGS
+  QUALITY_METRICS
+
+  @@map("impact_metric_types")
+  @@schema("medical")
+}
+
+enum DataQuality {
+  EXCELLENT
+  GOOD
+  STANDARD
+  POOR
+  INCOMPLETE
+
+  @@map("data_qualities")
+  @@schema("medical")
+}
+
+// Sprint 4: Analytics & Intelligence Schema
+
+model AnalyticsPerformanceMetric {
+  id                    String    @id @default(cuid())
+  centerId              String?
+  metricType            AnalyticsMetricType
+  metricName            String
+  value                 Float
+  unit                  String?
+  baseline              Float?
+  target                Float?
+  percentileRank        Float?
+  comparisonGroup       String?
+  timeFrame             String
+  dataQuality           DataQuality @default(STANDARD)
+  confidenceInterval    Json?
+  riskAdjustmentFactors Json?
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+  center                Center?   @relation(fields: [centerId], references: [id], onDelete: SetNull)
+
+  @@map("analytics_performance_metrics")
+  @@schema("medical")
+}
+
+model PredictiveModel {
+  id                    String                @id @default(cuid())
+  name                  String
+  version               String
+  modelType             PredictiveModelType
+  description           String?
+  trainingDataSize      Int
+  validationDataSize    Int?
+  accuracy              Float?
+  precision             Float?
+  recall                Float?
+  f1Score               Float?
+  aucScore              Float?
+  calibrationScore      Float?
+  features              Json
+  hyperparameters       Json?
+  trainingDate          DateTime
+  lastValidated         DateTime?
+  validationMetrics     Json?
+  deploymentStatus      DeploymentStatus      @default(STAGING)
+  modelVersion          String
+  isActive              Boolean               @default(true)
+  retrainingFrequency   Int? // days
+  lastRetrainedAt       DateTime?
+  nextRetrainingDue     DateTime?
+  performanceHistory    Json?
+  createdBy             String
+  createdAt             DateTime              @default(now())
+  updatedAt             DateTime              @updatedAt
+  predictions           ModelPrediction[]
+  modelMetrics          ModelPerformanceMetric[]
+
+  @@map("predictive_models")
+  @@schema("medical")
+}
+
+model ModelPrediction {
+  id                    String    @id @default(cuid())
+  modelId               String
+  patientId             String?
+  inputFeatures         Json
+  prediction            Json
+  confidence            Float
+  predictionType        PredictionType
+  actualOutcome         Json?
+  accuracyScore         Float?
+  metadata              Json?
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+  model                 PredictiveModel @relation(fields: [modelId], references: [id], onDelete: Cascade)
+
+  @@map("model_predictions")
+  @@schema("medical")
+}
+
+model ModelPerformanceMetric {
+  id                    String    @id @default(cuid())
+  modelId               String
+  metricName            String
+  value                 Float
+  timestamp             DateTime  @default(now())
+  dataSlice             String?   // e.g., 'validation', 'test', 'production'
+  additionalMetrics     Json?
+  model                 PredictiveModel @relation(fields: [modelId], references: [id], onDelete: Cascade)
+
+  @@map("model_performance_metrics")
+  @@schema("medical")
+}
+
+model ExecutiveDashboard {
+  id                    String    @id @default(cuid())
+  title                 String
+  description           String?
+  dashboardType         DashboardType
+  layout                Json
+  widgets               Json
+  filters               Json?
+  accessLevel           DataAccessLevel @default(AGGREGATE_ONLY)
+  isActive              Boolean   @default(true)
+  refreshInterval       Int?      // minutes
+  lastRefreshed         DateTime?
+  createdBy             String
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+
+  @@map("executive_dashboards")
+  @@schema("medical")
+}
+
+model ReportSchedule {
+  id                    String    @id @default(cuid())
+  name                  String
+  description           String?
+  reportType            ReportType
+  schedule              String    // cron expression
+  recipients            Json      // emails, roles
+  parameters            Json?
+  isActive              Boolean   @default(true)
+  lastRun               DateTime?
+  nextRun               DateTime?
+  format                ReportFormat @default(PDF)
+  deliveryMethod        DeliveryMethod @default(EMAIL)
+  templateId            String?
+  createdBy             String
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+
+  @@map("report_schedules")
+  @@schema("medical")
+}
+
+model CenterBenchmark {
+  id                    String    @id @default(cuid())
+  centerId              String
+  benchmarkPeriod       String
+  totalPatients         Int
+  newPatients           Int
+  dataQualityScore      Float
+  reportingCompleteness Float
+  timelinessScore       Float
+  overallScore          Float
+  rank                  Int?
+  percentileRank        Float?
+  peerGroup             String?
+  improvementAreas      Json?
+  strengths             Json?
+  recommendations       Json?
+  comparisonMetrics     Json?
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+  center                Center    @relation(fields: [centerId], references: [id], onDelete: Cascade)
+
+  @@map("center_benchmarks")
+  @@schema("medical")
+}
+
+model ResearchImpactAnalysis {
+  id                    String    @id @default(cuid())
+  researchRequestId     String
+  analysisDate          DateTime  @default(now())
+  impactScore           Float
+  citationCount         Int
+  publicationCount      Int
+  patentCount           Int?
+  guidelineCount        Int?
+  policyImpactCount     Int?
+  clinicalAdoptions     Int?
+  patientImpactScore    Float?
+  economicImpact        Float?
+  collaborationIndex    Float?
+  innovationIndex       Float?
+  reachScore            Float?
+  influenceScore        Float?
+  trendData             Json?
+  comparativeAnalysis   Json?
+  recommendations       Json?
+  verifiedBy            String?
+  verificationDate      DateTime?
+  createdBy             String
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+  researchRequest       ResearchRequest @relation(fields: [researchRequestId], references: [id], onDelete: Cascade)
+
+  @@map("research_impact_analyses")
+  @@schema("medical")
+}
+
+model CancerTrendAnalysis {
+  id                    String    @id @default(cuid())
+  cancerType            String
+  geographicLevel       String    // national, province, regency
+  geographicArea        String?
+  trendPeriod           String    // monthly, quarterly, yearly
+  startDate             DateTime
+  endDate               DateTime
+  baselineIncidence     Float?
+  currentIncidence      Float?
+  trendDirection        TrendDirection
+  trendSignificance     Float?
+  confidenceInterval    Json?
+  predictedValues       Json?
+  seasonalFactors       Json?
+  riskFactors           Json?
+  recommendations       Json?
+  dataQuality           DataQuality @default(STANDARD)
+  lastUpdated           DateTime  @default(now())
+  createdBy             String
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+
+  @@map("cancer_trend_analyses")
+  @@schema("medical")
+}
+
+model RealTimeAnalyticsCache {
+  id                    String    @id @default(cuid())
+  cacheKey              String    @unique
+  cacheValue            Json
+  cacheType             CacheType
+  expiresAt             DateTime
+  refreshInterval       Int       // minutes
+  lastRefreshed         DateTime  @default(now())
+  hitCount              Int       @default(0)
+  isActive              Boolean   @default(true)
+  metadata              Json?
+
+  @@map("real_time_analytics_cache")
+  @@schema("medical")
+}
+
+model NationalCancerIntelligence {
+  id                    String    @id @default(cuid())
+  reportDate            DateTime  @default(now())
+  totalRegisteredCases  Int
+  newCasesThisMonth     Int
+  activeCases           Int
+  mortalityRate         Float?
+  survivalRate          Float?
+  screeningCoverage     Float?
+  earlyDetectionRate    Float?
+  topCancerTypes        Json
+  demographicBreakdown  Json
+  geographicDistribution Json
+  trendAnalysis         Json?
+  riskFactorAnalysis    Json?
+  healthcareSystemLoad  Json?
+  resourceUtilization   Json?
+  qualityMetrics        Json?
+  policyRecommendations Json?
+  dataQuality           DataQuality @default(STANDARD)
+  reportingCompleteness Float?
+  lastUpdated           DateTime  @default(now())
+  verifiedBy            String?
+  verificationDate      DateTime?
+
+  @@map("national_cancer_intelligence")
+  @@schema("medical")
+}
+
+model MaterializedViewRefresh {
+  id                    String    @id @default(cuid())
+  viewName              String
+  tableName             String
+  refreshSchedule       String    // cron expression
+  lastRefreshed         DateTime?
+  nextRefresh           DateTime?
+  refreshDuration       Int?      // seconds
+  status                RefreshStatus @default(PENDING)
+  errorMessage          String?
+  rowCount              Int?
+  sizeInMB              Float?
+  isActive              Boolean   @default(true)
+  dependencies          Json?     // other views/tables
+  createdBy             String
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+
+  @@map("materialized_view_refresh")
+  @@schema("medical")
+}
+
+model AnalyticsEventLog {
+  id                    String    @id @default(cuid())
+  eventType             AnalyticsEventType
+  eventCategory         String
+  description           String?
+  eventData             Json?
+  userId                String?
+  sessionId             String?
+  ipAddress             String?
+  userAgent             String?
+  timestamp             DateTime  @default(now())
+  duration              Int?      // milliseconds
+  success               Boolean
+  errorCode             String?
+  errorMessage          String?
+  metadata              Json?
+
+  @@map("analytics_event_logs")
+  @@schema("audit")
+}
+
+// Analytics Enums
+
+enum AnalyticsMetricType {
+  PATIENT_VOLUME
+  DATA_QUALITY
+  REPORTING_TIMELINESS
+  TREATMENT_OUTCOMES
+  SURVIVAL_RATES
+  SCREENING_COVERAGE
+  EARLY_DETECTION
+  COST_EFFICIENCY
+  RESOURCE_UTILIZATION
+  RESEARCH_PRODUCTIVITY
+  PATIENT_SATISFACTION
+  CLINICAL_TRIAL_ENROLLMENT
+  WAITING_TIMES
+  READMISSION_RATES
+  COMPLICATION_RATES
+
+  @@map("analytics_metric_types")
+  @@schema("medical")
+}
+
+enum PredictiveModelType {
+  CANCER_RISK_PREDICTION
+  TREATMENT_RESPONSE
+  SURVIVAL_ANALYSIS
+  RECURRENCE_RISK
+  POPULATION_HEALTH_TRENDS
+  RESOURCE_UTILIZATION
+  DEMAND_FORECASTING
+  QUALITY_OUTCOMES
+  COST_PREDICTION
+  READMISSION_PREDICTION
+
+  @@map("predictive_model_types")
+  @@schema("medical")
+}
+
+enum DeploymentStatus {
+  DEVELOPMENT
+  TESTING
+  STAGING
+  PRODUCTION
+  DEPRECATED
+  ARCHIVED
+
+  @@map("deployment_statuses")
+  @@schema("medical")
+}
+
+enum PredictionType {
+  CLASSIFICATION
+  REGRESSION
+  SURVIVAL_ANALYSIS
+  TIME_SERIES
+  CLUSTERING
+  ANOMALY_DETECTION
+  RECOMMENDATION
+  RISK_SCORE
+
+  @@map("prediction_types")
+  @@schema("medical")
+}
+
+enum DashboardType {
+  EXECUTIVE_OVERVIEW
+  CLINICAL_PERFORMANCE
+  RESEARCH_INSIGHTS
+  OPERATIONAL_METRICS
+  PATIENT_OUTCOMES
+  QUALITY_IMPROVEMENT
+  FINANCIAL_ANALYTICS
+  POPULATION_HEALTH
+
+  @@map("dashboard_types")
+  @@schema("medical")
+}
+
+enum ReportType {
+  DAILY_SUMMARY
+  WEEKLY_ANALYTICS
+  MONTHLY_PERFORMANCE
+  QUARTERLY_REVIEW
+  ANNUAL_REPORT
+  AD_HOC_ANALYSIS
+  RESEARCH_IMPACT
+  QUALITY_METRICS
+  EXECUTIVE_BRIEFING
+
+  @@map("report_types")
+  @@schema("medical")
+}
+
+enum ReportFormat {
+  PDF
+  EXCEL
+  CSV
+  JSON
+  HTML
+  POWERPOINT
+
+  @@map("report_formats")
+  @@schema("medical")
+}
+
+enum DeliveryMethod {
+  EMAIL
+  FILE_SHARE
+  API_WEBHOOK
+  SFTP
+  CLOUD_STORAGE
+  PRINT
+
+  @@map("delivery_methods")
+  @@schema("medical")
+}
+
+enum TrendDirection {
+  INCREASING
+  DECREASING
+  STABLE
+  FLUCTUATING
+  SEASONAL
+  INSUFFICIENT_DATA
+
+  @@map("trend_directions")
+  @@schema("medical")
+}
+
+enum CacheType {
+  DASHBOARD_DATA
+  ANALYTICS_QUERY
+  AGGREGATE_METRICS
+  PATIENT_STATS
+  RESEARCH_DATA
+  TREND_ANALYSIS
+  BENCHMARK_DATA
+  EXECUTIVE_SUMMARY
+
+  @@map("cache_types")
+  @@schema("medical")
+}
+
+enum RefreshStatus {
+  PENDING
+  RUNNING
+  COMPLETED
+  FAILED
+  CANCELLED
+  SKIPPED
+
+  @@map("refresh_statuses")
+  @@schema("medical")
+}
+
+enum AnalyticsEventType {
+  DASHBOARD_VIEW
+  REPORT_GENERATED
+  QUERY_EXECUTED
+  CACHE_HIT
+  CACHE_MISS
+  MODEL_PREDICTION
+  DATA_EXPORT
+  ALERT_TRIGGERED
+  USER_LOGIN
+  PERFORMANCE_METRIC
+  ERROR_OCCURRED
+  SCHEDULE_EXECUTED
+
+  @@map("analytics_event_types")
+  @@schema("audit")
+}
+
+// Sprint 5: System Administration & Reporting Schema
+
+model SystemConfiguration {
+  id                String              @id @default(cuid())
+  category          String
+  key               String
+  value             Json
+  description       String?
+  isEncrypted       Boolean             @default(false)
+  isRequired        Boolean             @default(true)
+  defaultValue      Json?
+  validationRules   Json?
+  environment       String?             // development, staging, production
+  centerId          String?
+  isActive          Boolean             @default(true)
+  lastModifiedBy    String?
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  center            Center?             @relation(fields: [centerId], references: [id], onDelete: Cascade)
+
+  @@unique([category, key, centerId])
+  @@map("system_configurations")
+  @@schema("system")
+}
+
+model ReportTemplate {
+  id                String              @id @default(cuid())
+  name              String
+  title             String
+  description       String?
+  reportType        ReportType
+  templateType      TemplateType        @default(CUSTOM)
+  dataSource        String              // tables, views, queries
+  parameters        Json?               // report parameters schema
+  layout            Json                // drag-drop layout config
+  styling           Json?               // colors, fonts, formatting
+  filters           Json?               // available filters
+  aggregations      Json?               // data aggregations
+  charts            Json?               // chart configurations
+  accessLevel       DataAccessLevel     @default(AGGREGATE_ONLY)
+  isActive          Boolean             @default(true)
+  isPublic          Boolean             @default(false)
+  centerId          String?
+  createdBy         String
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  center            Center?             @relation(fields: [centerId], references: [id], onDelete: SetNull)
+  generatedReports  GeneratedReport[]
+  scheduledReports  ScheduledReport[]
+
+  @@map("report_templates")
+  @@schema("system")
+}
+
+model GeneratedReport {
+  id                String              @id @default(cuid())
+  templateId        String
+  name              String
+  parameters        Json?
+  format            ReportFormat        @default(PDF)
+  status            ReportStatus        @default(PENDING)
+  filePath          String?
+  fileSize          Int?
+  downloadCount     Int                 @default(0)
+  expiresAt         DateTime?
+  generatedBy       String
+  generatedAt       DateTime            @default(now())
+  completedAt       DateTime?
+  errorMessage      String?
+  template          ReportTemplate      @relation(fields: [templateId], references: [id], onDelete: Cascade)
+
+  @@map("generated_reports")
+  @@schema("system")
+}
+
+model ScheduledReport {
+  id                String              @id @default(cuid())
+  templateId        String
+  name              String
+  description       String?
+  schedule          String              // cron expression
+  recipients        Json                // emails, roles, users
+  parameters        Json?
+  format            ReportFormat        @default(PDF)
+  deliveryMethod    DeliveryMethod      @default(EMAIL)
+  isActive          Boolean             @default(true)
+  lastRun           DateTime?
+  nextRun           DateTime?
+  successCount      Int                 @default(0)
+  failureCount      Int                 @default(0)
+  createdBy         String
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  template          ReportTemplate      @relation(fields: [templateId], references: [id], onDelete: Cascade)
+  executions        ReportExecution[]
+
+  @@map("scheduled_reports")
+  @@schema("system")
+}
+
+model ReportExecution {
+  id                String              @id @default(cuid())
+  scheduledReportId String
+  executionTime     DateTime            @default(now())
+  status            ExecutionStatus
+  filePath          String?
+  fileSize          Int?
+  duration          Int?                // seconds
+  recipients        Json?
+  success           Boolean
+  errorMessage      String?
+  deliveryStatus    DeliveryStatus?
+  retryCount        Int                 @default(0)
+  scheduledReport   ScheduledReport     @relation(fields: [scheduledReportId], references: [id], onDelete: Cascade)
+
+  @@map("report_executions")
+  @@schema("system")
+}
+
+model BackupJob {
+  id                String              @id @default(cuid())
+  name              String
+  backupType        BackupType
+  dataSource        String              // database, files, full_system
+  schedule          String?             // cron expression
+  retentionDays     Int                 @default(30)
+  compression       Boolean             @default(true)
+  encryption        Boolean             @default(true)
+  storageLocation   String              // S3, local, FTP
+  storagePath       String?
+  isActive          Boolean             @default(true)
+  lastBackup        DateTime?
+  nextBackup        DateTime?
+  successCount      Int                 @default(0)
+  failureCount      Int                 @default(0)
+  totalSize         BigInt              @default(0)
+  estimatedSize     BigInt?
+  backupOptions     Json?               // custom backup options
+  verificationMode  VerificationMode    @default(CHECKSUM)
+  createdBy         String
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  executions        BackupExecution[]
+
+  @@map("backup_jobs")
+  @@schema("system")
+}
+
+model BackupExecution {
+  id                String              @id @default(cuid())
+  backupJobId       String
+  executionTime     DateTime            @default(now())
+  status            BackupStatus        @default(RUNNING)
+  startTime         DateTime            @default(now())
+  endTime           DateTime?
+  duration          Int?                // seconds
+  fileSize          BigInt?
+  compressedSize    BigInt?
+  filesCount        Int?
+  filePath          String?
+  checksum          String?
+  verificationPassed Boolean?
+  errorMessage      String?
+  retryCount        Int                 @default(0)
+  metadata          Json?
+  backupJob         BackupJob           @relation(fields: [backupJobId], references: [id], onDelete: Cascade)
+
+  @@map("backup_executions")
+  @@schema("system")
+}
+
+model UserActivityLog {
+  id                String              @id @default(cuid())
+  userId            String?
+  sessionId         String?
+  activityType      ActivityType
+  activity          String
+  resource          String?
+  resourceId        String?
+  details           Json?
+  ipAddress         String?
+  userAgent         String?
+  deviceId          String?
+  location          Json?               // country, city, coordinates
+  duration          Int?                // milliseconds
+  success           Boolean             @default(true)
+  errorCode         String?
+  errorMessage      String?
+  riskScore         Int                 @default(0)
+  tags              String[]            @default([])
+  timestamp         DateTime            @default(now())
+  user              User?               @relation("UserActivity", fields: [userId], references: [id], onDelete: SetNull)
+
+  @@map("user_activity_logs")
+  @@schema("audit")
+}
+
+model SecurityEvent {
+  id                String              @id @default(cuid())
+  eventType         SecurityEventType
+  severity          SecuritySeverity     @default(MEDIUM)
+  threatLevel       ThreatLevel         @default(LOW)
+  title             String
+  description       String
+  source            String?
+  ipAddress         String?
+  userAgent         String?
+  userId            String?
+  sessionId         String?
+  resource          String?
+  resourceId        String?
+  details           Json?
+  mitigationActions Json?
+  status            EventStatus         @default(OPEN)
+  assignedTo        String?
+  resolvedBy        String?
+  resolvedAt        DateTime?
+  falsePositive     Boolean             @default(false)
+  isCorrelated      Boolean             @default(false)
+  correlationId     String?
+  externalReference String?
+  complianceImpact  Json?               // GDPR, HIPAA, etc.
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  user              User?               @relation("SecurityEvents", fields: [userId], references: [id], onDelete: SetNull)
+
+  @@map("security_events")
+  @@schema("audit")
+}
+
+model NotificationTemplate {
+  id                String              @id @default(cuid())
+  name              String
+  category          NotificationCategory
+  channel           NotificationChannel
+  templateType      TemplateType        @default(STANDARD)
+  subject           String?
+  content           String              // supports templating
+  htmlContent       String?
+  attachments       Json?               // file templates
+  variables         Json?               // template variables schema
+  styling           Json?               // email/HTML styling
+  priority          NotificationPriority @default(MEDIUM)
+  isActive          Boolean             @default(true)
+  isDefault         Boolean             @default(false)
+  language          String              @default(en)
+  centerId          String?
+  createdBy         String
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  notifications     Notification[]
+
+  @@map("notification_templates")
+  @@schema("system")
+}
+
+model Notification {
+  id                String              @id @default(cuid())
+  templateId        String?
+  recipientId       String?             // user ID or email/phone
+  recipientType     RecipientType       @default(USER)
+  channel           NotificationChannel
+  type              NotificationType
+  title             String
+  message           String
+  data              Json?               // dynamic data
+  priority          NotificationPriority @default(MEDIUM)
+  status            NotificationStatus  @default(PENDING)
+  scheduledFor      DateTime?
+  sentAt            DateTime?
+  deliveredAt       DateTime?
+  readAt            DateTime?
+  failedAt          DateTime?
+  retryCount        Int                 @default(0)
+  maxRetries        Int                 @default(3)
+  responseRequired  Boolean             @default(false)
+  response          Json?
+  expiresAt         DateTime?
+  metadata          Json?
+  createdBy         String?
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  template          NotificationTemplate? @relation(fields: [templateId], references: [id], onDelete: SetNull)
+
+  @@map("notifications")
+  @@schema("system")
+}
+
+model ExternalIntegration {
+  id                String              @id @default(cuid())
+  name              String
+  type              IntegrationType
+  category          IntegrationCategory
+  description       String?
+  endpoint          String
+  authentication    Json                // API keys, OAuth, certificates
+  configuration     Json?               // integration-specific settings
+  dataMapping       Json?               // field mappings
+  syncFrequency     String?             // cron expression
+  isActive          Boolean             @default(true)
+  lastSync          DateTime?
+  nextSync          DateTime?
+  successCount      Int                 @default(0)
+  failureCount      Int                 @default(0)
+  timeout           Int                 @default(30000) // milliseconds
+  retryPolicy       Json?
+  rateLimit         Json?               // rate limiting config
+  centerId          String?
+  createdBy         String
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  syncLogs          IntegrationSyncLog[]
+
+  @@map("external_integrations")
+  @@schema("system")
+}
+
+model IntegrationSyncLog {
+  id                String              @id @default(cuid())
+  integrationId     String
+  syncType          SyncType            @default(FULL)
+  direction         SyncDirection
+  startTime         DateTime            @default(now())
+  endTime           DateTime?
+  duration          Int?                // seconds
+  status            SyncStatus          @default(RUNNING)
+  recordsProcessed  Int                 @default(0)
+  recordsSucceeded  Int                 @default(0)
+  recordsFailed     Int                 @default(0)
+  recordsSkipped    Int                 @default(0)
+  dataVolume        BigInt?
+  errorMessage      String?
+  errorDetails      Json?
+  checksumBefore    String?
+  checksumAfter     String?
+  rollbackAvailable Boolean             @default(false)
+  rollbackUntil     DateTime?
+  metadata          Json?
+  integration       ExternalIntegration @relation(fields: [integrationId], references: [id], onDelete: Cascade)
+
+  @@map("integration_sync_logs")
+  @@schema("system")
+}
+
+model PerformanceMetric {
+  id                String              @id @default(cuid())
+  metricType        PerformanceMetricType
+  metricName        String
+  value             Float
+  unit              String?
+  timestamp         DateTime            @default(now())
+  tags              Json?
+  dimensions        Json?               // additional dimensions
+  threshold         Json?               // warning/critical thresholds
+  aggregationMethod AggregationMethod?  @default(AVERAGE)
+  interval          Int                 @default(60) // seconds
+  source            String?             // application, database, external
+  hostname          String?
+  service           String?
+  environment       String?             // development, staging, production
+  centerId          String?
+  center            Center?             @relation("PerformanceMetrics", fields: [centerId], references: [id], onDelete: SetNull)
+
+  @@map("performance_metrics")
+  @@schema("system")
+}
+
+model SystemAlert {
+  id                String              @id @default(cuid())
+  alertType         AlertType
+  severity          AlertSeverity       @default(MEDIUM)
+  title             String
+  description       String
+  source            String?             // system component
+  metricName        String?
+  currentValue      Float?
+  thresholdValue    Float?
+  condition         AlertCondition
+  isActive          Boolean             @default(true)
+  isAcknowledged    Boolean             @default(false)
+  acknowledgedBy    String?
+  acknowledgedAt    DateTime?
+  resolvedBy        String?
+  resolvedAt        DateTime?
+  resolution        String?
+  falsePositive     Boolean             @default(false)
+  escalationLevel   Int                 @default(0)
+  maxEscalation     Int                 @default(3)
+  lastEscalatedAt   DateTime?
+  notificationsSent Int                 @default(0)
+  metadata          Json?
+  triggeredAt       DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+
+  @@map("system_alerts")
+  @@schema("system")
+}
+
+model DataExportJob {
+  id                String              @id @default(cuid())
+  name              String
+  exportType        ExportType
+  dataSource        String              // tables, views, custom query
+  format            ExportFormat        @default(CSV)
+  filters           Json?
+  fields            Json?               // field selection and mapping
+  options           Json?               // export options
+  compression       Boolean             @default(true)
+  encryption        Boolean             @default(false)
+  retentionDays     Int                 @default(7)
+  status            JobStatus           @default(PENDING)
+  progress          Float               @default(0)
+  totalRecords      BigInt?
+  processedRecords  BigInt?
+  filePath          String?
+  fileSize          BigInt?
+  downloadUrl       String?
+  expiresAt         DateTime?
+  estimatedDuration Int?                // seconds
+  actualDuration    Int?                // seconds
+  errorMessage      String?
+  validationResults Json?
+  requestedBy       String
+  requestedAt       DateTime            @default(now())
+  startedAt         DateTime?
+  completedAt       DateTime?
+
+  @@map("data_export_jobs")
+  @@schema("system")
+}
+
+model DataImportJob {
+  id                String              @id @default(cuid())
+  name              String
+  importType        ImportType
+  sourceType        ImportSourceType
+  filePath          String
+  targetTable       String
+  mapping           Json?               // field mappings
+  validation        Json?               // validation rules
+  options           Json?               // import options
+  batchSize         Int                 @default(1000)
+  skipDuplicates    Boolean             @default(false)
+  updateExisting    Boolean             @default(false)
+  dryRun            Boolean             @default(false)
+  status            JobStatus           @default(PENDING)
+  progress          Float               @default(0)
+  totalRecords      BigInt?
+  processedRecords  BigInt?
+  successfulRecords BigInt?
+  failedRecords     BigInt?
+  duplicateRecords  BigInt?
+  errorFilePath     String?
+  validationErrors  Json?
+  rollbackAvailable Boolean             @default(false)
+  rollbackUntil     DateTime?
+  estimatedDuration Int?                // seconds
+  actualDuration    Int?                // seconds
+  errorMessage      String?
+  requestedBy       String
+  requestedAt       DateTime            @default(now())
+  startedAt         DateTime?
+  completedAt       DateTime?
+
+  @@map("data_import_jobs")
+  @@schema("system")
+}
+
+model ScheduledTask {
+  id                String              @id @default(cuid())
+  name              String
+  taskType          TaskType
+  description       String?
+  schedule          String              // cron expression
+  timezone          String              @default(UTC)
+  isActive          Boolean             @default(true)
+  concurrency       Int                 @default(1)
+  timeout           Int?                // seconds
+  retryAttempts     Int                 @default(0)
+  retryDelay        Int                 @default(60) // seconds
+  maxRunTime        Int?                // seconds
+  lastRun           DateTime?
+  nextRun           DateTime?
+  successCount      Int                 @default(0)
+  failureCount      Int                 @default(0)
+  averageDuration   Int?                // seconds
+  configuration     Json?
+  environment       String?             // specific environment
+  centerId          String?
+  createdBy         String
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  executions        TaskExecution[]
+
+  @@map("scheduled_tasks")
+  @@schema("system")
+}
+
+model TaskExecution {
+  id                String              @id @default(cuid())
+  taskId            String
+  executionId       String              @unique
+  startTime         DateTime            @default(now())
+  endTime           DateTime?
+  duration          Int?                // seconds
+  status            TaskStatus          @default(RUNNING)
+  progress          Float               @default(0)
+  result            Json?
+  errorMessage      String?
+  errorDetails      Json?
+  workerId          String?
+  queuedAt          DateTime?
+  startedAt         DateTime?
+  completedAt       DateTime?
+  retryCount        Int                 @default(0)
+  metadata          Json?
+  task              ScheduledTask       @relation(fields: [taskId], references: [id], onDelete: Cascade)
+
+  @@map("task_executions")
+  @@schema("system")
+}
+
+model HealthCheck {
+  id                String              @id @default(cuid())
+  serviceName       String
+  checkType         HealthCheckType
+  endpoint          String?
+  expectedStatus    Int                 @default(200)
+  timeout           Int                 @default(30000) // milliseconds
+  interval          Int                 @default(60000) // milliseconds
+  isActive          Boolean             @default(true)
+  threshold         Int                 @default(3) // failures before alert
+  configuration     Json?
+  lastCheck         DateTime?
+  nextCheck         DateTime?
+  status            HealthStatus        @default(UNKNOWN)
+  responseTime      Int?                // milliseconds
+  uptime            Float?              // percentage
+  consecutiveFails  Int                 @default(0)
+  consecutivePasses Int                 @default(0)
+  lastFailure       DateTime?
+  lastSuccess       DateTime?
+  totalChecks       Int                 @default(0)
+  totalFailures     Int                 @default(0)
+  totalSuccesses    Int                 @default(0)
+  averageResponseTime Float?
+  createdBy         String?
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  results           HealthCheckResult[]
+
+  @@map("health_checks")
+  @@schema("system")
+}
+
+model HealthCheckResult {
+  id                String              @id @default(cuid())
+  healthCheckId     String
+  timestamp         DateTime            @default(now())
+  status            HealthStatus
+  responseTime      Int?                // milliseconds
+  statusCode        Int?
+  errorMessage      String?
+  details           Json?
+  metrics           Json?               // additional metrics
+  checkedBy         String?
+  healthCheck       HealthCheck         @relation(fields: [healthCheckId], references: [id], onDelete: Cascade)
+
+  @@map("health_check_results")
+  @@schema("system")
+}
+
+model ApiEndpoint {
+  id                String              @id @default(cuid())
+  path              String
+  method            HttpMethod
+  version           String              @default(v1)
+  description       String?
+  category          String?
+  tags              String[]
+  isActive          Boolean             @default(true)
+  isPublic          Boolean             @default(false)
+  requiresAuth      Boolean             @default(true)
+  rateLimit         Json?               // rate limiting config
+  requestSchema     Json?               // OpenAPI schema
+  responseSchema    Json?
+  deprecated        Boolean             @default(false)
+  deprecationDate   DateTime?
+  sunsetDate        DateTime?
+  migrationGuide    String?
+  documentationUrl  String?
+  createdBy         String
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  usage             ApiUsage[]
+
+  @@map("api_endpoints")
+  @@schema("system")
+}
+
+model ApiUsage {
+  id                String              @id @default(cuid())
+  endpointId        String
+  userId            String?
+  sessionId         String?
+  ipAddress         String?
+  userAgent         String?
+  requestTime       DateTime            @default(now())
+  responseTime      Int?                // milliseconds
+  statusCode        Int
+  requestSize       Int?                // bytes
+  responseSize      Int?                // bytes
+  success           Boolean
+  errorMessage      String?
+  apiVersion        String?
+  rateLimited       Boolean             @default(false)
+  cached            Boolean             @default(false)
+  metadata          Json?
+  endpoint          ApiEndpoint         @relation(fields: [endpointId], references: [id], onDelete: Cascade)
+  user              User?               @relation("ApiUsage", fields: [userId], references: [id], onDelete: SetNull)
+
+  @@map("api_usage")
+  @@schema("audit")
+}
+
+model ComplianceAudit {
+  id                String              @id @default(cuid())
+  auditType         ComplianceType
+  framework         ComplianceFramework
+  scope             Json                // what was audited
+  status            ComplianceStatus    @default(PENDING)
+  scheduledDate     DateTime
+  startDate         DateTime?
+  endDate           DateTime?
+  auditor           String?
+  findings          Json?
+  riskLevel         ComplianceRisk      @default(LOW)
+  recommendations   Json?
+  correctiveActions Json?
+  evidence          Json?               // evidence files/references
+  score             Float?              // 0-100
+  passed            Boolean?
+  reviewedBy        String?
+  reviewedAt        DateTime?
+  nextAuditDate     DateTime?
+  recurrence        String?             // recurrence pattern
+  automated         Boolean             @default(false)
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+
+  @@map("compliance_audits")
+  @@schema("audit")
+}
+
+// Sprint 5 Enums
+
+enum TemplateType {
+  STANDARD
+  CUSTOM
+  SYSTEM
+  USER_DEFINED
+
+  @@map("template_types")
+  @@schema("system")
+}
+
+enum ReportStatus {
+  PENDING
+  GENERATING
+  COMPLETED
+  FAILED
+  CANCELLED
+  EXPIRED
+
+  @@map("report_statuses")
+  @@schema("system")
+}
+
+enum ExecutionStatus {
+  PENDING
+  RUNNING
+  COMPLETED
+  FAILED
+  CANCELLED
+  RETRYING
+
+  @@map("execution_statuses")
+  @@schema("system")
+}
+
+enum DeliveryStatus {
+  PENDING
+  SENT
+  DELIVERED
+  FAILED
+  BOUNCED
+  OPENED
+  CLICKED
+
+  @@map("delivery_statuses")
+  @@schema("system")
+}
+
+enum BackupType {
+  FULL
+  INCREMENTAL
+  DIFFERENTIAL
+  TRANSACTION_LOG
+  SNAPSHOT
+  CONTINUOUS
+
+  @@map("backup_types")
+  @@schema("system")
+}
+
+enum BackupStatus {
+  PENDING
+  RUNNING
+  COMPLETED
+  FAILED
+  CANCELLED
+  CORRUPTED
+  VERIFIED
+
+  @@map("backup_statuses")
+  @@schema("system")
+}
+
+enum VerificationMode {
+  NONE
+  CHECKSUM
+  FULL
+  SAMPLE
+  INTEGRITY_CHECK
+
+  @@map("verification_modes")
+  @@schema("system")
+}
+
+enum ActivityType {
+  LOGIN
+  LOGOUT
+  PAGE_VIEW
+  DATA_ACCESS
+  DATA_MODIFY
+  REPORT_GENERATE
+  EXPORT
+  IMPORT
+  CONFIG_CHANGE
+  PRIVILEGE_ESCALATION
+  SECURITY_EVENT
+  ERROR_OCCURRED
+  SYSTEM_ACTION
+
+  @@map("activity_types")
+  @@schema("audit")
+}
+
+enum SecurityEventType {
+  LOGIN_FAILURE
+  UNAUTHORIZED_ACCESS
+  PRIVILEGE_ESCALATION
+  DATA_BREACH
+  MALICIOUS_REQUEST
+  SUSPICIOUS_ACTIVITY
+  BRUTE_FORCE_ATTACK
+  INJECTION_ATTACK
+  XSS_ATTEMPT
+  CSRF_ATTEMPT
+  DOS_ATTACK
+  POLICY_VIOLATION
+  COMPLIANCE_BREACH
+  ANOMALOUS_BEHAVIOR
+  THREAT_DETECTION
+
+  @@map("security_event_types")
+  @@schema("audit")
+}
+
+enum SecuritySeverity {
+  LOW
+  MEDIUM
+  HIGH
+  CRITICAL
+
+  @@map("security_severities")
+  @@schema("audit")
+}
+
+enum ThreatLevel {
+  LOW
+  MEDIUM
+  HIGH
+  CRITICAL
+  EMERGENCY
+
+  @@map("threat_levels")
+  @@schema("audit")
+}
+
+enum EventStatus {
+  OPEN
+  INVESTIGATING
+  RESOLVED
+  CLOSED
+  FALSE_POSITIVE
+  ESCALATED
+
+  @@map("event_statuses")
+  @@schema("audit")
+}
+
+enum NotificationCategory {
+  SYSTEM
+  SECURITY
+  REPORTS
+  BACKUPS
+  PERFORMANCE
+  COMPLIANCE
+  USER_MANAGEMENT
+  INTEGRATIONS
+  HEALTH_CHECKS
+  ALERTS
+
+  @@map("notification_categories")
+  @@schema("system")
+}
+
+enum NotificationChannel {
+  EMAIL
+  SMS
+  IN_APP
+  PUSH
+  WEBHOOK
+  SLACK
+  TELEGRAM
+  MICROSOFT_TEAMS
+
+  @@map("notification_channels")
+  @@schema("system")
+}
+
+enum NotificationType {
+  INFO
+  SUCCESS
+  WARNING
+  ERROR
+  ALERT
+  REMINDER
+  SYSTEM_UPDATE
+  SECURITY_ALERT
+  REPORT_READY
+  BACKUP_COMPLETED
+  THRESHOLD_EXCEEDED
+
+  @@map("notification_types")
+  @@schema("system")
+}
+
+enum NotificationPriority {
+  LOW
+  MEDIUM
+  HIGH
+  URGENT
+  CRITICAL
+
+  @@map("notification_priorities")
+  @@schema("system")
+}
+
+enum NotificationStatus {
+  PENDING
+  SCHEDULED
+  SENT
+  DELIVERED
+  FAILED
+  CANCELLED
+  EXPIRED
+  READ
+
+  @@map("notification_statuses")
+  @@schema("system")
+}
+
+enum RecipientType {
+  USER
+  ROLE
+  EMAIL
+  PHONE
+  GROUP
+  SYSTEM
+
+  @@map("recipient_types")
+  @@schema("system")
+}
+
+enum IntegrationType {
+  API_REST
+  API_GRAPHQL
+  DATABASE
+  FILE_TRANSFER
+  WEBHOOK
+  MESSAGE_QUEUE
+  BLOCKCHAIN
+  IOT_DEVICE
+
+  @@map("integration_types")
+  @@schema("system")
+}
+
+enum IntegrationCategory {
+  HEALTHCARE_SYSTEMS
+  LABORATORY_SYSTEMS
+  IMAGING_SYSTEMS
+  BILLING_SYSTEMS
+  PHARMACY_SYSTEMS
+  GOVERNMENT_SYSTEMS
+  RESEARCH_PLATFORMS
+  CLOUD_SERVICES
+  MONITORING_TOOLS
+  SECURITY_TOOLS
+  COMMUNICATION_PLATFORMS
+
+  @@map("integration_categories")
+  @@schema("system")
+}
+
+enum SyncType {
+  FULL
+  INCREMENTAL
+  REAL_TIME
+  BATCH
+  ON_DEMAND
+
+  @@map("sync_types")
+  @@schema("system")
+}
+
+enum SyncDirection {
+  INBOUND
+  OUTBOUND
+  BIDIRECTIONAL
+
+  @@map("sync_directions")
+  @@schema("system")
+}
+
+enum SyncStatus {
+  PENDING
+  RUNNING
+  COMPLETED
+  FAILED
+  CANCELLED
+  ROLLING_BACK
+  ROLLED_BACK
+
+  @@map("sync_statuses")
+  @@schema("system")
+}
+
+enum PerformanceMetricType {
+  CPU_USAGE
+  MEMORY_USAGE
+  DISK_USAGE
+  NETWORK_IO
+  DATABASE_CONNECTIONS
+  RESPONSE_TIME
+  THROUGHPUT
+  ERROR_RATE
+  QUEUE_SIZE
+  CACHE_HIT_RATE
+  ACTIVE_USERS
+  API_REQUESTS
+  BATCH_JOBS
+  BACKUP_DURATION
+  DATA_VOLUME
+
+  @@map("performance_metric_types")
+  @@schema("system")
+}
+
+enum AggregationMethod {
+  AVERAGE
+  SUM
+  MIN
+  MAX
+  COUNT
+  PERCENTILE_50
+  PERCENTILE_90
+  PERCENTILE_95
+  PERCENTILE_99
+
+  @@map("aggregation_methods")
+  @@schema("system")
+}
+
+enum AlertType {
+  THRESHOLD
+  ANOMALY
+  SYSTEM_DOWN
+  PERFORMANCE_DEGRADATION
+  SECURITY_BREACH
+  COMPLIANCE_VIOLATION
+  CAPACITY_LIMIT
+  ERROR_RATE
+  DATA_QUALITY
+  BACKUP_FAILURE
+  INTEGRATION_FAILURE
+  HEALTH_CHECK_FAILURE
+
+  @@map("alert_types")
+  @@schema("system")
+}
+
+enum AlertSeverity {
+  INFO
+  LOW
+  MEDIUM
+  HIGH
+  CRITICAL
+
+  @@map("alert_severities")
+  @@schema("system")
+}
+
+enum AlertCondition {
+  GREATER_THAN
+  LESS_THAN
+  EQUALS
+  NOT_EQUALS
+  GREATER_EQUAL
+  LESS_EQUAL
+  PERCENTAGE_CHANGE
+  ANOMALY_DETECTED
+  SYSTEM_DOWN
+  PATTERN_MATCHED
+
+  @@map("alert_conditions")
+  @@schema("system")
+}
+
+enum ExportType {
+  PATIENT_DATA
+  MEDICAL_RECORDS
+  ANALYTICS_DATA
+  REPORT_DATA
+  CONFIGURATION_DATA
+  AUDIT_LOGS
+  PERFORMANCE_DATA
+  BACKUP_DATA
+  FULL_EXPORT
+  CUSTOM_QUERY
+
+  @@map("export_types")
+  @@schema("system")
+}
+
+enum ExportFormat {
+  CSV
+  EXCEL
+  JSON
+  XML
+  PDF
+  PARQUET
+  SQL_DUMP
+  ARCHIVE
+
+  @@map("export_formats")
+  @@schema("system")
+}
+
+enum ImportType {
+  PATIENT_DATA
+  MEDICAL_RECORDS
+  MASTER_DATA
+  CONFIGURATION
+  BULK_UPDATE
+  MIGRATION
+  RESTORE
+  SYNC_IMPORT
+
+  @@map("import_types")
+  @@schema("system")
+}
+
+enum ImportSourceType {
+  CSV_FILE
+  EXCEL_FILE
+  JSON_FILE
+  XML_FILE
+  DATABASE
+  API_IMPORT
+  FTP_IMPORT
+  ARCHIVE_FILE
+
+  @@map("import_source_types")
+  @@schema("system")
+}
+
+enum JobStatus {
+  PENDING
+  QUEUED
+  RUNNING
+  COMPLETED
+  FAILED
+  CANCELLED
+  PAUSED
+  RETRYING
+
+  @@map("job_statuses")
+  @@schema("system")
+}
+
+enum TaskType {
+  BACKUP
+  CLEANUP
+  REPORT_GENERATION
+  DATA_SYNC
+  HEALTH_CHECK
+  NOTIFICATION
+  CACHE_REFRESH
+  LOG_ROTATION
+  INDEX_REBUILD
+  STATISTICS_UPDATE
+  COMPLIANCE_CHECK
+  MAINTENANCE
+  CUSTOM_SCRIPT
+
+  @@map("task_types")
+  @@schema("system")
+}
+
+enum TaskStatus {
+  PENDING
+  RUNNING
+  COMPLETED
+  FAILED
+  CANCELLED
+  TIMEOUT
+  SKIPPED
+
+  @@map("task_statuses")
+  @@schema("system")
+}
+
+enum HealthCheckType {
+  HTTP_ENDPOINT
+  DATABASE_CONNECTION
+  FILE_SYSTEM
+  SERVICE_PORT
+  API_HEALTH
+  SSL_CERTIFICATE
+  DOMAIN_DNS
+  NETWORK_CONNECTIVITY
+  CUSTOM_CHECK
+
+  @@map("health_check_types")
+  @@schema("system")
+}
+
+enum HealthStatus {
+  HEALTHY
+  DEGRADED
+  UNHEALTHY
+  UNKNOWN
+  MAINTENANCE
+
+  @@map("health_statuses")
+  @@schema("system")
+}
+
+enum HttpMethod {
+  GET
+  POST
+  PUT
+  PATCH
+  DELETE
+  HEAD
+  OPTIONS
+
+  @@map("http_methods")
+  @@schema("system")
+}
+
+enum ComplianceType {
+  SECURITY
+  PRIVACY
+  DATA_PROTECTION
+  ACCESS_CONTROL
+  AUDIT_TRAIL
+  BUSINESS_CONTINUITY
+  DISASTER_RECOVERY
+  RISK_ASSESSMENT
+
+  @@map("compliance_types")
+  @@schema("audit")
+}
+
+enum ComplianceFramework {
+  GDPR
+  HIPAA
+  ISO_27001
+  ISO_27701
+  NIST
+  SOC_2
+  PDPA
+  HITECH
+  PCI_DSS
+  CUSTOM
+
+  @@map("compliance_frameworks")
+  @@schema("audit")
+}
+
+enum ComplianceStatus {
+  PENDING
+  IN_PROGRESS
+  COMPLETED
+  FAILED
+  EXCEPTION
+  WAIVED
+  REVIEW_REQUIRED
+
+  @@map("compliance_statuses")
+  @@schema("audit")
+}
+
+enum ComplianceRisk {
+  LOW
+  MEDIUM
+  HIGH
+  CRITICAL
+
+  @@map("compliance_risks")
+  @@schema("audit")
 }

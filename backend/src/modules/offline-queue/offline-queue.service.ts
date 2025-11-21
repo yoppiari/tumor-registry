@@ -1,5 +1,5 @@
 import { Injectable, Logger, NotFoundException, ConflictException, BadRequestException } from '@nestjs/common';
-import { PrismaService } from '../../database/prisma.service';
+import { PrismaService } from '@/common/database/prisma.service';
 import { SyncOfflineDataDto } from './dto/sync-offline-data.dto';
 import { ResolveConflictDto } from './dto/resolve-conflict.dto';
 

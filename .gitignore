@@ -22,3 +22,8 @@ out/
 
 # Development
 .DS_Store
+
+# Documentation assets (generated files and screenshots)
+docs/assets/screenshots/*.png
+docs/testing/*.html
+docs/testing/*.md

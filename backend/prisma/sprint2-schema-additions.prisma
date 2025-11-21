@@ -1,0 +1,548 @@
+// Sprint 2: Data Entry & Quality Assurance Schema
+// Append this to schema.prisma
+
+// Story 2.2: Medical Imaging Management
+model MedicalImage {
+  id                String              @id @default(cuid())
+  patientId         String
+  recordId          String?             // MedicalRecord or other record reference
+  imageType         MedicalImageType
+  category          ImageCategory
+  fileName          String
+  originalFileName  String
+  filePath          String
+  fileSize          BigInt
+  mimeType          String
+  width             Int?
+  height            Int?
+  isDicom           Boolean             @default(false)
+  dicomMetadata     Json?               // DICOM tags and metadata
+  thumbnailPath     String?
+  compressedPath    String?
+  annotations       Json?               // image annotations
+  description       String?
+  findings          String?
+  bodyPart          String?
+  modality          String?             // CT, MRI, X-Ray, etc.
+  studyDate         DateTime?
+  seriesNumber      String?
+  instanceNumber    String?
+  isCompressed      Boolean             @default(false)
+  compressionRatio  Float?
+  quality           ImageQuality        @default(STANDARD)
+  tags              String[]            @default([])
+  uploadedBy        String
+  uploadedAt        DateTime            @default(now())
+  reviewedBy        String?
+  reviewedAt        DateTime?
+  isActive          Boolean             @default(true)
+  isDeleted         Boolean             @default(false)
+  deletedAt         DateTime?
+  deletedBy         String?
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+
+  @@index([patientId])
+  @@index([imageType])
+  @@index([category])
+  @@index([uploadedAt])
+  @@map("medical_images")
+  @@schema("medical")
+}
+
+// Story 2.3: Offline Data Entry
+model OfflineDataQueue {
+  id                String              @id @default(cuid())
+  userId            String
+  entityType        String              // patient, diagnosis, medication, etc.
+  entityId          String?             // null for creates
+  operation         OfflineOperation
+  data              Json                // the actual data payload
+  status            OfflineQueueStatus  @default(PENDING)
+  priority          Int                 @default(0)
+  attemptCount      Int                 @default(0)
+  maxAttempts       Int                 @default(3)
+  errorMessage      String?
+  errorDetails      Json?
+  conflictData      Json?               // data for conflict resolution
+  resolvedBy        String?
+  resolvedAt        DateTime?
+  resolution        ConflictResolution?
+  localTimestamp    DateTime            // when created offline
+  syncedAt          DateTime?
+  deviceId          String?
+  sessionId         String?
+  metadata          Json?
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+
+  @@index([userId])
+  @@index([status])
+  @@index([entityType])
+  @@index([localTimestamp])
+  @@map("offline_data_queue")
+  @@schema("system")
+}
+
+// Story 2.5: Complex Case Review
+model CaseReview {
+  id                String              @id @default(cuid())
+  patientId         String
+  caseType          CaseType
+  complexity        CaseComplexity      @default(STANDARD)
+  flagReason        String
+  description       String
+  clinicalData      Json                // relevant clinical data snapshot
+  diagnosisIds      String[]            @default([])
+  findings          Json?
+  recommendedActions Json?
+  specialty         MedicalSpecialty?
+  priority          ReviewPriority      @default(MEDIUM)
+  status            ReviewStatus        @default(PENDING)
+  flaggedBy         String
+  flaggedAt         DateTime            @default(now())
+  reviewedBy        String?
+  reviewedAt        DateTime?
+  reviewNotes       String?
+  outcome           ReviewOutcome?
+  resolution        String?
+  similarCases      Json?               // similar case matches
+  dueDate           DateTime?
+  completedAt       DateTime?
+  tags              String[]            @default([])
+  isActive          Boolean             @default(true)
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  assignments       ReviewAssignment[]
+  comments          ReviewComment[]
+
+  @@index([patientId])
+  @@index([caseType])
+  @@index([status])
+  @@index([specialty])
+  @@index([flaggedAt])
+  @@map("case_reviews")
+  @@schema("medical")
+}
+
+model ReviewAssignment {
+  id                String              @id @default(cuid())
+  caseReviewId      String
+  assignedTo        String
+  assignedBy        String
+  specialty         MedicalSpecialty?
+  role              String?
+  status            AssignmentStatus    @default(ASSIGNED)
+  priority          ReviewPriority      @default(MEDIUM)
+  dueDate           DateTime?
+  startedAt         DateTime?
+  completedAt       DateTime?
+  notes             String?
+  timeSpent         Int?                // minutes
+  isActive          Boolean             @default(true)
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  caseReview        CaseReview          @relation(fields: [caseReviewId], references: [id], onDelete: Cascade)
+
+  @@index([caseReviewId])
+  @@index([assignedTo])
+  @@index([status])
+  @@map("review_assignments")
+  @@schema("medical")
+}
+
+model ReviewComment {
+  id                String              @id @default(cuid())
+  caseReviewId      String
+  parentId          String?             // for threaded comments
+  userId            String
+  comment           String
+  commentType       CommentType         @default(GENERAL)
+  isInternal        Boolean             @default(false)
+  mentions          String[]            @default([])
+  attachments       Json?
+  isEdited          Boolean             @default(false)
+  editedAt          DateTime?
+  isDeleted         Boolean             @default(false)
+  deletedAt         DateTime?
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  caseReview        CaseReview          @relation(fields: [caseReviewId], references: [id], onDelete: Cascade)
+  parent            ReviewComment?      @relation("CommentThread", fields: [parentId], references: [id])
+  replies           ReviewComment[]     @relation("CommentThread")
+
+  @@index([caseReviewId])
+  @@index([parentId])
+  @@index([userId])
+  @@map("review_comments")
+  @@schema("medical")
+}
+
+// Story 2.8: Peer Review Validation
+model PeerReview {
+  id                String              @id @default(cuid())
+  entityType        PeerReviewEntity
+  entityId          String
+  reviewType        PeerReviewType      @default(QUALITY_CHECK)
+  requestedBy       String
+  requestedAt       DateTime            @default(now())
+  assignedTo        String?
+  assignedAt        DateTime?
+  status            PeerReviewStatus    @default(PENDING)
+  priority          ReviewPriority      @default(MEDIUM)
+  dueDate           DateTime?
+  title             String
+  description       String?
+  context           Json?               // entity data snapshot
+  checklist         Json?               // review checklist items
+  findings          Json?               // review findings
+  score             Float?              // quality score 0-100
+  recommendation    ReviewRecommendation?
+  requiresChanges   Boolean             @default(false)
+  approvedBy        String?
+  approvedAt        DateTime?
+  rejectedBy        String?
+  rejectedAt        DateTime?
+  rejectionReason   String?
+  completedAt       DateTime?
+  timeSpent         Int?                // minutes
+  tags              String[]            @default([])
+  isActive          Boolean             @default(true)
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  comments          PeerReviewComment[]
+  recognitions      ReviewRecognition[]
+
+  @@index([entityType])
+  @@index([entityId])
+  @@index([status])
+  @@index([assignedTo])
+  @@index([requestedAt])
+  @@map("peer_reviews")
+  @@schema("medical")
+}
+
+model PeerReviewComment {
+  id                String              @id @default(cuid())
+  peerReviewId      String
+  parentId          String?             // for threaded comments
+  userId            String
+  comment           String
+  commentType       CommentType         @default(GENERAL)
+  severity          CommentSeverity     @default(INFO)
+  lineReference     String?             // reference to specific data field
+  suggestion        String?
+  isResolved        Boolean             @default(false)
+  resolvedBy        String?
+  resolvedAt        DateTime?
+  isInternal        Boolean             @default(false)
+  mentions          String[]            @default([])
+  attachments       Json?
+  isEdited          Boolean             @default(false)
+  editedAt          DateTime?
+  isDeleted         Boolean             @default(false)
+  deletedAt         DateTime?
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  peerReview        PeerReview          @relation(fields: [peerReviewId], references: [id], onDelete: Cascade)
+  parent            PeerReviewComment?  @relation("PeerCommentThread", fields: [parentId], references: [id])
+  replies           PeerReviewComment[] @relation("PeerCommentThread")
+
+  @@index([peerReviewId])
+  @@index([parentId])
+  @@index([userId])
+  @@map("peer_review_comments")
+  @@schema("medical")
+}
+
+model ReviewRecognition {
+  id                String              @id @default(cuid())
+  peerReviewId      String
+  reviewerId        String
+  recognitionType   RecognitionType
+  awardedBy         String
+  title             String
+  description       String?
+  points            Int                 @default(0)
+  badge             String?
+  isPublic          Boolean             @default(true)
+  awardedAt         DateTime            @default(now())
+  peerReview        PeerReview          @relation(fields: [peerReviewId], references: [id], onDelete: Cascade)
+
+  @@index([peerReviewId])
+  @@index([reviewerId])
+  @@map("review_recognitions")
+  @@schema("medical")
+}
+
+// Enums for Sprint 2
+
+enum MedicalImageType {
+  HISTOLOGY
+  RADIOLOGY
+  CLINICAL_PHOTO
+  PATHOLOGY
+  ENDOSCOPY
+  ULTRASOUND
+  CT_SCAN
+  MRI
+  XRAY
+  PET_SCAN
+  MAMMOGRAPHY
+  OTHER
+
+  @@map("medical_image_types")
+  @@schema("medical")
+}
+
+enum ImageCategory {
+  HISTOLOGY
+  RADIOLOGY
+  CLINICAL
+  PATHOLOGY
+  DIAGNOSTIC
+  SURGICAL
+  FOLLOW_UP
+  SCREENING
+  OTHER
+
+  @@map("image_categories")
+  @@schema("medical")
+}
+
+enum ImageQuality {
+  EXCELLENT
+  GOOD
+  STANDARD
+  POOR
+  NEEDS_REVIEW
+
+  @@map("image_qualities")
+  @@schema("medical")
+}
+
+enum OfflineOperation {
+  CREATE
+  UPDATE
+  DELETE
+  SYNC
+
+  @@map("offline_operations")
+  @@schema("system")
+}
+
+enum OfflineQueueStatus {
+  PENDING
+  PROCESSING
+  SYNCED
+  FAILED
+  CONFLICT
+  RESOLVED
+  CANCELLED
+
+  @@map("offline_queue_statuses")
+  @@schema("system")
+}
+
+enum ConflictResolution {
+  USE_LOCAL
+  USE_REMOTE
+  MERGE
+  MANUAL
+
+  @@map("conflict_resolutions")
+  @@schema("system")
+}
+
+enum CaseType {
+  UNUSUAL_PRESENTATION
+  RARE_DIAGNOSIS
+  COMPLEX_COMORBIDITY
+  TREATMENT_CHALLENGE
+  DIAGNOSTIC_UNCERTAINTY
+  ADVERSE_EVENT
+  EXCEPTIONAL_OUTCOME
+  RESEARCH_INTEREST
+  QUALITY_CONCERN
+  OTHER
+
+  @@map("case_types")
+  @@schema("medical")
+}
+
+enum CaseComplexity {
+  SIMPLE
+  STANDARD
+  MODERATE
+  COMPLEX
+  HIGHLY_COMPLEX
+
+  @@map("case_complexities")
+  @@schema("medical")
+}
+
+enum MedicalSpecialty {
+  ONCOLOGY
+  HEMATOLOGY
+  SURGICAL_ONCOLOGY
+  RADIATION_ONCOLOGY
+  PATHOLOGY
+  RADIOLOGY
+  INTERNAL_MEDICINE
+  PEDIATRICS
+  GYNECOLOGY
+  UROLOGY
+  GASTROENTEROLOGY
+  PULMONOLOGY
+  DERMATOLOGY
+  NEUROLOGY
+  CARDIOLOGY
+  OTHER
+
+  @@map("medical_specialties")
+  @@schema("medical")
+}
+
+enum ReviewPriority {
+  LOW
+  MEDIUM
+  HIGH
+  URGENT
+  CRITICAL
+
+  @@map("review_priorities")
+  @@schema("medical")
+}
+
+enum ReviewStatus {
+  PENDING
+  IN_REVIEW
+  ASSIGNED
+  IN_PROGRESS
+  COMPLETED
+  ESCALATED
+  CANCELLED
+  ON_HOLD
+
+  @@map("review_statuses")
+  @@schema("medical")
+}
+
+enum ReviewOutcome {
+  RESOLVED
+  REQUIRES_ACTION
+  ESCALATED
+  DEFERRED
+  NO_ACTION_NEEDED
+  TRAINING_OPPORTUNITY
+
+  @@map("review_outcomes")
+  @@schema("medical")
+}
+
+enum AssignmentStatus {
+  ASSIGNED
+  ACCEPTED
+  IN_PROGRESS
+  COMPLETED
+  DECLINED
+  REASSIGNED
+
+  @@map("assignment_statuses")
+  @@schema("medical")
+}
+
+enum CommentType {
+  GENERAL
+  QUESTION
+  CONCERN
+  SUGGESTION
+  APPROVAL
+  REJECTION
+  CLARIFICATION
+  FOLLOW_UP
+
+  @@map("comment_types")
+  @@schema("medical")
+}
+
+enum CommentSeverity {
+  INFO
+  LOW
+  MEDIUM
+  HIGH
+  CRITICAL
+
+  @@map("comment_severities")
+  @@schema("medical")
+}
+
+enum PeerReviewEntity {
+  PATIENT_RECORD
+  DIAGNOSIS
+  TREATMENT_PLAN
+  MEDICAL_RECORD
+  LABORATORY_RESULT
+  RADIOLOGY_REPORT
+  PATHOLOGY_REPORT
+  CASE_REVIEW
+  RESEARCH_DATA
+  DATA_ENTRY
+
+  @@map("peer_review_entities")
+  @@schema("medical")
+}
+
+enum PeerReviewType {
+  QUALITY_CHECK
+  DATA_VALIDATION
+  CLINICAL_REVIEW
+  COMPLETENESS_CHECK
+  ACCURACY_VERIFICATION
+  PROTOCOL_COMPLIANCE
+  DOCUMENTATION_REVIEW
+  PEER_CONSULTATION
+
+  @@map("peer_review_types")
+  @@schema("medical")
+}
+
+enum PeerReviewStatus {
+  PENDING
+  ASSIGNED
+  IN_PROGRESS
+  COMPLETED
+  APPROVED
+  REJECTED
+  CANCELLED
+
+  @@map("peer_review_statuses")
+  @@schema("medical")
+}
+
+enum ReviewRecommendation {
+  APPROVE
+  APPROVE_WITH_CHANGES
+  MINOR_REVISION
+  MAJOR_REVISION
+  REJECT
+  ESCALATE
+  NEEDS_DISCUSSION
+
+  @@map("review_recommendations")
+  @@schema("medical")
+}
+
+enum RecognitionType {
+  EXCELLENT_REVIEW
+  THOROUGH_ANALYSIS
+  QUICK_TURNAROUND
+  HELPFUL_FEEDBACK
+  QUALITY_IMPROVEMENT
+  EXCEPTIONAL_INSIGHT
+  COLLABORATIVE_APPROACH
+  MENTORSHIP
+
+  @@map("recognition_types")
+  @@schema("medical")
+}

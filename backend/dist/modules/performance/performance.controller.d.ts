@@ -1,4 +1,3 @@
-import { Response } from 'express';
 import { PerformanceService } from './performance.service';
 import { RedisService } from './redis.service';
 import { PerformanceMonitorService } from './performance-monitor.service';
@@ -155,12 +154,12 @@ export declare class PerformanceController {
         components: {
             monitoring: string;
             redis: string;
-            database: "healthy" | "unhealthy" | "degraded";
+            database: "healthy" | "degraded" | "unhealthy";
             api: string;
         };
         alerts: string[];
     }>;
-    streamPatients(res: Response, centerId?: string, format?: string): Promise<void>;
+    streamPatients(reply: FastifyReply, centerId?: string, format?: string): Promise<void>;
     getDatabaseMetrics(): Promise<import("./database-performance.service").DatabasePerformanceMetrics>;
     getSlowQueries(limit?: number): Promise<import("./database-performance.service").SlowQuery[]>;
     getDatabaseRecommendations(): Promise<{
@@ -220,5 +219,5 @@ export declare class PerformanceController {
         totalAlerts: number;
         alerts: any[];
     }>;
-    exportMetrics(format: string, hours: number, res: Response): Promise<void>;
+    exportMetrics(format: string, hours: number, reply: FastifyReply): Promise<void>;
 }

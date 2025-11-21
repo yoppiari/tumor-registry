@@ -5,8 +5,8 @@ import { RedisService } from './redis.service';
 import { PerformanceMonitorService } from './performance-monitor.service';
 import { StreamingService } from './streaming.service';
 import { DatabasePerformanceService } from './database-performance.service';
-import { DatabaseModule } from '@/database/database.module';
-import { AuthModule } from '@/auth/auth.module';
+import { DatabaseModule } from '../../database/database.module';
+import { AuthModule } from '../auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
 import { ScheduleModule } from '@nestjs/schedule';
 

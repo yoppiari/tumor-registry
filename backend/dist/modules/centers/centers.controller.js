@@ -17,9 +17,9 @@ const common_1 = require("@nestjs/common");
 const swagger_1 = require("@nestjs/swagger");
 const centers_service_1 = require("./centers.service");
 const jwt_guard_1 = require("../auth/guards/jwt.guard");
-const permissions_guard_1 = require("@/auth/guards/permissions.guard");
-const permissions_decorator_1 = require("@/auth/decorators/permissions.decorator");
-const audit_log_decorator_1 = require("@/common/decorators/audit-log.decorator");
+const permissions_guard_1 = require("../../auth/guards/permissions.guard");
+const permissions_decorator_1 = require("../../auth/decorators/permissions.decorator");
+const audit_log_decorator_1 = require("../../common/decorators/audit-log.decorator");
 let CentersController = class CentersController {
     constructor(centersService) {
         this.centersService = centersService;

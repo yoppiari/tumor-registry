@@ -40,7 +40,18 @@ export class CreateExternalSystemDto {
 
   @ApiProperty({
     description: 'System configuration',
-    type: SystemConfiguration
+    type: 'object',
+    example: {
+      endpoint: 'https://api.example.com',
+      protocol: 'https',
+      port: 443,
+      authentication: { type: 'bearer', credentials: { token: 'xxx' } },
+      timeout: 30,
+      retryAttempts: 3,
+      retryDelay: 5,
+      mapping: [],
+      validation: []
+    }
   })
   @IsObject()
   configuration: SystemConfiguration;
@@ -82,7 +93,18 @@ export class UpdateExternalSystemDto {
 
   @ApiPropertyOptional({
     description: 'System configuration',
-    type: SystemConfiguration
+    type: 'object',
+    example: {
+      endpoint: 'https://api.example.com',
+      protocol: 'https',
+      port: 443,
+      authentication: { type: 'bearer', credentials: { token: 'xxx' } },
+      timeout: 30,
+      retryAttempts: 3,
+      retryDelay: 5,
+      mapping: [],
+      validation: []
+    }
   })
   @IsOptional()
   @IsObject()

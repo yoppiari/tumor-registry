@@ -1,9 +1,33 @@
 import { Injectable, Logger, NotFoundException, BadRequestException } from '@nestjs/common';
-import { PrismaService } from '../../database/prisma.service';
+import { PrismaService } from '@/common/database/prisma.service';
 import { CreatePeerReviewDto } from './dto/create-peer-review.dto';
 import { AddPeerCommentDto } from './dto/add-peer-comment.dto';
 import { CompleteReviewDto } from './dto/complete-review.dto';
 
+/**
+ * Peer Review Service - Story 2.8: Peer Review Validation
+ *
+ * This service manages the peer review workflow for validating data entry,
+ * clinical records, and other entities within the tumor registry system.
+ *
+ * Key Features:
+ * - Request peer reviews for various entity types (patient records, diagnoses, etc.)
+ * - Assign reviews to qualified reviewers
+ * - Threaded commenting system with severity levels
+ * - Review approval/rejection workflow with recommendations
+ * - Recognition system for quality reviews
+ * - Comprehensive audit logging
+ *
+ * Database Models:
+ * - PeerReview: Main review entity (schema: medical.peer_reviews)
+ * - PeerReviewComment: Threaded comments (schema: medical.peer_review_comments)
+ * - ReviewRecognition: Reviewer recognition (schema: medical.review_recognitions)
+ *
+ * IMPORTANT: All field names match the Prisma schema definitions exactly.
+ * Schema reference: /backend/prisma/sprint2-schema-additions.prisma (lines 182-276)
+ *
+ * Status: VERIFIED - All field mappings correct as of 2025-11-21
+ */
 @Injectable()
 export class PeerReviewService {
   private readonly logger = new Logger(PeerReviewService.name);

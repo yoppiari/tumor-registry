@@ -16,10 +16,10 @@ exports.PopulationHealthController = void 0;
 const common_1 = require("@nestjs/common");
 const swagger_1 = require("@nestjs/swagger");
 const population_health_service_1 = require("./population-health.service");
-const jwt_guard_1 = require("../auth/guards/jwt.guard");
-const permissions_guard_1 = require("@/auth/guards/permissions.guard");
-const permissions_decorator_1 = require("@/auth/decorators/permissions.decorator");
-const audit_log_decorator_1 = require("@/common/decorators/audit-log.decorator");
+const jwt_auth_guard_1 = require("../../auth/guards/jwt-auth.guard");
+const permissions_guard_1 = require("../../auth/guards/permissions.guard");
+const permissions_decorator_1 = require("../../auth/decorators/permissions.decorator");
+const audit_log_decorator_1 = require("../../common/decorators/audit-log.decorator");
 let PopulationHealthController = class PopulationHealthController {
     constructor(populationHealthService) {
         this.populationHealthService = populationHealthService;
@@ -289,7 +289,7 @@ __decorate([
     (0, permissions_decorator_1.RequirePermissions)('RESEARCH_EXPORT'),
     (0, common_1.HttpCode)(common_1.HttpStatus.CREATED),
     (0, audit_log_decorator_1.AuditLog)('GENERATE_POPULATION_HEALTH_REPORT'),
-    __param(0, Body()),
+    __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
@@ -393,7 +393,7 @@ __decorate([
 exports.PopulationHealthController = PopulationHealthController = __decorate([
     (0, swagger_1.ApiTags)('Population Health'),
     (0, common_1.Controller)('population-health'),
-    (0, common_1.UseGuards)(jwt_guard_1.JwtAuthGuard, permissions_guard_1.PermissionsGuard),
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard, permissions_guard_1.PermissionsGuard),
     __metadata("design:paramtypes", [population_health_service_1.PopulationHealthService])
 ], PopulationHealthController);
 //# sourceMappingURL=population-health.controller.js.map

@@ -9,12 +9,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var ResearchSprint3Service_1;
-var _a;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ResearchSprint3Service = void 0;
 const common_1 = require("@nestjs/common");
-const prisma_service_1 = require("../../database/prisma.service");
-const audit_service_1 = require("@/audit/audit.service");
+const prisma_service_1 = require("../../common/database/prisma.service");
+const audit_service_1 = require("../audit/audit.service");
 const email_service_1 = require("../auth/email.service");
 const client_1 = require("@prisma/client");
 let ResearchSprint3Service = ResearchSprint3Service_1 = class ResearchSprint3Service {
@@ -1564,6 +1563,8 @@ let ResearchSprint3Service = ResearchSprint3Service_1 = class ResearchSprint3Ser
 exports.ResearchSprint3Service = ResearchSprint3Service;
 exports.ResearchSprint3Service = ResearchSprint3Service = ResearchSprint3Service_1 = __decorate([
     (0, common_1.Injectable)(),
-    __metadata("design:paramtypes", [prisma_service_1.PrismaService, typeof (_a = typeof audit_service_1.AuditLogService !== "undefined" && audit_service_1.AuditLogService) === "function" ? _a : Object, email_service_1.EmailService])
+    __metadata("design:paramtypes", [prisma_service_1.PrismaService,
+        audit_service_1.AuditLogService,
+        email_service_1.EmailService])
 ], ResearchSprint3Service);
 //# sourceMappingURL=research.service.sprint3.js.map

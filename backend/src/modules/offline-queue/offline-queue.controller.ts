@@ -14,7 +14,7 @@ import {
 } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse, ApiParam, ApiQuery } from '@nestjs/swagger';
 import { OfflineQueueService } from './offline-queue.service';
-import { JwtAuthGuard } from '../auth/guards/jwt.guard';
+import { JwtAuthGuard } from '@/modules/auth/guards/jwt.guard';
 import { SyncOfflineDataDto } from './dto/sync-offline-data.dto';
 import { ResolveConflictDto } from './dto/resolve-conflict.dto';
 

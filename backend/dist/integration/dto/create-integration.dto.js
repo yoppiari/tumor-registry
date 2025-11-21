@@ -51,7 +51,18 @@ __decorate([
 __decorate([
     (0, swagger_1.ApiProperty)({
         description: 'System configuration',
-        type: integration_interface_1.SystemConfiguration
+        type: 'object',
+        example: {
+            endpoint: 'https://api.example.com',
+            protocol: 'https',
+            port: 443,
+            authentication: { type: 'bearer', credentials: { token: 'xxx' } },
+            timeout: 30,
+            retryAttempts: 3,
+            retryDelay: 5,
+            mapping: [],
+            validation: []
+        }
     }),
     (0, class_validator_1.IsObject)(),
     __metadata("design:type", Object)
@@ -99,7 +110,18 @@ __decorate([
 __decorate([
     (0, swagger_1.ApiPropertyOptional)({
         description: 'System configuration',
-        type: integration_interface_1.SystemConfiguration
+        type: 'object',
+        example: {
+            endpoint: 'https://api.example.com',
+            protocol: 'https',
+            port: 443,
+            authentication: { type: 'bearer', credentials: { token: 'xxx' } },
+            timeout: 30,
+            retryAttempts: 3,
+            retryDelay: 5,
+            mapping: [],
+            validation: []
+        }
     }),
     (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsObject)(),

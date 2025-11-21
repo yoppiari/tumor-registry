@@ -3,8 +3,8 @@ export declare class CentersController {
     private readonly centersService;
     constructor(centersService: CentersService);
     findAll(includeInactive?: string): Promise<{
-        name: string;
         id: string;
+        name: string;
         isActive: boolean;
         createdAt: Date;
         updatedAt: Date;
@@ -23,8 +23,8 @@ export declare class CentersController {
         regency?: string;
         address?: string;
     }): Promise<{
-        name: string;
         id: string;
+        name: string;
         isActive: boolean;
         createdAt: Date;
         updatedAt: Date;
@@ -40,8 +40,8 @@ export declare class CentersController {
         address?: string;
         isActive?: boolean;
     }): Promise<{
-        name: string;
         id: string;
+        name: string;
         isActive: boolean;
         createdAt: Date;
         updatedAt: Date;
@@ -51,8 +51,8 @@ export declare class CentersController {
         address: string | null;
     }>;
     activate(id: string): Promise<{
-        name: string;
         id: string;
+        name: string;
         isActive: boolean;
         createdAt: Date;
         updatedAt: Date;
@@ -62,8 +62,8 @@ export declare class CentersController {
         address: string | null;
     }>;
     deactivate(id: string): Promise<{
-        name: string;
         id: string;
+        name: string;
         isActive: boolean;
         createdAt: Date;
         updatedAt: Date;

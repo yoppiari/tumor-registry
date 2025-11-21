@@ -8,28 +8,27 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var __param = (this && this.__param) || function (paramIndex, decorator) {
-    return function (target, key) { decorator(target, key, paramIndex); }
-};
-var _a, _b, _c;
+var QualityService_1;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.QualityService = void 0;
 const common_1 = require("@nestjs/common");
-const typeorm_1 = require("@nestjs/typeorm");
-const typeorm_2 = require("typeorm");
-const patient_entity_1 = require("../patients/entities/patient.entity");
-const medical_image_entity_1 = require("../medical-imaging/entities/medical-image.entity");
-const quality_metric_entity_1 = require("./entities/quality-metric.entity");
-let QualityService = class QualityService {
-    constructor(patientRepository, imageRepository, qualityMetricRepository) {
-        this.patientRepository = patientRepository;
-        this.imageRepository = imageRepository;
-        this.qualityMetricRepository = qualityMetricRepository;
+const prisma_service_1 = require("../../common/database/prisma.service");
+let QualityService = QualityService_1 = class QualityService {
+    constructor(prisma) {
+        this.prisma = prisma;
+        this.logger = new common_1.Logger(QualityService_1.name);
     }
     async calculateQualityScore(patientId) {
-        const patient = await this.patientRepository.findOne({
+        const patient = await this.prisma.patient.findUnique({
             where: { id: patientId },
-            relations: ['images', 'treatments', 'followUps']
+            include: {
+                diagnoses: true,
+                medicalRecords: true,
+                procedures: true,
+                visits: true,
+                medications: true,
+                laboratoryResults: true,
+            }
         });
         if (!patient) {
             throw new common_1.NotFoundException('Patient not found');
@@ -39,10 +38,10 @@ let QualityService = class QualityService {
         const recommendations = [];
         const requiredFields = [
             { field: 'name', weight: 8 },
-            { field: 'idNumber', weight: 8 },
-            { field: 'birthDate', weight: 8 },
+            { field: 'nik', weight: 8 },
+            { field: 'dateOfBirth', weight: 8 },
             { field: 'gender', weight: 8 },
-            { field: 'diagnosisDate', weight: 8 }
+            { field: 'medicalRecordNumber', weight: 8 }
         ];
         let requiredScore = 0;
         for (const { field, weight } of requiredFields) {
@@ -59,27 +58,55 @@ let QualityService = class QualityService {
             }
         }
         score += requiredScore;
-        const medicalFields = [
-            { field: 'tumorType', weight: 10 },
-            { field: 'stage', weight: 8 },
-            { field: 'medicalHistory', weight: 7 }
-        ];
+        const hasDiagnosis = patient.diagnoses && patient.diagnoses.length > 0;
+        const hasMedicalRecords = patient.medicalRecords && patient.medicalRecords.length > 0;
+        const hasProcedures = patient.procedures && patient.procedures.length > 0;
         let medicalScore = 0;
-        for (const { field, weight } of medicalFields) {
-            if (patient[field]) {
-                medicalScore += weight;
+        if (hasDiagnosis) {
+            medicalScore += 10;
+            const latestDiagnosis = patient.diagnoses[patient.diagnoses.length - 1];
+            if (latestDiagnosis.diagnosisName && latestDiagnosis.diagnosisCode) {
+                medicalScore += 5;
             }
             else {
                 recommendations.push({
                     type: 'missing_medical_info',
                     priority: 'medium',
-                    message: `Add medical information: ${field}`,
-                    field: field
+                    message: 'Complete diagnosis information (code and name)',
+                    field: 'diagnosisInfo'
+                });
+            }
+            if (latestDiagnosis.severity) {
+                medicalScore += 5;
+            }
+            else {
+                recommendations.push({
+                    type: 'missing_medical_info',
+                    priority: 'medium',
+                    message: 'Add diagnosis severity information',
+                    field: 'severity'
                 });
             }
         }
+        else {
+            recommendations.push({
+                type: 'missing_medical_info',
+                priority: 'high',
+                message: 'Add diagnosis information'
+            });
+        }
+        if (hasMedicalRecords) {
+            medicalScore += 5;
+        }
+        else {
+            recommendations.push({
+                type: 'missing_medical_info',
+                priority: 'medium',
+                message: 'Add medical records'
+            });
+        }
         score += medicalScore;
-        if (patient.familyHistory) {
+        if (hasMedicalRecords && patient.medicalRecords.some(record => record.familyHistory)) {
             score += 5;
         }
         else {
@@ -89,38 +116,38 @@ let QualityService = class QualityService {
                 message: 'Consider adding family history for better risk assessment'
             });
         }
-        if (patient.previousTreatments) {
+        if (hasProcedures) {
             score += 5;
         }
         else {
             recommendations.push({
                 type: 'missing_treatment_history',
                 priority: 'medium',
-                message: 'Document previous treatments for comprehensive care'
+                message: 'Document procedures for comprehensive care'
             });
         }
-        const imageCount = patient.images?.length || 0;
-        if (imageCount >= 3) {
+        const labResultCount = patient.laboratoryResults?.length || 0;
+        if (labResultCount >= 3) {
             score += 15;
         }
-        else if (imageCount >= 1) {
-            score += imageCount * 5;
+        else if (labResultCount >= 1) {
+            score += labResultCount * 5;
             recommendations.push({
-                type: 'insufficient_imaging',
+                type: 'insufficient_lab_results',
                 priority: 'medium',
-                message: `Consider adding more diagnostic images (${3 - imageCount} more recommended)`
+                message: `Consider adding more laboratory results (${3 - labResultCount} more recommended)`
             });
         }
         else {
             recommendations.push({
-                type: 'missing_imaging',
+                type: 'missing_lab_results',
                 priority: 'high',
-                message: 'No diagnostic images found. Add relevant medical imaging.'
+                message: 'No laboratory results found. Add relevant test results.'
             });
         }
-        if (patient.treatments && patient.treatments.length > 0) {
-            const latestTreatment = patient.treatments[patient.treatments.length - 1];
-            if (latestTreatment.plan && latestTreatment.startDate) {
+        if (patient.medications && patient.medications.length > 0) {
+            const activeMedications = patient.medications.filter(med => med.isActive);
+            if (activeMedications.length > 0) {
                 score += 10;
             }
             else {
@@ -128,7 +155,7 @@ let QualityService = class QualityService {
                 recommendations.push({
                     type: 'incomplete_treatment_plan',
                     priority: 'high',
-                    message: 'Complete treatment plan details'
+                    message: 'Update current medication status'
                 });
             }
         }
@@ -136,7 +163,7 @@ let QualityService = class QualityService {
             recommendations.push({
                 type: 'missing_treatment_plan',
                 priority: 'high',
-                message: 'Create treatment plan for patient care'
+                message: 'Create medication plan for patient care'
             });
         }
         const requiredCompleteness = requiredScore / 40;
@@ -146,7 +173,7 @@ let QualityService = class QualityService {
             score: Math.round(score),
             requiredCompleteness,
             medicalCompleteness,
-            imageCount,
+            imageCount: labResultCount,
             recommendations: recommendations.length
         });
         return {
@@ -154,7 +181,7 @@ let QualityService = class QualityService {
             completeness: Math.round(overallCompleteness * 100),
             requiredCompleteness: Math.round(requiredCompleteness * 100),
             medicalCompleteness: Math.round(medicalCompleteness * 100),
-            imageCount,
+            imageCount: labResultCount,
             recommendations,
             lastUpdated: new Date(),
             category: this.getQualityCategory(score)
@@ -163,12 +190,16 @@ let QualityService = class QualityService {
     async getQualityTrends(patientId, days = 30) {
         const startDate = new Date();
         startDate.setDate(startDate.getDate() - days);
-        const metrics = await this.qualityMetricRepository.find({
+        const metrics = await this.prisma.qualityMetric.findMany({
             where: {
                 patientId,
-                createdAt: { $gte: startDate }
+                createdAt: {
+                    gte: startDate
+                }
             },
-            order: { createdAt: 'ASC' }
+            orderBy: {
+                createdAt: 'asc'
+            }
         });
         return metrics.map(metric => ({
             date: metric.createdAt,
@@ -179,11 +210,26 @@ let QualityService = class QualityService {
         }));
     }
     async getCenterQualitySummary(centerId) {
-        const patients = await this.patientRepository.find({
+        const patients = await this.prisma.patient.findMany({
             where: { centerId }
         });
         const scores = await Promise.all(patients.map(patient => this.calculateQualityScore(patient.id)));
         const totalPatients = scores.length;
+        if (totalPatients === 0) {
+            return {
+                centerId,
+                totalPatients: 0,
+                averageScore: 0,
+                qualityDistribution: {
+                    high: 0,
+                    medium: 0,
+                    low: 0,
+                    percentages: { high: 0, medium: 0, low: 0 }
+                },
+                topRecommendations: [],
+                lastUpdated: new Date()
+            };
+        }
         const averageScore = scores.reduce((sum, score) => sum + score.score, 0) / totalPatients;
         const highQualityCount = scores.filter(score => score.score >= 90).length;
         const mediumQualityCount = scores.filter(score => score.score >= 70 && score.score < 90).length;
@@ -220,8 +266,10 @@ let QualityService = class QualityService {
         };
     }
     async getNationalQualityOverview() {
-        const latestMetrics = await this.qualityMetricRepository.find({
-            order: { createdAt: 'DESC' },
+        const latestMetrics = await this.prisma.qualityMetric.findMany({
+            orderBy: {
+                createdAt: 'desc'
+            },
             take: 1000
         });
         if (latestMetrics.length === 0) {
@@ -255,16 +303,17 @@ let QualityService = class QualityService {
         };
     }
     async saveQualityMetric(patientId, data) {
-        const metric = this.qualityMetricRepository.create({
-            patientId,
-            score: data.score,
-            completeness: Math.round((data.requiredCompleteness + data.medicalCompleteness) * 50),
-            requiredCompleteness: Math.round(data.requiredCompleteness * 100),
-            medicalCompleteness: Math.round(data.medicalCompleteness * 100),
-            imageCount: data.imageCount,
-            recommendations: data.recommendations
+        await this.prisma.qualityMetric.create({
+            data: {
+                patientId,
+                score: data.score,
+                completeness: Math.round((data.requiredCompleteness + data.medicalCompleteness) * 50),
+                requiredCompleteness: Math.round(data.requiredCompleteness * 100),
+                medicalCompleteness: Math.round(data.medicalCompleteness * 100),
+                imageCount: data.imageCount,
+                recommendations: data.recommendations
+            }
         });
-        await this.qualityMetricRepository.save(metric);
     }
     getQualityCategory(score) {
         if (score >= 90)
@@ -303,9 +352,13 @@ let QualityService = class QualityService {
         return Math.ceil((pastDaysOfYear + firstDayOfYear.getDay() + 1) / 7);
     }
     async validatePatientData(patientId) {
-        const patient = await this.patientRepository.findOne({
+        const patient = await this.prisma.patient.findUnique({
             where: { id: patientId },
-            relations: ['images', 'treatments']
+            include: {
+                diagnoses: true,
+                procedures: true,
+                laboratoryResults: true
+            }
         });
         if (!patient) {
             return {
@@ -318,50 +371,53 @@ let QualityService = class QualityService {
         const warnings = [];
         if (!patient.name)
             errors.push('Patient name is required');
-        if (!patient.idNumber)
-            errors.push('Patient ID number is required');
-        if (!patient.birthDate)
+        if (!patient.nik)
+            errors.push('Patient NIK (ID number) is required');
+        if (!patient.dateOfBirth)
             errors.push('Birth date is required');
         if (!patient.gender)
             errors.push('Gender is required');
-        if (!patient.diagnosisDate)
-            errors.push('Diagnosis date is required');
-        if (patient.idNumber) {
-            const idPattern = /^[0-9]{16}$/;
-            if (!idPattern.test(patient.idNumber)) {
-                warnings.push('ID number format may be invalid (expected 16 digits)');
+        if (!patient.medicalRecordNumber)
+            errors.push('Medical record number is required');
+        if (patient.nik) {
+            const nikPattern = /^[0-9]{16}$/;
+            if (!nikPattern.test(patient.nik)) {
+                warnings.push('NIK format may be invalid (expected 16 digits)');
             }
         }
-        if (patient.birthDate && patient.diagnosisDate) {
-            const birth = new Date(patient.birthDate);
-            const diagnosis = new Date(patient.diagnosisDate);
+        if (patient.dateOfBirth) {
+            const birth = new Date(patient.dateOfBirth);
             const now = new Date();
-            if (birth >= diagnosis) {
-                errors.push('Birth date cannot be after diagnosis date');
-            }
             if (birth >= now) {
                 errors.push('Birth date cannot be in the future');
             }
-            if (diagnosis > now) {
-                warnings.push('Diagnosis date is in the future');
-            }
-            const ageAtDiagnosis = diagnosis.getFullYear() - birth.getFullYear();
-            if (ageAtDiagnosis > 120 || ageAtDiagnosis < 0) {
-                warnings.push('Patient age at diagnosis seems unrealistic');
+            if (patient.diagnoses && patient.diagnoses.length > 0) {
+                for (const diagnosis of patient.diagnoses) {
+                    if (diagnosis.onsetDate) {
+                        const onset = new Date(diagnosis.onsetDate);
+                        if (birth >= onset) {
+                            errors.push('Birth date cannot be after diagnosis onset date');
+                        }
+                        if (onset > now) {
+                            warnings.push('Diagnosis onset date is in the future');
+                        }
+                        const ageAtDiagnosis = onset.getFullYear() - birth.getFullYear();
+                        if (ageAtDiagnosis > 120 || ageAtDiagnosis < 0) {
+                            warnings.push('Patient age at diagnosis seems unrealistic');
+                        }
+                    }
+                }
             }
         }
-        if (patient.stage && !patient.tumorType) {
-            warnings.push('Cancer stage specified but tumor type is missing');
-        }
-        const images = patient.images || [];
-        if (images.length === 0) {
-            warnings.push('No medical imaging available');
-        }
-        else {
-            const hasDicom = images.some(img => img.category === 'dicom');
-            if (!hasDicom) {
-                warnings.push('No DICOM images found (recommended for cancer diagnosis)');
+        if (patient.diagnoses && patient.diagnoses.length > 0) {
+            const incompleteDiagnoses = patient.diagnoses.filter(d => !d.diagnosisCode || !d.diagnosisName);
+            if (incompleteDiagnoses.length > 0) {
+                warnings.push(`${incompleteDiagnoses.length} diagnosis(es) have incomplete information`);
             }
+        }
+        const labResults = patient.laboratoryResults || [];
+        if (labResults.length === 0) {
+            warnings.push('No laboratory results available');
         }
         return {
             isValid: errors.length === 0,
@@ -371,11 +427,8 @@ let QualityService = class QualityService {
     }
 };
 exports.QualityService = QualityService;
-exports.QualityService = QualityService = __decorate([
+exports.QualityService = QualityService = QualityService_1 = __decorate([
     (0, common_1.Injectable)(),
-    __param(0, (0, typeorm_1.InjectRepository)(patient_entity_1.Patient)),
-    __param(1, (0, typeorm_1.InjectRepository)(medical_image_entity_1.MedicalImage)),
-    __param(2, (0, typeorm_1.InjectRepository)(quality_metric_entity_1.QualityMetric)),
-    __metadata("design:paramtypes", [typeof (_a = typeof typeorm_2.Repository !== "undefined" && typeorm_2.Repository) === "function" ? _a : Object, typeof (_b = typeof typeorm_2.Repository !== "undefined" && typeorm_2.Repository) === "function" ? _b : Object, typeof (_c = typeof typeorm_2.Repository !== "undefined" && typeorm_2.Repository) === "function" ? _c : Object])
+    __metadata("design:paramtypes", [prisma_service_1.PrismaService])
 ], QualityService);
 //# sourceMappingURL=quality.service.js.map

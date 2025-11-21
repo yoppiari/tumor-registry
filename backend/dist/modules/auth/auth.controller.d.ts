@@ -1,7 +1,7 @@
 import { AuthService } from './auth.service';
 import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
-import { Request } from 'express';
+import type { FastifyRequest } from 'fastify';
 import { MfaService } from './mfa.service';
 export declare class AuthController {
     private readonly authService;
@@ -19,7 +19,7 @@ export declare class AuthController {
         };
         message: string;
         verificationToken: string;
-        mfaSecret: any;
+        mfaSecret: string;
     }>;
     login(loginDto: LoginDto): Promise<{
         requireMFA: boolean;
@@ -57,31 +57,31 @@ export declare class AuthController {
         accessToken: string;
         refreshToken: string;
     }>;
-    getProfile(req: Request): Promise<Express.User>;
-    logout(req: Request): Promise<{
+    getProfile(req: FastifyRequest): Promise<any>;
+    logout(req: FastifyRequest): Promise<{
         message: string;
     }>;
-    setupMfa(req: Request): Promise<{
+    setupMfa(req: FastifyRequest): Promise<{
         secret: string;
         manualEntryKey: string;
     }>;
-    enableMfa(req: Request, secret: string, token: string): Promise<{
+    enableMfa(req: FastifyRequest, secret: string, token: string): Promise<{
         success: boolean;
         backupCodes: string[];
     }>;
-    disableMfa(req: Request, password: string, token?: string): Promise<{
+    disableMfa(req: FastifyRequest, password: string, token?: string): Promise<{
         message: string;
     }>;
-    verifyMfaToken(req: Request, token: string): Promise<{
+    verifyMfaToken(req: FastifyRequest, token: string): Promise<{
         valid: boolean;
     }>;
-    regenerateBackupCodes(req: Request, token: string): Promise<{
+    regenerateBackupCodes(req: FastifyRequest, token: string): Promise<{
         backupCodes: string[];
     }>;
-    verifyBackupCode(req: Request, backupCode: string): Promise<{
+    verifyBackupCode(req: FastifyRequest, backupCode: string): Promise<{
         valid: boolean;
     }>;
-    getMfaStatus(req: Request): Promise<{
+    getMfaStatus(req: FastifyRequest): Promise<{
         mfaEnabled: any;
         mfaRequired: boolean;
     }>;

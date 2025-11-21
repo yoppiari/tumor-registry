@@ -1,5 +1,5 @@
 import { NestMiddleware } from '@nestjs/common';
-import { Request, Response, NextFunction } from 'express';
+import type { FastifyRequest, FastifyReply } from 'fastify';
 import { PerformanceMonitorService } from './performance-monitor.service';
 import { RedisService } from './redis.service';
 export interface ApiPerformanceMetrics {
@@ -25,7 +25,7 @@ export declare class ApiPerformanceMiddleware implements NestMiddleware {
     private readonly CACHEABLE_METHODS;
     private readonly CACHEABLE_STATUS_CODES;
     constructor(performanceMonitor: PerformanceMonitorService, redisService: RedisService);
-    use(req: Request, res: Response, next: NextFunction): Promise<void>;
+    use(req: FastifyRequest, reply: FastifyReply, next: NextFunction): Promise<void>;
     private generateRequestId;
     private getClientIp;
     private getUserId;

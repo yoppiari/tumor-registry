@@ -9,11 +9,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var BackupService_1;
-var _a;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.BackupService = void 0;
 const common_1 = require("@nestjs/common");
-const prisma_service_1 = require("../../database/prisma.service");
+const prisma_service_1 = require("../../../common/database/prisma.service");
 const database_backup_strategy_1 = require("../strategies/database-backup.strategy");
 const fs = require("fs");
 const path = require("path");
@@ -574,6 +573,7 @@ let BackupService = BackupService_1 = class BackupService {
 exports.BackupService = BackupService;
 exports.BackupService = BackupService = BackupService_1 = __decorate([
     (0, common_1.Injectable)(),
-    __metadata("design:paramtypes", [typeof (_a = typeof prisma_service_1.PrismaService !== "undefined" && prisma_service_1.PrismaService) === "function" ? _a : Object, database_backup_strategy_1.DatabaseBackupStrategy])
+    __metadata("design:paramtypes", [prisma_service_1.PrismaService,
+        database_backup_strategy_1.DatabaseBackupStrategy])
 ], BackupService);
 //# sourceMappingURL=backup.service.js.map

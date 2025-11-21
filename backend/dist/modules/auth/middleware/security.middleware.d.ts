@@ -1,10 +1,10 @@
 import { NestMiddleware } from '@nestjs/common';
-import { Request, Response, NextFunction } from 'express';
+import type { FastifyRequest, FastifyReply } from 'fastify';
 import { ConfigService } from '@nestjs/config';
 export declare class SecurityMiddleware implements NestMiddleware {
     private readonly configService;
     constructor(configService: ConfigService);
-    use(req: Request, res: Response, next: NextFunction): void;
+    use(req: FastifyRequest, reply: FastifyReply, next: () => void): void;
     private setSecurityHeaders;
     private validateRequest;
     private checkRateLimit;

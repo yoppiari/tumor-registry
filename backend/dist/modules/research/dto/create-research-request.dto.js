@@ -10,11 +10,67 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var _a, _b, _c, _d;
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UpdateResearchRequestDto = exports.CreateCollaborationDto = exports.CreateResearchRequestDto = void 0;
+exports.UpdateResearchRequestDto = exports.CreateResearchRequestDto = exports.CreateCollaborationDto = void 0;
 const class_validator_1 = require("class-validator");
 const class_transformer_1 = require("class-transformer");
 const swagger_1 = require("@nestjs/swagger");
 const client_1 = require("@prisma/client");
+class CreateCollaborationDto {
+}
+exports.CreateCollaborationDto = CreateCollaborationDto;
+__decorate([
+    (0, swagger_1.ApiProperty)({ description: 'Collaborator user ID' }),
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsNotEmpty)(),
+    __metadata("design:type", String)
+], CreateCollaborationDto.prototype, "collaboratorId", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ enum: client_1.CollaborationRole, description: 'Collaboration role' }),
+    (0, class_validator_1.IsEnum)(client_1.CollaborationRole),
+    __metadata("design:type", typeof (_a = typeof client_1.CollaborationRole !== "undefined" && client_1.CollaborationRole) === "function" ? _a : Object)
+], CreateCollaborationDto.prototype, "role", void 0);
+__decorate([
+    (0, swagger_1.ApiPropertyOptional)({ description: 'Responsibilities' }),
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", String)
+], CreateCollaborationDto.prototype, "responsibilities", void 0);
+__decorate([
+    (0, swagger_1.ApiPropertyOptional)({ description: 'Affiliation' }),
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", String)
+], CreateCollaborationDto.prototype, "affiliation", void 0);
+__decorate([
+    (0, swagger_1.ApiPropertyOptional)({ description: 'Email' }),
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", String)
+], CreateCollaborationDto.prototype, "email", void 0);
+__decorate([
+    (0, swagger_1.ApiPropertyOptional)({ description: 'Phone' }),
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", String)
+], CreateCollaborationDto.prototype, "phone", void 0);
+__decorate([
+    (0, swagger_1.ApiPropertyOptional)({ description: 'Expertise' }),
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", String)
+], CreateCollaborationDto.prototype, "expertise", void 0);
+__decorate([
+    (0, swagger_1.ApiPropertyOptional)({ description: 'Conflict of interest' }),
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", String)
+], CreateCollaborationDto.prototype, "conflictOfInterest", void 0);
+__decorate([
+    (0, swagger_1.ApiPropertyOptional)({ enum: client_1.DataAccessLevel, description: 'Data access level' }),
+    (0, class_validator_1.IsEnum)(client_1.DataAccessLevel),
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", typeof (_b = typeof client_1.DataAccessLevel !== "undefined" && client_1.DataAccessLevel) === "function" ? _b : Object)
+], CreateCollaborationDto.prototype, "dataAccessLevel", void 0);
 class CreateResearchRequestDto {
 }
 exports.CreateResearchRequestDto = CreateResearchRequestDto;
@@ -39,7 +95,7 @@ __decorate([
 __decorate([
     (0, swagger_1.ApiProperty)({ enum: client_1.StudyType, description: 'Type of study' }),
     (0, class_validator_1.IsEnum)(client_1.StudyType),
-    __metadata("design:type", typeof (_a = typeof client_1.StudyType !== "undefined" && client_1.StudyType) === "function" ? _a : Object)
+    __metadata("design:type", typeof (_c = typeof client_1.StudyType !== "undefined" && client_1.StudyType) === "function" ? _c : Object)
 ], CreateResearchRequestDto.prototype, "studyType", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({ description: 'Research objectives' }),
@@ -125,7 +181,7 @@ __decorate([
     (0, swagger_1.ApiPropertyOptional)({ enum: client_1.ResearchPriority, description: 'Research priority' }),
     (0, class_validator_1.IsEnum)(client_1.ResearchPriority),
     (0, class_validator_1.IsOptional)(),
-    __metadata("design:type", typeof (_b = typeof client_1.ResearchPriority !== "undefined" && client_1.ResearchPriority) === "function" ? _b : Object)
+    __metadata("design:type", typeof (_d = typeof client_1.ResearchPriority !== "undefined" && client_1.ResearchPriority) === "function" ? _d : Object)
 ], CreateResearchRequestDto.prototype, "priority", void 0);
 __decorate([
     (0, swagger_1.ApiPropertyOptional)({ description: 'Collaborator IDs (JSON array)' }),
@@ -141,62 +197,6 @@ __decorate([
     (0, class_validator_1.IsOptional)(),
     __metadata("design:type", Array)
 ], CreateResearchRequestDto.prototype, "collaborationDetails", void 0);
-class CreateCollaborationDto {
-}
-exports.CreateCollaborationDto = CreateCollaborationDto;
-__decorate([
-    (0, swagger_1.ApiProperty)({ description: 'Collaborator user ID' }),
-    (0, class_validator_1.IsString)(),
-    (0, class_validator_1.IsNotEmpty)(),
-    __metadata("design:type", String)
-], CreateCollaborationDto.prototype, "collaboratorId", void 0);
-__decorate([
-    (0, swagger_1.ApiProperty)({ enum: client_1.CollaborationRole, description: 'Collaboration role' }),
-    (0, class_validator_1.IsEnum)(client_1.CollaborationRole),
-    __metadata("design:type", typeof (_c = typeof client_1.CollaborationRole !== "undefined" && client_1.CollaborationRole) === "function" ? _c : Object)
-], CreateCollaborationDto.prototype, "role", void 0);
-__decorate([
-    (0, swagger_1.ApiPropertyOptional)({ description: 'Responsibilities' }),
-    (0, class_validator_1.IsString)(),
-    (0, class_validator_1.IsOptional)(),
-    __metadata("design:type", String)
-], CreateCollaborationDto.prototype, "responsibilities", void 0);
-__decorate([
-    (0, swagger_1.ApiPropertyOptional)({ description: 'Affiliation' }),
-    (0, class_validator_1.IsString)(),
-    (0, class_validator_1.IsOptional)(),
-    __metadata("design:type", String)
-], CreateCollaborationDto.prototype, "affiliation", void 0);
-__decorate([
-    (0, swagger_1.ApiPropertyOptional)({ description: 'Email' }),
-    (0, class_validator_1.IsString)(),
-    (0, class_validator_1.IsOptional)(),
-    __metadata("design:type", String)
-], CreateCollaborationDto.prototype, "email", void 0);
-__decorate([
-    (0, swagger_1.ApiPropertyOptional)({ description: 'Phone' }),
-    (0, class_validator_1.IsString)(),
-    (0, class_validator_1.IsOptional)(),
-    __metadata("design:type", String)
-], CreateCollaborationDto.prototype, "phone", void 0);
-__decorate([
-    (0, swagger_1.ApiPropertyOptional)({ description: 'Expertise' }),
-    (0, class_validator_1.IsString)(),
-    (0, class_validator_1.IsOptional)(),
-    __metadata("design:type", String)
-], CreateCollaborationDto.prototype, "expertise", void 0);
-__decorate([
-    (0, swagger_1.ApiPropertyOptional)({ description: 'Conflict of interest' }),
-    (0, class_validator_1.IsString)(),
-    (0, class_validator_1.IsOptional)(),
-    __metadata("design:type", String)
-], CreateCollaborationDto.prototype, "conflictOfInterest", void 0);
-__decorate([
-    (0, swagger_1.ApiPropertyOptional)({ enum: client_1.DataAccessLevel, description: 'Data access level' }),
-    (0, class_validator_1.IsEnum)(client_1.DataAccessLevel),
-    (0, class_validator_1.IsOptional)(),
-    __metadata("design:type", typeof (_d = typeof client_1.DataAccessLevel !== "undefined" && client_1.DataAccessLevel) === "function" ? _d : Object)
-], CreateCollaborationDto.prototype, "dataAccessLevel", void 0);
 class UpdateResearchRequestDto {
 }
 exports.UpdateResearchRequestDto = UpdateResearchRequestDto;

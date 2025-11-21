@@ -9,13 +9,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var SystemAdministrationService_1;
-var _a;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.SystemAdministrationService = void 0;
 const common_1 = require("@nestjs/common");
 const configuration_service_1 = require("./configuration.service");
 const dashboard_service_1 = require("./dashboard.service");
-const prisma_service_1 = require("../../database/prisma.service");
+const prisma_service_1 = require("../../../common/database/prisma.service");
 let SystemAdministrationService = SystemAdministrationService_1 = class SystemAdministrationService {
     constructor(prisma, configurationService, dashboardService) {
         this.prisma = prisma;
@@ -331,7 +330,8 @@ let SystemAdministrationService = SystemAdministrationService_1 = class SystemAd
 exports.SystemAdministrationService = SystemAdministrationService;
 exports.SystemAdministrationService = SystemAdministrationService = SystemAdministrationService_1 = __decorate([
     (0, common_1.Injectable)(),
-    __metadata("design:paramtypes", [typeof (_a = typeof prisma_service_1.PrismaService !== "undefined" && prisma_service_1.PrismaService) === "function" ? _a : Object, configuration_service_1.ConfigurationService,
+    __metadata("design:paramtypes", [prisma_service_1.PrismaService,
+        configuration_service_1.ConfigurationService,
         dashboard_service_1.DashboardService])
 ], SystemAdministrationService);
 //# sourceMappingURL=system-administration.service.js.map

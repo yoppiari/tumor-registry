@@ -177,7 +177,7 @@ let GeographicTestDataFactory = GeographicTestDataFactory_1 = class GeographicTe
             }
             if (aggregatedData.percentages) {
                 const totalPercentage = Object.values(aggregatedData.percentages).reduce((sum, percentage) => sum + Number(percentage), 0);
-                if (Math.abs(totalPercentage - 100) > 0.1) {
+                if (Math.abs(Number(totalPercentage) - 100) > 0.1) {
                     errors.push(`Percentage total mismatch: ${totalPercentage}%`);
                     accuracy -= 10;
                 }

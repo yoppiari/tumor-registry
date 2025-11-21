@@ -1,4 +1,4 @@
-import { PrismaService } from '../../database/prisma.service';
+import { PrismaService } from '@/common/database/prisma.service';
 import { SystemConfigurationData } from '../interfaces/system-administration.interface';
 import { CreateConfigDto } from '../dto/create-config.dto';
 export declare class ConfigurationService {

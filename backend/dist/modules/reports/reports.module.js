@@ -10,10 +10,11 @@ exports.ReportsModule = void 0;
 const common_1 = require("@nestjs/common");
 const reports_controller_1 = require("./controllers/reports.controller");
 const reports_service_1 = require("./services/reports.service");
+const report_history_service_1 = require("./services/report-history.service");
 const pdf_generator_1 = require("./generators/pdf.generator");
 const excel_generator_1 = require("./generators/excel.generator");
 const csv_generator_1 = require("./generators/csv.generator");
-const prisma_service_1 = require("../../database/prisma.service");
+const prisma_service_1 = require("../../common/database/prisma.service");
 let ReportsModule = class ReportsModule {
 };
 exports.ReportsModule = ReportsModule;
@@ -22,6 +23,7 @@ exports.ReportsModule = ReportsModule = __decorate([
         controllers: [reports_controller_1.ReportsController],
         providers: [
             reports_service_1.ReportsService,
+            report_history_service_1.ReportHistoryService,
             pdf_generator_1.PdfGenerator,
             excel_generator_1.ExcelGenerator,
             csv_generator_1.CsvGenerator,
@@ -29,6 +31,7 @@ exports.ReportsModule = ReportsModule = __decorate([
         ],
         exports: [
             reports_service_1.ReportsService,
+            report_history_service_1.ReportHistoryService,
             pdf_generator_1.PdfGenerator,
             excel_generator_1.ExcelGenerator,
             csv_generator_1.CsvGenerator,

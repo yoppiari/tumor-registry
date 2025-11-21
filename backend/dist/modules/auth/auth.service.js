@@ -14,7 +14,7 @@ const common_1 = require("@nestjs/common");
 const jwt_1 = require("@nestjs/jwt");
 const users_service_1 = require("../users/users.service");
 const email_service_1 = require("./email.service");
-const prisma_service_1 = require("../../database/prisma.service");
+const prisma_service_1 = require("../../common/database/prisma.service");
 const bcrypt = require("bcrypt");
 const speakeasy_1 = require("speakeasy");
 let AuthService = class AuthService {
@@ -49,7 +49,7 @@ let AuthService = class AuthService {
         });
         const verificationToken = this.jwtService.sign({ userId: user.id, email: user.email }, { expiresIn: '24h' });
         await this.emailService.sendVerificationEmail(user.email, verificationToken);
-        const mfaSecret = speakeasy_1.speakeasy.generateSecret({
+        const mfaSecret = speakeasy_1.default.generateSecret({
             name: `INAMSOS (${user.email})`,
             issuer: 'INAMSOS',
         });
@@ -106,7 +106,7 @@ let AuthService = class AuthService {
             if (!user || !user.mfaSecret) {
                 throw new common_1.UnauthorizedException('User not found or MFA not configured');
             }
-            const verified = speakeasy_1.speakeasy.totp.verify({
+            const verified = speakeasy_1.default.totp.verify({
                 secret: user.mfaSecret,
                 encoding: 'base32',
                 token: mfaCode,

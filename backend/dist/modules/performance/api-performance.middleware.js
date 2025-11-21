@@ -23,7 +23,7 @@ let ApiPerformanceMiddleware = ApiPerformanceMiddleware_1 = class ApiPerformance
         this.CACHEABLE_METHODS = ['GET'];
         this.CACHEABLE_STATUS_CODES = [200, 304];
     }
-    async use(req, res, next) {
+    async use(req, reply, next) {
         const startTime = Date.now();
         const requestId = this.generateRequestId();
         const metrics = {
@@ -126,7 +126,7 @@ let ApiPerformanceMiddleware = ApiPerformanceMiddleware_1 = class ApiPerformance
         const hash = Buffer.from(`${req.method}:${url}:${query}`).toString('base64');
         return `api_cache:${hash}`;
     }
-    async cacheResponse(req, res, body) {
+    async cacheResponse(req, reply, body) {
         try {
             const cacheKey = this.getCacheKey(req);
             const ttl = this.getCacheTTL(req);

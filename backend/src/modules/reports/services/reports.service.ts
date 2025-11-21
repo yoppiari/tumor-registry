@@ -1,5 +1,5 @@
 import { Injectable, Logger, NotFoundException, BadRequestException } from '@nestjs/common';
-import { PrismaService } from '../../database/prisma.service';
+import { PrismaService } from '@/common/database/prisma.service';
 import { PdfGenerator } from '../generators/pdf.generator';
 import { ExcelGenerator } from '../generators/excel.generator';
 import { CsvGenerator } from '../generators/csv.generator';

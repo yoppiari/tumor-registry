@@ -12,7 +12,7 @@ var AnalyticsService_1;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AnalyticsService = void 0;
 const common_1 = require("@nestjs/common");
-const prisma_service_1 = require("../../database/prisma.service");
+const prisma_service_1 = require("../../common/database/prisma.service");
 const redis_service_1 = require("../performance/redis.service");
 const performance_monitor_service_1 = require("../performance/performance-monitor.service");
 let AnalyticsService = AnalyticsService_1 = class AnalyticsService {

@@ -1,5 +1,5 @@
 import { Injectable, NestMiddleware, Logger } from '@nestjs/common';
-import { Request, Response, NextFunction } from 'express';
+import type { FastifyRequest, FastifyReply } from 'fastify';
 import { PerformanceMonitorService } from './performance-monitor.service';
 import { RedisService } from './redis.service';
 
@@ -31,7 +31,7 @@ export class ApiPerformanceMiddleware implements NestMiddleware {
     private redisService: RedisService,
   ) {}
 
-  async use(req: Request, res: Response, next: NextFunction) {
+  async use(req: FastifyRequest, reply: FastifyReply, next: NextFunction) {
     const startTime = Date.now();
     const requestId = this.generateRequestId();
 
@@ -143,7 +143,7 @@ export class ApiPerformanceMiddleware implements NestMiddleware {
     return `req_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
   }
 
-  private getClientIp(req: Request): string {
+  private getClientIp(req: FastifyRequest): string {
     return (
       req.ip ||
       req.connection.remoteAddress ||
@@ -153,7 +153,7 @@ export class ApiPerformanceMiddleware implements NestMiddleware {
     );
   }
 
-  private getUserId(req: Request): string | undefined {
+  private getUserId(req: FastifyRequest): string | undefined {
     // Try to get user ID from JWT token or session
     const authHeader = req.headers.authorization;
     if (authHeader && authHeader.startsWith('Bearer ')) {
@@ -168,14 +168,14 @@ export class ApiPerformanceMiddleware implements NestMiddleware {
     return undefined;
   }
 
-  private getCacheKey(req: Request): string {
+  private getCacheKey(req: FastifyRequest): string {
     const url = req.originalUrl || req.url;
     const query = JSON.stringify(req.query);
     const hash = Buffer.from(`${req.method}:${url}:${query}`).toString('base64');
     return `api_cache:${hash}`;
   }
 
-  private async cacheResponse(req: Request, res: Response, body: any): Promise<void> {
+  private async cacheResponse(req: FastifyRequest, reply: FastifyReply, body: any): Promise<void> {
     try {
       const cacheKey = this.getCacheKey(req);
       const ttl = this.getCacheTTL(req);
@@ -195,7 +195,7 @@ export class ApiPerformanceMiddleware implements NestMiddleware {
     }
   }
 
-  private getCacheTTL(req: Request): number {
+  private getCacheTTL(req: FastifyRequest): number {
     const url = req.originalUrl || req.url;
 
     // Different TTL for different endpoints

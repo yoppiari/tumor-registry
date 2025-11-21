@@ -13,7 +13,7 @@ import {
 } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse, ApiParam, ApiQuery } from '@nestjs/swagger';
 import { PatientsService } from './patients.service';
-import { JwtAuthGuard } from '../auth/guards/jwt.guard';
+import { JwtAuthGuard } from '@/modules/auth/guards/jwt.guard';
 import { Gender, BloodType, MaritalStatus } from '@prisma/client';
 
 @ApiTags('Patients')

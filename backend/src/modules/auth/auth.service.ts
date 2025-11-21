@@ -4,9 +4,9 @@ import { UsersService } from '../users/users.service';
 import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
 import { EmailService } from './email.service';
-import { PrismaService } from '../../database/prisma.service';
+import { PrismaService } from '@/common/database/prisma.service';
 import * as bcrypt from 'bcrypt';
-import { speakeasy } from 'speakeasy';
+import speakeasy from 'speakeasy';
 
 @Injectable()
 export class AuthService {

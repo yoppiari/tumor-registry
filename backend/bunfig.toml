@@ -1,0 +1,13 @@
+# Bun Configuration
+[install]
+# Use hardlinks for faster installs
+copyFiles = false
+
+[test]
+preload = ["./src"]
+
+# Module resolution - Bun will read tsconfig.json paths
+[run]
+# Enable compatibility mode for better module resolution
+bun = true
+smol = true

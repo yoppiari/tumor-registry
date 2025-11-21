@@ -1,5 +1,5 @@
 import { Injectable, Logger, OnModuleInit } from '@nestjs/common';
-import { PrismaService } from '../../database/prisma.service';
+import { PrismaService } from '@/common/database/prisma.service';
 import { Cache } from 'cache-manager';
 import { RedisService } from '../performance/redis.service';
 import { PerformanceMonitorService } from '../performance/performance-monitor.service';

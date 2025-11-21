@@ -1,4 +1,4 @@
-import { PrismaService } from '../../database/prisma.service';
+import { PrismaService } from '@/common/database/prisma.service';
 import { AdminDashboardData } from '../interfaces/system-administration.interface';
 export declare class DashboardService {
     private readonly prisma;

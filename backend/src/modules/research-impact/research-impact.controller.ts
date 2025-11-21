@@ -14,8 +14,8 @@ import {
   ValidationPipe,
 } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse, ApiBearerAuth, ApiQuery } from '@nestjs/swagger';
-import { JwtAuthGuard } from '../auth/guards/jwt.guard';
-import { EnhancedThrottlerGuard } from '../auth/guards/enhanced-throttler.guard';
+import { JwtAuthGuard } from '@/modules/auth/guards/jwt.guard';
+import { EnhancedThrottlerGuard } from '@/modules/auth/guards/enhanced-throttler.guard';
 import { ResearchImpactService } from './research-impact.service';
 import {
   CreatePublicationDto,

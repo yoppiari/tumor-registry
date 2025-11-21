@@ -15,16 +15,25 @@ const bull_1 = require("@nestjs/bull");
 const core_1 = require("@nestjs/core");
 const common_2 = require("@nestjs/common");
 const database_module_1 = require("./database/database.module");
+const common_module_1 = require("./common/common.module");
 const health_module_1 = require("./common/health/health.module");
 const auth_module_1 = require("./modules/auth/auth.module");
 const users_module_1 = require("./modules/users/users.module");
 const centers_module_1 = require("./modules/centers/centers.module");
 const patients_module_1 = require("./modules/patients/patients.module");
+const analytics_module_1 = require("./modules/analytics/analytics.module");
+const research_module_1 = require("./modules/research/research.module");
+const research_impact_module_1 = require("./modules/research-impact/research-impact.module");
+const reports_module_1 = require("./modules/reports/reports.module");
+const scheduled_reports_module_1 = require("./modules/scheduled-reports/scheduled-reports.module");
+const notifications_module_1 = require("./modules/notifications/notifications.module");
+const medical_imaging_module_1 = require("./modules/medical-imaging/medical-imaging.module");
+const case_review_module_1 = require("./modules/case-review/case-review.module");
+const peer_review_module_1 = require("./modules/peer-review/peer-review.module");
+const offline_queue_module_1 = require("./modules/offline-queue/offline-queue.module");
 const http_exception_filter_1 = require("./common/filters/http-exception.filter");
-const security_middleware_1 = require("./modules/auth/middleware/security.middleware");
 let AppModule = class AppModule {
     configure(consumer) {
-        consumer.apply(security_middleware_1.SecurityMiddleware).forRoutes('*');
     }
 };
 exports.AppModule = AppModule;
@@ -49,11 +58,22 @@ exports.AppModule = AppModule = __decorate([
                 },
             }),
             database_module_1.DatabaseModule,
+            common_module_1.CommonModule,
             health_module_1.HealthModule,
             auth_module_1.AuthModule,
             users_module_1.UsersModule,
             centers_module_1.CentersModule,
             patients_module_1.PatientsModule,
+            analytics_module_1.AnalyticsModule,
+            research_module_1.ResearchModule,
+            research_impact_module_1.ResearchImpactModule,
+            reports_module_1.ReportsModule,
+            scheduled_reports_module_1.ScheduledReportsModule,
+            notifications_module_1.NotificationsModule,
+            medical_imaging_module_1.MedicalImagingModule,
+            case_review_module_1.CaseReviewModule,
+            peer_review_module_1.PeerReviewModule,
+            offline_queue_module_1.OfflineQueueModule,
         ],
         controllers: [],
         providers: [

@@ -1,6 +1,6 @@
 import { Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { Cron, CronExpression } from '@nestjs/schedule';
-import { PrismaService } from '../../../database/prisma.service';
+import { PrismaService } from '@/common/database/prisma.service';
 import { EmailService } from '../../auth/email.service';
 import {
   SendNotificationRequest,

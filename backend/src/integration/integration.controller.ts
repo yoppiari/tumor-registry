@@ -37,7 +37,7 @@ export class IntegrationController {
   // External Systems Endpoints
   @Post('systems')
   @ApiOperation({ summary: 'Create a new external system configuration' })
-  @ApiResponse({ status: 201, description: 'External system created successfully', type: ExternalSystem })
+  @ApiResponse({ status: 201, description: 'External system created successfully' })
   @ApiResponse({ status: 400, description: 'Bad request' })
   async createExternalSystem(@Body() createDto: CreateExternalSystemDto): Promise<ExternalSystem> {
     return this.integrationService.createExternalSystem(createDto);
@@ -45,7 +45,7 @@ export class IntegrationController {
 
   @Get('systems')
   @ApiOperation({ summary: 'Get all external systems' })
-  @ApiResponse({ status: 200, description: 'External systems retrieved successfully', type: [ExternalSystem] })
+  @ApiResponse({ status: 200, description: 'External systems retrieved successfully' })
   async getExternalSystems(): Promise<ExternalSystem[]> {
     return this.integrationService.getExternalSystems();
   }
@@ -53,7 +53,7 @@ export class IntegrationController {
   @Get('systems/:id')
   @ApiOperation({ summary: 'Get external system by ID' })
   @ApiParam({ name: 'id', description: 'External system ID' })
-  @ApiResponse({ status: 200, description: 'External system retrieved successfully', type: ExternalSystem })
+  @ApiResponse({ status: 200, description: 'External system retrieved successfully' })
   @ApiResponse({ status: 404, description: 'External system not found' })
   async getExternalSystem(@Param('id') id: string): Promise<ExternalSystem> {
     return this.integrationService.getExternalSystem(id);
@@ -62,7 +62,7 @@ export class IntegrationController {
   @Put('systems/:id')
   @ApiOperation({ summary: 'Update external system configuration' })
   @ApiParam({ name: 'id', description: 'External system ID' })
-  @ApiResponse({ status: 200, description: 'External system updated successfully', type: ExternalSystem })
+  @ApiResponse({ status: 200, description: 'External system updated successfully' })
   @ApiResponse({ status: 404, description: 'External system not found' })
   async updateExternalSystem(
     @Param('id') id: string,
@@ -85,7 +85,7 @@ export class IntegrationController {
   // HL7 Message Endpoints
   @Post('hl7/messages')
   @ApiOperation({ summary: 'Process incoming HL7 message' })
-  @ApiResponse({ status: 201, description: 'HL7 message processed successfully', type: HL7Message })
+  @ApiResponse({ status: 201, description: 'HL7 message processed successfully' })
   @ApiResponse({ status: 400, description: 'Invalid HL7 message format' })
   async processHL7Message(@Body() createDto: CreateHL7MessageDto): Promise<HL7Message> {
     return this.integrationService.processHL7Message(createDto);
@@ -97,7 +97,7 @@ export class IntegrationController {
   @ApiQuery({ name: 'status', required: false, description: 'Filter by processing status' })
   @ApiQuery({ name: 'dateFrom', required: false, description: 'Filter messages from date' })
   @ApiQuery({ name: 'dateTo', required: false, description: 'Filter messages to date' })
-  @ApiResponse({ status: 200, description: 'HL7 messages retrieved successfully', type: [HL7Message] })
+  @ApiResponse({ status: 200, description: 'HL7 messages retrieved successfully' })
   async getHL7Messages(
     @Query('messageType') messageType?: string,
     @Query('status') status?: string,
@@ -115,7 +115,7 @@ export class IntegrationController {
   // FHIR Resource Endpoints
   @Post('fhir/resources')
   @ApiOperation({ summary: 'Process incoming FHIR resource' })
-  @ApiResponse({ status: 201, description: 'FHIR resource processed successfully', type: FHIRResource })
+  @ApiResponse({ status: 201, description: 'FHIR resource processed successfully' })
   @ApiResponse({ status: 400, description: 'Invalid FHIR resource format' })
   async processFHIRResource(@Body() createDto: CreateFHIRResourceDto): Promise<FHIRResource> {
     return this.integrationService.processFHIRResource(createDto);
@@ -127,7 +127,7 @@ export class IntegrationController {
   @ApiQuery({ name: 'status', required: false, description: 'Filter by processing status' })
   @ApiQuery({ name: 'dateFrom', required: false, description: 'Filter resources from date' })
   @ApiQuery({ name: 'dateTo', required: false, description: 'Filter resources to date' })
-  @ApiResponse({ status: 200, description: 'FHIR resources retrieved successfully', type: [FHIRResource] })
+  @ApiResponse({ status: 200, description: 'FHIR resources retrieved successfully' })
   async getFHIRResources(
     @Query('resourceType') resourceType?: string,
     @Query('status') status?: string,
@@ -145,7 +145,7 @@ export class IntegrationController {
   // Integration Workflow Endpoints
   @Post('workflows')
   @ApiOperation({ summary: 'Create a new integration workflow' })
-  @ApiResponse({ status: 201, description: 'Workflow created successfully', type: IntegrationWorkflow })
+  @ApiResponse({ status: 201, description: 'Workflow created successfully' })
   @ApiResponse({ status: 400, description: 'Bad request' })
   async createWorkflow(@Body() createDto: CreateWorkflowDto): Promise<IntegrationWorkflow> {
     return this.integrationService.createWorkflow(createDto);
@@ -153,7 +153,7 @@ export class IntegrationController {
 
   @Get('workflows')
   @ApiOperation({ summary: 'Get all integration workflows' })
-  @ApiResponse({ status: 200, description: 'Workflows retrieved successfully', type: [IntegrationWorkflow] })
+  @ApiResponse({ status: 200, description: 'Workflows retrieved successfully' })
   async getWorkflows(): Promise<IntegrationWorkflow[]> {
     return this.integrationService.getWorkflows();
   }
@@ -173,7 +173,7 @@ export class IntegrationController {
   // Data Mapping Endpoints
   @Post('mappings')
   @ApiOperation({ summary: 'Create a new data mapping configuration' })
-  @ApiResponse({ status: 201, description: 'Data mapping created successfully', type: DataMapping })
+  @ApiResponse({ status: 201, description: 'Data mapping created successfully' })
   @ApiResponse({ status: 400, description: 'Bad request' })
   async createDataMapping(@Body() mapping: Partial<DataMapping>): Promise<DataMapping> {
     return this.integrationService.createDataMapping(mapping);
@@ -181,7 +181,7 @@ export class IntegrationController {
 
   @Get('mappings')
   @ApiOperation({ summary: 'Get all data mappings' })
-  @ApiResponse({ status: 200, description: 'Data mappings retrieved successfully', type: [DataMapping] })
+  @ApiResponse({ status: 200, description: 'Data mappings retrieved successfully' })
   async getDataMappings(): Promise<DataMapping[]> {
     return this.integrationService.getDataMappings();
   }
@@ -189,7 +189,7 @@ export class IntegrationController {
   // Health Check Endpoints
   @Get('health')
   @ApiOperation({ summary: 'Get health status of all integration systems' })
-  @ApiResponse({ status: 200, description: 'Health checks completed successfully', type: [IntegrationHealth] })
+  @ApiResponse({ status: 200, description: 'Health checks completed successfully' })
   async getSystemHealth(): Promise<IntegrationHealth[]> {
     return this.integrationService.getSystemHealth();
   }
@@ -197,7 +197,7 @@ export class IntegrationController {
   @Get('health/:systemId')
   @ApiOperation({ summary: 'Get health status of specific integration system' })
   @ApiParam({ name: 'systemId', description: 'External system ID' })
-  @ApiResponse({ status: 200, description: 'Health check completed successfully', type: IntegrationHealth })
+  @ApiResponse({ status: 200, description: 'Health check completed successfully' })
   @ApiResponse({ status: 404, description: 'System not found' })
   async getSystemHealthById(@Param('systemId') systemId: string): Promise<IntegrationHealth[]> {
     return this.integrationService.getSystemHealth(systemId);
@@ -206,7 +206,7 @@ export class IntegrationController {
   // HL7 v2 Specific Endpoints
   @Post('hl7/v2/adt')
   @ApiOperation({ summary: 'Process HL7 v2 ADT (Admission, Discharge, Transfer) message' })
-  @ApiResponse({ status: 201, description: 'ADT message processed successfully', type: HL7Message })
+  @ApiResponse({ status: 201, description: 'ADT message processed successfully' })
   async processADTMessage(@Body() createDto: CreateHL7MessageDto): Promise<HL7Message> {
     const adtDto = {
       ...createDto,
@@ -218,7 +218,7 @@ export class IntegrationController {
 
   @Post('hl7/v2/oru')
   @ApiOperation({ summary: 'Process HL7 v2 ORU (Observation Result Unsolicited) message' })
-  @ApiResponse({ status: 201, description: 'ORU message processed successfully', type: HL7Message })
+  @ApiResponse({ status: 201, description: 'ORU message processed successfully' })
   async processORUMessage(@Body() createDto: CreateHL7MessageDto): Promise<HL7Message> {
     const oruDto = {
       ...createDto,
@@ -230,7 +230,7 @@ export class IntegrationController {
 
   @Post('hl7/v2/orm')
   @ApiOperation({ summary: 'Process HL7 v2 ORM (Order) message' })
-  @ApiResponse({ status: 201, description: 'ORM message processed successfully', type: HL7Message })
+  @ApiResponse({ status: 201, description: 'ORM message processed successfully' })
   async processORMMessage(@Body() createDto: CreateHL7MessageDto): Promise<HL7Message> {
     const ormDto = {
       ...createDto,
@@ -243,11 +243,11 @@ export class IntegrationController {
   // FHIR R4 Specific Endpoints
   @Post('fhir/r4/Patient')
   @ApiOperation({ summary: 'Process FHIR R4 Patient resource' })
-  @ApiResponse({ status: 201, description: 'Patient resource processed successfully', type: FHIRResource })
+  @ApiResponse({ status: 201, description: 'Patient resource processed successfully' })
   async processPatientResource(@Body() createDto: CreateFHIRResourceDto): Promise<FHIRResource> {
     const patientDto = {
       ...createDto,
-      resourceType: 'Patient',
+      resourceType: 'Patient' as const,
       fhirVersion: 'R4'
     };
     return this.integrationService.processFHIRResource(patientDto);
@@ -255,11 +255,11 @@ export class IntegrationController {
 
   @Post('fhir/r4/Observation')
   @ApiOperation({ summary: 'Process FHIR R4 Observation resource' })
-  @ApiResponse({ status: 201, description: 'Observation resource processed successfully', type: FHIRResource })
+  @ApiResponse({ status: 201, description: 'Observation resource processed successfully' })
   async processObservationResource(@Body() createDto: CreateFHIRResourceDto): Promise<FHIRResource> {
     const observationDto = {
       ...createDto,
-      resourceType: 'Observation',
+      resourceType: 'Observation' as const,
       fhirVersion: 'R4'
     };
     return this.integrationService.processFHIRResource(observationDto);
@@ -267,11 +267,11 @@ export class IntegrationController {
 
   @Post('fhir/r4/Condition')
   @ApiOperation({ summary: 'Process FHIR R4 Condition resource' })
-  @ApiResponse({ status: 201, description: 'Condition resource processed successfully', type: FHIRResource })
+  @ApiResponse({ status: 201, description: 'Condition resource processed successfully' })
   async processConditionResource(@Body() createDto: CreateFHIRResourceDto): Promise<FHIRResource> {
     const conditionDto = {
       ...createDto,
-      resourceType: 'Condition',
+      resourceType: 'Condition' as const,
       fhirVersion: 'R4'
     };
     return this.integrationService.processFHIRResource(conditionDto);
@@ -279,11 +279,11 @@ export class IntegrationController {
 
   @Post('fhir/r4/Procedure')
   @ApiOperation({ summary: 'Process FHIR R4 Procedure resource' })
-  @ApiResponse({ status: 201, description: 'Procedure resource processed successfully', type: FHIRResource })
+  @ApiResponse({ status: 201, description: 'Procedure resource processed successfully' })
   async processProcedureResource(@Body() createDto: CreateFHIRResourceDto): Promise<FHIRResource> {
     const procedureDto = {
       ...createDto,
-      resourceType: 'Procedure',
+      resourceType: 'Procedure' as const,
       fhirVersion: 'R4'
     };
     return this.integrationService.processFHIRResource(procedureDto);
@@ -291,11 +291,11 @@ export class IntegrationController {
 
   @Post('fhir/r4/Medication')
   @ApiOperation({ summary: 'Process FHIR R4 Medication resource' })
-  @ApiResponse({ status: 201, description: 'Medication resource processed successfully', type: FHIRResource })
+  @ApiResponse({ status: 201, description: 'Medication resource processed successfully' })
   async processMedicationResource(@Body() createDto: CreateFHIRResourceDto): Promise<FHIRResource> {
     const medicationDto = {
       ...createDto,
-      resourceType: 'Medication',
+      resourceType: 'Medication' as const,
       fhirVersion: 'R4'
     };
     return this.integrationService.processFHIRResource(medicationDto);
@@ -303,11 +303,11 @@ export class IntegrationController {
 
   @Post('fhir/r4/Encounter')
   @ApiOperation({ summary: 'Process FHIR R4 Encounter resource' })
-  @ApiResponse({ status: 201, description: 'Encounter resource processed successfully', type: FHIRResource })
+  @ApiResponse({ status: 201, description: 'Encounter resource processed successfully' })
   async processEncounterResource(@Body() createDto: CreateFHIRResourceDto): Promise<FHIRResource> {
     const encounterDto = {
       ...createDto,
-      resourceType: 'Encounter',
+      resourceType: 'Encounter' as const,
       fhirVersion: 'R4'
     };
     return this.integrationService.processFHIRResource(encounterDto);
@@ -315,11 +315,11 @@ export class IntegrationController {
 
   @Post('fhir/r4/DiagnosticReport')
   @ApiOperation({ summary: 'Process FHIR R4 DiagnosticReport resource' })
-  @ApiResponse({ status: 201, description: 'DiagnosticReport resource processed successfully', type: FHIRResource })
+  @ApiResponse({ status: 201, description: 'DiagnosticReport resource processed successfully' })
   async processDiagnosticReportResource(@Body() createDto: CreateFHIRResourceDto): Promise<FHIRResource> {
     const diagnosticReportDto = {
       ...createDto,
-      resourceType: 'DiagnosticReport',
+      resourceType: 'DiagnosticReport' as const,
       fhirVersion: 'R4'
     };
     return this.integrationService.processFHIRResource(diagnosticReportDto);
@@ -379,7 +379,7 @@ export class IntegrationController {
       try {
         const result = await this.integrationService.processFHIRResource(resourceDto);
         results.push(result);
-        if (result.processingStatus === 'completed') {
+        if (result.processingStatus === 'created' || result.processingStatus === 'updated') {
           successful++;
         } else {
           failed++;

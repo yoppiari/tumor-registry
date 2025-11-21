@@ -29,7 +29,7 @@ export declare class PredictiveAnalyticsController {
             error: any;
             data?: undefined;
         })[];
-        assessmentType: "survival" | "cancer-risk" | "treatment-response" | "recurrence";
+        assessmentType: "cancer-risk" | "treatment-response" | "survival" | "recurrence";
     }>;
     getRiskDistributionAnalysis(centerId?: string): Promise<{
         message: string;

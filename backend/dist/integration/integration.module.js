@@ -11,9 +11,8 @@ const common_1 = require("@nestjs/common");
 const config_1 = require("@nestjs/config");
 const integration_controller_1 = require("./integration.controller");
 const integration_service_1 = require("./integration.service");
-const analytics_module_1 = require("../analytics/analytics.module");
-const patients_module_1 = require("../patients/patients.module");
-const treatments_module_1 = require("../treatments/treatments.module");
+const analytics_module_1 = require("../modules/analytics/analytics.module");
+const patients_module_1 = require("../modules/patients/patients.module");
 let IntegrationModule = class IntegrationModule {
 };
 exports.IntegrationModule = IntegrationModule;
@@ -23,7 +22,6 @@ exports.IntegrationModule = IntegrationModule = __decorate([
             config_1.ConfigModule,
             analytics_module_1.AnalyticsModule,
             patients_module_1.PatientsModule,
-            treatments_module_1.TreatmentsModule
         ],
         controllers: [integration_controller_1.IntegrationController],
         providers: [integration_service_1.IntegrationService],

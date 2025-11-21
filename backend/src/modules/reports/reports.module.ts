@@ -5,7 +5,7 @@ import { ReportHistoryService } from './services/report-history.service';
 import { PdfGenerator } from './generators/pdf.generator';
 import { ExcelGenerator } from './generators/excel.generator';
 import { CsvGenerator } from './generators/csv.generator';
-import { PrismaService } from '../../database/prisma.service';
+import { PrismaService } from '@/common/database/prisma.service';
 
 @Module({
   controllers: [ReportsController],

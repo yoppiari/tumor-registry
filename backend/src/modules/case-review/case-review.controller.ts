@@ -14,7 +14,7 @@ import {
 } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse, ApiParam, ApiQuery, ApiBody } from '@nestjs/swagger';
 import { CaseReviewService } from './case-review.service';
-import { JwtAuthGuard } from '../auth/guards/jwt.guard';
+import { JwtAuthGuard } from '@/modules/auth/guards/jwt.guard';
 import { CreateCaseReviewDto } from './dto/create-case-review.dto';
 import { AssignReviewDto } from './dto/assign-review.dto';
 import { AddCommentDto } from './dto/add-comment.dto';
@@ -136,8 +136,9 @@ export class CaseReviewController {
       properties: {
         reviewNotes: { type: 'string' },
         outcome: { type: 'string', enum: ['RESOLVED', 'REQUIRES_ACTION', 'ESCALATED', 'DEFERRED', 'NO_ACTION_NEEDED', 'TRAINING_OPPORTUNITY'] },
-        resolution: { type: 'string', required: false },
+        resolution: { type: 'string' },
       },
+      required: ['reviewNotes', 'outcome'],
     },
   })
   @ApiResponse({ status: 200, description: 'Case review completed successfully' })

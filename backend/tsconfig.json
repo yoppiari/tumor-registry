@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "module": "commonjs",
+    "moduleResolution": "node",
     "declaration": true,
     "removeComments": true,
     "emitDecoratorMetadata": true,
@@ -9,7 +10,7 @@
     "target": "ES2021",
     "sourceMap": true,
     "outDir": "./dist",
-    "baseUrl": "./",
+    "baseUrl": "./src",
     "incremental": true,
     "skipLibCheck": true,
     "strictNullChecks": false,
@@ -17,14 +18,17 @@
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false,
+    "types": ["bun-types"],
     "paths": {
-      "@/*": ["src/*"],
-      "@/common/*": ["src/common/*"],
-      "@/config/*": ["src/config/*"],
-      "@/auth/*": ["src/modules/auth/*"],
-      "@/users/*": ["src/modules/users/*"],
-      "@/patients/*": ["src/modules/patients/*"],
-      "@/analytics/*": ["src/modules/analytics/*"]
+      "@/*": ["./*"],
+      "@/common/*": ["./common/*"],
+      "@/config/*": ["./config/*"],
+      "@/auth/*": ["./auth/*", "./modules/auth/*"],
+      "@/users/*": ["./users/*", "./modules/users/*"],
+      "@/patients/*": ["./patients/*", "./modules/patients/*"],
+      "@/analytics/*": ["./modules/analytics/*"],
+      "@/modules/*": ["./modules/*"],
+      "@/database/*": ["./database/*", "./common/database/*"]
     }
   },
   "include": ["src/**/*"],

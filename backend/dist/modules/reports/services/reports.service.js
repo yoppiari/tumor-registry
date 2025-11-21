@@ -9,11 +9,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var ReportsService_1;
-var _a;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ReportsService = void 0;
 const common_1 = require("@nestjs/common");
-const prisma_service_1 = require("../../database/prisma.service");
+const prisma_service_1 = require("../../../common/database/prisma.service");
 const pdf_generator_1 = require("../generators/pdf.generator");
 const excel_generator_1 = require("../generators/excel.generator");
 const csv_generator_1 = require("../generators/csv.generator");
@@ -574,7 +573,8 @@ let ReportsService = ReportsService_1 = class ReportsService {
 exports.ReportsService = ReportsService;
 exports.ReportsService = ReportsService = ReportsService_1 = __decorate([
     (0, common_1.Injectable)(),
-    __metadata("design:paramtypes", [typeof (_a = typeof prisma_service_1.PrismaService !== "undefined" && prisma_service_1.PrismaService) === "function" ? _a : Object, pdf_generator_1.PdfGenerator,
+    __metadata("design:paramtypes", [prisma_service_1.PrismaService,
+        pdf_generator_1.PdfGenerator,
         excel_generator_1.ExcelGenerator,
         csv_generator_1.CsvGenerator])
 ], ReportsService);

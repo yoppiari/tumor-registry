@@ -5,6 +5,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 import { MfaService } from './mfa.service';
+import { EmailService } from './email.service';
 import { EncryptionService } from './services/encryption.service';
 import { UsersModule } from '../users/users.module';
 import { DatabaseModule } from '../../database/database.module';
@@ -31,9 +32,10 @@ import { JwtRefreshStrategy } from './strategies/jwt-refresh.strategy';
   providers: [
     AuthService,
     MfaService,
+    EmailService,
     EncryptionService,
     JwtRefreshStrategy,
   ],
-  exports: [AuthService, EncryptionService],
+  exports: [AuthService, EmailService, EncryptionService],
 })
 export class AuthModule {}

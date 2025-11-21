@@ -8,12 +8,14 @@ import { EnhancedAnalyticsService } from './enhanced-analytics.service';
 import { RedisService } from './redis.service';
 import { ScheduledTasksService } from './scheduled-tasks.service';
 import { DatabaseModule } from '../../database/database.module';
+import { PerformanceModule } from '../performance/performance.module';
 
 @Module({
   imports: [
     DatabaseModule,
     ConfigModule,
     ScheduleModule.forRoot(),
+    PerformanceModule,
   ],
   controllers: [
     AnalyticsController,

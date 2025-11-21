@@ -28,7 +28,12 @@ let HttpExceptionFilter = HttpExceptionFilter_1 = class HttpExceptionFilter {
         const errorResponse = this.buildErrorResponse(exception, request);
         const sanitizedResponse = this.sanitizeErrorResponse(errorResponse);
         this.logError(exception, request, status);
-        response.status(status).json(sanitizedResponse);
+        if (response && typeof response.code === 'function') {
+            response.code(status).send(sanitizedResponse);
+        }
+        else if (response && typeof response.status === 'function') {
+            response.status(status).json(sanitizedResponse);
+        }
     }
     buildErrorResponse(exception, request) {
         const timestamp = new Date().toISOString();
@@ -181,7 +186,12 @@ class ValidationExceptionFilter {
             body: request.body,
             query: request.query,
         });
-        response.status(status).json(errorResponse);
+        if (response && typeof response.code === 'function') {
+            response.code(status).send(errorResponse);
+        }
+        else if (response && typeof response.status === 'function') {
+            response.status(status).json(errorResponse);
+        }
     }
     extractValidationErrors(exception) {
         if (exception && typeof exception === 'object' && 'message' in exception) {

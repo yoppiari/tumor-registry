@@ -1,14 +1,14 @@
 import { Injectable, NestMiddleware, HttpException, HttpStatus } from '@nestjs/common';
-import { Request, Response, NextFunction } from 'express';
+import type { FastifyRequest, FastifyReply } from 'fastify';
 import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class SecurityMiddleware implements NestMiddleware {
   constructor(private readonly configService: ConfigService) {}
 
-  use(req: Request, res: Response, next: NextFunction) {
+  use(req: FastifyRequest, reply: FastifyReply, next: () => void) {
     // Security headers
-    this.setSecurityHeaders(res);
+    this.setSecurityHeaders(reply);
 
     // Request validation
     this.validateRequest(req);
@@ -28,26 +28,26 @@ export class SecurityMiddleware implements NestMiddleware {
     next();
   }
 
-  private setSecurityHeaders(res: Response) {
+  private setSecurityHeaders(reply: FastifyReply) {
     // Prevent clickjacking
-    res.setHeader('X-Frame-Options', 'DENY');
+    reply.header('X-Frame-Options', 'DENY');
 
     // Prevent MIME type sniffing
-    res.setHeader('X-Content-Type-Options', 'nosniff');
+    reply.header('X-Content-Type-Options', 'nosniff');
 
     // Enable XSS protection
-    res.setHeader('X-XSS-Protection', '1; mode=block');
+    reply.header('X-XSS-Protection', '1; mode=block');
 
     // Strict Transport Security
     if (this.configService.get<string>('NODE_ENV') === 'production') {
-      res.setHeader(
+      reply.header(
         'Strict-Transport-Security',
         'max-age=31536000; includeSubDomains; preload'
       );
     }
 
     // Content Security Policy
-    res.setHeader(
+    reply.header(
       'Content-Security-Policy',
       "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; " +
       "style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; " +
@@ -55,17 +55,17 @@ export class SecurityMiddleware implements NestMiddleware {
     );
 
     // Referrer Policy
-    res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
+    reply.header('Referrer-Policy', 'strict-origin-when-cross-origin');
 
     // Permissions Policy
-    res.setHeader(
+    reply.header(
       'Permissions-Policy',
       'geolocation=(), microphone=(), camera=(), usb=(), magnetometer=(), ' +
       'gyroscope=(), ambient-light-sensor=(), accelerometer=(), payment=()'
     );
   }
 
-  private validateRequest(req: Request) {
+  private validateRequest(req: FastifyRequest) {
     // Validate user agent to prevent basic bot attacks
     const userAgent = req.headers['user-agent'];
     if (!userAgent || userAgent.length < 10) {
@@ -90,7 +90,7 @@ export class SecurityMiddleware implements NestMiddleware {
     }
   }
 
-  private checkRateLimit(req: Request) {
+  private checkRateLimit(req: FastifyRequest) {
     // This is a simple in-memory rate limit
     // In production, use Redis or other distributed cache
     const clientIp = req.ip || req.connection.remoteAddress;
@@ -123,7 +123,7 @@ export class SecurityMiddleware implements NestMiddleware {
     global.rateLimitStore[key] = validRequests;
   }
 
-  private validateRequestSize(req: Request) {
+  private validateRequestSize(req: FastifyRequest) {
     const contentLength = parseInt(req.headers['content-length'] || '0');
     const maxSize = 10 * 1024 * 1024; // 10MB
 
@@ -135,13 +135,13 @@ export class SecurityMiddleware implements NestMiddleware {
     }
   }
 
-  private preventSqlInjection(req: Request) {
+  private preventSqlInjection(req: FastifyRequest) {
     const sqlPatterns = [
       /(\%27)|(\')|(\-\-)|(\%23)|(#)/i,
       /((\%3D)|(=))[^\n]*((\%27)|(\')|(\-\-)|(\%3B)|(;))/i,
       /\w*((\%27)|(\'))((\%6F)|o|(\%4F))((\%72)|r|(\%52))/i,
-      /((\%27)|(\'))union/ix,
-      /exec(\s|\+)+(s|x)p\w+/ix,
+      /((\%27)|(\'))union/i,
+      /exec(\s|\+)+(s|x)p\w+/i,
       /UNION[^a-zA-Z]/i,
       /SELECT[^a-zA-Z]/i,
       /INSERT[^a-zA-Z]/i,
@@ -181,7 +181,7 @@ export class SecurityMiddleware implements NestMiddleware {
     }
   }
 
-  private preventXss(req: Request) {
+  private preventXss(req: FastifyRequest) {
     const xssPatterns = [
       /<script[^>]*>.*?<\/script>/gi,
       /<iframe[^>]*>.*?<\/iframe>/gi,

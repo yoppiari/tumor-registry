@@ -1,5 +1,5 @@
 import { Injectable, Logger, NotFoundException, BadRequestException } from '@nestjs/common';
-import { PrismaService } from '../../database/prisma.service';
+import { PrismaService } from '@/common/database/prisma.service';
 import { RedisService } from '../analytics/redis.service';
 import {
   CreatePublicationDto,
@@ -221,10 +221,10 @@ export class ResearchImpactService {
 
   async analyzeCitations(dto: CitationAnalysisDto) {
     const cacheKey = `citation-analysis:${dto.publicationId}`;
-    const cached = await this.redisService.get(cacheKey);
+    const cached = await this.redisService.get<any>(cacheKey);
 
     if (cached) {
-      return JSON.parse(cached);
+      return cached;
     }
 
     const publication = await this.prisma.researchPublication.findUnique({
@@ -266,11 +266,7 @@ export class ResearchImpactService {
       recentCitations: publication.citations.slice(-10).reverse(),
     };
 
-    await this.redisService.setex(
-      cacheKey,
-      this.CACHE_TTL,
-      JSON.stringify(analysis),
-    );
+    await this.redisService.set(cacheKey, analysis, this.CACHE_TTL);
 
     return analysis;
   }
@@ -279,10 +275,10 @@ export class ResearchImpactService {
 
   async calculateBibliometricIndicators(dto: BiblometricIndicatorsDto) {
     const cacheKey = `bibliometric:${dto.researcherId}:${dto.timePeriod || 'all'}`;
-    const cached = await this.redisService.get(cacheKey);
+    const cached = await this.redisService.get<any>(cacheKey);
 
     if (cached) {
-      return JSON.parse(cached);
+      return cached;
     }
 
     // Get all publications by researcher
@@ -328,11 +324,7 @@ export class ResearchImpactService {
 
     indicators.publicationsByYear = this.groupPublicationsByYear(publications);
 
-    await this.redisService.setex(
-      cacheKey,
-      this.CACHE_TTL * 2,
-      JSON.stringify(indicators),
-    );
+    await this.redisService.set(cacheKey, indicators, this.CACHE_TTL * 2);
 
     return indicators;
   }
@@ -341,10 +333,10 @@ export class ResearchImpactService {
 
   async getResearcherContributions(dto: ResearcherContributionDto) {
     const cacheKey = `researcher-contributions:${dto.researcherId}`;
-    const cached = await this.redisService.get(cacheKey);
+    const cached = await this.redisService.get<any>(cacheKey);
 
     if (cached && !dto.includeDetails) {
-      return JSON.parse(cached);
+      return cached;
     }
 
     const timePeriod = dto.timePeriod || '1y';
@@ -392,11 +384,7 @@ export class ResearchImpactService {
     };
 
     if (!dto.includeDetails) {
-      await this.redisService.setex(
-        cacheKey,
-        this.CACHE_TTL,
-        JSON.stringify(summary),
-      );
+      await this.redisService.set(cacheKey, summary, this.CACHE_TTL);
     }
 
     return summary;
@@ -404,10 +392,10 @@ export class ResearchImpactService {
 
   async createResearcherLeaderboard(limit: number = 20) {
     const cacheKey = `researcher-leaderboard:${limit}`;
-    const cached = await this.redisService.get(cacheKey);
+    const cached = await this.redisService.get<any>(cacheKey);
 
     if (cached) {
-      return JSON.parse(cached);
+      return cached;
     }
 
     // Get top researchers by impact metrics
@@ -434,14 +422,10 @@ export class ResearchImpactService {
     const result = {
       leaderboard,
       generatedAt: new Date(),
-      totalResearchers: leaderboard.length,
+      totalResearchers: Array.isArray(leaderboard) ? leaderboard.length : 0,
     };
 
-    await this.redisService.setex(
-      cacheKey,
-      this.CACHE_TTL * 4,
-      JSON.stringify(result),
-    );
+    await this.redisService.set(cacheKey, result, this.CACHE_TTL * 4);
 
     return result;
   }
@@ -450,10 +434,10 @@ export class ResearchImpactService {
 
   async getCollaborationNetwork(dto: CollaborationNetworkDto) {
     const cacheKey = `collaboration-network:${dto.researchRequestId || dto.centerId}`;
-    const cached = await this.redisService.get(cacheKey);
+    const cached = await this.redisService.get<any>(cacheKey);
 
     if (cached) {
-      return JSON.parse(cached);
+      return cached;
     }
 
     let collaborations;
@@ -508,11 +492,7 @@ export class ResearchImpactService {
       dto.minStrength || 0.1,
     );
 
-    await this.redisService.setex(
-      cacheKey,
-      this.CACHE_TTL * 2,
-      JSON.stringify(network),
-    );
+    await this.redisService.set(cacheKey, network, this.CACHE_TTL * 2);
 
     return network;
   }
@@ -565,10 +545,10 @@ export class ResearchImpactService {
 
   async analyzeROI(dto: ROIAnalysisDto) {
     const cacheKey = `roi-analysis:${dto.researchRequestId}`;
-    const cached = await this.redisService.get(cacheKey);
+    const cached = await this.redisService.get<any>(cacheKey);
 
     if (cached) {
-      return JSON.parse(cached);
+      return cached;
     }
 
     const research = await this.prisma.researchRequest.findUnique({
@@ -626,11 +606,7 @@ export class ResearchImpactService {
         ? (((totalValue - fundingAmount) / fundingAmount) * 100).toFixed(2)
         : 0;
 
-    await this.redisService.setex(
-      cacheKey,
-      this.CACHE_TTL * 6,
-      JSON.stringify(analysis),
-    );
+    await this.redisService.set(cacheKey, analysis, this.CACHE_TTL * 6);
 
     return analysis;
   }
@@ -742,8 +718,9 @@ export class ResearchImpactService {
     let maxCount = 0;
 
     Object.entries(byYear).forEach(([year, count]) => {
-      if (count > maxCount) {
-        maxCount = count as number;
+      const countValue = typeof count === 'number' ? count : 0;
+      if (countValue > maxCount) {
+        maxCount = countValue;
         maxYear = year;
       }
     });

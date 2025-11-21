@@ -3,6 +3,54 @@ import { Type } from 'class-transformer';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { StudyType, ResearchPriority, DataAccessLevel, CollaborationRole } from '@prisma/client';
 
+// Declare CreateCollaborationDto first since it's referenced by CreateResearchRequestDto
+export class CreateCollaborationDto {
+  @ApiProperty({ description: 'Collaborator user ID' })
+  @IsString()
+  @IsNotEmpty()
+  collaboratorId: string;
+
+  @ApiProperty({ enum: CollaborationRole, description: 'Collaboration role' })
+  @IsEnum(CollaborationRole)
+  role: CollaborationRole;
+
+  @ApiPropertyOptional({ description: 'Responsibilities' })
+  @IsString()
+  @IsOptional()
+  responsibilities?: string;
+
+  @ApiPropertyOptional({ description: 'Affiliation' })
+  @IsString()
+  @IsOptional()
+  affiliation?: string;
+
+  @ApiPropertyOptional({ description: 'Email' })
+  @IsString()
+  @IsOptional()
+  email?: string;
+
+  @ApiPropertyOptional({ description: 'Phone' })
+  @IsString()
+  @IsOptional()
+  phone?: string;
+
+  @ApiPropertyOptional({ description: 'Expertise' })
+  @IsString()
+  @IsOptional()
+  expertise?: string;
+
+  @ApiPropertyOptional({ description: 'Conflict of interest' })
+  @IsString()
+  @IsOptional()
+  conflictOfInterest?: string;
+
+  @ApiPropertyOptional({ enum: DataAccessLevel, description: 'Data access level' })
+  @IsEnum(DataAccessLevel)
+  @IsOptional()
+  dataAccessLevel?: DataAccessLevel;
+}
+
+// Now declare CreateResearchRequestDto after CreateCollaborationDto
 export class CreateResearchRequestDto {
   @ApiProperty({ description: 'Research title' })
   @IsString()
@@ -106,52 +154,6 @@ export class CreateResearchRequestDto {
   @Type(() => CreateCollaborationDto)
   @IsOptional()
   collaborationDetails?: CreateCollaborationDto[];
-}
-
-export class CreateCollaborationDto {
-  @ApiProperty({ description: 'Collaborator user ID' })
-  @IsString()
-  @IsNotEmpty()
-  collaboratorId: string;
-
-  @ApiProperty({ enum: CollaborationRole, description: 'Collaboration role' })
-  @IsEnum(CollaborationRole)
-  role: CollaborationRole;
-
-  @ApiPropertyOptional({ description: 'Responsibilities' })
-  @IsString()
-  @IsOptional()
-  responsibilities?: string;
-
-  @ApiPropertyOptional({ description: 'Affiliation' })
-  @IsString()
-  @IsOptional()
-  affiliation?: string;
-
-  @ApiPropertyOptional({ description: 'Email' })
-  @IsString()
-  @IsOptional()
-  email?: string;
-
-  @ApiPropertyOptional({ description: 'Phone' })
-  @IsString()
-  @IsOptional()
-  phone?: string;
-
-  @ApiPropertyOptional({ description: 'Expertise' })
-  @IsString()
-  @IsOptional()
-  expertise?: string;
-
-  @ApiPropertyOptional({ description: 'Conflict of interest' })
-  @IsString()
-  @IsOptional()
-  conflictOfInterest?: string;
-
-  @ApiPropertyOptional({ enum: DataAccessLevel, description: 'Data access level' })
-  @IsEnum(DataAccessLevel)
-  @IsOptional()
-  dataAccessLevel?: DataAccessLevel;
 }
 
 export class UpdateResearchRequestDto {

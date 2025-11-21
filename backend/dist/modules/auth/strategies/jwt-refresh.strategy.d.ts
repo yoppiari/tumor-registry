@@ -6,7 +6,7 @@ export declare class JwtRefreshStrategy extends JwtRefreshStrategy_base {
     private readonly configService;
     private readonly authService;
     constructor(configService: ConfigService, authService: AuthService);
-    validate(req: Request, payload: any): Promise<{
+    validate(req: FastifyRequest, payload: any): Promise<{
         userId: any;
         email: any;
         roles: any;

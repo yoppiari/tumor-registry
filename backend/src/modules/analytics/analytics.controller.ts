@@ -8,8 +8,8 @@ import {
   ValidationPipe,
 } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse, ApiQuery } from '@nestjs/swagger';
-import { JwtAuthGuard } from '../auth/guards/jwt.guard';
-import { EnhancedThrottlerGuard } from '../auth/guards/enhanced-throttler.guard';
+import { JwtAuthGuard } from '@/modules/auth/guards/jwt.guard';
+import { EnhancedThrottlerGuard } from '@/modules/auth/guards/enhanced-throttler.guard';
 import { AnalyticsService } from './analytics.service';
 import { ExecutiveDashboardQueryDto, EnhancedAnalyticsQueryDto } from './dto/enhanced-analytics.dto';
 

@@ -82,8 +82,8 @@ let PopulationHealthService = PopulationHealthService_1 = class PopulationHealth
                             diagnoses: {
                                 select: {
                                     id: true,
-                                    diagnosisDate: true,
-                                    isPrimaryCancer: true,
+                                    onsetDate: true,
+                                    isPrimary: true,
                                 },
                             },
                         },
@@ -91,8 +91,8 @@ let PopulationHealthService = PopulationHealthService_1 = class PopulationHealth
                 },
             });
             const incidenceData = centers.reduce((acc, center) => {
-                const region = level === 'province' ? center.province : center.regency;
-                const cancerPatients = center.patients.filter(patient => patient.diagnoses.some(diagnosis => diagnosis.isPrimaryCancer)).length;
+                const region = level === 'province' ? center.province : (center.regency || 'Unknown');
+                const cancerPatients = center.patients.filter(patient => patient.diagnoses.some(diagnosis => diagnosis.isPrimary)).length;
                 const totalPatients = center.patients.length;
                 if (!acc[region]) {
                     acc[region] = {
@@ -111,17 +111,18 @@ let PopulationHealthService = PopulationHealthService_1 = class PopulationHealth
             Object.keys(incidenceData).forEach(region => {
                 const data = incidenceData[region];
                 data.incidenceRate = data.totalPopulation > 0
-                    ? ((data.cancerCases / data.totalPopulation) * 100000).toFixed(2)
+                    ? parseFloat(((data.cancerCases / data.totalPopulation) * 100000).toFixed(2))
                     : 0;
             });
+            const dataValues = Object.values(incidenceData);
             return {
                 level,
-                data: Object.values(incidenceData).sort((a, b) => b.incidenceRate - a.incidenceRate),
+                data: dataValues.sort((a, b) => b.incidenceRate - a.incidenceRate),
                 summary: {
                     totalRegions: Object.keys(incidenceData).length,
-                    averageIncidenceRate: this.calculateAverage(incidenceData, 'incidenceRate'),
-                    highestIncidence: Math.max(...Object.values(incidenceData).map(d => d.incidenceRate)),
-                    lowestIncidence: Math.min(...Object.values(incidenceData).map(d => d.incidenceRate)),
+                    averageIncidenceRate: this.calculateAverage(dataValues, 'incidenceRate'),
+                    highestIncidence: dataValues.length > 0 ? Math.max(...dataValues.map(d => d.incidenceRate)) : 0,
+                    lowestIncidence: dataValues.length > 0 ? Math.min(...dataValues.map(d => d.incidenceRate)) : 0,
                 },
             };
         }
@@ -197,14 +198,18 @@ let PopulationHealthService = PopulationHealthService_1 = class PopulationHealth
     async getHealthcareAccessAnalysis() {
         try {
             const centers = await this.prisma.center.findMany({
-                include: {
+                select: {
+                    id: true,
+                    name: true,
+                    province: true,
+                    regency: true,
                     patients: {
                         select: {
                             id: true,
                             diagnoses: {
                                 select: {
                                     id: true,
-                                    diagnosisDate: true,
+                                    onsetDate: true,
                                 },
                             },
                         },

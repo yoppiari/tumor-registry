@@ -16,10 +16,10 @@ import {
 } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse, ApiParam, ApiQuery, ApiBearerAuth } from '@nestjs/swagger';
 import { ResearchSprint3Service } from './research.service.sprint3';
-import { JwtAuthGuard } from '@/auth/guards/jwt.guard';
+import { JwtAuthGuard } from '@/modules/auth/guards/jwt.guard';
 import { PermissionsGuard } from '@/auth/guards/permissions.guard';
 import { RequirePermissions } from '@/auth/decorators/permissions.decorator';
-import { AuditLog } from '@/common/decorators/audit-log.decorator';
+import { AuditLog } from '../../common/decorators/audit-log.decorator';
 import {
   CreateResearchRequestDto,
   UpdateResearchRequestDto,

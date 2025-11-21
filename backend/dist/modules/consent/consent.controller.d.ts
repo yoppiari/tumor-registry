@@ -14,13 +14,13 @@ export declare class ConsentController {
         guardianRelation?: string;
         notes?: string;
     }): Promise<{
-        description: string;
         id: string;
+        description: string;
+        patientId: string;
+        providerId: string;
+        notes: string | null;
         createdAt: Date;
         updatedAt: Date;
-        patientId: string;
-        notes: string | null;
-        providerId: string;
         consentType: import(".prisma/client").$Enums.ConsentType;
         isConsented: boolean;
         consentDate: Date;
@@ -50,13 +50,13 @@ export declare class ConsentController {
         guardianRelation?: string;
         notes?: string;
     }): Promise<{
-        description: string;
         id: string;
+        description: string;
+        patientId: string;
+        providerId: string;
+        notes: string | null;
         createdAt: Date;
         updatedAt: Date;
-        patientId: string;
-        notes: string | null;
-        providerId: string;
         consentType: import(".prisma/client").$Enums.ConsentType;
         isConsented: boolean;
         consentDate: Date;
@@ -65,13 +65,13 @@ export declare class ConsentController {
         guardianRelation: string | null;
     }>;
     revokeConsent(id: string, reason: string): Promise<{
-        description: string;
         id: string;
+        description: string;
+        patientId: string;
+        providerId: string;
+        notes: string | null;
         createdAt: Date;
         updatedAt: Date;
-        patientId: string;
-        notes: string | null;
-        providerId: string;
         consentType: import(".prisma/client").$Enums.ConsentType;
         isConsented: boolean;
         consentDate: Date;
@@ -89,13 +89,13 @@ export declare class ConsentController {
         guardianRelation?: string;
         notes?: string;
     }): Promise<{
-        description: string;
         id: string;
+        description: string;
+        patientId: string;
+        providerId: string;
+        notes: string | null;
         createdAt: Date;
         updatedAt: Date;
-        patientId: string;
-        notes: string | null;
-        providerId: string;
         consentType: import(".prisma/client").$Enums.ConsentType;
         isConsented: boolean;
         consentDate: Date;
@@ -113,13 +113,13 @@ export declare class ConsentController {
         guardianRelation?: string;
         notes?: string;
     }): Promise<{
-        description: string;
         id: string;
+        description: string;
+        patientId: string;
+        providerId: string;
+        notes: string | null;
         createdAt: Date;
         updatedAt: Date;
-        patientId: string;
-        notes: string | null;
-        providerId: string;
         consentType: import(".prisma/client").$Enums.ConsentType;
         isConsented: boolean;
         consentDate: Date;
@@ -137,13 +137,13 @@ export declare class ConsentController {
         guardianRelation?: string;
         notes?: string;
     }): Promise<{
-        description: string;
         id: string;
+        description: string;
+        patientId: string;
+        providerId: string;
+        notes: string | null;
         createdAt: Date;
         updatedAt: Date;
-        patientId: string;
-        notes: string | null;
-        providerId: string;
         consentType: import(".prisma/client").$Enums.ConsentType;
         isConsented: boolean;
         consentDate: Date;
@@ -161,13 +161,13 @@ export declare class ConsentController {
         guardianRelation?: string;
         notes?: string;
     }): Promise<{
-        description: string;
         id: string;
+        description: string;
+        patientId: string;
+        providerId: string;
+        notes: string | null;
         createdAt: Date;
         updatedAt: Date;
-        patientId: string;
-        notes: string | null;
-        providerId: string;
         consentType: import(".prisma/client").$Enums.ConsentType;
         isConsented: boolean;
         consentDate: Date;
@@ -185,13 +185,13 @@ export declare class ConsentController {
         guardianRelation?: string;
         notes?: string;
     }): Promise<{
-        description: string;
         id: string;
+        description: string;
+        patientId: string;
+        providerId: string;
+        notes: string | null;
         createdAt: Date;
         updatedAt: Date;
-        patientId: string;
-        notes: string | null;
-        providerId: string;
         consentType: import(".prisma/client").$Enums.ConsentType;
         isConsented: boolean;
         consentDate: Date;
@@ -209,13 +209,13 @@ export declare class ConsentController {
         guardianRelation?: string;
         notes?: string;
     }): Promise<{
-        description: string;
         id: string;
+        description: string;
+        patientId: string;
+        providerId: string;
+        notes: string | null;
         createdAt: Date;
         updatedAt: Date;
-        patientId: string;
-        notes: string | null;
-        providerId: string;
         consentType: import(".prisma/client").$Enums.ConsentType;
         isConsented: boolean;
         consentDate: Date;
@@ -233,13 +233,13 @@ export declare class ConsentController {
         guardianRelation?: string;
         notes?: string;
     }): Promise<{
-        description: string;
         id: string;
+        description: string;
+        patientId: string;
+        providerId: string;
+        notes: string | null;
         createdAt: Date;
         updatedAt: Date;
-        patientId: string;
-        notes: string | null;
-        providerId: string;
         consentType: import(".prisma/client").$Enums.ConsentType;
         isConsented: boolean;
         consentDate: Date;
@@ -257,13 +257,13 @@ export declare class ConsentController {
         guardianRelation?: string;
         notes?: string;
     }): Promise<{
-        description: string;
         id: string;
+        description: string;
+        patientId: string;
+        providerId: string;
+        notes: string | null;
         createdAt: Date;
         updatedAt: Date;
-        patientId: string;
-        notes: string | null;
-        providerId: string;
         consentType: import(".prisma/client").$Enums.ConsentType;
         isConsented: boolean;
         consentDate: Date;

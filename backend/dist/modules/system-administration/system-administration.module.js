@@ -12,7 +12,7 @@ const system_administration_controller_1 = require("./controllers/system-adminis
 const system_administration_service_1 = require("./services/system-administration.service");
 const configuration_service_1 = require("./services/configuration.service");
 const dashboard_service_1 = require("./services/dashboard.service");
-const prisma_service_1 = require("../../database/prisma.service");
+const prisma_service_1 = require("../../common/database/prisma.service");
 let SystemAdministrationModule = class SystemAdministrationModule {
 };
 exports.SystemAdministrationModule = SystemAdministrationModule;

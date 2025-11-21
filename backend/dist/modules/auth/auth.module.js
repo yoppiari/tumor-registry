@@ -14,6 +14,7 @@ const config_1 = require("@nestjs/config");
 const auth_controller_1 = require("./auth.controller");
 const auth_service_1 = require("./auth.service");
 const mfa_service_1 = require("./mfa.service");
+const email_service_1 = require("./email.service");
 const encryption_service_1 = require("./services/encryption.service");
 const users_module_1 = require("../users/users.module");
 const database_module_1 = require("../../database/database.module");
@@ -43,10 +44,11 @@ exports.AuthModule = AuthModule = __decorate([
         providers: [
             auth_service_1.AuthService,
             mfa_service_1.MfaService,
+            email_service_1.EmailService,
             encryption_service_1.EncryptionService,
             jwt_refresh_strategy_1.JwtRefreshStrategy,
         ],
-        exports: [auth_service_1.AuthService, encryption_service_1.EncryptionService],
+        exports: [auth_service_1.AuthService, email_service_1.EmailService, encryption_service_1.EncryptionService],
     })
 ], AuthModule);
 //# sourceMappingURL=auth.module.js.map

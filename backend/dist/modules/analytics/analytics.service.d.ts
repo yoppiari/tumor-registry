@@ -1,5 +1,5 @@
 import { OnModuleInit } from '@nestjs/common';
-import { PrismaService } from '../../database/prisma.service';
+import { PrismaService } from '@/common/database/prisma.service';
 import { RedisService } from '../performance/redis.service';
 import { PerformanceMonitorService } from '../performance/performance-monitor.service';
 export declare class AnalyticsService implements OnModuleInit {
@@ -16,12 +16,12 @@ export declare class AnalyticsService implements OnModuleInit {
     getCancerTrends(period?: string): Promise<{
         period: string;
         data: {
+            quarter: string;
+            cases: number;
+        }[] | {
             month: string;
             cases: number;
             trend: number;
-        }[] | {
-            quarter: string;
-            cases: number;
         }[];
         growth: number;
     }>;

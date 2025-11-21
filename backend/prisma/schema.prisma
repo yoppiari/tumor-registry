@@ -66,6 +66,7 @@ model User {
   securityEvents            SecurityEvent[]         @relation("SecurityEvents")
   apiUsage                  ApiUsage[]              @relation("ApiUsage")
   center                    Center                  @relation(fields: [centerId], references: [id], onDelete: Cascade)
+  offlineDataQueue          OfflineDataQueue[]
 
   @@map("users")
   @@schema("system")
@@ -176,9 +177,11 @@ model Patient {
   medications         PatientMedication[]
   procedures          PatientProcedure[]
   visits              PatientVisit[]
-  center              Center              @relation(fields: [centerId], references: [id], onDelete: Cascade)
+  // TODO: Add MedicalImage model
+  //   center              Center              @relation(fields: [centerId], references: [id], onDelete: Cascade)
   radiologyResults    RadiologyResult[]
   vitalSigns          VitalSign[]
+  Center              Center              @relation(fields: [centerId], references: [id])
 
   @@map("patients")
   @@schema("medical")
@@ -205,6 +208,8 @@ model MedicalRecord {
   createdAt        DateTime   @default(now())
   updatedAt        DateTime   @updatedAt
   patient          Patient    @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  // TODO: Add MedicalImage model
+  //   medicalImages    MedicalImage[]
 
   @@map("medical_records")
   @@schema("medical")
@@ -3509,32 +3514,32 @@ enum OutcomeType {
 // Epic 1: User Management & Security - Additional Models
 
 model PasswordPolicy {
-  id                   String   @id @default(cuid())
-  name                 String   @unique
-  minLength            Int?     @default(8)
-  requireUppercase     Boolean  @default(true)
-  requireLowercase     Boolean  @default(true)
-  requireNumbers       Boolean  @default(true)
-  requireSpecialChars  Boolean  @default(true)
-  preventReuse         Int?     @default(5)
-  maxAge               Int?     // days
-  lockoutThreshold     Int?     @default(5)
-  lockoutDuration      Int?     // minutes
-  organizationId       String?
-  roleId               String?
-  isActive             Boolean  @default(true)
-  createdAt            DateTime @default(now())
-  updatedAt            DateTime @updatedAt
+  id                  String   @id @default(cuid())
+  name                String   @unique
+  minLength           Int?     @default(8)
+  requireUppercase    Boolean  @default(true)
+  requireLowercase    Boolean  @default(true)
+  requireNumbers      Boolean  @default(true)
+  requireSpecialChars Boolean  @default(true)
+  preventReuse        Int?     @default(5)
+  maxAge              Int? // days
+  lockoutThreshold    Int?     @default(5)
+  lockoutDuration     Int? // minutes
+  organizationId      String?
+  roleId              String?
+  isActive            Boolean  @default(true)
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
 
   @@map("password_policies")
   @@schema("system")
 }
 
 model PasswordHistory {
-  id            String   @id @default(cuid())
-  userId        String
-  passwordHash  String
-  createdAt     DateTime @default(now())
+  id           String   @id @default(cuid())
+  userId       String
+  passwordHash String
+  createdAt    DateTime @default(now())
 
   @@map("password_history")
   @@schema("system")
@@ -3551,31 +3556,31 @@ model FailedLoginAttempt {
 }
 
 model AccountLockout {
-  id               String    @id @default(cuid())
-  userId           String
-  lockedUntil      DateTime
-  reason           String
-  isActive         Boolean   @default(true)
-  createdAt        DateTime  @default(now())
-  unlockedAt       DateTime?
+  id          String    @id @default(cuid())
+  userId      String
+  lockedUntil DateTime
+  reason      String
+  isActive    Boolean   @default(true)
+  createdAt   DateTime  @default(now())
+  unlockedAt  DateTime?
 
   @@map("account_lockouts")
   @@schema("system")
 }
 
 model UserSession {
-  id               String    @id @default(cuid())
-  userId           String
+  id                String    @id @default(cuid())
+  userId            String
   deviceFingerprint String?
-  userAgent        String
-  ipAddress        String
-  deviceType       String?   @default("unknown")
-  location         Json?     // { country, city, latitude, longitude }
-  isActive         Boolean   @default(true)
-  lastActivity     DateTime  @default(now())
-  createdAt        DateTime  @default(now())
-  expiresAt        DateTime
-  terminatedAt     DateTime?
+  userAgent         String
+  ipAddress         String
+  deviceType        String?   @default("unknown")
+  location          Json? // { country, city, latitude, longitude }
+  isActive          Boolean   @default(true)
+  lastActivity      DateTime  @default(now())
+  createdAt         DateTime  @default(now())
+  expiresAt         DateTime
+  terminatedAt      DateTime?
   terminationReason String?
 
   @@map("user_sessions")
@@ -3583,14 +3588,14 @@ model UserSession {
 }
 
 model SecurityAlert {
-  id            String   @id @default(cuid())
+  id            String                @id @default(cuid())
   threatType    String
   severity      SecurityEventSeverity
   affectedUsers String[]
   description   String
   mitigation    String
-  triggeredAt   DateTime @default(now())
-  isActive      Boolean  @default(true)
+  triggeredAt   DateTime              @default(now())
+  isActive      Boolean               @default(true)
   resolvedAt    DateTime?
   resolvedBy    String?
 
@@ -3606,4 +3611,74 @@ enum SecurityEventSeverity {
 
   @@map("security_event_severities")
   @@schema("system")
+}
+
+// ============================================================================
+// OFFLINE QUEUE MODELS
+// ============================================================================
+
+model OfflineDataQueue {
+  id             String   @id @default(cuid())
+  userId         String
+  entityType     String // patient, diagnosis, medication, etc.
+  entityId       String? // null for CREATE operations
+  operation      String // CREATE, UPDATE, DELETE, SYNC
+  data           Json // The actual data payload
+  priority       Int      @default(0)
+  localTimestamp DateTime
+  deviceId       String?
+  sessionId      String?
+  metadata       Json?
+
+  status       OfflineQueueStatus @default(PENDING)
+  attemptCount Int                @default(0)
+  maxAttempts  Int                @default(3)
+
+  conflictData Json?
+  resolution   String? // USE_LOCAL, USE_REMOTE, MERGE, MANUAL
+  resolvedBy   String?
+  resolvedAt   DateTime?
+
+  syncedAt     DateTime?
+  errorMessage String?
+  errorDetails Json?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, status])
+  @@index([status, priority])
+  @@index([entityType, entityId])
+  @@map("offline_data_queue")
+  @@schema("system")
+}
+
+enum OfflineQueueStatus {
+  PENDING
+  PROCESSING
+  SYNCED
+  FAILED
+  CONFLICT
+  RESOLVED
+
+  @@map("offline_queue_statuses")
+  @@schema("system")
+}
+
+model QualityMetric {
+  id                    String   @id @default(cuid())
+  patientId             String
+  score                 Int
+  completeness          Int
+  requiredCompleteness  Int
+  medicalCompleteness   Int
+  imageCount            Int
+  recommendations       Int
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+
+  @@map("quality_metrics")
+  @@schema("medical")
 }

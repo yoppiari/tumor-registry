@@ -132,7 +132,7 @@ __decorate([
 ], ScheduleReportDto.prototype, "deliveryMethod", void 0);
 __decorate([
     (0, class_validator_1.IsOptional)(),
-    IsBoolean(),
+    (0, class_validator_1.IsBoolean)(),
     __metadata("design:type", Boolean)
 ], ScheduleReportDto.prototype, "isActive", void 0);
 __decorate([

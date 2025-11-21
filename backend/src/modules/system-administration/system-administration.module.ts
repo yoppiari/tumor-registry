@@ -3,7 +3,7 @@ import { SystemAdministrationController } from './controllers/system-administrat
 import { SystemAdministrationService } from './services/system-administration.service';
 import { ConfigurationService } from './services/configuration.service';
 import { DashboardService } from './services/dashboard.service';
-import { PrismaService } from '../../database/prisma.service';
+import { PrismaService } from '@/common/database/prisma.service';
 
 @Module({
   controllers: [SystemAdministrationController],

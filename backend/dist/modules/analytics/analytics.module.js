@@ -17,6 +17,7 @@ const enhanced_analytics_service_1 = require("./enhanced-analytics.service");
 const redis_service_1 = require("./redis.service");
 const scheduled_tasks_service_1 = require("./scheduled-tasks.service");
 const database_module_1 = require("../../database/database.module");
+const performance_module_1 = require("../performance/performance.module");
 let AnalyticsModule = class AnalyticsModule {
 };
 exports.AnalyticsModule = AnalyticsModule;
@@ -26,6 +27,7 @@ exports.AnalyticsModule = AnalyticsModule = __decorate([
             database_module_1.DatabaseModule,
             config_1.ConfigModule,
             schedule_1.ScheduleModule.forRoot(),
+            performance_module_1.PerformanceModule,
         ],
         controllers: [
             analytics_controller_1.AnalyticsController,

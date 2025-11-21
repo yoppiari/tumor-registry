@@ -88,7 +88,7 @@ export class CancerRegistryService {
           }
 
           const [totalCases, cancerTypes] = await Promise.all([
-            this.prisma.diagnosis.count({
+            this.prisma.patientDiagnosis.count({
               where: {
                 ...where,
                 isPrimaryCancer: true,
@@ -133,7 +133,7 @@ export class CancerRegistryService {
         where.patient = { centerId };
       }
 
-      const diagnoses = await this.prisma.diagnosis.findMany({
+      const diagnoses = await this.prisma.patientDiagnosis.findMany({
         where,
         include: {
           patient: {
@@ -141,7 +141,7 @@ export class CancerRegistryService {
               id: true,
               dateOfBirth: true,
               gender: true,
-              vitalStatus: true,
+              isDeceased: true,
               dateOfDeath: true,
             },
           },
@@ -373,7 +373,7 @@ export class CancerRegistryService {
             isPrimaryCancer: true,
           },
         },
-        vitalStatus: 'ALIVE',
+        isDeceased: false,
       },
     });
   }
@@ -383,7 +383,7 @@ export class CancerRegistryService {
     startOfMonth.setDate(1);
     startOfMonth.setHours(0, 0, 0, 0);
 
-    return await this.prisma.diagnosis.count({
+    return await this.prisma.patientDiagnosis.count({
       where: {
         ...where,
         isPrimaryCancer: true,
@@ -399,7 +399,7 @@ export class CancerRegistryService {
     startOfYear.setMonth(0, 1);
     startOfYear.setHours(0, 0, 0, 0);
 
-    return await this.prisma.diagnosis.count({
+    return await this.prisma.patientDiagnosis.count({
       where: {
         ...where,
         isPrimaryCancer: true,
@@ -423,7 +423,7 @@ export class CancerRegistryService {
       },
       select: {
         id: true,
-        vitalStatus: true,
+        isDeceased: true,
         dateOfDeath: true,
         diagnoses: {
           where: {
@@ -442,7 +442,7 @@ export class CancerRegistryService {
 
     if (patients.length === 0) return 0;
 
-    const alivePatients = patients.filter(patient => patient.vitalStatus === 'ALIVE').length;
+    const alivePatients = patients.filter(patient => !patient.isDeceased).length;
     return Math.round((alivePatients / patients.length) * 100);
   }
 
@@ -501,7 +501,7 @@ export class CancerRegistryService {
   }
 
   private async getTopCancerTypes(where: any, limit: number = 10): Promise<any[]> {
-    const diagnoses = await this.prisma.diagnosis.groupBy({
+    const diagnoses = await this.prisma.patientDiagnosis.groupBy({
       by: ['icd10Category'],
       where: {
         ...where,
@@ -529,7 +529,7 @@ export class CancerRegistryService {
   }
 
   private async getStageDistribution(where: any): Promise<any> {
-    const diagnoses = await this.prisma.diagnosis.groupBy({
+    const diagnoses = await this.prisma.patientDiagnosis.groupBy({
       by: ['stage'],
       where: {
         ...where,
@@ -590,7 +590,7 @@ export class CancerRegistryService {
     const totalPatients = diagnoses.length;
     if (totalPatients === 0) return { oneYear: 0, threeYear: 0, fiveYear: 0, median: 0 };
 
-    const alivePatients = diagnoses.filter(d => d.patient.vitalStatus === 'ALIVE');
+    const alivePatients = diagnoses.filter(d => !d.patient.isDeceased);
     const survivalRate = (alivePatients.length / totalPatients) * 100;
 
     return {

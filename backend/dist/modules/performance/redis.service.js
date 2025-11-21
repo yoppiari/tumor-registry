@@ -22,6 +22,12 @@ let RedisService = RedisService_1 = class RedisService {
         this.defaultTTL = 3600;
     }
     async onModuleInit() {
+        const redisDisabled = this.configService.get('REDIS_DISABLED', 'true') === 'true';
+        if (redisDisabled) {
+            this.logger.log('Redis is disabled - running without cache');
+            this.redis = null;
+            return;
+        }
         await this.initializeRedis();
     }
     async initializeRedis() {
@@ -57,11 +63,13 @@ let RedisService = RedisService_1 = class RedisService {
             this.logger.log('Redis initialized successfully');
         }
         catch (error) {
-            this.logger.error('Failed to initialize Redis:', error);
-            throw error;
+            this.logger.warn('Failed to initialize Redis - running without cache:', error.message);
+            this.redis = null;
         }
     }
     async get(key) {
+        if (!this.redis)
+            return null;
         try {
             return await this.redis.get(key);
         }
@@ -71,25 +79,29 @@ let RedisService = RedisService_1 = class RedisService {
         }
     }
     async set(key, value, ttl) {
+        if (!this.redis)
+            return;
         try {
             const expireTime = ttl || this.defaultTTL;
             await this.redis.setex(key, expireTime, value);
         }
         catch (error) {
             this.logger.error(`Redis set error for key ${key}:`, error);
-            throw error;
         }
     }
     async setex(key, seconds, value) {
+        if (!this.redis)
+            return;
         try {
             await this.redis.setex(key, seconds, value);
         }
         catch (error) {
             this.logger.error(`Redis setex error for key ${key}:`, error);
-            throw error;
         }
     }
     async del(key) {
+        if (!this.redis)
+            return 0;
         try {
             return await this.redis.del(key);
         }
@@ -99,6 +111,8 @@ let RedisService = RedisService_1 = class RedisService {
         }
     }
     async exists(key) {
+        if (!this.redis)
+            return 0;
         try {
             return await this.redis.exists(key);
         }
@@ -108,6 +122,8 @@ let RedisService = RedisService_1 = class RedisService {
         }
     }
     async expire(key, seconds) {
+        if (!this.redis)
+            return 0;
         try {
             return await this.redis.expire(key, seconds);
         }
@@ -117,6 +133,8 @@ let RedisService = RedisService_1 = class RedisService {
         }
     }
     async keys(pattern) {
+        if (!this.redis)
+            return [];
         try {
             return await this.redis.keys(pattern);
         }
@@ -126,6 +144,8 @@ let RedisService = RedisService_1 = class RedisService {
         }
     }
     async flushPattern(pattern) {
+        if (!this.redis)
+            return 0;
         try {
             const keys = await this.keys(pattern);
             if (keys.length === 0)
@@ -138,6 +158,8 @@ let RedisService = RedisService_1 = class RedisService {
         }
     }
     async hget(key, field) {
+        if (!this.redis)
+            return null;
         try {
             return await this.redis.hget(key, field);
         }
@@ -147,6 +169,8 @@ let RedisService = RedisService_1 = class RedisService {
         }
     }
     async hset(key, field, value) {
+        if (!this.redis)
+            return 0;
         try {
             return await this.redis.hset(key, field, value);
         }
@@ -156,15 +180,19 @@ let RedisService = RedisService_1 = class RedisService {
         }
     }
     async hmset(key, data) {
+        if (!this.redis)
+            return 'OK';
         try {
             return await this.redis.hmset(key, data);
         }
         catch (error) {
             this.logger.error(`Redis hmset error for key ${key}:`, error);
-            throw error;
+            return 'OK';
         }
     }
     async hgetall(key) {
+        if (!this.redis)
+            return {};
         try {
             return await this.redis.hgetall(key);
         }
@@ -174,6 +202,8 @@ let RedisService = RedisService_1 = class RedisService {
         }
     }
     async lpush(key, ...values) {
+        if (!this.redis)
+            return 0;
         try {
             return await this.redis.lpush(key, ...values);
         }
@@ -183,6 +213,8 @@ let RedisService = RedisService_1 = class RedisService {
         }
     }
     async rpush(key, ...values) {
+        if (!this.redis)
+            return 0;
         try {
             return await this.redis.rpush(key, ...values);
         }
@@ -192,6 +224,8 @@ let RedisService = RedisService_1 = class RedisService {
         }
     }
     async lrange(key, start, stop) {
+        if (!this.redis)
+            return [];
         try {
             return await this.redis.lrange(key, start, stop);
         }
@@ -201,6 +235,8 @@ let RedisService = RedisService_1 = class RedisService {
         }
     }
     async warmCache(cacheConfig) {
+        if (!this.redis)
+            return;
         try {
             const promises = cacheConfig.map(({ key, data, ttl }) => this.set(key, JSON.stringify(data), ttl));
             await Promise.all(promises);
@@ -211,6 +247,8 @@ let RedisService = RedisService_1 = class RedisService {
         }
     }
     async getWithStampedeProtection(key, fetcher, ttl = this.defaultTTL, lockTimeout = 10) {
+        if (!this.redis)
+            return await fetcher();
         const lockKey = `${key}:lock`;
         const resultKey = key;
         try {
@@ -244,6 +282,8 @@ let RedisService = RedisService_1 = class RedisService {
         }
     }
     async getWithMultiLevelCache(key, l1Fetcher, l2Fetcher, dbFetcher, ttl = this.defaultTTL) {
+        if (!this.redis)
+            return await dbFetcher();
         try {
             const l1Result = await l1Fetcher();
             if (l1Result !== null) {
@@ -277,6 +317,16 @@ let RedisService = RedisService_1 = class RedisService {
         return totalDeleted;
     }
     async getCacheInfo() {
+        if (!this.redis) {
+            return {
+                connected: false,
+                memory: '0B',
+                keys: 0,
+                hits: 0,
+                misses: 0,
+                hitRate: 0,
+            };
+        }
         try {
             const info = await this.redis.info('memory');
             const stats = await this.redis.info('stats');
@@ -308,6 +358,8 @@ let RedisService = RedisService_1 = class RedisService {
         }
     }
     async isHealthy() {
+        if (!this.redis)
+            return false;
         try {
             const result = await this.redis.ping();
             return result === 'PONG';

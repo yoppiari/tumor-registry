@@ -244,7 +244,7 @@ export interface FHIRResource {
   versionId?: string;
   lastUpdated?: Date;
   sourceSystem: string;
-  processingStatus: 'created' | 'updated' | 'deleted' | 'error' | 'pending';
+  processingStatus: 'received' | 'created' | 'updated' | 'deleted' | 'error' | 'pending' | 'completed';
   validationStatus: 'valid' | 'invalid' | 'warnings';
   resource: any; // The actual FHIR resource object
   extensions: FHIRExtension[];
@@ -434,6 +434,7 @@ export interface IntegrationEventMetadata {
   userAgent?: string;
   retryCount?: number;
   version?: string;
+  environment?: string;
   tags?: Record<string, string>;
 }
 
@@ -445,7 +446,7 @@ export interface IntegrationWorkflow {
   trigger: WorkflowTrigger;
   steps: WorkflowStep[];
   status: 'active' | 'inactive' | 'error';
-  configuration: WorkflowConfiguration;
+  configuration?: WorkflowConfiguration;
   statistics: WorkflowStatistics;
   createdAt: Date;
   updatedAt: Date;

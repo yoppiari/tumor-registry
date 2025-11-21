@@ -11,20 +11,23 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
+var _a;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ReportsController = void 0;
 const common_1 = require("@nestjs/common");
 const swagger_1 = require("@nestjs/swagger");
-const jwt_auth_guard_1 = require("../../auth/guards/jwt-auth.guard");
-const roles_guard_1 = require("../../auth/guards/roles.guard");
-const roles_decorator_1 = require("../../auth/decorators/roles.decorator");
+const jwt_auth_guard_1 = require("../../../auth/guards/jwt-auth.guard");
+const roles_guard_1 = require("../../../auth/guards/roles.guard");
+const roles_decorator_1 = require("../../../auth/decorators/roles.decorator");
 const reports_service_1 = require("../services/reports.service");
+const report_history_service_1 = require("../services/report-history.service");
 const create_report_template_dto_1 = require("../dto/create-report-template.dto");
 const generate_report_dto_1 = require("../dto/generate-report.dto");
 const fs = require("fs");
 let ReportsController = class ReportsController {
-    constructor(reportsService) {
+    constructor(reportsService, historyService) {
         this.reportsService = reportsService;
+        this.historyService = historyService;
     }
     async getTemplates(reportType, accessLevel, centerId, isActive) {
         const filters = {
@@ -55,7 +58,7 @@ let ReportsController = class ReportsController {
     async getGeneratedReport(id) {
         return this.reportsService.getReport(id);
     }
-    async downloadReport(id, res) {
+    async downloadReport(id, reply) {
         try {
             const { filePath, fileName, mimeType } = await this.reportsService.downloadReport(id);
             res.setHeader('Content-Type', mimeType);
@@ -135,6 +138,61 @@ let ReportsController = class ReportsController {
     async cloneTemplate(id, cloneData) {
         return this.reportsService.cloneTemplate(id, cloneData);
     }
+    async getReportHistory(reportId) {
+        return this.historyService.getReportHistory(reportId);
+    }
+    async getTemplateHistory(templateId, startDate, endDate, status, limit) {
+        const filters = {
+            startDate: startDate ? new Date(startDate) : undefined,
+            endDate: endDate ? new Date(endDate) : undefined,
+            status,
+            limit: limit ? parseInt(limit) : undefined,
+        };
+        return this.historyService.getTemplateHistory(templateId, filters);
+    }
+    async getDistributions(reportHistoryId) {
+        return this.historyService.getDistributions(reportHistoryId);
+    }
+    async getAccessLogs(reportHistoryId, userId, accessType, startDate, endDate) {
+        const filters = {
+            userId,
+            accessType,
+            startDate: startDate ? new Date(startDate) : undefined,
+            endDate: endDate ? new Date(endDate) : undefined,
+        };
+        return this.historyService.getAccessLogs(reportHistoryId, filters);
+    }
+    async logAccess(reportHistoryId, accessData, req) {
+        return this.historyService.logAccess({
+            reportHistoryId,
+            userId: req.user.id,
+            userName: req.user.name,
+            ...accessData,
+        });
+    }
+    async verifyIntegrity(reportHistoryId) {
+        return this.historyService.verifyIntegrity(reportHistoryId);
+    }
+    async getVersionHistory(reportId) {
+        return this.historyService.getVersionHistory(reportId);
+    }
+    async exportForAudit(startDate, endDate, templateId, reportType) {
+        const filters = {
+            startDate: startDate ? new Date(startDate) : undefined,
+            endDate: endDate ? new Date(endDate) : undefined,
+            templateId,
+            reportType,
+        };
+        return this.historyService.exportForAudit(filters);
+    }
+    async getHistoryStatistics(templateId, startDate, endDate) {
+        const filters = {
+            templateId,
+            startDate: startDate ? new Date(startDate) : undefined,
+            endDate: endDate ? new Date(endDate) : undefined,
+        };
+        return this.historyService.getHistoryStatistics(filters);
+    }
 };
 exports.ReportsController = ReportsController;
 __decorate([
@@ -203,7 +261,7 @@ __decorate([
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Res)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, Object]),
+    __metadata("design:paramtypes", [String, typeof (_a = typeof FastifyReply !== "undefined" && FastifyReply) === "function" ? _a : Object]),
     __metadata("design:returntype", Promise)
 ], ReportsController.prototype, "downloadReport", null);
 __decorate([
@@ -248,7 +306,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], ReportsController.prototype, "getScheduledReport", null);
 __decorate([
-    Put('scheduled/:id/toggle'),
+    (0, common_1.Put)('scheduled/:id/toggle'),
     (0, roles_decorator_1.Roles)('SYSTEM_ADMIN', 'CENTER_DIRECTOR', 'DATA_ANALYST'),
     (0, swagger_1.ApiOperation)({ summary: 'Toggle scheduled report active status' }),
     (0, swagger_1.ApiResponse)({ status: 200, description: 'Scheduled report status updated successfully' }),
@@ -385,11 +443,117 @@ __decorate([
     __metadata("design:paramtypes", [String, Object]),
     __metadata("design:returntype", Promise)
 ], ReportsController.prototype, "cloneTemplate", null);
+__decorate([
+    (0, common_1.Get)('history/:reportId'),
+    (0, roles_decorator_1.Roles)('SYSTEM_ADMIN', 'CENTER_DIRECTOR', 'DATA_ANALYST', 'RESEARCHER'),
+    (0, swagger_1.ApiOperation)({ summary: 'Get complete history for a report' }),
+    (0, swagger_1.ApiResponse)({ status: 200, description: 'Report history retrieved successfully' }),
+    __param(0, (0, common_1.Param)('reportId')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], ReportsController.prototype, "getReportHistory", null);
+__decorate([
+    (0, common_1.Get)('history/template/:templateId'),
+    (0, roles_decorator_1.Roles)('SYSTEM_ADMIN', 'CENTER_DIRECTOR', 'DATA_ANALYST'),
+    (0, swagger_1.ApiOperation)({ summary: 'Get history by template' }),
+    (0, swagger_1.ApiResponse)({ status: 200, description: 'Template history retrieved successfully' }),
+    __param(0, (0, common_1.Param)('templateId')),
+    __param(1, (0, common_1.Query)('startDate')),
+    __param(2, (0, common_1.Query)('endDate')),
+    __param(3, (0, common_1.Query)('status')),
+    __param(4, (0, common_1.Query)('limit')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, String, String, String, String]),
+    __metadata("design:returntype", Promise)
+], ReportsController.prototype, "getTemplateHistory", null);
+__decorate([
+    (0, common_1.Get)('distributions/:reportHistoryId'),
+    (0, roles_decorator_1.Roles)('SYSTEM_ADMIN', 'CENTER_DIRECTOR', 'DATA_ANALYST'),
+    (0, swagger_1.ApiOperation)({ summary: 'Get distribution tracking for a report' }),
+    (0, swagger_1.ApiResponse)({ status: 200, description: 'Distribution tracking retrieved successfully' }),
+    __param(0, (0, common_1.Param)('reportHistoryId')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], ReportsController.prototype, "getDistributions", null);
+__decorate([
+    (0, common_1.Get)('access-logs/:reportHistoryId'),
+    (0, roles_decorator_1.Roles)('SYSTEM_ADMIN', 'CENTER_DIRECTOR', 'DATA_ANALYST'),
+    (0, swagger_1.ApiOperation)({ summary: 'Get access logs for a report (who viewed it)' }),
+    (0, swagger_1.ApiResponse)({ status: 200, description: 'Access logs retrieved successfully' }),
+    __param(0, (0, common_1.Param)('reportHistoryId')),
+    __param(1, (0, common_1.Query)('userId')),
+    __param(2, (0, common_1.Query)('accessType')),
+    __param(3, (0, common_1.Query)('startDate')),
+    __param(4, (0, common_1.Query)('endDate')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, String, String, String, String]),
+    __metadata("design:returntype", Promise)
+], ReportsController.prototype, "getAccessLogs", null);
+__decorate([
+    (0, common_1.Post)('access-logs/:reportHistoryId'),
+    (0, roles_decorator_1.Roles)('SYSTEM_ADMIN', 'CENTER_DIRECTOR', 'DATA_ANALYST', 'RESEARCHER'),
+    (0, swagger_1.ApiOperation)({ summary: 'Log report access' }),
+    (0, swagger_1.ApiResponse)({ status: 201, description: 'Access logged successfully' }),
+    __param(0, (0, common_1.Param)('reportHistoryId')),
+    __param(1, (0, common_1.Body)()),
+    __param(2, (0, common_1.Request)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, Object, Object]),
+    __metadata("design:returntype", Promise)
+], ReportsController.prototype, "logAccess", null);
+__decorate([
+    (0, common_1.Get)('integrity/:reportHistoryId'),
+    (0, roles_decorator_1.Roles)('SYSTEM_ADMIN', 'CENTER_DIRECTOR', 'DATA_ANALYST'),
+    (0, swagger_1.ApiOperation)({ summary: 'Verify report file integrity' }),
+    (0, swagger_1.ApiResponse)({ status: 200, description: 'Integrity verification completed' }),
+    __param(0, (0, common_1.Param)('reportHistoryId')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], ReportsController.prototype, "verifyIntegrity", null);
+__decorate([
+    (0, common_1.Get)('versions/:reportId'),
+    (0, roles_decorator_1.Roles)('SYSTEM_ADMIN', 'CENTER_DIRECTOR', 'DATA_ANALYST', 'RESEARCHER'),
+    (0, swagger_1.ApiOperation)({ summary: 'Get version history for a report' }),
+    (0, swagger_1.ApiResponse)({ status: 200, description: 'Version history retrieved successfully' }),
+    __param(0, (0, common_1.Param)('reportId')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], ReportsController.prototype, "getVersionHistory", null);
+__decorate([
+    (0, common_1.Get)('audit/export'),
+    (0, roles_decorator_1.Roles)('SYSTEM_ADMIN', 'CENTER_DIRECTOR'),
+    (0, swagger_1.ApiOperation)({ summary: 'Export report history for compliance audit' }),
+    (0, swagger_1.ApiResponse)({ status: 200, description: 'Audit export completed successfully' }),
+    __param(0, (0, common_1.Query)('startDate')),
+    __param(1, (0, common_1.Query)('endDate')),
+    __param(2, (0, common_1.Query)('templateId')),
+    __param(3, (0, common_1.Query)('reportType')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, String, String, String]),
+    __metadata("design:returntype", Promise)
+], ReportsController.prototype, "exportForAudit", null);
+__decorate([
+    (0, common_1.Get)('history/statistics'),
+    (0, roles_decorator_1.Roles)('SYSTEM_ADMIN', 'CENTER_DIRECTOR', 'DATA_ANALYST'),
+    (0, swagger_1.ApiOperation)({ summary: 'Get history statistics' }),
+    (0, swagger_1.ApiResponse)({ status: 200, description: 'Statistics retrieved successfully' }),
+    __param(0, (0, common_1.Query)('templateId')),
+    __param(1, (0, common_1.Query)('startDate')),
+    __param(2, (0, common_1.Query)('endDate')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, String, String]),
+    __metadata("design:returntype", Promise)
+], ReportsController.prototype, "getHistoryStatistics", null);
 exports.ReportsController = ReportsController = __decorate([
     (0, swagger_1.ApiTags)('reports'),
     (0, common_1.Controller)('reports'),
     (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard, roles_guard_1.RolesGuard),
     (0, swagger_1.ApiBearerAuth)(),
-    __metadata("design:paramtypes", [reports_service_1.ReportsService])
+    __metadata("design:paramtypes", [reports_service_1.ReportsService,
+        report_history_service_1.ReportHistoryService])
 ], ReportsController);
 //# sourceMappingURL=reports.controller.js.map

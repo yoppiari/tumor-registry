@@ -23,7 +23,7 @@ let PdfGenerator = PdfGenerator_1 = class PdfGenerator {
             fs.mkdirSync(outputPath, { recursive: true });
         }
         const filePath = path.join(outputPath, filename);
-        return new Promise((resolve, reject) => {
+        return new Promise(async (resolve, reject) => {
             try {
                 const doc = new PDFDocument({
                     size: 'A4',

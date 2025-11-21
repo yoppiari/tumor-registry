@@ -1,6 +1,6 @@
-import { PrismaService } from '@/database/prisma.service';
-import { AuditLogService } from '@/audit/audit.service';
-import { EmailService } from '@/auth/email.service';
+import { PrismaService } from '@/common/database/prisma.service';
+import { AuditLogService } from '../audit/audit.service';
+import { EmailService } from '../auth/email.service';
 import { CollaborationStatus } from '@prisma/client';
 export declare class ResearchSprint3Service {
     private prisma;

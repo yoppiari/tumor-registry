@@ -1,6 +1,6 @@
 import { Injectable, Logger, NotFoundException, BadRequestException } from '@nestjs/common';
 import { Cron, CronExpression, SchedulerRegistry } from '@nestjs/schedule';
-import { PrismaService } from '../../../database/prisma.service';
+import { PrismaService } from '@/common/database/prisma.service';
 import { CronJob } from 'cron';
 import * as crypto from 'crypto';
 import {
@@ -647,7 +647,7 @@ export class ScheduledReportsService {
 
   // Cron job to cleanup old executions
   @Cron(CronExpression.EVERY_DAY_AT_2AM)
-  async cleanupOldExecutions(): Promise<void> {
+  async cleanupOldExecutions() {
     const retentionDays = 90;
     const cutoffDate = new Date(Date.now() - retentionDays * 24 * 60 * 60 * 1000);
 

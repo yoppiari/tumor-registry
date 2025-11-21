@@ -11,15 +11,16 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
+var _a, _b;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.DataMigrationController = void 0;
 const common_1 = require("@nestjs/common");
 const swagger_1 = require("@nestjs/swagger");
 const data_migration_service_1 = require("./data-migration.service");
 const jwt_guard_1 = require("../auth/guards/jwt.guard");
-const permissions_guard_1 = require("@/auth/guards/permissions.guard");
-const permissions_decorator_1 = require("@/auth/decorators/permissions.decorator");
-const audit_log_decorator_1 = require("@/common/decorators/audit-log.decorator");
+const permissions_guard_1 = require("../../auth/guards/permissions.guard");
+const permissions_decorator_1 = require("../../auth/decorators/permissions.decorator");
+const audit_log_decorator_1 = require("../../common/decorators/audit-log.decorator");
 const platform_express_1 = require("@nestjs/platform-express");
 let DataMigrationController = class DataMigrationController {
     constructor(dataMigrationService) {
@@ -399,7 +400,7 @@ __decorate([
     __param(0, (0, common_1.Body)()),
     __param(1, (0, uploaded_file_type_1.UploadedFile)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, Object]),
+    __metadata("design:paramtypes", [Object, typeof (_b = typeof Express !== "undefined" && (_a = Express.Multer) !== void 0 && _a.File) === "function" ? _b : Object]),
     __metadata("design:returntype", Promise)
 ], DataMigrationController.prototype, "importPatientData", null);
 __decorate([

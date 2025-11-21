@@ -3,7 +3,7 @@ import { UsersService } from '../users/users.service';
 import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
 import { EmailService } from './email.service';
-import { PrismaService } from '../../database/prisma.service';
+import { PrismaService } from '@/common/database/prisma.service';
 export declare class AuthService {
     private usersService;
     private jwtService;
@@ -22,7 +22,7 @@ export declare class AuthService {
         };
         message: string;
         verificationToken: string;
-        mfaSecret: any;
+        mfaSecret: string;
     }>;
     login(loginDto: LoginDto): Promise<{
         requireMFA: boolean;
@@ -62,8 +62,8 @@ export declare class AuthService {
     }>;
     validateRefreshToken(userId: string, refreshToken: string): Promise<{
         center: {
-            name: string;
             id: string;
+            name: string;
             isActive: boolean;
             createdAt: Date;
             updatedAt: Date;
@@ -74,10 +74,10 @@ export declare class AuthService {
         };
         userRoles: ({
             role: {
-                description: string | null;
-                name: string;
                 id: string;
+                name: string;
                 code: string;
+                description: string | null;
                 level: number;
             };
         } & {
@@ -88,14 +88,13 @@ export declare class AuthService {
             userId: string;
         })[];
     } & {
+        id: string;
         email: string;
         name: string;
         kolegiumId: string | null;
         passwordHash: string;
         phone: string | null;
         nik: string | null;
-        centerId: string;
-        id: string;
         isActive: boolean;
         isEmailVerified: boolean;
         mfaEnabled: boolean;
@@ -103,6 +102,7 @@ export declare class AuthService {
         lastLoginAt: Date | null;
         createdAt: Date;
         updatedAt: Date;
+        centerId: string;
     }>;
     logout(userId: string, refreshToken: string): Promise<{
         message: string;

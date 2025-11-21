@@ -2,6 +2,7 @@ import {
   Controller,
   Get,
   Post,
+  Body,
   Query,
   UseGuards,
   HttpCode,
@@ -9,10 +10,10 @@ import {
 } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse, ApiQuery } from '@nestjs/swagger';
 import { PopulationHealthService } from './population-health.service';
-import { JwtAuthGuard } from '@/auth/guards/jwt.guard';
+import { JwtAuthGuard } from '@/auth/guards/jwt-auth.guard';
 import { PermissionsGuard } from '@/auth/guards/permissions.guard';
 import { RequirePermissions } from '@/auth/decorators/permissions.decorator';
-import { AuditLog } from '@/common/decorators/audit-log.decorator';
+import { AuditLog } from '../../common/decorators/audit-log.decorator';
 
 @ApiTags('Population Health')
 @Controller('population-health')

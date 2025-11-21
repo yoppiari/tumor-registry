@@ -3,9 +3,8 @@ import { Type } from 'class-transformer';
 import { ApiProperty } from '@nestjs/swagger';
 
 class RecipientDto {
-  @ApiProperty()
-  @IsString()
-  @IsNotEmpty()
+  @ApiProperty({ enum: ['USER', 'ROLE', 'EMAIL', 'GROUP'] })
+  @IsEnum(['USER', 'ROLE', 'EMAIL', 'GROUP'])
   type: 'USER' | 'ROLE' | 'EMAIL' | 'GROUP';
 
   @ApiProperty()

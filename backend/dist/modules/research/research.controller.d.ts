@@ -44,7 +44,7 @@ export declare class ResearchController {
     }): Promise<{
         exportId: any;
         requestId: string;
-        format: "csv" | "excel" | "json";
+        format: "json" | "csv" | "excel";
         dataCount: number;
         status: string;
         exportDate: any;

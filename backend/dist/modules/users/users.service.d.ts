@@ -1,4 +1,4 @@
-import { PrismaService } from '../../database/prisma.service';
+import { PrismaService } from '@/common/database/prisma.service';
 export declare class UsersService {
     private prisma;
     constructor(prisma: PrismaService);
@@ -13,8 +13,8 @@ export declare class UsersService {
         centerId?: string;
     }): Promise<{
         center: {
-            name: string;
             id: string;
+            name: string;
             isActive: boolean;
             createdAt: Date;
             updatedAt: Date;
@@ -25,10 +25,10 @@ export declare class UsersService {
         };
         userRoles: ({
             role: {
-                description: string | null;
-                name: string;
                 id: string;
+                name: string;
                 code: string;
+                description: string | null;
                 level: number;
             };
         } & {
@@ -39,14 +39,13 @@ export declare class UsersService {
             userId: string;
         })[];
     } & {
+        id: string;
         email: string;
         name: string;
         kolegiumId: string | null;
         passwordHash: string;
         phone: string | null;
         nik: string | null;
-        centerId: string;
-        id: string;
         isActive: boolean;
         isEmailVerified: boolean;
         mfaEnabled: boolean;
@@ -54,11 +53,12 @@ export declare class UsersService {
         lastLoginAt: Date | null;
         createdAt: Date;
         updatedAt: Date;
+        centerId: string;
     }>;
     findById(id: string): Promise<{
         center: {
-            name: string;
             id: string;
+            name: string;
             isActive: boolean;
             createdAt: Date;
             updatedAt: Date;
@@ -69,10 +69,10 @@ export declare class UsersService {
         };
         userRoles: ({
             role: {
-                description: string | null;
-                name: string;
                 id: string;
+                name: string;
                 code: string;
+                description: string | null;
                 level: number;
             };
         } & {
@@ -83,14 +83,13 @@ export declare class UsersService {
             userId: string;
         })[];
     } & {
+        id: string;
         email: string;
         name: string;
         kolegiumId: string | null;
         passwordHash: string;
         phone: string | null;
         nik: string | null;
-        centerId: string;
-        id: string;
         isActive: boolean;
         isEmailVerified: boolean;
         mfaEnabled: boolean;
@@ -98,11 +97,12 @@ export declare class UsersService {
         lastLoginAt: Date | null;
         createdAt: Date;
         updatedAt: Date;
+        centerId: string;
     }>;
     findByEmail(email: string): Promise<{
         center: {
-            name: string;
             id: string;
+            name: string;
             isActive: boolean;
             createdAt: Date;
             updatedAt: Date;
@@ -113,10 +113,10 @@ export declare class UsersService {
         };
         userRoles: ({
             role: {
-                description: string | null;
-                name: string;
                 id: string;
+                name: string;
                 code: string;
+                description: string | null;
                 level: number;
             };
         } & {
@@ -127,14 +127,13 @@ export declare class UsersService {
             userId: string;
         })[];
     } & {
+        id: string;
         email: string;
         name: string;
         kolegiumId: string | null;
         passwordHash: string;
         phone: string | null;
         nik: string | null;
-        centerId: string;
-        id: string;
         isActive: boolean;
         isEmailVerified: boolean;
         mfaEnabled: boolean;
@@ -142,6 +141,7 @@ export declare class UsersService {
         lastLoginAt: Date | null;
         createdAt: Date;
         updatedAt: Date;
+        centerId: string;
     }>;
     update(id: string, updateData: Partial<{
         name: string;
@@ -154,8 +154,8 @@ export declare class UsersService {
         lastLoginAt: Date;
     }>): Promise<{
         center: {
-            name: string;
             id: string;
+            name: string;
             isActive: boolean;
             createdAt: Date;
             updatedAt: Date;
@@ -166,10 +166,10 @@ export declare class UsersService {
         };
         userRoles: ({
             role: {
-                description: string | null;
-                name: string;
                 id: string;
+                name: string;
                 code: string;
+                description: string | null;
                 level: number;
             };
         } & {
@@ -180,14 +180,13 @@ export declare class UsersService {
             userId: string;
         })[];
     } & {
+        id: string;
         email: string;
         name: string;
         kolegiumId: string | null;
         passwordHash: string;
         phone: string | null;
         nik: string | null;
-        centerId: string;
-        id: string;
         isActive: boolean;
         isEmailVerified: boolean;
         mfaEnabled: boolean;
@@ -195,18 +194,19 @@ export declare class UsersService {
         lastLoginAt: Date | null;
         createdAt: Date;
         updatedAt: Date;
+        centerId: string;
     }>;
     getUserRole(userId: string): Promise<string>;
     findAll(): Promise<{
-        center: {
-            name: string;
-        };
+        id: string;
         email: string;
         name: string;
-        id: string;
         isActive: boolean;
         isEmailVerified: boolean;
         createdAt: Date;
+        center: {
+            name: string;
+        };
         userRoles: {
             role: {
                 name: string;
@@ -215,8 +215,8 @@ export declare class UsersService {
     }[]>;
     updateRole(userId: string, roleCode: string): Promise<{
         center: {
-            name: string;
             id: string;
+            name: string;
             isActive: boolean;
             createdAt: Date;
             updatedAt: Date;
@@ -227,10 +227,10 @@ export declare class UsersService {
         };
         userRoles: ({
             role: {
-                description: string | null;
-                name: string;
                 id: string;
+                name: string;
                 code: string;
+                description: string | null;
                 level: number;
             };
         } & {
@@ -241,14 +241,13 @@ export declare class UsersService {
             userId: string;
         })[];
     } & {
+        id: string;
         email: string;
         name: string;
         kolegiumId: string | null;
         passwordHash: string;
         phone: string | null;
         nik: string | null;
-        centerId: string;
-        id: string;
         isActive: boolean;
         isEmailVerified: boolean;
         mfaEnabled: boolean;
@@ -256,6 +255,7 @@ export declare class UsersService {
         lastLoginAt: Date | null;
         createdAt: Date;
         updatedAt: Date;
+        centerId: string;
     }>;
     validatePassword(plainPassword: string, hashedPassword: string): Promise<boolean>;
     hashPassword(plainPassword: string): Promise<string>;

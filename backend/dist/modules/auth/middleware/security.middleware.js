@@ -16,8 +16,8 @@ let SecurityMiddleware = class SecurityMiddleware {
     constructor(configService) {
         this.configService = configService;
     }
-    use(req, res, next) {
-        this.setSecurityHeaders(res);
+    use(req, reply, next) {
+        this.setSecurityHeaders(reply);
         this.validateRequest(req);
         this.checkRateLimit(req);
         this.validateRequestSize(req);
@@ -25,18 +25,18 @@ let SecurityMiddleware = class SecurityMiddleware {
         this.preventXss(req);
         next();
     }
-    setSecurityHeaders(res) {
-        res.setHeader('X-Frame-Options', 'DENY');
-        res.setHeader('X-Content-Type-Options', 'nosniff');
-        res.setHeader('X-XSS-Protection', '1; mode=block');
+    setSecurityHeaders(reply) {
+        reply.header('X-Frame-Options', 'DENY');
+        reply.header('X-Content-Type-Options', 'nosniff');
+        reply.header('X-XSS-Protection', '1; mode=block');
         if (this.configService.get('NODE_ENV') === 'production') {
-            res.setHeader('Strict-Transport-Security', 'max-age=31536000; includeSubDomains; preload');
+            reply.header('Strict-Transport-Security', 'max-age=31536000; includeSubDomains; preload');
         }
-        res.setHeader('Content-Security-Policy', "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; " +
+        reply.header('Content-Security-Policy', "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; " +
             "style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; " +
             "font-src 'self'; connect-src 'self'; frame-ancestors 'none';");
-        res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
-        res.setHeader('Permissions-Policy', 'geolocation=(), microphone=(), camera=(), usb=(), magnetometer=(), ' +
+        reply.header('Referrer-Policy', 'strict-origin-when-cross-origin');
+        reply.header('Permissions-Policy', 'geolocation=(), microphone=(), camera=(), usb=(), magnetometer=(), ' +
             'gyroscope=(), ambient-light-sensor=(), accelerometer=(), payment=()');
     }
     validateRequest(req) {
@@ -84,8 +84,8 @@ let SecurityMiddleware = class SecurityMiddleware {
             /(\%27)|(\')|(\-\-)|(\%23)|(#)/i,
             /((\%3D)|(=))[^\n]*((\%27)|(\')|(\-\-)|(\%3B)|(;))/i,
             /\w*((\%27)|(\'))((\%6F)|o|(\%4F))((\%72)|r|(\%52))/i,
-            /((\%27)|(\'))union/ix,
-            /exec(\s|\+)+(s|x)p\w+/ix,
+            /((\%27)|(\'))union/i,
+            /exec(\s|\+)+(s|x)p\w+/i,
             /UNION[^a-zA-Z]/i,
             /SELECT[^a-zA-Z]/i,
             /INSERT[^a-zA-Z]/i,

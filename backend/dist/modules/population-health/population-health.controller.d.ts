@@ -98,7 +98,7 @@ export declare class PopulationHealthController {
         message: string;
         filters: {
             cancerType: string;
-            heatLevel: "low" | "medium" | "high";
+            heatLevel: "high" | "medium" | "low";
         };
         data: {
             hotspots: {

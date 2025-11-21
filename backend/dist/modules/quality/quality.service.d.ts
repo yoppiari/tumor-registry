@@ -1,13 +1,9 @@
-import { Repository } from 'typeorm';
-import { Patient } from '../patients/entities/patient.entity';
-import { MedicalImage } from '../medical-imaging/entities/medical-image.entity';
-import { QualityMetric } from './entities/quality-metric.entity';
+import { PrismaService } from '@/common/database/prisma.service';
 import { QualityScore, QualityTrend } from './interfaces/quality.interface';
 export declare class QualityService {
-    private patientRepository;
-    private imageRepository;
-    private qualityMetricRepository;
-    constructor(patientRepository: Repository<Patient>, imageRepository: Repository<MedicalImage>, qualityMetricRepository: Repository<QualityMetric>);
+    private prisma;
+    private readonly logger;
+    constructor(prisma: PrismaService);
     calculateQualityScore(patientId: string): Promise<QualityScore>;
     getQualityTrends(patientId: string, days?: number): Promise<QualityTrend[]>;
     getCenterQualitySummary(centerId: string): Promise<any>;

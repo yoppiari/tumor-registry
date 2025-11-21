@@ -39,23 +39,23 @@ export class TestTenantManager {
 
     try {
       // Create center in system schema
-      const center = await this.prisma.client.$queryRaw`
+      const center = await this.prisma.$queryRaw`
         INSERT INTO system.centers (id, name, code, province, is_active, created_at, updated_at)
         VALUES (${centerId}, ${centerConfig.name}, ${centerConfig.code}, ${centerConfig.province}, ${true}, NOW(), NOW())
         RETURNING id, name, code, province, is_active
       `;
 
       // Create isolated schema for test center
-      await this.prisma.client.$executeRaw`
+      await this.prisma.$executeRaw`
         CREATE SCHEMA IF NOT EXISTS ${this.TEST_CENTERS_PREFIX}${centerId}
       `;
 
       // Grant permissions
-      await this.prisma.client.$executeRaw`
+      await this.prisma.$executeRaw`
         GRANT USAGE ON SCHEMA ${this.TEST_CENTERS_PREFIX}${centerId} TO inamsos
       `;
 
-      await this.prisma.client.$executeRaw`
+      await this.prisma.$executeRaw`
         GRANT CREATE ON SCHEMA ${this.TEST_CENTERS_PREFIX}${centerId} TO inamsos
       `;
 
@@ -76,12 +76,12 @@ export class TestTenantManager {
       const schemaName = `${this.TEST_CENTERS_PREFIX}${centerId}`;
 
       // Drop schema with CASCADE
-      await this.prisma.client.$executeRaw`
+      await this.prisma.$executeRaw`
         DROP SCHEMA IF EXISTS ${schemaName} CASCADE
       `;
 
       // Remove center from system schema
-      await this.prisma.client.$queryRaw`
+      await this.prisma.$queryRaw`
         DELETE FROM system.centers WHERE id = ${centerId}
       `;
 
@@ -105,7 +105,7 @@ export class TestTenantManager {
         const schemaName = `${this.TEST_CENTERS_PREFIX}${centerId}`;
 
         // Check if schema exists and is isolated
-        const schemaExists = await this.prisma.client.$queryRaw`
+        const schemaExists = await this.prisma.$queryRaw<any[]>`
           SELECT 1 FROM information_schema.schemata
           WHERE schema_name = ${schemaName}
         `;
@@ -117,7 +117,7 @@ export class TestTenantManager {
         }
 
         // Verify no cross-schema access
-        const crossSchemaAccess = await this.prisma.client.$queryRaw`
+        const crossSchemaAccess = await this.prisma.$queryRaw<any[]>`
           SELECT COUNT(*) as count
           FROM information_schema.role_table_grants
           WHERE table_schema LIKE 'test_%'
@@ -153,7 +153,7 @@ export class TestTenantManager {
 
     try {
       // Create test tables in center schema
-      await this.prisma.client.$executeRaw`
+      await this.prisma.$executeRaw`
         CREATE TABLE IF NOT EXISTS ${schemaName}.test_patients (
           id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
           name VARCHAR(255) NOT NULL,
@@ -162,7 +162,7 @@ export class TestTenantManager {
       `;
 
       // Insert test data
-      await this.prisma.client.$queryRaw`
+      await this.prisma.$queryRaw`
         INSERT INTO ${schemaName}.test_patients (name)
         VALUES ('Test Patient 1'), ('Test Patient 2')
       `;
@@ -180,7 +180,7 @@ export class TestTenantManager {
    */
   async getTestCenters(): Promise<TestCenterConfig[]> {
     try {
-      const centers = await this.prisma.client.$queryRaw`
+      const centers = await this.prisma.$queryRaw`
         SELECT id, name, code, province, is_active
         FROM system.centers
         WHERE id LIKE '${this.TEST_CENTERS_PREFIX}%'

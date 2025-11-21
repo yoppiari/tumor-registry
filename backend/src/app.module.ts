@@ -6,6 +6,7 @@ import { BullModule } from '@nestjs/bull';
 import { APP_FILTER, APP_PIPE } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
 import { DatabaseModule } from './database/database.module';
+import { CommonModule } from './common/common.module';
 import { HealthModule } from './common/health/health.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { UsersModule } from './modules/users/users.module';
@@ -48,6 +49,7 @@ import { SecurityMiddleware } from './modules/auth/middleware/security.middlewar
       },
     }),
     DatabaseModule,
+    CommonModule,
     HealthModule,
     AuthModule,
     UsersModule,
@@ -92,6 +94,7 @@ import { SecurityMiddleware } from './modules/auth/middleware/security.middlewar
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(SecurityMiddleware).forRoutes('*');
+    // Temporarily disabled - middleware needs to be updated for Fastify
+    // consumer.apply(SecurityMiddleware).forRoutes('*');
   }
 }

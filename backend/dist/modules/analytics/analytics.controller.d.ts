@@ -8,12 +8,12 @@ export declare class AnalyticsController {
     getTrends(period?: string): Promise<{
         period: string;
         data: {
+            quarter: string;
+            cases: number;
+        }[] | {
             month: string;
             cases: number;
             trend: number;
-        }[] | {
-            quarter: string;
-            cases: number;
         }[];
         growth: number;
     }>;

@@ -11,7 +11,6 @@ import {
   SystemConfiguration,
   HL7Message as HL7MessageInterface,
   FHIRResource as FHIRResourceInterface,
-  MLPrediction,
   TransformationRule,
   FieldMapping
 } from './interfaces/integration.interface';
@@ -314,6 +313,7 @@ export class IntegrationService {
       resourceId: createDto.resourceId || this.generateId(),
       sourceSystem: createDto.sourceSystem,
       processingStatus: 'received',
+      validationStatus: 'valid',
       resource: createDto.resource,
       extensions: createDto.extensions || [],
       identifiers: createDto.identifiers || [],
@@ -392,6 +392,21 @@ export class IntegrationService {
       id: this.generateId(),
       ...createDto,
       status: 'inactive',
+      configuration: createDto.configuration || {
+        parallel: false,
+        transactional: true,
+        rollbackOnFailure: true,
+        logging: {
+          enabled: true,
+          level: 'info',
+          detailed: false
+        },
+        monitoring: {
+          enabled: true,
+          alerts: false,
+          metrics: true
+        }
+      },
       statistics: {
         totalExecutions: 0,
         successfulExecutions: 0,
@@ -425,10 +440,12 @@ export class IntegrationService {
     this.logger.log(`Executing workflow: ${workflow.name} (${workflowId})`);
 
     const startTime = Date.now();
-    const execution = {
+    const execution: any = {
       id: this.generateId(),
       workflowId,
       startTime: new Date(),
+      endTime: undefined,
+      duration: undefined,
       status: 'running' as const,
       input: {},
       steps: []

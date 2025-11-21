@@ -307,7 +307,7 @@ export class PerformanceController {
   @ApiResponse({ status: 200, description: 'Patient data stream started' })
   @RequirePermissions('PATIENT_DATA_READ')
   async streamPatients(
-    @Res() res: Response,
+    @Res() reply: FastifyReply,
     @Query('centerId') centerId?: string,
     @Query('format') format: string = 'json',
   ) {
@@ -518,7 +518,7 @@ export class PerformanceController {
   async exportMetrics(
     @Query('format') format: string = 'json',
     @Query('hours') hours: number = 24,
-    @Res() res: Response,
+    @Res() reply: FastifyReply,
   ) {
     try {
       const [

@@ -270,6 +270,7 @@ let IntegrationService = IntegrationService_1 = class IntegrationService {
             resourceId: createDto.resourceId || this.generateId(),
             sourceSystem: createDto.sourceSystem,
             processingStatus: 'received',
+            validationStatus: 'valid',
             resource: createDto.resource,
             extensions: createDto.extensions || [],
             identifiers: createDto.identifiers || [],
@@ -334,6 +335,21 @@ let IntegrationService = IntegrationService_1 = class IntegrationService {
             id: this.generateId(),
             ...createDto,
             status: 'inactive',
+            configuration: createDto.configuration || {
+                parallel: false,
+                transactional: true,
+                rollbackOnFailure: true,
+                logging: {
+                    enabled: true,
+                    level: 'info',
+                    detailed: false
+                },
+                monitoring: {
+                    enabled: true,
+                    alerts: false,
+                    metrics: true
+                }
+            },
             statistics: {
                 totalExecutions: 0,
                 successfulExecutions: 0,
@@ -365,6 +381,8 @@ let IntegrationService = IntegrationService_1 = class IntegrationService {
             id: this.generateId(),
             workflowId,
             startTime: new Date(),
+            endTime: undefined,
+            duration: undefined,
             status: 'running',
             input: {},
             steps: []

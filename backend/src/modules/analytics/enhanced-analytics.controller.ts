@@ -10,7 +10,7 @@ import {
   Param,
 } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse, ApiQuery, ApiParam } from '@nestjs/swagger';
-import { JwtAuthGuard } from '../auth/guards/jwt.guard';
+import { JwtAuthGuard } from '@/modules/auth/guards/jwt.guard';
 import { EnhancedAnalyticsService } from './enhanced-analytics.service';
 import { RedisService } from './redis.service';
 

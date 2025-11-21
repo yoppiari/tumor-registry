@@ -1,4 +1,4 @@
-import { PrismaService } from '../../database/prisma.service';
+import { PrismaService } from '@/common/database/prisma.service';
 import { DatabaseBackupStrategy } from '../strategies/database-backup.strategy';
 import { BackupStatistics, BackupHealthStatus, RecoveryOptions, RecoveryResult } from '../interfaces/backup.interface';
 import { CreateBackupJobDto } from '../dto/create-backup-job.dto';

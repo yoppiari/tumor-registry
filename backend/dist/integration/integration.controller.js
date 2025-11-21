@@ -12,7 +12,6 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 var IntegrationController_1;
-var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.IntegrationController = void 0;
 const common_1 = require("@nestjs/common");
@@ -203,7 +202,7 @@ let IntegrationController = IntegrationController_1 = class IntegrationControlle
             try {
                 const result = await this.integrationService.processFHIRResource(resourceDto);
                 results.push(result);
-                if (result.processingStatus === 'completed') {
+                if (result.processingStatus === 'created' || result.processingStatus === 'updated') {
                     successful++;
                 }
                 else {
@@ -227,7 +226,7 @@ exports.IntegrationController = IntegrationController;
 __decorate([
     (0, common_1.Post)('systems'),
     (0, swagger_1.ApiOperation)({ summary: 'Create a new external system configuration' }),
-    (0, swagger_1.ApiResponse)({ status: 201, description: 'External system created successfully', type: integration_interface_1.ExternalSystem }),
+    (0, swagger_1.ApiResponse)({ status: 201, description: 'External system created successfully' }),
     (0, swagger_1.ApiResponse)({ status: 400, description: 'Bad request' }),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
@@ -237,7 +236,7 @@ __decorate([
 __decorate([
     (0, common_1.Get)('systems'),
     (0, swagger_1.ApiOperation)({ summary: 'Get all external systems' }),
-    (0, swagger_1.ApiResponse)({ status: 200, description: 'External systems retrieved successfully', type: [integration_interface_1.ExternalSystem] }),
+    (0, swagger_1.ApiResponse)({ status: 200, description: 'External systems retrieved successfully' }),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
@@ -246,7 +245,7 @@ __decorate([
     (0, common_1.Get)('systems/:id'),
     (0, swagger_1.ApiOperation)({ summary: 'Get external system by ID' }),
     (0, swagger_1.ApiParam)({ name: 'id', description: 'External system ID' }),
-    (0, swagger_1.ApiResponse)({ status: 200, description: 'External system retrieved successfully', type: integration_interface_1.ExternalSystem }),
+    (0, swagger_1.ApiResponse)({ status: 200, description: 'External system retrieved successfully' }),
     (0, swagger_1.ApiResponse)({ status: 404, description: 'External system not found' }),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
@@ -257,12 +256,12 @@ __decorate([
     (0, common_1.Put)('systems/:id'),
     (0, swagger_1.ApiOperation)({ summary: 'Update external system configuration' }),
     (0, swagger_1.ApiParam)({ name: 'id', description: 'External system ID' }),
-    (0, swagger_1.ApiResponse)({ status: 200, description: 'External system updated successfully', type: integration_interface_1.ExternalSystem }),
+    (0, swagger_1.ApiResponse)({ status: 200, description: 'External system updated successfully' }),
     (0, swagger_1.ApiResponse)({ status: 404, description: 'External system not found' }),
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, typeof (_a = typeof update_integration_dto_1.UpdateExternalSystemDto !== "undefined" && update_integration_dto_1.UpdateExternalSystemDto) === "function" ? _a : Object]),
+    __metadata("design:paramtypes", [String, update_integration_dto_1.UpdateExternalSystemDto]),
     __metadata("design:returntype", Promise)
 ], IntegrationController.prototype, "updateExternalSystem", null);
 __decorate([
@@ -280,11 +279,11 @@ __decorate([
 __decorate([
     (0, common_1.Post)('hl7/messages'),
     (0, swagger_1.ApiOperation)({ summary: 'Process incoming HL7 message' }),
-    (0, swagger_1.ApiResponse)({ status: 201, description: 'HL7 message processed successfully', type: integration_interface_1.HL7Message }),
+    (0, swagger_1.ApiResponse)({ status: 201, description: 'HL7 message processed successfully' }),
     (0, swagger_1.ApiResponse)({ status: 400, description: 'Invalid HL7 message format' }),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [typeof (_b = typeof create_hl7_message_dto_1.CreateHL7MessageDto !== "undefined" && create_hl7_message_dto_1.CreateHL7MessageDto) === "function" ? _b : Object]),
+    __metadata("design:paramtypes", [create_hl7_message_dto_1.CreateHL7MessageDto]),
     __metadata("design:returntype", Promise)
 ], IntegrationController.prototype, "processHL7Message", null);
 __decorate([
@@ -294,7 +293,7 @@ __decorate([
     (0, swagger_1.ApiQuery)({ name: 'status', required: false, description: 'Filter by processing status' }),
     (0, swagger_1.ApiQuery)({ name: 'dateFrom', required: false, description: 'Filter messages from date' }),
     (0, swagger_1.ApiQuery)({ name: 'dateTo', required: false, description: 'Filter messages to date' }),
-    (0, swagger_1.ApiResponse)({ status: 200, description: 'HL7 messages retrieved successfully', type: [integration_interface_1.HL7Message] }),
+    (0, swagger_1.ApiResponse)({ status: 200, description: 'HL7 messages retrieved successfully' }),
     __param(0, (0, common_1.Query)('messageType')),
     __param(1, (0, common_1.Query)('status')),
     __param(2, (0, common_1.Query)('dateFrom')),
@@ -307,11 +306,11 @@ __decorate([
 __decorate([
     (0, common_1.Post)('fhir/resources'),
     (0, swagger_1.ApiOperation)({ summary: 'Process incoming FHIR resource' }),
-    (0, swagger_1.ApiResponse)({ status: 201, description: 'FHIR resource processed successfully', type: integration_interface_1.FHIRResource }),
+    (0, swagger_1.ApiResponse)({ status: 201, description: 'FHIR resource processed successfully' }),
     (0, swagger_1.ApiResponse)({ status: 400, description: 'Invalid FHIR resource format' }),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [typeof (_c = typeof create_fhir_resource_dto_1.CreateFHIRResourceDto !== "undefined" && create_fhir_resource_dto_1.CreateFHIRResourceDto) === "function" ? _c : Object]),
+    __metadata("design:paramtypes", [create_fhir_resource_dto_1.CreateFHIRResourceDto]),
     __metadata("design:returntype", Promise)
 ], IntegrationController.prototype, "processFHIRResource", null);
 __decorate([
@@ -321,7 +320,7 @@ __decorate([
     (0, swagger_1.ApiQuery)({ name: 'status', required: false, description: 'Filter by processing status' }),
     (0, swagger_1.ApiQuery)({ name: 'dateFrom', required: false, description: 'Filter resources from date' }),
     (0, swagger_1.ApiQuery)({ name: 'dateTo', required: false, description: 'Filter resources to date' }),
-    (0, swagger_1.ApiResponse)({ status: 200, description: 'FHIR resources retrieved successfully', type: [integration_interface_1.FHIRResource] }),
+    (0, swagger_1.ApiResponse)({ status: 200, description: 'FHIR resources retrieved successfully' }),
     __param(0, (0, common_1.Query)('resourceType')),
     __param(1, (0, common_1.Query)('status')),
     __param(2, (0, common_1.Query)('dateFrom')),
@@ -334,7 +333,7 @@ __decorate([
 __decorate([
     (0, common_1.Post)('workflows'),
     (0, swagger_1.ApiOperation)({ summary: 'Create a new integration workflow' }),
-    (0, swagger_1.ApiResponse)({ status: 201, description: 'Workflow created successfully', type: integration_interface_1.IntegrationWorkflow }),
+    (0, swagger_1.ApiResponse)({ status: 201, description: 'Workflow created successfully' }),
     (0, swagger_1.ApiResponse)({ status: 400, description: 'Bad request' }),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
@@ -344,7 +343,7 @@ __decorate([
 __decorate([
     (0, common_1.Get)('workflows'),
     (0, swagger_1.ApiOperation)({ summary: 'Get all integration workflows' }),
-    (0, swagger_1.ApiResponse)({ status: 200, description: 'Workflows retrieved successfully', type: [integration_interface_1.IntegrationWorkflow] }),
+    (0, swagger_1.ApiResponse)({ status: 200, description: 'Workflows retrieved successfully' }),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
@@ -365,7 +364,7 @@ __decorate([
 __decorate([
     (0, common_1.Post)('mappings'),
     (0, swagger_1.ApiOperation)({ summary: 'Create a new data mapping configuration' }),
-    (0, swagger_1.ApiResponse)({ status: 201, description: 'Data mapping created successfully', type: integration_interface_1.DataMapping }),
+    (0, swagger_1.ApiResponse)({ status: 201, description: 'Data mapping created successfully' }),
     (0, swagger_1.ApiResponse)({ status: 400, description: 'Bad request' }),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
@@ -375,7 +374,7 @@ __decorate([
 __decorate([
     (0, common_1.Get)('mappings'),
     (0, swagger_1.ApiOperation)({ summary: 'Get all data mappings' }),
-    (0, swagger_1.ApiResponse)({ status: 200, description: 'Data mappings retrieved successfully', type: [integration_interface_1.DataMapping] }),
+    (0, swagger_1.ApiResponse)({ status: 200, description: 'Data mappings retrieved successfully' }),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
@@ -383,7 +382,7 @@ __decorate([
 __decorate([
     (0, common_1.Get)('health'),
     (0, swagger_1.ApiOperation)({ summary: 'Get health status of all integration systems' }),
-    (0, swagger_1.ApiResponse)({ status: 200, description: 'Health checks completed successfully', type: [integration_interface_1.IntegrationHealth] }),
+    (0, swagger_1.ApiResponse)({ status: 200, description: 'Health checks completed successfully' }),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
@@ -392,7 +391,7 @@ __decorate([
     (0, common_1.Get)('health/:systemId'),
     (0, swagger_1.ApiOperation)({ summary: 'Get health status of specific integration system' }),
     (0, swagger_1.ApiParam)({ name: 'systemId', description: 'External system ID' }),
-    (0, swagger_1.ApiResponse)({ status: 200, description: 'Health check completed successfully', type: integration_interface_1.IntegrationHealth }),
+    (0, swagger_1.ApiResponse)({ status: 200, description: 'Health check completed successfully' }),
     (0, swagger_1.ApiResponse)({ status: 404, description: 'System not found' }),
     __param(0, (0, common_1.Param)('systemId')),
     __metadata("design:type", Function),
@@ -402,91 +401,91 @@ __decorate([
 __decorate([
     (0, common_1.Post)('hl7/v2/adt'),
     (0, swagger_1.ApiOperation)({ summary: 'Process HL7 v2 ADT (Admission, Discharge, Transfer) message' }),
-    (0, swagger_1.ApiResponse)({ status: 201, description: 'ADT message processed successfully', type: integration_interface_1.HL7Message }),
+    (0, swagger_1.ApiResponse)({ status: 201, description: 'ADT message processed successfully' }),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [typeof (_d = typeof create_hl7_message_dto_1.CreateHL7MessageDto !== "undefined" && create_hl7_message_dto_1.CreateHL7MessageDto) === "function" ? _d : Object]),
+    __metadata("design:paramtypes", [create_hl7_message_dto_1.CreateHL7MessageDto]),
     __metadata("design:returntype", Promise)
 ], IntegrationController.prototype, "processADTMessage", null);
 __decorate([
     (0, common_1.Post)('hl7/v2/oru'),
     (0, swagger_1.ApiOperation)({ summary: 'Process HL7 v2 ORU (Observation Result Unsolicited) message' }),
-    (0, swagger_1.ApiResponse)({ status: 201, description: 'ORU message processed successfully', type: integration_interface_1.HL7Message }),
+    (0, swagger_1.ApiResponse)({ status: 201, description: 'ORU message processed successfully' }),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [typeof (_e = typeof create_hl7_message_dto_1.CreateHL7MessageDto !== "undefined" && create_hl7_message_dto_1.CreateHL7MessageDto) === "function" ? _e : Object]),
+    __metadata("design:paramtypes", [create_hl7_message_dto_1.CreateHL7MessageDto]),
     __metadata("design:returntype", Promise)
 ], IntegrationController.prototype, "processORUMessage", null);
 __decorate([
     (0, common_1.Post)('hl7/v2/orm'),
     (0, swagger_1.ApiOperation)({ summary: 'Process HL7 v2 ORM (Order) message' }),
-    (0, swagger_1.ApiResponse)({ status: 201, description: 'ORM message processed successfully', type: integration_interface_1.HL7Message }),
+    (0, swagger_1.ApiResponse)({ status: 201, description: 'ORM message processed successfully' }),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [typeof (_f = typeof create_hl7_message_dto_1.CreateHL7MessageDto !== "undefined" && create_hl7_message_dto_1.CreateHL7MessageDto) === "function" ? _f : Object]),
+    __metadata("design:paramtypes", [create_hl7_message_dto_1.CreateHL7MessageDto]),
     __metadata("design:returntype", Promise)
 ], IntegrationController.prototype, "processORMMessage", null);
 __decorate([
     (0, common_1.Post)('fhir/r4/Patient'),
     (0, swagger_1.ApiOperation)({ summary: 'Process FHIR R4 Patient resource' }),
-    (0, swagger_1.ApiResponse)({ status: 201, description: 'Patient resource processed successfully', type: integration_interface_1.FHIRResource }),
+    (0, swagger_1.ApiResponse)({ status: 201, description: 'Patient resource processed successfully' }),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [typeof (_g = typeof create_fhir_resource_dto_1.CreateFHIRResourceDto !== "undefined" && create_fhir_resource_dto_1.CreateFHIRResourceDto) === "function" ? _g : Object]),
+    __metadata("design:paramtypes", [create_fhir_resource_dto_1.CreateFHIRResourceDto]),
     __metadata("design:returntype", Promise)
 ], IntegrationController.prototype, "processPatientResource", null);
 __decorate([
     (0, common_1.Post)('fhir/r4/Observation'),
     (0, swagger_1.ApiOperation)({ summary: 'Process FHIR R4 Observation resource' }),
-    (0, swagger_1.ApiResponse)({ status: 201, description: 'Observation resource processed successfully', type: integration_interface_1.FHIRResource }),
+    (0, swagger_1.ApiResponse)({ status: 201, description: 'Observation resource processed successfully' }),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [typeof (_h = typeof create_fhir_resource_dto_1.CreateFHIRResourceDto !== "undefined" && create_fhir_resource_dto_1.CreateFHIRResourceDto) === "function" ? _h : Object]),
+    __metadata("design:paramtypes", [create_fhir_resource_dto_1.CreateFHIRResourceDto]),
     __metadata("design:returntype", Promise)
 ], IntegrationController.prototype, "processObservationResource", null);
 __decorate([
     (0, common_1.Post)('fhir/r4/Condition'),
     (0, swagger_1.ApiOperation)({ summary: 'Process FHIR R4 Condition resource' }),
-    (0, swagger_1.ApiResponse)({ status: 201, description: 'Condition resource processed successfully', type: integration_interface_1.FHIRResource }),
+    (0, swagger_1.ApiResponse)({ status: 201, description: 'Condition resource processed successfully' }),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [typeof (_j = typeof create_fhir_resource_dto_1.CreateFHIRResourceDto !== "undefined" && create_fhir_resource_dto_1.CreateFHIRResourceDto) === "function" ? _j : Object]),
+    __metadata("design:paramtypes", [create_fhir_resource_dto_1.CreateFHIRResourceDto]),
     __metadata("design:returntype", Promise)
 ], IntegrationController.prototype, "processConditionResource", null);
 __decorate([
     (0, common_1.Post)('fhir/r4/Procedure'),
     (0, swagger_1.ApiOperation)({ summary: 'Process FHIR R4 Procedure resource' }),
-    (0, swagger_1.ApiResponse)({ status: 201, description: 'Procedure resource processed successfully', type: integration_interface_1.FHIRResource }),
+    (0, swagger_1.ApiResponse)({ status: 201, description: 'Procedure resource processed successfully' }),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [typeof (_k = typeof create_fhir_resource_dto_1.CreateFHIRResourceDto !== "undefined" && create_fhir_resource_dto_1.CreateFHIRResourceDto) === "function" ? _k : Object]),
+    __metadata("design:paramtypes", [create_fhir_resource_dto_1.CreateFHIRResourceDto]),
     __metadata("design:returntype", Promise)
 ], IntegrationController.prototype, "processProcedureResource", null);
 __decorate([
     (0, common_1.Post)('fhir/r4/Medication'),
     (0, swagger_1.ApiOperation)({ summary: 'Process FHIR R4 Medication resource' }),
-    (0, swagger_1.ApiResponse)({ status: 201, description: 'Medication resource processed successfully', type: integration_interface_1.FHIRResource }),
+    (0, swagger_1.ApiResponse)({ status: 201, description: 'Medication resource processed successfully' }),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [typeof (_l = typeof create_fhir_resource_dto_1.CreateFHIRResourceDto !== "undefined" && create_fhir_resource_dto_1.CreateFHIRResourceDto) === "function" ? _l : Object]),
+    __metadata("design:paramtypes", [create_fhir_resource_dto_1.CreateFHIRResourceDto]),
     __metadata("design:returntype", Promise)
 ], IntegrationController.prototype, "processMedicationResource", null);
 __decorate([
     (0, common_1.Post)('fhir/r4/Encounter'),
     (0, swagger_1.ApiOperation)({ summary: 'Process FHIR R4 Encounter resource' }),
-    (0, swagger_1.ApiResponse)({ status: 201, description: 'Encounter resource processed successfully', type: integration_interface_1.FHIRResource }),
+    (0, swagger_1.ApiResponse)({ status: 201, description: 'Encounter resource processed successfully' }),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [typeof (_m = typeof create_fhir_resource_dto_1.CreateFHIRResourceDto !== "undefined" && create_fhir_resource_dto_1.CreateFHIRResourceDto) === "function" ? _m : Object]),
+    __metadata("design:paramtypes", [create_fhir_resource_dto_1.CreateFHIRResourceDto]),
     __metadata("design:returntype", Promise)
 ], IntegrationController.prototype, "processEncounterResource", null);
 __decorate([
     (0, common_1.Post)('fhir/r4/DiagnosticReport'),
     (0, swagger_1.ApiOperation)({ summary: 'Process FHIR R4 DiagnosticReport resource' }),
-    (0, swagger_1.ApiResponse)({ status: 201, description: 'DiagnosticReport resource processed successfully', type: integration_interface_1.FHIRResource }),
+    (0, swagger_1.ApiResponse)({ status: 201, description: 'DiagnosticReport resource processed successfully' }),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [typeof (_o = typeof create_fhir_resource_dto_1.CreateFHIRResourceDto !== "undefined" && create_fhir_resource_dto_1.CreateFHIRResourceDto) === "function" ? _o : Object]),
+    __metadata("design:paramtypes", [create_fhir_resource_dto_1.CreateFHIRResourceDto]),
     __metadata("design:returntype", Promise)
 ], IntegrationController.prototype, "processDiagnosticReportResource", null);
 __decorate([

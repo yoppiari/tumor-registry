@@ -14,7 +14,7 @@ import {
 } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse, ApiParam, ApiQuery, ApiBody } from '@nestjs/swagger';
 import { PeerReviewService } from './peer-review.service';
-import { JwtAuthGuard } from '../auth/guards/jwt.guard';
+import { JwtAuthGuard } from '@/modules/auth/guards/jwt.guard';
 import { CreatePeerReviewDto } from './dto/create-peer-review.dto';
 import { AddPeerCommentDto } from './dto/add-peer-comment.dto';
 import { CompleteReviewDto } from './dto/complete-review.dto';

@@ -27,7 +27,7 @@ export class PdfGenerator {
 
     const filePath = path.join(outputPath, filename);
 
-    return new Promise((resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
       try {
         const doc = new PDFDocument({
           size: 'A4',

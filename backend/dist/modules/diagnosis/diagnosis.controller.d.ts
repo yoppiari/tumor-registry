@@ -15,19 +15,19 @@ export declare class DiagnosisController {
         notes?: string;
         isPrimary?: boolean;
     }): Promise<{
-        status: import(".prisma/client").$Enums.DiagnosisStatus;
         id: string;
+        patientId: string;
+        providerId: string;
+        notes: string | null;
         createdAt: Date;
         updatedAt: Date;
-        patientId: string;
         diagnosisCode: string;
         diagnosisName: string;
         diagnosisType: import(".prisma/client").$Enums.DiagnosisType;
         severity: import(".prisma/client").$Enums.DiagnosisSeverity | null;
+        status: import(".prisma/client").$Enums.DiagnosisStatus;
         onsetDate: Date | null;
         resolutionDate: Date | null;
-        notes: string | null;
-        providerId: string;
         isPrimary: boolean;
     }>;
     searchDiagnoses(searchQuery: any): Promise<{
@@ -55,38 +55,38 @@ export declare class DiagnosisController {
         notes?: string;
         isPrimary?: boolean;
     }): Promise<{
-        status: import(".prisma/client").$Enums.DiagnosisStatus;
         id: string;
+        patientId: string;
+        providerId: string;
+        notes: string | null;
         createdAt: Date;
         updatedAt: Date;
-        patientId: string;
         diagnosisCode: string;
         diagnosisName: string;
         diagnosisType: import(".prisma/client").$Enums.DiagnosisType;
         severity: import(".prisma/client").$Enums.DiagnosisSeverity | null;
+        status: import(".prisma/client").$Enums.DiagnosisStatus;
         onsetDate: Date | null;
         resolutionDate: Date | null;
-        notes: string | null;
-        providerId: string;
         isPrimary: boolean;
     }>;
     resolveDiagnosis(id: string, resolveDto: {
         resolutionDate: string;
         notes?: string;
     }): Promise<{
-        status: import(".prisma/client").$Enums.DiagnosisStatus;
         id: string;
+        patientId: string;
+        providerId: string;
+        notes: string | null;
         createdAt: Date;
         updatedAt: Date;
-        patientId: string;
         diagnosisCode: string;
         diagnosisName: string;
         diagnosisType: import(".prisma/client").$Enums.DiagnosisType;
         severity: import(".prisma/client").$Enums.DiagnosisSeverity | null;
+        status: import(".prisma/client").$Enums.DiagnosisStatus;
         onsetDate: Date | null;
         resolutionDate: Date | null;
-        notes: string | null;
-        providerId: string;
         isPrimary: boolean;
     }>;
     createPrimaryCancerDiagnosis(createDiagnosisDto: {
@@ -97,19 +97,19 @@ export declare class DiagnosisController {
         onsetDate?: string;
         notes?: string;
     }): Promise<{
-        status: import(".prisma/client").$Enums.DiagnosisStatus;
         id: string;
+        patientId: string;
+        providerId: string;
+        notes: string | null;
         createdAt: Date;
         updatedAt: Date;
-        patientId: string;
         diagnosisCode: string;
         diagnosisName: string;
         diagnosisType: import(".prisma/client").$Enums.DiagnosisType;
         severity: import(".prisma/client").$Enums.DiagnosisSeverity | null;
+        status: import(".prisma/client").$Enums.DiagnosisStatus;
         onsetDate: Date | null;
         resolutionDate: Date | null;
-        notes: string | null;
-        providerId: string;
         isPrimary: boolean;
     }>;
     createMetastasisDiagnosis(createDiagnosisDto: {
@@ -120,19 +120,19 @@ export declare class DiagnosisController {
         onsetDate?: string;
         notes?: string;
     }): Promise<{
-        status: import(".prisma/client").$Enums.DiagnosisStatus;
         id: string;
+        patientId: string;
+        providerId: string;
+        notes: string | null;
         createdAt: Date;
         updatedAt: Date;
-        patientId: string;
         diagnosisCode: string;
         diagnosisName: string;
         diagnosisType: import(".prisma/client").$Enums.DiagnosisType;
         severity: import(".prisma/client").$Enums.DiagnosisSeverity | null;
+        status: import(".prisma/client").$Enums.DiagnosisStatus;
         onsetDate: Date | null;
         resolutionDate: Date | null;
-        notes: string | null;
-        providerId: string;
         isPrimary: boolean;
     }>;
     createComplicationDiagnosis(createDiagnosisDto: {
@@ -143,19 +143,19 @@ export declare class DiagnosisController {
         onsetDate?: string;
         notes?: string;
     }): Promise<{
-        status: import(".prisma/client").$Enums.DiagnosisStatus;
         id: string;
+        patientId: string;
+        providerId: string;
+        notes: string | null;
         createdAt: Date;
         updatedAt: Date;
-        patientId: string;
         diagnosisCode: string;
         diagnosisName: string;
         diagnosisType: import(".prisma/client").$Enums.DiagnosisType;
         severity: import(".prisma/client").$Enums.DiagnosisSeverity | null;
+        status: import(".prisma/client").$Enums.DiagnosisStatus;
         onsetDate: Date | null;
         resolutionDate: Date | null;
-        notes: string | null;
-        providerId: string;
         isPrimary: boolean;
     }>;
     createAdmittingDiagnosis(createDiagnosisDto: {
@@ -166,19 +166,19 @@ export declare class DiagnosisController {
         onsetDate?: string;
         notes?: string;
     }): Promise<{
-        status: import(".prisma/client").$Enums.DiagnosisStatus;
         id: string;
+        patientId: string;
+        providerId: string;
+        notes: string | null;
         createdAt: Date;
         updatedAt: Date;
-        patientId: string;
         diagnosisCode: string;
         diagnosisName: string;
         diagnosisType: import(".prisma/client").$Enums.DiagnosisType;
         severity: import(".prisma/client").$Enums.DiagnosisSeverity | null;
+        status: import(".prisma/client").$Enums.DiagnosisStatus;
         onsetDate: Date | null;
         resolutionDate: Date | null;
-        notes: string | null;
-        providerId: string;
         isPrimary: boolean;
     }>;
     createDischargeDiagnosis(createDiagnosisDto: {
@@ -189,19 +189,19 @@ export declare class DiagnosisController {
         onsetDate?: string;
         notes?: string;
     }): Promise<{
-        status: import(".prisma/client").$Enums.DiagnosisStatus;
         id: string;
+        patientId: string;
+        providerId: string;
+        notes: string | null;
         createdAt: Date;
         updatedAt: Date;
-        patientId: string;
         diagnosisCode: string;
         diagnosisName: string;
         diagnosisType: import(".prisma/client").$Enums.DiagnosisType;
         severity: import(".prisma/client").$Enums.DiagnosisSeverity | null;
+        status: import(".prisma/client").$Enums.DiagnosisStatus;
         onsetDate: Date | null;
         resolutionDate: Date | null;
-        notes: string | null;
-        providerId: string;
         isPrimary: boolean;
     }>;
     searchIcd10ByCategory(category: string): Promise<{

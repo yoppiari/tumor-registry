@@ -1,4 +1,4 @@
-import { IsString, IsOptional, IsEnum, IsDate, IsArray, ValidateNested, IsObject } from 'class-validator';
+import { IsString, IsOptional, IsEnum, IsDate, IsArray, ValidateNested, IsObject, IsBoolean } from 'class-validator';
 import { Type } from 'class-transformer';
 
 export enum ReportFormat {

@@ -15,9 +15,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.BackupController = void 0;
 const common_1 = require("@nestjs/common");
 const swagger_1 = require("@nestjs/swagger");
-const jwt_auth_guard_1 = require("../../auth/guards/jwt-auth.guard");
-const roles_guard_1 = require("../../auth/guards/roles.guard");
-const roles_decorator_1 = require("../../auth/decorators/roles.decorator");
+const jwt_auth_guard_1 = require("../../../auth/guards/jwt-auth.guard");
+const roles_guard_1 = require("../../../auth/guards/roles.guard");
+const roles_decorator_1 = require("../../../auth/decorators/roles.decorator");
 const backup_service_1 = require("../services/backup.service");
 const create_backup_job_dto_1 = require("../dto/create-backup-job.dto");
 let BackupController = class BackupController {

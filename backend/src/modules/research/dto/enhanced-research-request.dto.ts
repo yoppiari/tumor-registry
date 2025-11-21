@@ -131,7 +131,7 @@ export class EnhancedCreateResearchRequestDto {
   @Matches(/^[a-zA-Z0-9\s\-_,]+$/, { message: 'Keywords contain invalid characters' })
   keywords?: string;
 
-  @ApiPropertyOptional({ type: [EnhancedCreateCollaborationDto], description: 'Collaborations' })
+  @ApiPropertyOptional({ type: () => [EnhancedCreateCollaborationDto], description: 'Collaborations' })
   @IsArray()
   @ValidateNested({ each: true })
   @Type(() => EnhancedCreateCollaborationDto)

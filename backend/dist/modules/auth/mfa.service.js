@@ -12,7 +12,7 @@ var MfaService_1;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.MfaService = void 0;
 const common_1 = require("@nestjs/common");
-const prisma_service_1 = require("../../database/prisma.service");
+const prisma_service_1 = require("../../common/database/prisma.service");
 const speakeasy = require("speakeasy");
 let MfaService = MfaService_1 = class MfaService {
     constructor(prisma) {

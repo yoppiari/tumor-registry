@@ -27,6 +27,16 @@ let EmailService = EmailService_1 = class EmailService {
         this.logger.log(`📧 Password reset email would be sent to ${email}`);
         this.logger.log(`🔗 Reset URL: ${resetUrl}`);
     }
+    async sendNotificationEmail(email, title, message) {
+        this.logger.log(`📧 Notification email would be sent to ${email}`);
+        this.logger.log(`📌 Title: ${title}`);
+        this.logger.log(`📝 Message: ${message}`);
+    }
+    async sendReportEmail(email, reportName, filePath) {
+        this.logger.log(`📧 Report email would be sent to ${email}`);
+        this.logger.log(`📊 Report: ${reportName}`);
+        this.logger.log(`📎 Attachment: ${filePath}`);
+    }
 };
 exports.EmailService = EmailService;
 exports.EmailService = EmailService = EmailService_1 = __decorate([

@@ -12,18 +12,16 @@ export class PredictiveAnalyticsService {
       const patient = await this.prisma.patient.findUnique({
         where: { id: patientId },
         include: {
-          diagnoses: {
+          diagnosis: {
             select: {
-              icd10Category: true,
               diagnosisDate: true,
               stage: true,
+              cancerType: true,
             },
           },
           medicalRecords: {
             select: {
               familyHistory: true,
-              lifestyleFactors: true,
-              environmentalExposure: true,
             },
           },
         },
@@ -75,14 +73,14 @@ export class PredictiveAnalyticsService {
       const patient = await this.prisma.patient.findUnique({
         where: { id: patientId },
         include: {
-          diagnoses: {
+          diagnosis: {
             select: {
-              icd10Category: true,
+              cancerType: true,
               stage: true,
-              biomarkers: true,
+              grade: true,
             },
           },
-          treatments: {
+          procedures: {
             select: {
               procedureName: true,
               status: true,
@@ -96,7 +94,7 @@ export class PredictiveAnalyticsService {
         throw new Error(`Patient with ID ${patientId} not found`);
       }
 
-      const primaryDiagnosis = patient.diagnoses.find(d => d.isPrimaryCancer);
+      const primaryDiagnosis = patient.diagnosis.find(d => d.stage && d.cancerType);
       if (!primaryDiagnosis) {
         throw new Error('No primary cancer diagnosis found');
       }
@@ -108,7 +106,7 @@ export class PredictiveAnalyticsService {
       return {
         patientId,
         treatmentType,
-        cancerType: primaryDiagnosis.icd10Category,
+        cancerType: primaryDiagnosis.cancerType,
         stage: primaryDiagnosis.stage,
         responsePrediction: {
           completeResponse: predictedResponse.complete,
@@ -144,16 +142,15 @@ export class PredictiveAnalyticsService {
       const patient = await this.prisma.patient.findUnique({
         where: { id: patientId },
         include: {
-          diagnoses: {
+          diagnosis: {
             select: {
-              icd10Category: true,
+              cancerType: true,
               stage: true,
               grade: true,
               diagnosisDate: true,
-              biomarkers: true,
             },
           },
-          treatments: {
+          procedures: {
             select: {
               procedureName: true,
               startDate: true,
@@ -168,7 +165,7 @@ export class PredictiveAnalyticsService {
         throw new Error(`Patient with ID ${patientId} not found`);
       }
 
-      const primaryDiagnosis = patient.diagnoses.find(d => d.isPrimaryCancer);
+      const primaryDiagnosis = patient.diagnosis.find(d => d.stage && d.cancerType);
       if (!primaryDiagnosis) {
         throw new Error('No primary cancer diagnosis found');
       }
@@ -178,7 +175,7 @@ export class PredictiveAnalyticsService {
 
       return {
         patientId,
-        cancerType: primaryDiagnosis.icd10Category,
+        cancerType: primaryDiagnosis.cancerType,
         stage: primaryDiagnosis.stage,
         diagnosisDate: primaryDiagnosis.diagnosisDate,
         survivalPrediction: {
@@ -211,16 +208,14 @@ export class PredictiveAnalyticsService {
       const patient = await this.prisma.patient.findUnique({
         where: { id: patientId },
         include: {
-          diagnoses: {
+          diagnosis: {
             select: {
-              icd10Category: true,
+              cancerType: true,
               stage: true,
               grade: true,
-              margins: true,
-              lymphNodeInvolvement: true,
             },
           },
-          treatments: {
+          procedures: {
             select: {
               procedureName: true,
               status: true,
@@ -442,10 +437,10 @@ export class PredictiveAnalyticsService {
 
   private calculateResponseFactors(patient: any, diagnosis: any): any {
     return {
-      cancerType: diagnosis.icd10Category,
+      cancerType: diagnosis.cancerType,
       stage: diagnosis.stage,
       grade: diagnosis.grade,
-      biomarkers: diagnosis.biomarkers || [],
+      biomarkers: [], // Biomarkers not in schema
       age: this.getAge(patient.dateOfBirth),
       performanceStatus: 0.8, // Placeholder
       comorbidities: 0.2, // Placeholder
@@ -518,8 +513,8 @@ export class PredictiveAnalyticsService {
       age: this.getAge(patient.dateOfBirth),
       stage: diagnosis.stage,
       grade: diagnosis.grade,
-      biomarkers: diagnosis.biomarkers || [],
-      treatmentHistory: patient.treatments.length,
+      biomarkers: [], // Biomarkers not in schema
+      treatmentHistory: patient.procedures.length,
     };
   }
 

@@ -2,25 +2,54 @@ import { NestFactory } from '@nestjs/core';
 import { ValidationPipe, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
-import helmet from 'helmet';
+import { FastifyAdapter, NestFastifyApplication } from '@nestjs/platform-fastify';
+import helmet from '@fastify/helmet';
+import cors from '@fastify/cors';
+import multipart from '@fastify/multipart';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  // Create Fastify adapter with Bun-compatible options
+  const adapter = new FastifyAdapter({
+    logger: false,
+    trustProxy: true,
+  });
+
+  const app = await NestFactory.create<NestFastifyApplication>(
+    AppModule,
+    adapter,
+  );
+
   const configService = app.get(ConfigService);
   const logger = new Logger('Bootstrap');
 
-  // Security
-  app.use(helmet());
+  // Register Fastify plugins
+  await app.register(helmet, {
+    contentSecurityPolicy: {
+      directives: {
+        defaultSrc: [`'self'`],
+        styleSrc: [`'self'`, `'unsafe-inline'`],
+        imgSrc: [`'self'`, 'data:', 'validator.swagger.io'],
+        scriptSrc: [`'self'`, `https: 'unsafe-inline'`],
+      },
+    },
+  });
 
-  // CORS
-  app.enableCors({
+  await app.register(cors, {
     origin: [
       'http://localhost:3000',
       'http://localhost:3001',
+      'http://localhost:3002',
+      'http://localhost:3003',
       configService.get<string>('FRONTEND_URL'),
     ].filter(Boolean),
     credentials: true,
+  });
+
+  await app.register(multipart, {
+    limits: {
+      fileSize: 10 * 1024 * 1024, // 10MB
+    },
   });
 
   // Global validation pipe
@@ -45,6 +74,7 @@ async function bootstrap() {
     .addTag('patients')
     .addTag('centers')
     .addTag('analytics')
+    .addBearerAuth()
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
@@ -56,6 +86,7 @@ async function bootstrap() {
 
   logger.log(`🚀 Application running on http://localhost:${port}`);
   logger.log(`📚 API documentation available at http://localhost:${port}/api/docs`);
+  logger.log(`⚡ Powered by Fastify + Bun`);
 }
 
 bootstrap().catch((error) => {

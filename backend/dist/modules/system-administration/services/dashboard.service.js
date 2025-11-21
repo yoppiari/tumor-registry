@@ -9,11 +9,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var DashboardService_1;
-var _a;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.DashboardService = void 0;
 const common_1 = require("@nestjs/common");
-const prisma_service_1 = require("../../database/prisma.service");
+const prisma_service_1 = require("../../../common/database/prisma.service");
 let DashboardService = DashboardService_1 = class DashboardService {
     constructor(prisma) {
         this.prisma = prisma;
@@ -345,6 +344,6 @@ let DashboardService = DashboardService_1 = class DashboardService {
 exports.DashboardService = DashboardService;
 exports.DashboardService = DashboardService = DashboardService_1 = __decorate([
     (0, common_1.Injectable)(),
-    __metadata("design:paramtypes", [typeof (_a = typeof prisma_service_1.PrismaService !== "undefined" && prisma_service_1.PrismaService) === "function" ? _a : Object])
+    __metadata("design:paramtypes", [prisma_service_1.PrismaService])
 ], DashboardService);
 //# sourceMappingURL=dashboard.service.js.map

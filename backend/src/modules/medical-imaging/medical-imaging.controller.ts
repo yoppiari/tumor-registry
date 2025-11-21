@@ -19,7 +19,7 @@ import {
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiTags, ApiOperation, ApiResponse, ApiParam, ApiQuery, ApiConsumes, ApiBody } from '@nestjs/swagger';
 import { MedicalImagingService } from './medical-imaging.service';
-import { JwtAuthGuard } from '../auth/guards/jwt.guard';
+import { JwtAuthGuard } from '@/modules/auth/guards/jwt.guard';
 import { UploadImageDto } from './dto/upload-image.dto';
 import { UpdateImageDto } from './dto/update-image.dto';
 import { Response } from 'express';
@@ -106,7 +106,7 @@ export class MedicalImagingController {
   @ApiResponse({ status: 404, description: 'Image not found' })
   async getImageFile(
     @Param('id', ParseUUIDPipe) id: string,
-    @Res() res: Response,
+    @Res() reply: FastifyReply,
   ) {
     const { filePath, mimeType, fileName } = await this.medicalImagingService.getImageFile(id);
 
@@ -124,7 +124,7 @@ export class MedicalImagingController {
   @ApiResponse({ status: 404, description: 'Thumbnail not found' })
   async getThumbnail(
     @Param('id', ParseUUIDPipe) id: string,
-    @Res() res: Response,
+    @Res() reply: FastifyReply,
   ) {
     const { filePath, mimeType } = await this.medicalImagingService.getThumbnail(id);
 

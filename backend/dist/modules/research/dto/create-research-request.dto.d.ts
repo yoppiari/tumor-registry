@@ -1,4 +1,15 @@
 import { StudyType, ResearchPriority, DataAccessLevel, CollaborationRole } from '@prisma/client';
+export declare class CreateCollaborationDto {
+    collaboratorId: string;
+    role: CollaborationRole;
+    responsibilities?: string;
+    affiliation?: string;
+    email?: string;
+    phone?: string;
+    expertise?: string;
+    conflictOfInterest?: string;
+    dataAccessLevel?: DataAccessLevel;
+}
 export declare class CreateResearchRequestDto {
     title: string;
     description: string;
@@ -20,17 +31,6 @@ export declare class CreateResearchRequestDto {
     priority?: ResearchPriority;
     collaborators?: string;
     collaborationDetails?: CreateCollaborationDto[];
-}
-export declare class CreateCollaborationDto {
-    collaboratorId: string;
-    role: CollaborationRole;
-    responsibilities?: string;
-    affiliation?: string;
-    email?: string;
-    phone?: string;
-    expertise?: string;
-    conflictOfInterest?: string;
-    dataAccessLevel?: DataAccessLevel;
 }
 export declare class UpdateResearchRequestDto {
     title?: string;

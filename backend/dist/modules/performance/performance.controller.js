@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
+var _a, _b;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PerformanceController = void 0;
 const common_1 = require("@nestjs/common");
@@ -21,9 +22,9 @@ const performance_monitor_service_1 = require("./performance-monitor.service");
 const streaming_service_1 = require("./streaming.service");
 const database_performance_service_1 = require("./database-performance.service");
 const jwt_guard_1 = require("../auth/guards/jwt.guard");
-const permissions_guard_1 = require("@/auth/guards/permissions.guard");
-const permissions_decorator_1 = require("@/auth/decorators/permissions.decorator");
-const audit_log_decorator_1 = require("@/common/decorators/audit-log.decorator");
+const permissions_guard_1 = require("../../auth/guards/permissions.guard");
+const permissions_decorator_1 = require("../../auth/decorators/permissions.decorator");
+const audit_log_decorator_1 = require("../../common/decorators/audit-log.decorator");
 let PerformanceController = class PerformanceController {
     constructor(performanceService, redisService, performanceMonitor, streamingService, databasePerformance) {
         this.performanceService = performanceService;
@@ -218,7 +219,7 @@ let PerformanceController = class PerformanceController {
             alerts: databaseHealth.alerts || [],
         };
     }
-    async streamPatients(res, centerId, format = 'json') {
+    async streamPatients(reply, centerId, format = 'json') {
         try {
             const stream = this.streamingService.createPatientStream(centerId);
             res.setHeader('Content-Type', 'application/json');
@@ -345,7 +346,7 @@ let PerformanceController = class PerformanceController {
             }),
         };
     }
-    async exportMetrics(format = 'json', hours = 24, res) {
+    async exportMetrics(format = 'json', hours = 24, reply) {
         try {
             const [queryMetrics, systemMetrics, databaseMetrics,] = await Promise.all([
                 this.performanceMonitor.getQueryMetrics(),
@@ -496,7 +497,7 @@ __decorate([
     __param(1, (0, common_1.Query)('centerId')),
     __param(2, (0, common_1.Query)('format')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, String, String]),
+    __metadata("design:paramtypes", [typeof (_a = typeof FastifyReply !== "undefined" && FastifyReply) === "function" ? _a : Object, String, String]),
     __metadata("design:returntype", Promise)
 ], PerformanceController.prototype, "streamPatients", null);
 __decorate([
@@ -578,7 +579,7 @@ __decorate([
     __param(1, (0, common_1.Query)('hours')),
     __param(2, (0, common_1.Res)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, Number, Object]),
+    __metadata("design:paramtypes", [String, Number, typeof (_b = typeof FastifyReply !== "undefined" && FastifyReply) === "function" ? _b : Object]),
     __metadata("design:returntype", Promise)
 ], PerformanceController.prototype, "exportMetrics", null);
 exports.PerformanceController = PerformanceController = __decorate([

@@ -257,7 +257,7 @@ export class GeographicTestDataFactory {
           0
         );
 
-        if (Math.abs(totalPercentage - 100) > 0.1) {
+        if (Math.abs(Number(totalPercentage) - 100) > 0.1) {
           errors.push(`Percentage total mismatch: ${totalPercentage}%`);
           accuracy -= 10;
         }

@@ -1,5 +1,5 @@
 import { Injectable, Logger, NotFoundException, ConflictException } from '@nestjs/common';
-import { PrismaService } from '../../database/prisma.service';
+import { PrismaService } from '@/common/database/prisma.service';
 import { SystemConfigurationData } from '../interfaces/system-administration.interface';
 import { CreateConfigDto } from '../dto/create-config.dto';
 import * as crypto from 'crypto';

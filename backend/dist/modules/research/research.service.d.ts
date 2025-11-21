@@ -64,7 +64,7 @@ export declare class ResearchService {
     exportResearchData(requestId: string, exportFormat: 'json' | 'csv' | 'excel', requestedBy: string): Promise<{
         exportId: any;
         requestId: string;
-        format: "csv" | "excel" | "json";
+        format: "csv" | "json" | "excel";
         dataCount: number;
         status: string;
         exportDate: any;

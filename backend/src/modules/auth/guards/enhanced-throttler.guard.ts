@@ -8,7 +8,7 @@ import {
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { ThrottlerStorage, ThrottlerModuleOptions } from '@nestjs/throttler';
-import { Request, Response } from 'express';
+import type { FastifyRequest, FastifyReply } from 'fastify';
 import { ConfigService } from '@nestjs/config';
 
 @Injectable()
@@ -58,7 +58,7 @@ export class EnhancedThrottlerGuard implements NestGuard {
     return true;
   }
 
-  private getLimits(request: Request, customOptions?: { ttl: number; limit: number }) {
+  private getLimits(request: FastifyRequest, customOptions?: { ttl: number; limit: number }) {
     const user = (request as any).user;
     const role = user?.role || 'ANONYMOUS';
     const endpoint = this.getEndpointType(request);
@@ -115,7 +115,7 @@ export class EnhancedThrottlerGuard implements NestGuard {
     return customOptions || endpointLimits;
   }
 
-  private getEndpointType(request: Request): string {
+  private getEndpointType(request: FastifyRequest): string {
     const path = request.path.toLowerCase();
     const method = request.method.toLowerCase();
 
@@ -158,7 +158,7 @@ export class EnhancedThrottlerGuard implements NestGuard {
     return 'data';
   }
 
-  private async checkRateLimit(request: Request, limits: { ttl: number; limit: number }): Promise<boolean> {
+  private async checkRateLimit(request: FastifyRequest, limits: { ttl: number; limit: number }): Promise<boolean> {
     const clientIp = this.getClientIp(request);
     const user = (request as any).user;
     const key = user ? `user:${user.sub}` : `ip:${clientIp}`;
@@ -204,13 +204,13 @@ export class EnhancedThrottlerGuard implements NestGuard {
     return existing.count <= limits.limit;
   }
 
-  private setRateLimitHeaders(response: Response, limits: { ttl: number; limit: number }) {
+  private setRateLimitHeaders(response: FastifyReply, limits: { ttl: number; limit: number }) {
     response.setHeader('X-RateLimit-Limit', limits.limit);
     response.setHeader('X-RateLimit-Window', limits.ttl);
     response.setHeader('X-RateLimit-Remaining', Math.max(0, limits.limit - 1));
   }
 
-  private getClientIp(request: Request): string {
+  private getClientIp(request: FastifyRequest): string {
     return (
       (request.headers['x-forwarded-for'] as string)?.split(',')[0] ||
       (request.headers['x-real-ip'] as string) ||

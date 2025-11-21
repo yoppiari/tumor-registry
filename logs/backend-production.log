@@ -1,7 +1,0 @@
-
-> inamsos-backend@1.0.0 start:dev
-> nest start --watch
-
-
- Error  EACCES: permission denied, rmdir '/home/yopi/Projects/tumor-registry/backend/dist/analytics'
-

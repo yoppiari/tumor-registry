@@ -13,7 +13,7 @@ import { AuthService } from './auth.service';
 import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
 import { JwtAuthGuard } from './guards/jwt.guard';
-import { Request } from 'express';
+import type { FastifyRequest } from 'fastify';
 import { MfaService } from './mfa.service';
 import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 
@@ -59,14 +59,14 @@ export class AuthController {
 
   @Get('profile')
   @UseGuards(JwtAuthGuard)
-  async getProfile(@Req() req: Request) {
+  async getProfile(@Req() req: FastifyRequest) {
     return req.user;
   }
 
   @Post('logout')
   @UseGuards(JwtAuthGuard)
   @HttpCode(HttpStatus.OK)
-  async logout(@Req() req: Request) {
+  async logout(@Req() req: FastifyRequest) {
     // In a real implementation, you would invalidate the token here
     return { message: 'Logged out successfully' };
   }
@@ -76,7 +76,7 @@ export class AuthController {
   @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: 'Generate MFA secret and QR code' })
   @ApiResponse({ status: 200, description: 'MFA secret generated successfully' })
-  async setupMfa(@Req() req: Request) {
+  async setupMfa(@Req() req: FastifyRequest) {
     const user = req.user as any;
     return await this.mfaService.generateSecret(user.id);
   }
@@ -88,7 +88,7 @@ export class AuthController {
   @ApiResponse({ status: 200, description: 'MFA enabled successfully' })
   @ApiResponse({ status: 400, description: 'Invalid verification code' })
   async enableMfa(
-    @Req() req: Request,
+    @Req() req: FastifyRequest,
     @Body('secret') secret: string,
     @Body('token') token: string,
   ) {
@@ -103,7 +103,7 @@ export class AuthController {
   @ApiResponse({ status: 200, description: 'MFA disabled successfully' })
   @ApiResponse({ status: 400, description: 'Invalid verification code or password' })
   async disableMfa(
-    @Req() req: Request,
+    @Req() req: FastifyRequest,
     @Body('password') password: string,
     @Body('token') token?: string,
   ) {
@@ -119,7 +119,7 @@ export class AuthController {
   @ApiResponse({ status: 200, description: 'MFA token verified successfully' })
   @ApiResponse({ status: 400, description: 'Invalid MFA token' })
   async verifyMfaToken(
-    @Req() req: Request,
+    @Req() req: FastifyRequest,
     @Body('token') token: string,
   ) {
     const user = req.user as any;
@@ -134,7 +134,7 @@ export class AuthController {
   @ApiResponse({ status: 200, description: 'Backup codes regenerated successfully' })
   @ApiResponse({ status: 400, description: 'Invalid verification code' })
   async regenerateBackupCodes(
-    @Req() req: Request,
+    @Req() req: FastifyRequest,
     @Body('token') token: string,
   ) {
     const user = req.user as any;
@@ -149,7 +149,7 @@ export class AuthController {
   @ApiResponse({ status: 200, description: 'Backup code verified successfully' })
   @ApiResponse({ status: 400, description: 'Invalid backup code' })
   async verifyBackupCode(
-    @Req() req: Request,
+    @Req() req: FastifyRequest,
     @Body('backupCode') backupCode: string,
   ) {
     const user = req.user as any;
@@ -161,7 +161,7 @@ export class AuthController {
   @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: 'Get MFA status' })
   @ApiResponse({ status: 200, description: 'MFA status retrieved successfully' })
-  async getMfaStatus(@Req() req: Request) {
+  async getMfaStatus(@Req() req: FastifyRequest) {
     const user = req.user as any;
     const isRequired = await this.mfaService.isMfaRequired(user.id);
     return {

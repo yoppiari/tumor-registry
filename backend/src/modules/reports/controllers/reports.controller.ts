@@ -2,6 +2,7 @@ import {
   Controller,
   Get,
   Post,
+  Put,
   Delete,
   Query,
   Param,
@@ -13,9 +14,9 @@ import {
   Res,
 } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse, ApiBearerAuth } from '@nestjs/swagger';
-import { JwtAuthGuard } from '../../auth/guards/jwt-auth.guard';
-import { RolesGuard } from '../../auth/guards/roles.guard';
-import { Roles } from '../../auth/decorators/roles.decorator';
+import { JwtAuthGuard } from '@/auth/guards/jwt-auth.guard';
+import { RolesGuard } from '@/auth/guards/roles.guard';
+import { Roles } from '@/auth/decorators/roles.decorator';
 import { ReportsService } from '../services/reports.service';
 import { ReportHistoryService } from '../services/report-history.service';
 import { CreateReportTemplateDto } from '../dto/create-report-template.dto';
@@ -107,7 +108,7 @@ export class ReportsController {
   @ApiResponse({ status: 200, description: 'Report downloaded successfully' })
   async downloadReport(
     @Param('id') id: string,
-    @Res() res: Response,
+    @Res() reply: FastifyReply,
   ) {
     try {
       const { filePath, fileName, mimeType } = await this.reportsService.downloadReport(id);

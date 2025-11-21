@@ -15,10 +15,10 @@ import {
 } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse, ApiParam, ApiQuery } from '@nestjs/swagger';
 import { ResearchService } from './research.service';
-import { JwtAuthGuard } from '../auth/guards/jwt.guard';
-import { EnhancedPermissionsGuard } from '../auth/guards/enhanced-permissions.guard';
-import { EnhancedThrottlerGuard } from '../auth/guards/enhanced-throttler.guard';
-import { RequirePermissions } from '../auth/decorators/permissions.decorator';
+import { JwtAuthGuard } from '@/modules/auth/guards/jwt.guard';
+import { EnhancedPermissionsGuard } from '@/modules/auth/guards/enhanced-permissions.guard';
+import { EnhancedThrottlerGuard } from '@/modules/auth/guards/enhanced-throttler.guard';
+import { RequirePermissions } from '@/auth/decorators/permissions.decorator';
 import { AuditLog } from '../../common/decorators/audit-log.decorator';
 import { EnhancedCreateResearchRequestDto, EnhancedUpdateResearchRequestDto, EnhancedSearchResearchDto, EnhancedApprovalDto } from './dto/enhanced-research-request.dto';
 import { ResearchRequestStatus, StudyType, EthicsStatus } from '@prisma/client';

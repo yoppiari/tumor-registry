@@ -13,9 +13,9 @@ import {
   Request,
 } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse, ApiBearerAuth } from '@nestjs/swagger';
-import { JwtAuthGuard } from '../../auth/guards/jwt-auth.guard';
-import { RolesGuard } from '../../auth/guards/roles.guard';
-import { Roles } from '../../auth/decorators/roles.decorator';
+import { JwtAuthGuard } from '@/auth/guards/jwt-auth.guard';
+import { RolesGuard } from '@/auth/guards/roles.guard';
+import { Roles } from '@/auth/decorators/roles.decorator';
 import { ScheduledReportsService } from '../services/scheduled-reports.service';
 import { CreateScheduledReportDto } from '../dto/create-scheduled-report.dto';
 import { UpdateScheduledReportDto } from '../dto/update-scheduled-report.dto';

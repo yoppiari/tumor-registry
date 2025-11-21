@@ -18,10 +18,10 @@ import { ApiTags, ApiOperation, ApiResponse, ApiParam, ApiQuery, ApiBearerAuth }
 import { AdvancedSearchService } from '../services/advanced-search.service';
 import { CollaborationService } from '../services/collaboration.service';
 import { ResearchPlanningService } from '../services/research-planning.service';
-import { JwtAuthGuard } from '../../auth/guards/jwt.guard';
-import { EnhancedPermissionsGuard } from '../../auth/guards/enhanced-permissions.guard';
-import { EnhancedThrottlerGuard } from '../../auth/guards/enhanced-throttler.guard';
-import { RequirePermissions } from '../../auth/decorators/permissions.decorator';
+import { JwtAuthGuard } from '@/auth/guards/jwt.guard';
+import { EnhancedPermissionsGuard } from '@/auth/guards/enhanced-permissions.guard';
+import { EnhancedThrottlerGuard } from '@/auth/guards/enhanced-throttler.guard';
+import { RequirePermissions } from '@/auth/decorators/permissions.decorator';
 import { AuditLog } from '../../../common/decorators/audit-log.decorator';
 import {
   AdvancedSearchDto,

@@ -21,6 +21,12 @@ let RedisService = RedisService_1 = class RedisService {
         this.defaultTTL = 3600;
     }
     async onModuleInit() {
+        const redisDisabled = this.configService.get('REDIS_DISABLED', 'true') === 'true';
+        if (redisDisabled) {
+            this.logger.log('Redis is disabled - running without cache');
+            this.redis = null;
+            return;
+        }
         try {
             const redisConfig = {
                 host: this.configService.get('redis.host') || 'localhost',

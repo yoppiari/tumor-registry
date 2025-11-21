@@ -1,2 +1,24 @@
 node_modules/
 .env
+backend/dist
+
+# Log files
+*.log
+logs/
+
+# Temporary files
+*.pid
+*.js.map
+
+# Temporary server files
+analytics-server.js
+api-server.js
+proxy-server.js
+mock-server.js
+
+# Next.js
+.next/
+out/
+
+# Development
+.DS_Store

@@ -12,6 +12,15 @@ export class RedisService implements OnModuleInit {
   constructor(private configService: ConfigService) {}
 
   async onModuleInit() {
+    // Check if Redis is disabled via environment variable
+    const redisDisabled = this.configService.get<string>('REDIS_DISABLED', 'true') === 'true';
+
+    if (redisDisabled) {
+      this.logger.log('Redis is disabled - running without cache');
+      this.redis = null;
+      return;
+    }
+
     await this.initializeRedis();
   }
 
@@ -55,13 +64,15 @@ export class RedisService implements OnModuleInit {
       this.logger.log('Redis initialized successfully');
 
     } catch (error) {
-      this.logger.error('Failed to initialize Redis:', error);
-      throw error;
+      this.logger.warn('Failed to initialize Redis - running without cache:', error.message);
+      this.redis = null;
     }
   }
 
   // Basic operations
   async get(key: string): Promise<string | null> {
+    if (!this.redis) return null;
+
     try {
       return await this.redis.get(key);
     } catch (error) {
@@ -71,25 +82,29 @@ export class RedisService implements OnModuleInit {
   }
 
   async set(key: string, value: string, ttl?: number): Promise<void> {
+    if (!this.redis) return;
+
     try {
       const expireTime = ttl || this.defaultTTL;
       await this.redis.setex(key, expireTime, value);
     } catch (error) {
       this.logger.error(`Redis set error for key ${key}:`, error);
-      throw error;
     }
   }
 
   async setex(key: string, seconds: number, value: string): Promise<void> {
+    if (!this.redis) return;
+
     try {
       await this.redis.setex(key, seconds, value);
     } catch (error) {
       this.logger.error(`Redis setex error for key ${key}:`, error);
-      throw error;
     }
   }
 
   async del(key: string): Promise<number> {
+    if (!this.redis) return 0;
+
     try {
       return await this.redis.del(key);
     } catch (error) {
@@ -99,6 +114,8 @@ export class RedisService implements OnModuleInit {
   }
 
   async exists(key: string): Promise<number> {
+    if (!this.redis) return 0;
+
     try {
       return await this.redis.exists(key);
     } catch (error) {
@@ -108,6 +125,8 @@ export class RedisService implements OnModuleInit {
   }
 
   async expire(key: string, seconds: number): Promise<number> {
+    if (!this.redis) return 0;
+
     try {
       return await this.redis.expire(key, seconds);
     } catch (error) {
@@ -118,6 +137,8 @@ export class RedisService implements OnModuleInit {
 
   // Pattern-based operations
   async keys(pattern: string): Promise<string[]> {
+    if (!this.redis) return [];
+
     try {
       return await this.redis.keys(pattern);
     } catch (error) {
@@ -127,6 +148,8 @@ export class RedisService implements OnModuleInit {
   }
 
   async flushPattern(pattern: string): Promise<number> {
+    if (!this.redis) return 0;
+
     try {
       const keys = await this.keys(pattern);
       if (keys.length === 0) return 0;
@@ -139,6 +162,8 @@ export class RedisService implements OnModuleInit {
 
   // Hash operations
   async hget(key: string, field: string): Promise<string | null> {
+    if (!this.redis) return null;
+
     try {
       return await this.redis.hget(key, field);
     } catch (error) {
@@ -148,6 +173,8 @@ export class RedisService implements OnModuleInit {
   }
 
   async hset(key: string, field: string, value: string): Promise<number> {
+    if (!this.redis) return 0;
+
     try {
       return await this.redis.hset(key, field, value);
     } catch (error) {
@@ -157,15 +184,19 @@ export class RedisService implements OnModuleInit {
   }
 
   async hmset(key: string, data: Record<string, string>): Promise<string> {
+    if (!this.redis) return 'OK';
+
     try {
       return await this.redis.hmset(key, data);
     } catch (error) {
       this.logger.error(`Redis hmset error for key ${key}:`, error);
-      throw error;
+      return 'OK';
     }
   }
 
   async hgetall(key: string): Promise<Record<string, string>> {
+    if (!this.redis) return {};
+
     try {
       return await this.redis.hgetall(key);
     } catch (error) {
@@ -176,6 +207,8 @@ export class RedisService implements OnModuleInit {
 
   // List operations
   async lpush(key: string, ...values: string[]): Promise<number> {
+    if (!this.redis) return 0;
+
     try {
       return await this.redis.lpush(key, ...values);
     } catch (error) {
@@ -185,6 +218,8 @@ export class RedisService implements OnModuleInit {
   }
 
   async rpush(key: string, ...values: string[]): Promise<number> {
+    if (!this.redis) return 0;
+
     try {
       return await this.redis.rpush(key, ...values);
     } catch (error) {
@@ -194,6 +229,8 @@ export class RedisService implements OnModuleInit {
   }
 
   async lrange(key: string, start: number, stop: number): Promise<string[]> {
+    if (!this.redis) return [];
+
     try {
       return await this.redis.lrange(key, start, stop);
     } catch (error) {
@@ -208,6 +245,8 @@ export class RedisService implements OnModuleInit {
     data: any;
     ttl: number;
   }>): Promise<void> {
+    if (!this.redis) return;
+
     try {
       const promises = cacheConfig.map(({ key, data, ttl }) =>
         this.set(key, JSON.stringify(data), ttl)
@@ -226,6 +265,8 @@ export class RedisService implements OnModuleInit {
     ttl: number = this.defaultTTL,
     lockTimeout: number = 10
   ): Promise<T> {
+    if (!this.redis) return await fetcher();
+
     const lockKey = `${key}:lock`;
     const resultKey = key;
 
@@ -278,6 +319,8 @@ export class RedisService implements OnModuleInit {
     dbFetcher: () => Promise<T>,        // Database
     ttl: number = this.defaultTTL
   ): Promise<T> {
+    if (!this.redis) return await dbFetcher();
+
     try {
       // Level 1: Memory cache (fastest)
       const l1Result = await l1Fetcher();
@@ -335,6 +378,17 @@ export class RedisService implements OnModuleInit {
     misses: number;
     hitRate: number;
   }> {
+    if (!this.redis) {
+      return {
+        connected: false,
+        memory: '0B',
+        keys: 0,
+        hits: 0,
+        misses: 0,
+        hitRate: 0,
+      };
+    }
+
     try {
       const info = await this.redis.info('memory');
       const stats = await this.redis.info('stats');
@@ -370,6 +424,8 @@ export class RedisService implements OnModuleInit {
 
   // Health check
   async isHealthy(): Promise<boolean> {
+    if (!this.redis) return false;
+
     try {
       const result = await this.redis.ping();
       return result === 'PONG';

@@ -11,6 +11,15 @@ export class RedisService implements OnModuleInit, OnModuleDestroy {
   constructor(private configService: ConfigService) {}
 
   async onModuleInit() {
+    // Check if Redis is disabled via environment variable
+    const redisDisabled = this.configService.get<string>('REDIS_DISABLED', 'true') === 'true';
+
+    if (redisDisabled) {
+      this.logger.log('Redis is disabled - running without cache');
+      this.redis = null;
+      return;
+    }
+
     try {
       const redisConfig = {
         host: this.configService.get('redis.host') || 'localhost',

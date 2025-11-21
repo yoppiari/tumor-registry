@@ -6,7 +6,6 @@ import {
   HttpStatus,
   Logger,
 } from '@nestjs/common';
-import { Request, Response } from 'express';
 import { ConfigService } from '@nestjs/config';
 
 export interface ErrorResponse {
@@ -34,8 +33,8 @@ export class HttpExceptionFilter implements ExceptionFilter {
 
   catch(exception: unknown, host: ArgumentsHost) {
     const ctx = host.switchToHttp();
-    const response = ctx.getResponse<Response>();
-    const request = ctx.getRequest<Request>();
+    const response = ctx.getResponse();
+    const request = ctx.getRequest();
 
     const status =
       exception instanceof HttpException
@@ -48,11 +47,16 @@ export class HttpExceptionFilter implements ExceptionFilter {
     // Log the error with contextual information
     this.logError(exception, request, status);
 
-    // Send sanitized response
-    response.status(status).json(sanitizedResponse);
+    // Send sanitized response using Fastify API
+    if (response && typeof response.code === 'function') {
+      response.code(status).send(sanitizedResponse);
+    } else if (response && typeof response.status === 'function') {
+      // Fallback to Express API if needed
+      response.status(status).json(sanitizedResponse);
+    }
   }
 
-  private buildErrorResponse(exception: unknown, request: Request): ErrorResponse {
+  private buildErrorResponse(exception: unknown, request: any): ErrorResponse {
     const timestamp = new Date().toISOString();
     const path = request.url;
     const requestId = request.headers['x-request-id'] as string || this.generateRequestId();
@@ -116,7 +120,7 @@ export class HttpExceptionFilter implements ExceptionFilter {
     return errorResponse;
   }
 
-  private logError(exception: unknown, request: Request, status: number): void {
+  private logError(exception: unknown, request: any, status: number): void {
     const requestId = request.headers['x-request-id'] as string || 'unknown';
     const userId = (request as any).user?.sub || 'anonymous';
     const ip = request.ip || request.connection.remoteAddress;
@@ -193,8 +197,8 @@ export class ValidationExceptionFilter implements ExceptionFilter {
 
   catch(exception: unknown, host: ArgumentsHost) {
     const ctx = host.switchToHttp();
-    const response = ctx.getResponse<Response>();
-    const request = ctx.getRequest<Request>();
+    const response = ctx.getResponse();
+    const request = ctx.getRequest();
 
     const status = HttpStatus.BAD_REQUEST;
 
@@ -222,7 +226,13 @@ export class ValidationExceptionFilter implements ExceptionFilter {
       query: request.query,
     });
 
-    response.status(status).json(errorResponse);
+    // Send response using Fastify API
+    if (response && typeof response.code === 'function') {
+      response.code(status).send(errorResponse);
+    } else if (response && typeof response.status === 'function') {
+      // Fallback to Express API if needed
+      response.status(status).json(errorResponse);
+    }
   }
 
   private extractValidationErrors(exception: unknown): any {

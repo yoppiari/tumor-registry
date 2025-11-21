@@ -18,6 +18,7 @@ export function LoginForm({ onSuccess, onError }: LoginFormProps) {
   const [fieldErrors, setFieldErrors] = useState<Partial<LoginRequest>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [loginError, setLoginError] = useState<string>('');
 
   const { login } = useAuth();
   const router = useRouter();
@@ -45,9 +46,12 @@ export function LoginForm({ onSuccess, onError }: LoginFormProps) {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
 
-    // Clear field error when user starts typing
+    // Clear errors when user starts typing
     if (fieldErrors[name as keyof LoginRequest]) {
       setFieldErrors(prev => ({ ...prev, [name]: undefined }));
+    }
+    if (loginError) {
+      setLoginError('');
     }
   };
 
@@ -66,6 +70,7 @@ export function LoginForm({ onSuccess, onError }: LoginFormProps) {
       router.push('/dashboard');
     } catch (error: any) {
       const errorMessage = error.message || 'Login gagal. Silakan coba lagi.';
+      setLoginError(errorMessage);
       onError?.(errorMessage);
     } finally {
       setIsSubmitting(false);
@@ -92,6 +97,37 @@ export function LoginForm({ onSuccess, onError }: LoginFormProps) {
         </div>
 
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
+          {loginError && (
+            <div className="rounded-lg bg-red-50 p-4 border border-red-200">
+              <div className="flex">
+                <div className="flex-shrink-0">
+                  <svg className="h-5 w-5 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                </div>
+                <div className="ml-3">
+                  <h3 className="text-sm font-medium text-red-800">
+                    Login Gagal
+                  </h3>
+                  <div className="mt-1 text-sm text-red-700">
+                    {loginError}
+                  </div>
+                </div>
+                <div className="ml-auto pl-3">
+                  <button
+                    type="button"
+                    onClick={() => setLoginError('')}
+                    className="inline-flex rounded-md p-1.5 text-red-500 hover:bg-red-100 focus:outline-none"
+                  >
+                    <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+
           <div className="space-y-4">
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-gray-700">

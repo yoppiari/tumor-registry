@@ -1,0 +1,645 @@
+import { Injectable, Logger } from '@nestjs/common';
+import { PrismaService } from '../../database/prisma.service';
+import * as crypto from 'crypto';
+import { Cron, CronExpression } from '@nestjs/schedule';
+
+interface SecurityEvent {
+  type: string;
+  severity: 'LOW' | 'MEDIUM' | 'HIGH' | 'CRITICAL';
+  userId?: string;
+  sessionId?: string;
+  ipAddress: string;
+  userAgent: string;
+  timestamp: Date;
+  details: any;
+  threatScore: number;
+}
+
+interface ThreatPattern {
+  id: string;
+  name: string;
+  pattern: RegExp | Function;
+  severity: 'LOW' | 'MEDIUM' | 'HIGH' | 'CRITICAL';
+  description: string;
+  mitigation: string;
+}
+
+@Injectable()
+export class SecurityMonitoringService {
+  private readonly logger = new Logger(SecurityMonitoringService.name);
+  private readonly threatPatterns: ThreatPattern[] = [
+    {
+      id: 'brute_force_attempt',
+      name: 'Brute Force Login Attempt',
+      pattern: (events: SecurityEvent[]) => {
+        const failedLogins = events.filter(e => e.type === 'LOGIN_FAILED');
+        return failedLogins.length >= 5 &&
+               this.areEventsInTimeWindow(failedLogins, 5 * 60 * 1000); // 5 minutes
+      },
+      severity: 'HIGH',
+      description: 'Multiple failed login attempts detected',
+      mitigation: 'Implement account lockout and IP blocking',
+    },
+    {
+      id: 'impossible_travel',
+      name: 'Impossible Travel',
+      pattern: (events: SecurityEvent[]) => {
+        const loginEvents = events.filter(e => e.type === 'LOGIN_SUCCESS');
+        if (loginEvents.length < 2) return false;
+
+        for (let i = 1; i < loginEvents.length; i++) {
+          const prev = loginEvents[i - 1];
+          const curr = loginEvents[i];
+
+          if (this.isImpossibleTravel(prev, curr)) {
+            return true;
+          }
+        }
+        return false;
+      },
+      severity: 'CRITICAL',
+      description: 'Login from geographically impossible locations',
+      mitigation: 'Require additional authentication and investigate',
+    },
+    {
+      id: 'unusual_access_pattern',
+      name: 'Unusual Access Pattern',
+      pattern: (events: SecurityEvent[]) => {
+        const accessEvents = events.filter(e => e.type === 'DATA_ACCESS');
+        return this.detectUnusualAccessPattern(accessEvents);
+      },
+      severity: 'MEDIUM',
+      description: 'Access pattern deviates from user behavior',
+      mitigation: 'Monitor and potentially block anomalous access',
+    },
+    {
+      id: 'privilege_escalation_attempt',
+      name: 'Privilege Escalation Attempt',
+      pattern: (events: SecurityEvent[]) => {
+        const permissionChanges = events.filter(e => e.type === 'PERMISSION_CHANGE');
+        return permissionChanges.length > 0;
+      },
+      severity: 'HIGH',
+      description: 'User attempting to modify permissions',
+      mitigation: 'Review permission changes and validate authorization',
+    },
+    {
+      id: 'data_exfiltration_risk',
+      name: 'Data Exfiltration Risk',
+      pattern: (events: SecurityEvent[]) => {
+        const dataExports = events.filter(e => e.type === 'DATA_EXPORT');
+        const largeExports = dataExports.filter(e => e.details.recordCount > 1000);
+        return largeExports.length > 0;
+      },
+      severity: 'HIGH',
+      description: 'Large data export detected',
+      mitigation: 'Review export requests and implement quotas',
+    },
+  ];
+
+  constructor(private prisma: PrismaService) {}
+
+  async logSecurityEvent(event: Omit<SecurityEvent, 'timestamp' | 'threatScore'>): Promise<void> {
+    const securityEvent: SecurityEvent = {
+      ...event,
+      timestamp: new Date(),
+      threatScore: this.calculateThreatScore(event),
+    };
+
+    try {
+      // Store in database
+      await this.prisma.securityEvent.create({
+        data: {
+          type: securityEvent.type,
+          severity: securityEvent.severity,
+          userId: securityEvent.userId,
+          sessionId: securityEvent.sessionId,
+          ipAddress: securityEvent.ipAddress,
+          userAgent: securityEvent.userAgent,
+          details: securityEvent.details,
+          threatScore: securityEvent.threatScore,
+        },
+      });
+
+      // Check for threat patterns
+      await this.analyzeThreatPatterns(securityEvent);
+
+      // Check for automated responses
+      await this.checkAutomatedResponse(securityEvent);
+
+      this.logger.log(`Security event logged: ${event.type} (${event.severity})`);
+    } catch (error) {
+      this.logger.error('Failed to log security event', error);
+    }
+  }
+
+  async analyzeUserBehavior(userId: string, timeWindowHours: number = 24): Promise<{
+    riskScore: number;
+    anomalies: Array<{
+      type: string;
+      description: string;
+      severity: string;
+      confidence: number;
+    }>;
+    baseline: {
+      averageLoginsPerDay: number;
+      typicalAccessTimes: number[];
+      typicalLocations: string[];
+      usualDataAccessPatterns: any;
+    };
+  }> {
+    const timeWindow = new Date(Date.now() - timeWindowHours * 60 * 60 * 1000);
+
+    const events = await this.prisma.securityEvent.findMany({
+      where: {
+        userId,
+        timestamp: { gte: timeWindow },
+      },
+      orderBy: { timestamp: 'asc' },
+    });
+
+    const baseline = await this.calculateUserBaseline(userId);
+    const anomalies = this.detectAnomalies(events, baseline);
+    const riskScore = this.calculateBehaviorRiskScore(anomalies);
+
+    return {
+      riskScore,
+      anomalies,
+      baseline,
+    };
+  }
+
+  async detectAdvancedThreats(): Promise<Array<{
+    threatType: string;
+    severity: string;
+    affectedUsers: string[];
+    description: string;
+    recommendedActions: string[];
+    confidence: number;
+  }>> {
+    const threats: any[] = [];
+
+    // Analyze recent events for advanced threats
+    const recentEvents = await this.prisma.securityEvent.findMany({
+      where: {
+        timestamp: { gte: new Date(Date.now() - 24 * 60 * 60 * 1000) },
+      },
+      orderBy: { timestamp: 'desc' },
+    });
+
+    // Group events by user for pattern analysis
+    const eventsByUser = this.groupEventsByUser(recentEvents);
+
+    for (const [userId, userEvents] of Object.entries(eventsByUser)) {
+      for (const pattern of this.threatPatterns) {
+        const isMatch = typeof pattern.pattern === 'function'
+          ? pattern.pattern(userEvents)
+          : userEvents.some(event => pattern.pattern.test(event.type));
+
+        if (isMatch) {
+          threats.push({
+            threatType: pattern.name,
+            severity: pattern.severity,
+            affectedUsers: [userId],
+            description: pattern.description,
+            recommendedActions: [pattern.mitigation],
+            confidence: this.calculateThreatConfidence(userEvents, pattern),
+          });
+        }
+      }
+    }
+
+    return threats;
+  }
+
+  async generateSecurityReport(timeframeDays: number = 7): Promise<{
+    summary: {
+      totalEvents: number;
+      criticalEvents: number;
+      highRiskEvents: number;
+      uniqueUsersAffected: number;
+      topThreatTypes: Array<{ type: string; count: number }>;
+      riskTrend: 'increasing' | 'stable' | 'decreasing';
+    };
+    threats: Array<{
+      type: string;
+      count: number;
+      severity: string;
+      description: string;
+    }>;
+    recommendations: Array<{
+      priority: 'HIGH' | 'MEDIUM' | 'LOW';
+      action: string;
+      rationale: string;
+    }>;
+  }> {
+    const timeWindow = new Date(Date.now() - timeframeDays * 24 * 60 * 60 * 1000);
+
+    const events = await this.prisma.securityEvent.findMany({
+      where: { timestamp: { gte: timeWindow } },
+    });
+
+    const criticalEvents = events.filter(e => e.severity === 'CRITICAL');
+    const highRiskEvents = events.filter(e => e.severity === 'HIGH');
+    const uniqueUsersAffected = new Set(events.map(e => e.userId).filter(Boolean)).size;
+
+    // Top threat types
+    const threatCounts: Record<string, number> = {};
+    events.forEach(event => {
+      threatCounts[event.type] = (threatCounts[event.type] || 0) + 1;
+    });
+
+    const topThreatTypes = Object.entries(threatCounts)
+      .map(([type, count]) => ({ type, count }))
+      .sort((a, b) => b.count - a.count)
+      .slice(0, 10);
+
+    // Calculate risk trend
+    const riskTrend = await this.calculateRiskTrend(events, timeframeDays);
+
+    // Generate recommendations
+    const recommendations = await this.generateSecurityRecommendations(events);
+
+    return {
+      summary: {
+        totalEvents: events.length,
+        criticalEvents: criticalEvents.length,
+        highRiskEvents: highRiskEvents.length,
+        uniqueUsersAffected,
+        topThreatTypes,
+        riskTrend,
+      },
+      threats: this.categorizeThreats(events),
+      recommendations,
+    };
+  }
+
+  @Cron(CronExpression.EVERY_MINUTE)
+  async performRealTimeThreatDetection(): Promise<void> {
+    try {
+      const recentEvents = await this.prisma.securityEvent.findMany({
+        where: {
+          timestamp: { gte: new Date(Date.now() - 5 * 60 * 1000) }, // Last 5 minutes
+        },
+      });
+
+      for (const pattern of this.threatPatterns) {
+        const matchingEvents = await this.findMatchingEvents(recentEvents, pattern);
+
+        if (matchingEvents.length > 0) {
+          await this.handleThreatDetection(pattern, matchingEvents);
+        }
+      }
+    } catch (error) {
+      this.logger.error('Real-time threat detection failed', error);
+    }
+  }
+
+  @Cron(CronExpression.EVERY_HOUR)
+  async cleanupOldSecurityEvents(): Promise<void> {
+    try {
+      const thirtyDaysAgo = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000);
+
+      const result = await this.prisma.securityEvent.deleteMany({
+        where: {
+          timestamp: { lt: thirtyDaysAgo },
+          severity: { not: 'CRITICAL' }, // Keep critical events longer
+        },
+      });
+
+      if (result.count > 0) {
+        this.logger.log(`Cleaned up ${result.count} old security events`);
+      }
+    } catch (error) {
+      this.logger.error('Security event cleanup failed', error);
+    }
+  }
+
+  private calculateThreatScore(event: Omit<SecurityEvent, 'timestamp' | 'threatScore'>): number {
+    let score = 0;
+
+    // Base score by severity
+    const severityScores = {
+      LOW: 10,
+      MEDIUM: 30,
+      HIGH: 60,
+      CRITICAL: 90,
+    };
+
+    score += severityScores[event.severity];
+
+    // Adjust based on event type
+    const eventScores: Record<string, number> = {
+      LOGIN_FAILED: 20,
+      UNAUTHORIZED_ACCESS: 70,
+      DATA_BREACH_ATTEMPT: 80,
+      PRIVILEGE_ESCALATION: 75,
+      SUSPICIOUS_ACTIVITY: 50,
+      MALWARE_DETECTED: 85,
+      POLICY_VIOLATION: 40,
+    };
+
+    score += eventScores[event.type] || 0;
+
+    // Adjust for user context
+    if (event.userId) {
+      // Higher risk for privileged users
+      const isPrivileged = await this.isPrivilegedUser(event.userId);
+      if (isPrivileged) score += 20;
+    }
+
+    return Math.min(score, 100);
+  }
+
+  private async analyzeThreatPatterns(event: SecurityEvent): Promise<void> {
+    const recentEvents = await this.prisma.securityEvent.findMany({
+      where: {
+        timestamp: { gte: new Date(Date.now() - 60 * 60 * 1000) }, // Last hour
+        ...(event.userId && { userId: event.userId }),
+      },
+    });
+
+    for (const pattern of this.threatPatterns) {
+      const isMatch = typeof pattern.pattern === 'function'
+        ? pattern.pattern(recentEvents)
+        : pattern.pattern.test(event.type);
+
+      if (isMatch) {
+        await this.handleThreatDetection(pattern, [event, ...recentEvents]);
+      }
+    }
+  }
+
+  private async checkAutomatedResponse(event: SecurityEvent): Promise<void> {
+    // Automated responses based on event type and severity
+    switch (event.type) {
+      case 'LOGIN_FAILED':
+        if (event.severity === 'HIGH') {
+          await this.triggerAccountLockout(event.userId!);
+        }
+        break;
+
+      case 'UNAUTHORIZED_ACCESS':
+        await this.blockIpAddress(event.ipAddress);
+        break;
+
+      case 'PRIVILEGE_ESCALATION':
+        await this.requireAdditionalAuthentication(event.userId!);
+        break;
+
+      case 'DATA_BREACH_ATTEMPT':
+        await this.triggerEmergencyLockdown();
+        break;
+    }
+  }
+
+  private async triggerAccountLockout(userId: string): Promise<void> {
+    try {
+      await this.prisma.user.update({
+        where: { id: userId },
+        data: { isActive: false },
+      });
+
+      await this.prisma.securityEvent.create({
+        data: {
+          type: 'ACCOUNT_LOCKED',
+          severity: 'HIGH',
+          userId,
+          ipAddress: 'system',
+          userAgent: 'system',
+          details: { reason: 'Automated lockout due to security threat' },
+          threatScore: 80,
+        },
+      });
+
+      this.logger.warn(`Account locked due to security threat: ${userId}`);
+    } catch (error) {
+      this.logger.error('Failed to lock account', error);
+    }
+  }
+
+  private async blockIpAddress(ipAddress: string): Promise<void> {
+    // Implementation would depend on your infrastructure
+    // This could update firewall rules, load balancer configurations, etc.
+    this.logger.warn(`IP address blocked due to security threat: ${ipAddress}`);
+  }
+
+  private async requireAdditionalAuthentication(userId: string): Promise<void> {
+    // Flag user for additional authentication requirements
+    await this.prisma.user.update({
+      where: { id: userId },
+      data: { requiresMfa: true },
+    });
+
+    this.logger.log(`Additional authentication required for user: ${userId}`);
+  }
+
+  private async triggerEmergencyLockdown(): Promise<void> {
+    // Implement emergency lockdown procedures
+    this.logger.error('Emergency lockdown triggered due to security breach');
+  }
+
+  private areEventsInTimeWindow(events: SecurityEvent[], windowMs: number): boolean {
+    if (events.length < 2) return true;
+
+    const firstEvent = events[0];
+    const lastEvent = events[events.length - 1];
+
+    return (lastEvent.timestamp.getTime() - firstEvent.timestamp.getTime()) <= windowMs;
+  }
+
+  private isImpossibleTravel(event1: SecurityEvent, event2: SecurityEvent): boolean {
+    const speed = this.calculateTravelSpeed(event1, event2);
+    return speed > 900; // Faster than commercial aircraft
+  }
+
+  private calculateTravelSpeed(event1: SecurityEvent, event2: SecurityEvent): number {
+    // Simplified calculation - in production, you'd use proper geolocation
+    const timeDiff = (event2.timestamp.getTime() - event1.timestamp.getTime()) / (1000 * 60 * 60); // hours
+    if (timeDiff <= 0) return Infinity;
+
+    // This would use actual geolocation distance calculation
+    const estimatedDistance = 1000; // km (placeholder)
+
+    return estimatedDistance / timeDiff; // km/h
+  }
+
+  private detectUnusualAccessPattern(accessEvents: SecurityEvent[]): boolean {
+    // Implement ML-based pattern detection
+    // For now, use simple heuristics
+    return accessEvents.length > 1000; // Unusually high access
+  }
+
+  private async calculateUserBaseline(userId: string): Promise<any> {
+    // Calculate user's normal behavior patterns
+    return {
+      averageLoginsPerDay: 3,
+      typicalAccessTimes: [9, 14, 16], // Hours
+      typicalLocations: ['Jakarta', 'Indonesia'],
+      usualDataAccessPatterns: {},
+    };
+  }
+
+  private detectAnomalies(events: SecurityEvent[], baseline: any): Array<any> {
+    const anomalies: any[] = [];
+
+    // Compare events against baseline and flag anomalies
+    // Implementation would depend on specific anomaly detection algorithms
+
+    return anomalies;
+  }
+
+  private calculateBehaviorRiskScore(anomalies: any[]): number {
+    if (anomalies.length === 0) return 0;
+
+    const severityScores = { LOW: 10, MEDIUM: 30, HIGH: 60, CRITICAL: 90 };
+    const totalScore = anomalies.reduce((sum, anomaly) => {
+      return sum + (severityScores[anomaly.severity] || 0);
+    }, 0);
+
+    return Math.min(totalScore, 100);
+  }
+
+  private groupEventsByUser(events: SecurityEvent[]): Record<string, SecurityEvent[]> {
+    const grouped: Record<string, SecurityEvent[]> = {};
+
+    events.forEach(event => {
+      if (event.userId) {
+        if (!grouped[event.userId]) {
+          grouped[event.userId] = [];
+        }
+        grouped[event.userId].push(event);
+      }
+    });
+
+    return grouped;
+  }
+
+  private calculateThreatConfidence(events: SecurityEvent[], pattern: ThreatPattern): number {
+    // Calculate confidence level for threat detection
+    const matchingEvents = events.filter(event =>
+      typeof pattern.pattern === 'function'
+        ? pattern.pattern([event])
+        : pattern.pattern.test(event.type)
+    );
+
+    return Math.min((matchingEvents.length / events.length) * 100, 95);
+  }
+
+  private async isPrivilegedUser(userId: string): Promise<boolean> {
+    const user = await this.prisma.user.findUnique({
+      where: { id: userId },
+      include: { roles: true },
+    });
+
+    return user?.roles.some(role =>
+      ['ADMIN', 'SYSTEM_ADMIN', 'CENTER_ADMIN'].includes(role.name)
+    ) || false;
+  }
+
+  private async calculateRiskTrend(events: SecurityEvent[], timeframeDays: number): Promise<'increasing' | 'stable' | 'decreasing'> {
+    const midPoint = new Date(Date.now() - (timeframeDays / 2) * 24 * 60 * 60 * 1000);
+
+    const firstHalf = events.filter(e => e.timestamp < midPoint);
+    const secondHalf = events.filter(e => e.timestamp >= midPoint);
+
+    const firstHalfRisk = firstHalf.reduce((sum, e) => sum + e.threatScore, 0) / (firstHalf.length || 1);
+    const secondHalfRisk = secondHalf.reduce((sum, e) => sum + e.threatScore, 0) / (secondHalf.length || 1);
+
+    const riskChange = ((secondHalfRisk - firstHalfRisk) / firstHalfRisk) * 100;
+
+    if (riskChange > 10) return 'increasing';
+    if (riskChange < -10) return 'decreasing';
+    return 'stable';
+  }
+
+  private async generateSecurityRecommendations(events: SecurityEvent[]): Promise<Array<any>> {
+    const recommendations: any[] = [];
+    const eventTypes = new Set(events.map(e => e.type));
+    const highRiskEvents = events.filter(e => e.severity === 'HIGH' || e.severity === 'CRITICAL');
+
+    if (eventTypes.has('LOGIN_FAILED') && highRiskEvents.length > 0) {
+      recommendations.push({
+        priority: 'HIGH',
+        action: 'Implement stronger password policies and multi-factor authentication',
+        rationale: 'Multiple high-risk login failures detected',
+      });
+    }
+
+    if (eventTypes.has('UNAUTHORIZED_ACCESS')) {
+      recommendations.push({
+        priority: 'HIGH',
+        action: 'Review and tighten access controls',
+        rationale: 'Unauthorized access attempts detected',
+      });
+    }
+
+    if (eventTypes.has('DATA_EXPORT') && highRiskEvents.length > 0) {
+      recommendations.push({
+        priority: 'MEDIUM',
+        action: 'Implement data export quotas and additional approval workflows',
+        rationale: 'Unusual data export activities detected',
+      });
+    }
+
+    return recommendations;
+  }
+
+  private categorizeThreats(events: SecurityEvent[]): Array<any> {
+    const threatCategories: Record<string, any> = {};
+
+    events.forEach(event => {
+      if (!threatCategories[event.type]) {
+        threatCategories[event.type] = {
+          type: event.type,
+          count: 0,
+          severity: event.severity,
+          description: this.getThreatDescription(event.type),
+        };
+      }
+      threatCategories[event.type].count++;
+    });
+
+    return Object.values(threatCategories);
+  }
+
+  private getThreatDescription(eventType: string): string {
+    const descriptions: Record<string, string> = {
+      LOGIN_FAILED: 'Failed login attempts',
+      UNAUTHORIZED_ACCESS: 'Unauthorized access attempts',
+      DATA_BREACH_ATTEMPT: 'Data breach attempts',
+      PRIVILEGE_ESCALATION: 'Privilege escalation attempts',
+      SUSPICIOUS_ACTIVITY: 'Suspicious activities detected',
+      MALWARE_DETECTED: 'Malware detection',
+      POLICY_VIOLATION: 'Security policy violations',
+    };
+
+    return descriptions[eventType] || 'Security event';
+  }
+
+  private async findMatchingEvents(events: SecurityEvent[], pattern: ThreatPattern): Promise<SecurityEvent[]> {
+    return events.filter(event => {
+      return typeof pattern.pattern === 'function'
+        ? pattern.pattern([event])
+        : pattern.pattern.test(event.type);
+    });
+  }
+
+  private async handleThreatDetection(pattern: ThreatPattern, events: SecurityEvent[]): Promise<void> {
+    const affectedUsers = [...new Set(events.map(e => e.userId).filter(Boolean))];
+
+    await this.prisma.securityAlert.create({
+      data: {
+        threatType: pattern.name,
+        severity: pattern.severity,
+        affectedUsers,
+        description: pattern.description,
+        mitigation: pattern.mitigation,
+        triggeredAt: new Date(),
+        isActive: true,
+      },
+    });
+
+    this.logger.warn(`Threat detected: ${pattern.name} affecting ${affectedUsers.length} users`);
+  }
+}

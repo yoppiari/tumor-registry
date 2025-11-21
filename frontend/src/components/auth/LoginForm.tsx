@@ -61,7 +61,7 @@ export function LoginForm({ onSuccess, onError }: LoginFormProps) {
     setIsSubmitting(true);
 
     try {
-      await login(formData);
+      await login(formData.email, formData.password);
       onSuccess?.();
       router.push('/dashboard');
     } catch (error: any) {

@@ -11,10 +11,19 @@ import { AuthModule } from './modules/auth/auth.module';
 import { UsersModule } from './modules/users/users.module';
 import { CentersModule } from './modules/centers/centers.module';
 import { PatientsModule } from './modules/patients/patients.module';
+import { AnalyticsModule } from './modules/analytics/analytics.module';
+import { ResearchModule } from './modules/research/research.module';
+import { ResearchImpactModule } from './modules/research-impact/research-impact.module';
+import { ReportsModule } from './modules/reports/reports.module';
+import { ScheduledReportsModule } from './modules/scheduled-reports/scheduled-reports.module';
+import { NotificationsModule } from './modules/notifications/notifications.module';
+// Sprint 2: Data Entry & Quality Assurance Modules
+import { MedicalImagingModule } from './modules/medical-imaging/medical-imaging.module';
+import { CaseReviewModule } from './modules/case-review/case-review.module';
+import { PeerReviewModule } from './modules/peer-review/peer-review.module';
+import { OfflineQueueModule } from './modules/offline-queue/offline-queue.module';
 // Temporarily commented out problematic modules
-// import { AnalyticsModule } from './modules/analytics/analytics.module';
 // import { SystemAdministrationModule } from './modules/system-administration/system-administration.module';
-// import { ReportsModule } from './modules/reports/reports.module';
 // import { BackupModule } from './modules/backup/backup.module';
 import { HttpExceptionFilter, ValidationExceptionFilter } from './common/filters/http-exception.filter';
 import { SecurityMiddleware } from './modules/auth/middleware/security.middleware';
@@ -44,9 +53,18 @@ import { SecurityMiddleware } from './modules/auth/middleware/security.middlewar
     UsersModule,
     CentersModule,
     PatientsModule,
-    // AnalyticsModule,
+    AnalyticsModule,
+    ResearchModule,
+    ResearchImpactModule,
+    ReportsModule,
+    ScheduledReportsModule,
+    NotificationsModule,
+    // Sprint 2 Modules
+    MedicalImagingModule,
+    CaseReviewModule,
+    PeerReviewModule,
+    OfflineQueueModule,
     // SystemAdministrationModule,
-    // ReportsModule,
     // BackupModule,
   ],
   controllers: [],

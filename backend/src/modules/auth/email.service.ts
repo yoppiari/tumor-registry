@@ -29,4 +29,20 @@ export class EmailService {
 
     // In production, send actual password reset email
   }
+
+  async sendNotificationEmail(email: string, title: string, message: string) {
+    this.logger.log(`📧 Notification email would be sent to ${email}`);
+    this.logger.log(`📌 Title: ${title}`);
+    this.logger.log(`📝 Message: ${message}`);
+
+    // In production, send actual notification email
+  }
+
+  async sendReportEmail(email: string, reportName: string, filePath: string) {
+    this.logger.log(`📧 Report email would be sent to ${email}`);
+    this.logger.log(`📊 Report: ${reportName}`);
+    this.logger.log(`📎 Attachment: ${filePath}`);
+
+    // In production, send actual report email with attachment
+  }
 }

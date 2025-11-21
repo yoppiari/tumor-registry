@@ -28,7 +28,7 @@ export function Layout({ children }: LayoutProps) {
     { name: 'Data Pasien', href: '/patients', icon: '👥', roles: ['data_entry', 'doctor', 'nurse', 'researcher', 'admin', 'super_admin'] },
     { name: 'Penelitian', href: '/research', icon: '🔬', roles: ['researcher', 'admin', 'super_admin'] },
     { name: 'Analytics', href: '/analytics', icon: '📈', roles: ['researcher', 'admin', 'super_admin', 'national_stakeholder'] },
-    { name: 'Administrasi', href: '/admin', icon: '⚙️', roles: ['admin', 'super_admin'] },
+    { name: 'Administrasi', href: '/admin', icon: '⚙️', roles: ['admin', 'super_admin', 'SYSTEM_ADMIN'] },
     { name: 'Laporan', href: '/reports', icon: '📋', roles: ['researcher', 'admin', 'super_admin', 'national_stakeholder'] },
     { name: 'Pengaturan', href: '/settings', icon: '🔧' },
   ];
@@ -47,6 +47,7 @@ export function Layout({ children }: LayoutProps) {
       researcher: 'Peneliti',
       admin: 'Administrator',
       super_admin: 'Super Admin',
+      SYSTEM_ADMIN: 'Super Administrator',
       national_stakeholder: 'Stakeholder Nasional',
     };
     return roleLabels[role] || role;

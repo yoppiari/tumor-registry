@@ -1,0 +1,522 @@
+import { Injectable, Logger, NotFoundException, UnauthorizedException } from '@nestjs/common';
+import { PrismaService } from '../../database/prisma.service';
+import { JwtService } from '@nestjs/jwt';
+import * as crypto from 'crypto';
+
+@Injectable()
+export class SessionManagementService {
+  private readonly logger = new Logger(SessionManagementService.name);
+
+  constructor(
+    private prisma: PrismaService,
+    private jwtService: JwtService,
+  ) {}
+
+  async createSession(userId: string, deviceInfo: {
+    userAgent: string;
+    ipAddress: string;
+    deviceFingerprint?: string;
+    deviceType?: string;
+    location?: {
+      country?: string;
+      city?: string;
+      latitude?: number;
+      longitude?: number;
+    };
+  }): Promise<{
+    sessionId: string;
+    accessToken: string;
+    refreshToken: string;
+    expiresAt: Date;
+  }> {
+    const sessionId = crypto.randomUUID();
+    const deviceFingerprint = deviceInfo.deviceFingerprint || this.generateDeviceFingerprint(deviceInfo);
+
+    // Check concurrent session limits
+    await this.checkConcurrentSessionLimit(userId);
+
+    const sessionData = {
+      id: sessionId,
+      userId,
+      deviceFingerprint,
+      userAgent: deviceInfo.userAgent,
+      ipAddress: deviceInfo.ipAddress,
+      deviceType: deviceInfo.deviceType || 'unknown',
+      location: deviceInfo.location || {},
+      isActive: true,
+      createdAt: new Date(),
+      lastActivity: new Date(),
+      expiresAt: new Date(Date.now() + 24 * 60 * 60 * 1000), // 24 hours
+    };
+
+    // Create session in database
+    await this.prisma.userSession.create({
+      data: sessionData,
+    });
+
+    // Generate tokens
+    const payload = {
+      sub: userId,
+      sessionId,
+      deviceFingerprint,
+      type: 'access',
+    };
+
+    const accessToken = this.jwtService.sign(payload, {
+      expiresIn: '2h',
+    });
+
+    const refreshToken = this.jwtService.sign(
+      { ...payload, type: 'refresh' },
+      { expiresIn: '7d' }
+    );
+
+    this.logger.log(`Session created for user ${userId}: ${sessionId}`);
+
+    return {
+      sessionId,
+      accessToken,
+      refreshToken,
+      expiresAt: sessionData.expiresAt,
+    };
+  }
+
+  async getUserSessions(userId: string): Promise<Array<{
+    id: string;
+    deviceType: string;
+    userAgent: string;
+    ipAddress: string;
+    location: any;
+    lastActivity: Date;
+    createdAt: Date;
+    isActive: boolean;
+    isCurrent: boolean;
+  }>> {
+    const sessions = await this.prisma.userSession.findMany({
+      where: { userId },
+      orderBy: { lastActivity: 'desc' },
+    });
+
+    return sessions.map(session => ({
+      id: session.id,
+      deviceType: session.deviceType,
+      userAgent: this.sanitizeUserAgent(session.userAgent),
+      ipAddress: this.maskIpAddress(session.ipAddress),
+      location: session.location,
+      lastActivity: session.lastActivity,
+      createdAt: session.createdAt,
+      isActive: session.isActive && session.expiresAt > new Date(),
+      isCurrent: false, // Will be set by caller
+    }));
+  }
+
+  async terminateSession(userId: string, sessionId: string): Promise<void> {
+    const session = await this.prisma.userSession.findFirst({
+      where: {
+        id: sessionId,
+        userId,
+      },
+    });
+
+    if (!session) {
+      throw new NotFoundException('Session not found');
+    }
+
+    await this.prisma.userSession.update({
+      where: { id: sessionId },
+      data: {
+        isActive: false,
+        terminatedAt: new Date(),
+        terminationReason: 'User terminated',
+      },
+    });
+
+    this.logger.log(`Session terminated for user ${userId}: ${sessionId}`);
+  }
+
+  async terminateAllSessions(userId: string, exceptCurrentSessionId?: string): Promise<void> {
+    const whereClause: any = {
+      userId,
+      isActive: true,
+    };
+
+    if (exceptCurrentSessionId) {
+      whereClause.id = { not: exceptCurrentSessionId };
+    }
+
+    const result = await this.prisma.userSession.updateMany({
+      where: whereClause,
+      data: {
+        isActive: false,
+        terminatedAt: new Date(),
+        terminationReason: 'User terminated all sessions',
+      },
+    });
+
+    this.logger.log(`Terminated ${result.count} sessions for user ${userId}`);
+  }
+
+  async validateSession(sessionId: string, deviceFingerprint?: string): Promise<{
+    isValid: boolean;
+    userId?: string;
+    requiresReauth?: boolean;
+    securityRisk?: string;
+  }> {
+    const session = await this.prisma.userSession.findUnique({
+      where: { id: sessionId },
+      include: { user: { select: { roles: true } } },
+    });
+
+    if (!session) {
+      return { isValid: false };
+    }
+
+    // Check if session is expired
+    if (session.expiresAt < new Date()) {
+      await this.deactivateSession(sessionId);
+      return { isValid: false };
+    }
+
+    // Check if session is active
+    if (!session.isActive) {
+      return { isValid: false };
+    }
+
+    // Device fingerprint validation
+    if (session.deviceFingerprint && deviceFingerprint) {
+      const fingerprintMatch = this.compareDeviceFingerprints(
+        session.deviceFingerprint,
+        deviceFingerprint
+      );
+
+      if (!fingerprintMatch) {
+        this.logger.warn(`Device fingerprint mismatch for session ${sessionId}`);
+        return {
+          isValid: false,
+          securityRisk: 'Device fingerprint mismatch - possible session hijacking',
+        };
+      }
+    }
+
+    // Check for suspicious activities
+    const securityRisk = await this.detectSuspiciousActivity(session);
+
+    if (securityRisk) {
+      return {
+        isValid: false,
+        securityRisk,
+      };
+    }
+
+    // Update last activity
+    await this.updateSessionActivity(sessionId);
+
+    // Check if re-authentication is required for sensitive operations
+    const requiresReauth = this.shouldRequireReauth(session);
+
+    return {
+      isValid: true,
+      userId: session.userId,
+      requiresReauth,
+    };
+  }
+
+  async detectAnomalousSessions(userId: string): Promise<Array<{
+    sessionId: string;
+    riskType: string;
+    riskScore: number;
+    details: any;
+  }>> {
+    const sessions = await this.prisma.userSession.findMany({
+      where: {
+        userId,
+        isActive: true,
+        lastActivity: {
+          gte: new Date(Date.now() - 24 * 60 * 60 * 1000), // Last 24 hours
+        },
+      },
+    });
+
+    const anomalousSessions: Array<{
+      sessionId: string;
+      riskType: string;
+      riskScore: number;
+      details: any;
+    }> = [];
+
+    // Check for sessions from unusual locations
+    const locationAnomalies = await this.detectLocationAnomalies(sessions);
+    anomalousSessions.push(...locationAnomalies);
+
+    // Check for concurrent sessions from different devices
+    const deviceAnomalies = this.detectDeviceAnomalies(sessions);
+    anomalousSessions.push(...deviceAnomalies);
+
+    // Check for unusual access patterns
+    const patternAnomalies = this.detectPatternAnomalies(sessions);
+    anomalousSessions.push(...patternAnomalies);
+
+    return anomalousSessions;
+  }
+
+  async getSessionStatistics(userId: string): Promise<{
+    totalSessions: number;
+    activeSessions: number;
+    averageSessionDuration: number;
+    mostUsedDevices: Array<{ deviceType: string; count: number }>;
+    accessLocations: Array<{ country: string; city: string; count: number }>;
+    lastAccess: Date;
+  }> {
+    const sessions = await this.prisma.userSession.findMany({
+      where: { userId },
+      orderBy: { createdAt: 'desc' },
+    });
+
+    const activeSessions = sessions.filter(
+      s => s.isActive && s.expiresAt > new Date()
+    );
+
+    // Calculate average session duration
+    const completedSessions = sessions.filter(s => s.terminatedAt);
+    const averageSessionDuration = completedSessions.length > 0
+      ? completedSessions.reduce((sum, s) => {
+          const duration = s.terminatedAt!.getTime() - s.createdAt.getTime();
+          return sum + duration;
+        }, 0) / completedSessions.length / (1000 * 60) // in minutes
+      : 0;
+
+    // Device usage statistics
+    const deviceCounts: Record<string, number> = {};
+    sessions.forEach(session => {
+      deviceCounts[session.deviceType] = (deviceCounts[session.deviceType] || 0) + 1;
+    });
+
+    const mostUsedDevices = Object.entries(deviceCounts)
+      .map(([deviceType, count]) => ({ deviceType, count }))
+      .sort((a, b) => b.count - a.count)
+      .slice(0, 5);
+
+    // Location statistics
+    const locationCounts: Record<string, { country: string; city: string; count: number }> = {};
+    sessions.forEach(session => {
+      if (session.location?.country) {
+        const key = `${session.location.country}-${session.location.city || 'unknown'}`;
+        if (!locationCounts[key]) {
+          locationCounts[key] = {
+            country: session.location.country,
+            city: session.location.city || 'unknown',
+            count: 0,
+          };
+        }
+        locationCounts[key].count++;
+      }
+    });
+
+    const accessLocations = Object.values(locationCounts)
+      .sort((a, b) => b.count - a.count)
+      .slice(0, 10);
+
+    return {
+      totalSessions: sessions.length,
+      activeSessions: activeSessions.length,
+      averageSessionDuration: Math.round(averageSessionDuration),
+      mostUsedDevices,
+      accessLocations,
+      lastAccess: sessions[0]?.lastActivity || new Date(),
+    };
+  }
+
+  async cleanupExpiredSessions(): Promise<number> {
+    const result = await this.prisma.userSession.updateMany({
+      where: {
+        expiresAt: { lt: new Date() },
+        isActive: true,
+      },
+      data: {
+        isActive: false,
+        terminatedAt: new Date(),
+        terminationReason: 'Session expired',
+      },
+    });
+
+    if (result.count > 0) {
+      this.logger.log(`Cleaned up ${result.count} expired sessions`);
+    }
+
+    return result.count;
+  }
+
+  private async checkConcurrentSessionLimit(userId: string): Promise<void> {
+    const user = await this.prisma.user.findUnique({
+      where: { id: userId },
+      include: { roles: true },
+    });
+
+    if (!user) return;
+
+    // Get concurrent session limit based on user role
+    let maxConcurrentSessions = 5; // Default
+
+    if (user.roles.some(role => role.name === 'ADMIN' || role.name === 'SYSTEM_ADMIN')) {
+      maxConcurrentSessions = 10;
+    } else if (user.roles.some(role => role.name === 'CENTER_ADMIN')) {
+      maxConcurrentSessions = 7;
+    }
+
+    const activeSessionCount = await this.prisma.userSession.count({
+      where: {
+        userId,
+        isActive: true,
+        expiresAt: { gt: new Date() },
+      },
+    });
+
+    if (activeSessionCount >= maxConcurrentSessions) {
+      // Terminate oldest session
+      const oldestSession = await this.prisma.userSession.findFirst({
+        where: {
+          userId,
+          isActive: true,
+          expiresAt: { gt: new Date() },
+        },
+        orderBy: { lastActivity: 'asc' },
+      });
+
+      if (oldestSession) {
+        await this.prisma.userSession.update({
+          where: { id: oldestSession.id },
+          data: {
+            isActive: false,
+            terminatedAt: new Date(),
+            terminationReason: 'Concurrent session limit exceeded',
+          },
+        });
+      }
+    }
+  }
+
+  private generateDeviceFingerprint(deviceInfo: {
+    userAgent: string;
+    ipAddress: string;
+  }): string {
+    const fingerprintData = {
+      userAgent: deviceInfo.userAgent,
+      ipHash: crypto.createHash('sha256').update(deviceInfo.ipAddress).digest('hex'),
+      timestamp: Math.floor(Date.now() / (1000 * 60 * 60)), // Hour buckets
+    };
+
+    return crypto.createHash('sha256').update(JSON.stringify(fingerprintData)).digest('hex');
+  }
+
+  private compareDeviceFingerprints(fp1: string, fp2: string): boolean {
+    return fp1 === fp2;
+  }
+
+  private async detectSuspiciousActivity(session: any): Promise<string | null> {
+    // Check for IP changes
+    if (session.ipAddress !== session.lastIpAddress) {
+      return 'IP address changed during session';
+    }
+
+    // Check for rapid succession of requests (potential bot)
+    const recentRequests = await this.getRecentRequestCount(session.id);
+    if (recentRequests > 1000) { // 1000 requests in last minute
+      return 'Unusual request pattern detected';
+    }
+
+    return null;
+  }
+
+  private async getRecentRequestCount(sessionId: string): Promise<number> {
+    // This would be implemented with request tracking
+    // For now, return 0
+    return 0;
+  }
+
+  private async deactivateSession(sessionId: string): Promise<void> {
+    await this.prisma.userSession.update({
+      where: { id: sessionId },
+      data: {
+        isActive: false,
+        terminatedAt: new Date(),
+        terminationReason: 'Session expired',
+      },
+    });
+  }
+
+  private shouldRequireReauth(session: any): boolean {
+    const sessionAge = (Date.now() - session.createdAt.getTime()) / (1000 * 60 * 60); // hours
+    return sessionAge > 8; // Require re-authentication after 8 hours
+  }
+
+  private async updateSessionActivity(sessionId: string): Promise<void> {
+    await this.prisma.userSession.update({
+      where: { id: sessionId },
+      data: { lastActivity: new Date() },
+    });
+  }
+
+  private sanitizeUserAgent(userAgent: string): string {
+    // Remove potentially sensitive information
+    return userAgent.replace(/\([^)]*\)/g, '(...)').substring(0, 100);
+  }
+
+  private maskIpAddress(ipAddress: string): string {
+    const parts = ipAddress.split('.');
+    if (parts.length === 4) {
+      return `${parts[0]}.${parts[1]}.*.*`;
+    } else if (ipAddress.includes(':')) {
+      // IPv6 - show first 2 segments
+      const segments = ipAddress.split(':');
+      return `${segments[0]}:${segments[1]}::`;
+    }
+    return ipAddress;
+  }
+
+  private async detectLocationAnomalies(sessions: any[]): Promise<Array<any>> {
+    const anomalies: any[] = [];
+    const locations = sessions.map(s => s.location?.country).filter(Boolean);
+
+    if (locations.length > 1) {
+      // Check for sessions from different countries within short timeframe
+      const uniqueCountries = new Set(locations);
+      if (uniqueCountries.size > 1) {
+        sessions.forEach(session => {
+          if (session.location?.country) {
+            anomalies.push({
+              sessionId: session.id,
+              riskType: 'Multiple country access',
+              riskScore: 70,
+              details: { country: session.location.country },
+            });
+          }
+        });
+      }
+    }
+
+    return anomalies;
+  }
+
+  private detectDeviceAnomalies(sessions: any[]): Array<any> {
+    const anomalies: any[] = [];
+    const deviceTypes = sessions.map(s => s.deviceType);
+    const uniqueDevices = new Set(deviceTypes);
+
+    if (uniqueDevices.size > 3) {
+      // Too many different device types
+      anomalies.push({
+        sessionId: sessions[0].id,
+        riskType: 'Multiple device types',
+        riskScore: 50,
+        details: { deviceCount: uniqueDevices.size },
+      });
+    }
+
+    return anomalies;
+  }
+
+  private detectPatternAnomalies(sessions: any[]): Array<any> {
+    // Implement pattern detection logic
+    return [];
+  }
+}

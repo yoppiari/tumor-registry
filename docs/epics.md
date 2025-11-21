@@ -131,6 +131,51 @@ Acceptance Criteria:
 - SSO configuration manageable by center administrators
 ```
 
+**Story 1.8: Password Policy Management**
+```
+As a System Administrator
+I want to configure and enforce password policies across the system
+So that we maintain strong security standards and compliance
+
+Acceptance Criteria:
+- Configurable password complexity rules (length, character types, patterns)
+- Password history tracking to prevent reuse of recent passwords
+- Account lockout policies after failed attempts
+- Password expiration notifications and forced resets
+- Customizable password policies by role or security level
+- Compliance with healthcare password standards (NIST, HIPAA)
+```
+
+**Story 1.9: Session Management Across Devices**
+```
+As a User
+I want to manage my active sessions across multiple devices
+So that I can maintain security and control over my account access
+
+Acceptance Criteria:
+- View all active sessions with device details and locations
+- Terminate specific sessions remotely
+- Session timeout configuration by role sensitivity
+- Concurrent session limits per user
+- Device fingerprinting for anomaly detection
+- Real-time alerts for suspicious session activities
+```
+
+**Story 1.10: Advanced Security Monitoring**
+```
+As a Security Officer
+I want comprehensive security monitoring and threat detection
+So that I can proactively identify and respond to security threats
+
+Acceptance Criteria:
+- Real-time threat detection using AI/ML algorithms
+- Behavioral analytics for anomaly identification
+- Security incident logging and workflow management
+- Automated response protocols for common threats
+- Integration with national cybersecurity frameworks
+- Regular security assessment reports and recommendations
+```
+
 ---
 
 ## Epic 2: Data Entry & Quality Assurance
@@ -263,6 +308,36 @@ Acceptance Criteria:
 - Review comments threaded for collaborative discussion
 - Review status tracking (pending, in review, completed, rejected)
 - Recognition system for high-quality peer reviews
+```
+
+**Story 2.9: Advanced Data Validation Rules**
+```
+As a Center Administrator
+I want to configure custom data validation rules for our specific requirements
+So that we can ensure data quality meets our center's medical standards
+
+Acceptance Criteria:
+- Custom validation rule builder with medical terminology support
+- Cross-field validation for medical consistency (e.g., diagnosis-treatment correlation)
+- Validation rule templates for common cancer registry standards
+- Real-time validation feedback during data entry
+- Validation performance metrics and rule effectiveness tracking
+- Export/import validation rules between centers for standardization
+```
+
+**Story 2.10: Intelligent Data Auto-Completion**
+```
+As a Data Entry Staff
+I want AI-powered suggestions and auto-completion for data fields
+So that I can enter data faster while maintaining accuracy
+
+Acceptance Criteria:
+- Smart auto-completion based on existing patient data patterns
+- Medical terminology suggestions with ICD-10 coding support
+- Treatment protocol recommendations based on cancer type and stage
+- Predictive field population using machine learning models
+- Confidence scores for AI suggestions with manual override options
+- Continuous learning from user corrections to improve accuracy
 ```
 
 ---
@@ -443,6 +518,36 @@ Acceptance Criteria:
 - Comprehensive access logging for compliance auditing
 ```
 
+**Story 4.6: Data Usage Analytics**
+```
+As a National Administrator
+I want comprehensive analytics on how research data is being used
+So that I can understand research impact and optimize data access policies
+
+Acceptance Criteria:
+- Usage metrics tracking (downloads, views, citations, collaborations)
+- Research impact assessment with publication and patent tracking
+- Data access pattern analysis for policy optimization
+- Researcher engagement metrics and satisfaction scores
+- Economic impact assessment of data sharing initiatives
+- Automated impact reports with ROI analysis
+```
+
+**Story 4.7: Collaborative Research Platform**
+```
+As a Researcher
+I want a collaborative platform for multi-center research studies
+So that I can coordinate with multiple institutions on large-scale studies
+
+Acceptance Criteria:
+- Multi-center study coordination tools with standardized protocols
+- Secure data sharing with role-based access per institution
+- Centralized study management with milestone tracking
+- Communication tools for research teams across institutions
+- Harmonization tools for data from different centers
+- Publication collaboration tools with authorship management
+```
+
 ---
 
 ## Epic 5: Analytics & Intelligence
@@ -530,6 +635,36 @@ Acceptance Criteria:
 - Collaboration network visualization showing research partnerships
 - Innovation metrics including patents and diagnostic tools developed
 - ROI analysis for research funding allocation
+```
+
+**Story 5.6: AI-Powered Cancer Insights**
+```
+As a Researcher
+I want AI-generated insights and patterns from cancer data
+So that I can discover novel correlations and research opportunities
+
+Acceptance Criteria:
+- Machine learning insights for cancer pattern discovery
+- Automated hypothesis generation based on data patterns
+- Natural language queries for complex data analysis
+- Visualization of AI-discovered correlations and clusters
+- Validation tools for AI-generated insights
+- Integration with external AI research platforms
+```
+
+**Story 5.7: Real-Time Clinical Decision Support**
+```
+As a Medical Professional
+I want real-time clinical decision support based on national cancer data
+So that I can make evidence-based decisions for patient care
+
+Acceptance Criteria:
+- Real-time treatment recommendations based on similar cases
+- Prognosis predictions using national outcome data
+- Clinical trial matching based on patient profiles
+- Drug interaction alerts with alternative suggestions
+- Evidence-based guidelines with source attribution
+- Integration with hospital EMR systems
 ```
 
 ---
@@ -769,6 +904,51 @@ Acceptance Criteria:
 - Communication templates for stakeholder notifications
 - Recovery time objective (RTO) and recovery point objective (RPO) monitoring
 - Regular disaster recovery drills with performance measurement
+```
+
+**Story 6.16: Advanced Security Analytics**
+```
+As a Security Officer
+I want advanced security analytics and threat intelligence integration
+So that I can proactively identify and mitigate emerging cyber threats
+
+Acceptance Criteria:
+- Integration with national cybersecurity threat intelligence feeds
+- Advanced persistent threat (APT) detection patterns
+- Zero-day vulnerability scanning and assessment
+- Security incident correlation and automated response
+- Dark web monitoring for potential data breaches
+- Regular security posture assessment with improvement recommendations
+```
+
+**Story 6.17: Multi-Tenant Resource Management**
+```
+As a National Administrator
+I want sophisticated resource management across multiple tenants
+So that I can optimize resource allocation and cost efficiency
+
+Acceptance Criteria:
+- Dynamic resource scaling based on center usage patterns
+- Cost allocation and chargeback capabilities per center
+- Resource usage forecasting and capacity planning
+- Performance isolation between tenants
+- Automated resource optimization recommendations
+- Integration with cloud provider billing systems
+```
+
+**Story 6.18: Compliance Automation**
+```
+As a Compliance Officer
+I want automated compliance checking and reporting
+So that we can maintain continuous compliance with healthcare regulations
+
+Acceptance Criteria:
+- Automated HIPAA compliance checking with real-time monitoring
+- GDPR-style data privacy compliance for international collaborations
+- Healthcare standard compliance (HL7 FHIR, DICOM, ICD-10)
+- Automated compliance report generation for audits
+- Regulatory change monitoring and impact assessment
+- Compliance gap identification with remediation tracking
 ```
 
 ---

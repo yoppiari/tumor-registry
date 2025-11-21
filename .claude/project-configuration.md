@@ -55,6 +55,46 @@
 
 ---
 
+## Development Guidelines
+
+### **CRITICAL: File Ownership Requirements**
+
+⚠️ **IMPORTANT**: All files and directories MUST be created with `yopi:yopi` ownership, NOT `root:root`
+
+**Requirements:**
+- Always create files as user `yopi`, never as `root`
+- Avoid using `sudo` for file operations unless absolutely necessary
+- If root ownership occurs, immediately change ownership with: `chown -R yopi:yopi [file/directory]`
+- Before creating files, verify current user with: `whoami` (should return `yopi`)
+
+**Common Issues to Avoid:**
+1. ❌ Using `sudo npm install` - creates node_modules with root ownership
+2. ❌ Using `sudo docker` commands that create files
+3. ❌ Running build scripts with elevated privileges
+4. ❌ Creating config files with `sudo tee` or `sudo echo`
+
+**Best Practices:**
+1. ✅ Always check permissions before running commands
+2. ✅ Use `npm install` without sudo
+3. ✅ Fix ownership immediately if root ownership occurs
+4. ✅ Verify file creation with `ls -la` to confirm ownership
+5. ✅ Use proper user context for all development operations
+
+**File Ownership Verification:**
+```bash
+# Check current user
+whoami
+
+# Check file ownership
+ls -la /path/to/files
+
+# Fix ownership issues
+chown -R yopi:yopi /path/to/problematic/files
+```
+
+---
+
 **Configuration Date**: 2025-11-19
 **BMM Version**: Core v6.0
 **Recommended Agent**: Use enterprise-level agents for all subsequent tasks
+**File Ownership**: ALL files must be owned by `yopi:yopi` user

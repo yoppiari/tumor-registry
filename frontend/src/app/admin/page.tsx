@@ -29,7 +29,7 @@ export default function AdminPage() {
     }
 
     // Check if user has admin privileges
-    if (user?.role !== 'admin' && user?.role !== 'super_admin') {
+    if (user?.role !== 'admin' && user?.role !== 'super_admin' && user?.role !== 'SYSTEM_ADMIN') {
       window.location.href = '/dashboard';
       return;
     }
@@ -204,7 +204,7 @@ export default function AdminPage() {
     );
   }
 
-  if (user?.role !== 'admin' && user?.role !== 'super_admin') {
+  if (user?.role !== 'admin' && user?.role !== 'super_admin' && user?.role !== 'SYSTEM_ADMIN') {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
@@ -217,9 +217,7 @@ export default function AdminPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <header className="bg-white shadow-sm border-b">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-4">
             <div>
               <h1 className="text-2xl font-bold text-gray-900">System Administration</h1>
@@ -230,9 +228,11 @@ export default function AdminPage() {
                 Logged in as: <span className="font-medium">{user?.name}</span>
               </span>
               <span className={`px-2 py-1 text-xs font-medium rounded-full ${
+                user?.role === 'SYSTEM_ADMIN' ? 'bg-red-100 text-red-800' :
                 user?.role === 'super_admin' ? 'bg-purple-100 text-purple-800' : 'bg-blue-100 text-blue-800'
               }`}>
-                {user?.role === 'super_admin' ? 'Super Admin' : 'Admin'}
+                {user?.role === 'SYSTEM_ADMIN' ? 'Super Administrator' :
+                 user?.role === 'super_admin' ? 'Super Admin' : 'Admin'}
               </span>
             </div>
           </div>
@@ -409,11 +409,15 @@ export default function AdminPage() {
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
                           <span className={`px-2 py-1 text-xs font-medium rounded-full ${
-                            userItem.role === 'admin' || userItem.role === 'super_admin'
+                            userItem.role === 'SYSTEM_ADMIN' || userItem.role === 'admin' || userItem.role === 'super_admin'
                               ? 'bg-purple-100 text-purple-800'
                               : userItem.role === 'doctor'
                               ? 'bg-blue-100 text-blue-800'
-                              : 'bg-green-100 text-green-800'
+                              : userItem.role === 'nurse'
+                              ? 'bg-green-100 text-green-800'
+                              : userItem.role === 'researcher'
+                              ? 'bg-yellow-100 text-yellow-800'
+                              : 'bg-gray-100 text-gray-800'
                           }`}>
                             {userItem.role}
                           </span>
@@ -794,7 +798,7 @@ export default function AdminPage() {
             </div>
           </div>
         )}
-      </main>
+      </div>
     </div>
   );
 }

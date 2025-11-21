@@ -17,6 +17,7 @@ import { JwtAuthGuard } from '../../auth/guards/jwt-auth.guard';
 import { RolesGuard } from '../../auth/guards/roles.guard';
 import { Roles } from '../../auth/decorators/roles.decorator';
 import { ReportsService } from '../services/reports.service';
+import { ReportHistoryService } from '../services/report-history.service';
 import { CreateReportTemplateDto } from '../dto/create-report-template.dto';
 import { GenerateReportDto, ScheduleReportDto } from '../dto/generate-report.dto';
 import { Response } from 'express';
@@ -27,7 +28,10 @@ import * as fs from 'fs';
 @UseGuards(JwtAuthGuard, RolesGuard)
 @ApiBearerAuth()
 export class ReportsController {
-  constructor(private readonly reportsService: ReportsService) {}
+  constructor(
+    private readonly reportsService: ReportsService,
+    private readonly historyService: ReportHistoryService,
+  ) {}
 
   @Get('templates')
   @Roles('SYSTEM_ADMIN', 'CENTER_DIRECTOR', 'DATA_ANALYST', 'RESEARCHER')
@@ -303,5 +307,136 @@ export class ReportsController {
     @Body() cloneData: { name: string; description?: string },
   ) {
     return this.reportsService.cloneTemplate(id, cloneData);
+  }
+
+  // Story 6.5: Report History Tracking Endpoints
+
+  @Get('history/:reportId')
+  @Roles('SYSTEM_ADMIN', 'CENTER_DIRECTOR', 'DATA_ANALYST', 'RESEARCHER')
+  @ApiOperation({ summary: 'Get complete history for a report' })
+  @ApiResponse({ status: 200, description: 'Report history retrieved successfully' })
+  async getReportHistory(@Param('reportId') reportId: string) {
+    return this.historyService.getReportHistory(reportId);
+  }
+
+  @Get('history/template/:templateId')
+  @Roles('SYSTEM_ADMIN', 'CENTER_DIRECTOR', 'DATA_ANALYST')
+  @ApiOperation({ summary: 'Get history by template' })
+  @ApiResponse({ status: 200, description: 'Template history retrieved successfully' })
+  async getTemplateHistory(
+    @Param('templateId') templateId: string,
+    @Query('startDate') startDate?: string,
+    @Query('endDate') endDate?: string,
+    @Query('status') status?: string,
+    @Query('limit') limit?: string,
+  ) {
+    const filters = {
+      startDate: startDate ? new Date(startDate) : undefined,
+      endDate: endDate ? new Date(endDate) : undefined,
+      status,
+      limit: limit ? parseInt(limit) : undefined,
+    };
+
+    return this.historyService.getTemplateHistory(templateId, filters);
+  }
+
+  @Get('distributions/:reportHistoryId')
+  @Roles('SYSTEM_ADMIN', 'CENTER_DIRECTOR', 'DATA_ANALYST')
+  @ApiOperation({ summary: 'Get distribution tracking for a report' })
+  @ApiResponse({ status: 200, description: 'Distribution tracking retrieved successfully' })
+  async getDistributions(@Param('reportHistoryId') reportHistoryId: string) {
+    return this.historyService.getDistributions(reportHistoryId);
+  }
+
+  @Get('access-logs/:reportHistoryId')
+  @Roles('SYSTEM_ADMIN', 'CENTER_DIRECTOR', 'DATA_ANALYST')
+  @ApiOperation({ summary: 'Get access logs for a report (who viewed it)' })
+  @ApiResponse({ status: 200, description: 'Access logs retrieved successfully' })
+  async getAccessLogs(
+    @Param('reportHistoryId') reportHistoryId: string,
+    @Query('userId') userId?: string,
+    @Query('accessType') accessType?: string,
+    @Query('startDate') startDate?: string,
+    @Query('endDate') endDate?: string,
+  ) {
+    const filters = {
+      userId,
+      accessType,
+      startDate: startDate ? new Date(startDate) : undefined,
+      endDate: endDate ? new Date(endDate) : undefined,
+    };
+
+    return this.historyService.getAccessLogs(reportHistoryId, filters);
+  }
+
+  @Post('access-logs/:reportHistoryId')
+  @Roles('SYSTEM_ADMIN', 'CENTER_DIRECTOR', 'DATA_ANALYST', 'RESEARCHER')
+  @ApiOperation({ summary: 'Log report access' })
+  @ApiResponse({ status: 201, description: 'Access logged successfully' })
+  async logAccess(
+    @Param('reportHistoryId') reportHistoryId: string,
+    @Body() accessData: any,
+    @Request() req,
+  ) {
+    return this.historyService.logAccess({
+      reportHistoryId,
+      userId: req.user.id,
+      userName: req.user.name,
+      ...accessData,
+    });
+  }
+
+  @Get('integrity/:reportHistoryId')
+  @Roles('SYSTEM_ADMIN', 'CENTER_DIRECTOR', 'DATA_ANALYST')
+  @ApiOperation({ summary: 'Verify report file integrity' })
+  @ApiResponse({ status: 200, description: 'Integrity verification completed' })
+  async verifyIntegrity(@Param('reportHistoryId') reportHistoryId: string) {
+    return this.historyService.verifyIntegrity(reportHistoryId);
+  }
+
+  @Get('versions/:reportId')
+  @Roles('SYSTEM_ADMIN', 'CENTER_DIRECTOR', 'DATA_ANALYST', 'RESEARCHER')
+  @ApiOperation({ summary: 'Get version history for a report' })
+  @ApiResponse({ status: 200, description: 'Version history retrieved successfully' })
+  async getVersionHistory(@Param('reportId') reportId: string) {
+    return this.historyService.getVersionHistory(reportId);
+  }
+
+  @Get('audit/export')
+  @Roles('SYSTEM_ADMIN', 'CENTER_DIRECTOR')
+  @ApiOperation({ summary: 'Export report history for compliance audit' })
+  @ApiResponse({ status: 200, description: 'Audit export completed successfully' })
+  async exportForAudit(
+    @Query('startDate') startDate?: string,
+    @Query('endDate') endDate?: string,
+    @Query('templateId') templateId?: string,
+    @Query('reportType') reportType?: string,
+  ) {
+    const filters = {
+      startDate: startDate ? new Date(startDate) : undefined,
+      endDate: endDate ? new Date(endDate) : undefined,
+      templateId,
+      reportType,
+    };
+
+    return this.historyService.exportForAudit(filters);
+  }
+
+  @Get('history/statistics')
+  @Roles('SYSTEM_ADMIN', 'CENTER_DIRECTOR', 'DATA_ANALYST')
+  @ApiOperation({ summary: 'Get history statistics' })
+  @ApiResponse({ status: 200, description: 'Statistics retrieved successfully' })
+  async getHistoryStatistics(
+    @Query('templateId') templateId?: string,
+    @Query('startDate') startDate?: string,
+    @Query('endDate') endDate?: string,
+  ) {
+    const filters = {
+      templateId,
+      startDate: startDate ? new Date(startDate) : undefined,
+      endDate: endDate ? new Date(endDate) : undefined,
+    };
+
+    return this.historyService.getHistoryStatistics(filters);
   }
 }

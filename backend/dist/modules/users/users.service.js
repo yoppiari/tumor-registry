@@ -127,6 +127,40 @@ let UsersService = class UsersService {
         });
         return userRole?.role.code || 'STAFF';
     }
+    async getUserPermissions(userId) {
+        const userRoles = await this.prisma.userRole.findMany({
+            where: {
+                userId,
+                isActive: true,
+            },
+            include: {
+                role: {
+                    include: {
+                        permissions: {
+                            include: {
+                                permission: true,
+                            },
+                        },
+                    },
+                },
+            },
+        });
+        const permissionsMap = new Map();
+        for (const userRole of userRoles) {
+            for (const rolePermission of userRole.role.permissions) {
+                const permission = rolePermission.permission;
+                if (!permissionsMap.has(permission.code)) {
+                    permissionsMap.set(permission.code, {
+                        code: permission.code,
+                        name: permission.name,
+                        resource: permission.resource,
+                        action: permission.action,
+                    });
+                }
+            }
+        }
+        return Array.from(permissionsMap.values());
+    }
     async findAll() {
         const users = await this.prisma.user.findMany({
             select: {

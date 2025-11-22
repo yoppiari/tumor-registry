@@ -1,6 +1,8 @@
 'use client';
 
+import { useState } from 'react';
 import { usePatient, PatientProvider } from '@/contexts/PatientContext';
+import { Layout } from '@/components/layout/Layout';
 import { Patient } from '@/types/patient';
 import PatientSearch from '@/components/patients/PatientSearch';
 import PatientList from '@/components/patients/PatientList';
@@ -38,43 +40,41 @@ function PatientManagementContent() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <div className="bg-white shadow-sm border-b">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center py-4">
-            <div>
-              <h1 className="text-2xl font-bold text-gray-900">Manajemen Pasien</h1>
-              <p className="text-gray-600">INAMSOS - Sistem Informasi Kanker Nasional</p>
-            </div>
-            <div className="flex space-x-3">
-              <button
-                onClick={handleShowListView}
-                className={`px-4 py-2 rounded-lg font-medium transition-colors ${
-                  !showChatEntry
-                    ? 'bg-blue-500 text-white'
-                    : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-                }`}
-              >
-                Daftar Pasien
-              </button>
-              <button
-                onClick={handleShowChatEntry}
-                className={`px-4 py-2 rounded-lg font-medium transition-colors ${
-                  showChatEntry
-                    ? 'bg-green-500 text-white'
-                    : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-                }`}
-              >
-                Input Baru
-              </button>
-            </div>
+    <Layout>
+      {/* Page Header */}
+      <div className="mb-6">
+        <div className="flex justify-between items-center">
+          <div>
+            <h1 className="text-2xl font-bold text-gray-900">Manajemen Pasien</h1>
+            <p className="text-gray-600">INAMSOS - Sistem Informasi Kanker Nasional</p>
+          </div>
+          <div className="flex space-x-3">
+            <button
+              onClick={handleShowListView}
+              className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+                !showChatEntry
+                  ? 'bg-blue-500 text-white'
+                  : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+              }`}
+            >
+              Daftar Pasien
+            </button>
+            <button
+              onClick={handleShowChatEntry}
+              className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+                showChatEntry
+                  ? 'bg-green-500 text-white'
+                  : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+              }`}
+            >
+              Input Baru
+            </button>
           </div>
         </div>
       </div>
 
       {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div>
         {showChatEntry ? (
           /* WhatsApp-inspired Entry View */
           <div className="max-w-4xl mx-auto">
@@ -130,7 +130,7 @@ function PatientManagementContent() {
           </div>
         )}
       </div>
-    </div>
+    </Layout>
   );
 }
 

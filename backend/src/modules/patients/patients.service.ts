@@ -568,4 +568,95 @@ export class PatientsService {
       return acc;
     }, {});
   }
+
+  // Chat session management (in-memory for now)
+  private chatSessions = new Map<string, any>();
+
+  async createChatSession() {
+    const { v4: uuidv4 } = await import('uuid');
+    const sessionId = uuidv4();
+
+    const session = {
+      id: sessionId,
+      status: 'in_progress',
+      currentStep: 0,
+      totalSteps: 8,
+      messages: [
+        {
+          id: uuidv4(),
+          type: 'system',
+          content: '👋 Selamat datang di sistem input data pasien INAMSOS. Mari kita mulai dengan nama pasien.',
+          timestamp: new Date(),
+        }
+      ],
+      formData: {},
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    };
+
+    this.chatSessions.set(sessionId, session);
+    return session;
+  }
+
+  async getChatSession(sessionId: string) {
+    const session = this.chatSessions.get(sessionId);
+    if (!session) {
+      throw new NotFoundException('Session not found');
+    }
+    return session;
+  }
+
+  async sendChatMessage(sessionId: string, content: string, fieldName?: string, formData?: any) {
+    const { v4: uuidv4 } = await import('uuid');
+    const session = await this.getChatSession(sessionId);
+
+    // Add user message
+    session.messages.push({
+      id: uuidv4(),
+      type: 'user',
+      content,
+      timestamp: new Date(),
+      fieldName,
+    });
+
+    // Update form data
+    if (fieldName && formData) {
+      session.formData = { ...session.formData, ...formData };
+    }
+
+    // Generate system response
+    const nextStep = session.currentStep + 1;
+    const responses = [
+      { content: '📅 Terima kasih! Sekarang masukkan tanggal lahir pasien (format: YYYY-MM-DD).' },
+      { content: '👤 Jenis kelamin pasien?', options: ['Laki-laki', 'Perempuan'] },
+      { content: '📞 Apakah ada nomor telepon pasien?', },
+      { content: '📍 Masukkan alamat pasien.' },
+      { content: '🏥 Dimana lokasi kanker utama?' },
+      { content: '📊 Stadium kanker?', options: ['I', 'II', 'III', 'IV'] },
+      { content: '💊 Status pengobatan?', options: ['Baru', 'Sedang Berjalan', 'Selesai', 'Paliatif'] },
+      { content: '✅ Data berhasil disimpan! Terima kasih.', completed: true },
+    ];
+
+    if (nextStep < responses.length) {
+      const response = responses[nextStep];
+      session.messages.push({
+        id: uuidv4(),
+        type: 'system',
+        content: response.content,
+        timestamp: new Date(),
+        options: response.options,
+        completed: response.completed || false,
+      });
+      session.currentStep = nextStep;
+
+      if (response.completed) {
+        session.status = 'completed';
+      }
+    }
+
+    session.updatedAt = new Date();
+    this.chatSessions.set(sessionId, session);
+
+    return session;
+  }
 }

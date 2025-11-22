@@ -1,315 +1,317 @@
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:03 PM [32m    LOG[39m [38;5;3m[NestFactory] [39m[32mStarting Nest application...[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:03 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mBullModule dependencies initialized[39m[38;5;3m +110ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:03 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mDatabaseModule dependencies initialized[39m[38;5;3m +0ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:03 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mPassportModule dependencies initialized[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:03 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mThrottlerModule dependencies initialized[39m[38;5;3m +11ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:03 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mConfigHostModule dependencies initialized[39m[38;5;3m +3ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:03 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mCommonModule dependencies initialized[39m[38;5;3m +0ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:03 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mUsersModule dependencies initialized[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:03 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mHealthModule dependencies initialized[39m[38;5;3m +0ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:03 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mDiscoveryModule dependencies initialized[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:03 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mConfigModule dependencies initialized[39m[38;5;3m +6ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:03 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mConfigModule dependencies initialized[39m[38;5;3m +0ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:03 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mScheduleModule dependencies initialized[39m[38;5;3m +3ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:03 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mAppModule dependencies initialized[39m[38;5;3m +182ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:03 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mJwtModule dependencies initialized[39m[38;5;3m +4ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:03 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mReportsModule dependencies initialized[39m[38;5;3m +2ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:03 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mNotificationsModule dependencies initialized[39m[38;5;3m +0ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:03 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mMedicalImagingModule dependencies initialized[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:03 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mCaseReviewModule dependencies initialized[39m[38;5;3m +0ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:03 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mPeerReviewModule dependencies initialized[39m[38;5;3m +0ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:03 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mOfflineQueueModule dependencies initialized[39m[38;5;3m +0ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:03 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mScheduledReportsModule dependencies initialized[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:03 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mCentersModule dependencies initialized[39m[38;5;3m +0ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:03 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mPatientsModule dependencies initialized[39m[38;5;3m +0ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:03 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mResearchModule dependencies initialized[39m[38;5;3m +4ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:03 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mPerformanceModule dependencies initialized[39m[38;5;3m +2ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:03 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mResearchImpactModule dependencies initialized[39m[38;5;3m +2ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:03 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mAnalyticsModule dependencies initialized[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:03 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mAuthModule dependencies initialized[39m[38;5;3m +0ms[39m
-[33m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [33m   WARN[39m [38;5;3m[LegacyRouteConverter] [39m[33mUnsupported route path: "/api/v1/*". In previous versions, the symbols ?, *, and + were used to denote optional or repeating path parameters. The latest version of "path-to-regexp" now requires the use of named parameters. For example, instead of using a route like /users/* to capture all routes starting with "/users", you should use /users/*path. For more details, refer to the migration guide. Attempting to auto-convert...[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mHealthController {/api/v1/health}:[39m[38;5;3m +3ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/health, GET} route[39m[38;5;3m +7ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/health/detailed, GET} route[39m[38;5;3m +2ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/health/readiness, GET} route[39m[38;5;3m +2ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/health/liveness, GET} route[39m[38;5;3m +2ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mAuthController {/api/v1/auth}:[39m[38;5;3m +0ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/auth/register, POST} route[39m[38;5;3m +3ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/auth/login, POST} route[39m[38;5;3m +2ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/auth/verify-mfa, POST} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/auth/verify-email, POST} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/auth/refresh-token, POST} route[39m[38;5;3m +2ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/auth/profile, GET} route[39m[38;5;3m +2ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/auth/logout, POST} route[39m[38;5;3m +2ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/auth/mfa/setup, POST} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/auth/mfa/enable, POST} route[39m[38;5;3m +2ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/auth/mfa/disable, POST} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/auth/mfa/verify, POST} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/auth/mfa/backup-codes/regenerate, POST} route[39m[38;5;3m +2ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/auth/mfa/backup-codes/verify, POST} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/auth/mfa/status, GET} route[39m[38;5;3m +2ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mCentersController {/api/v1/centers}:[39m[38;5;3m +0ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/centers, GET} route[39m[38;5;3m +2ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/centers/statistics, GET} route[39m[38;5;3m +2ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/centers/:id, GET} route[39m[38;5;3m +2ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/centers/:id/users, GET} route[39m[38;5;3m +3ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/centers, POST} route[39m[38;5;3m +2ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/centers/:id, PUT} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/centers/:id/activate, PUT} route[39m[38;5;3m +2ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/centers/:id/deactivate, PUT} route[39m[38;5;3m +2ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/centers/:id, DELETE} route[39m[38;5;3m +2ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mPatientsController {/api/v1/patients}:[39m[38;5;3m +0ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/patients, GET} route[39m[38;5;3m +2ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/patients/search, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/patients/statistics, GET} route[39m[38;5;3m +2ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/patients/:id, GET} route[39m[38;5;3m +2ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/patients/nik/:nik, GET} route[39m[38;5;3m +2ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/patients/mrn/:mrn, GET} route[39m[38;5;3m +2ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/patients, POST} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/patients/:id, PUT} route[39m[38;5;3m +2ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/patients/:id/vital-signs, GET} route[39m[38;5;3m +2ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/patients/:id/diagnoses, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/patients/:id/medications, GET} route[39m[38;5;3m +2ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/patients/:id/allergies, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/patients/:id/visits, GET} route[39m[38;5;3m +2ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/patients/:id/insurance, GET} route[39m[38;5;3m +2ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mAnalyticsController {/api/v1/analytics}:[39m[38;5;3m +0ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/analytics/dashboard, GET} route[39m[38;5;3m +2ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/analytics/cancer-stats, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/analytics/trends, GET} route[39m[38;5;3m +2ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/analytics/center-performance, GET} route[39m[38;5;3m +2ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mEnhancedAnalyticsController {/api/v1/analytics/v2}:[39m[38;5;3m +0ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/analytics/v2/dashboard/executive, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/analytics/v2/dashboard/national-intelligence, GET} route[39m[38;5;3m +2ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/analytics/v2/performance/benchmark, GET} route[39m[38;5;3m +2ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/analytics/v2/performance/metrics/:centerId, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/analytics/v2/predictive/trends, GET} route[39m[38;5;3m +2ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/analytics/v2/predictive/trends/:cancerType, GET} route[39m[38;5;3m +2ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/analytics/v2/research/impact, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/analytics/v2/research/impact/summary, GET} route[39m[38;5;3m +2ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/analytics/v2/real-time/metrics, GET} route[39m[38;5;3m +2ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/analytics/v2/cache/stats, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/analytics/v2/cache/metrics, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/analytics/v2/cache/invalidate/all, POST} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/analytics/v2/cache/invalidate/center/:centerId, POST} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/analytics/v2/cache/invalidate/patient/:patientId, POST} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/analytics/v2/materialized-views/refresh, POST} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/analytics/v2/data-quality/summary, GET} route[39m[38;5;3m +2ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/analytics/v2/health/analytics, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/analytics/v2/events/recent, GET} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/analytics/v2/optimize/cache, POST} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mPerformanceController {/api/v1/performance}:[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/performance/database/analysis, GET} route[39m[38;5;3m +2ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/performance/application/metrics, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/performance/caching/strategy, POST} route[39m[38;5;3m +2ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/performance/queries/optimize, POST} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/performance/dashboard, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/performance/benchmark/run, POST} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/performance/cache/info, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/performance/cache/clear, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/performance/monitor/metrics, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/performance/monitor/prometheus, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/performance/monitor/health, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/performance/stream/patients, GET} route[39m[38;5;3m +2ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/performance/database/metrics, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/performance/database/slow-queries, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/performance/database/recommendations, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/performance/database/maintenance, POST} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/performance/analytics/realtime, GET} route[39m[38;5;3m +2ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/performance/cache/warm, POST} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/performance/alerts, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/performance/export/metrics, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mResearchController {/api/v1/research}:[39m[38;5;3m +0ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/requests, POST} route[39m[38;5;3m +2ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/requests, GET} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/requests/:requestId, GET} route[39m[38;5;3m +2ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/requests/:requestId, PUT} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/requests/:requestId/approve, PUT} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/requests/:requestId/reject, PUT} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/requests/:requestId/ethics/review, PUT} route[39m[38;5;3m +2ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/requests/:requestId/ethics/approve, PUT} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/requests/:requestId/export, POST} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/statistics, GET} route[39m[38;5;3m +2ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/requests/pending, GET} route[39m[38;5;3m +2ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/requests/my-requests, GET} route[39m[38;5;3m +2ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/ethics/pending, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/templates/observational-study, POST} route[39m[38;5;3m +2ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/templates/clinical-outcome-study, POST} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/templates/registry-based-study, POST} route[39m[38;5;3m +2ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/templates/quality-improvement-study, POST} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mResearchSprint3Controller {/api/v1/research-sprint3}:[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-sprint3/aggregate-statistics, GET} route[39m[38;5;3m +2ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-sprint3/cancer-trends, GET} route[39m[38;5;3m +3ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-sprint3/demographic-analysis, GET} route[39m[38;5;3m +2ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-sprint3/geographic-data, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-sprint3/cancer-hotspots, GET} route[39m[38;5;3m +3ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-sprint3/provincial-statistics, GET} route[39m[38;5;3m +2ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-sprint3/research-requests, POST} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-sprint3/research-requests, GET} route[39m[38;5;3m +2ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-sprint3/research-requests/:id, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-sprint3/research-requests/:id, PUT} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-sprint3/approvals, POST} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-sprint3/research-requests/:id/approvals, GET} route[39m[38;5;3m +2ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-sprint3/approvals/:id, PUT} route[39m[38;5;3m +2ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-sprint3/my-approvals, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-sprint3/collaborations, POST} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-sprint3/collaborations/:id/status, PUT} route[39m[38;5;3m +2ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-sprint3/research-requests/:id/collaborations, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-sprint3/my-collaborations, GET} route[39m[38;5;3m +2ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-sprint3/data-access-sessions, POST} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-sprint3/data-access-sessions/:id/end, PUT} route[39m[38;5;3m +2ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-sprint3/data-access-sessions, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-sprint3/my-data-access-sessions, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-sprint3/impact-metrics, POST} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-sprint3/research-requests/:id/impact-metrics, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-sprint3/publications, POST} route[39m[38;5;3m +2ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-sprint3/research-requests/:id/publications, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-sprint3/dashboard/overview, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-sprint3/analytics/workflow, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-sprint3/analytics/compliance, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-sprint3/stats/summary, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-sprint3/export/clean-data, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-sprint3/validate-request, POST} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mResearchDiscoveryController {/api/v1/research/discovery}:[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/discovery/search/advanced, POST} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/discovery/search/save, POST} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/discovery/search/saved, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/discovery/search/saved/:id, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/discovery/search/saved/:id, PUT} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/discovery/search/saved/:id, DELETE} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/discovery/search/saved/:id/execute, POST} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/discovery/search/suggestions, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/discovery/profiles, POST} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/discovery/profiles/:userId, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/discovery/profiles/:userId, PUT} route[39m[38;5;3m +2ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/discovery/profiles, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/discovery/experts/find, POST} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/discovery/projects, POST} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/discovery/projects/:id, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/discovery/projects/:id, PUT} route[39m[38;5;3m +2ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/discovery/projects, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/discovery/projects/:projectId/members, POST} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/discovery/projects/:projectId/members/:memberId, PUT} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/discovery/projects/:projectId/members/:memberId, DELETE} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/discovery/projects/:projectId/annotations, POST} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/discovery/projects/:projectId/annotations, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/discovery/annotations/:id, PUT} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/discovery/annotations/:id, DELETE} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/discovery/planning/data-availability, POST} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/discovery/planning/sample-size, POST} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/discovery/planning/feasibility, POST} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/discovery/planning/similar-studies, POST} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/discovery/planning/similar-studies, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mResearchImpactController {/api/v1/research-impact}:[39m[38;5;3m +0ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-impact/publications, POST} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-impact/publications/:id, GET} route[39m[38;5;3m +2ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-impact/publications/:id, PUT} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-impact/publications/:id, DELETE} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-impact/publications/research/:researchRequestId, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-impact/citations, POST} route[39m[38;5;3m +2ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-impact/citations/publication/:publicationId, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-impact/citations/analyze, POST} route[39m[38;5;3m +2ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-impact/bibliometric-indicators, POST} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-impact/researcher-contributions, POST} route[39m[38;5;3m +2ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-impact/researcher-leaderboard, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-impact/collaboration-network, POST} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-impact/innovations, POST} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-impact/innovations/research/:researchRequestId, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-impact/roi-analysis, POST} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-impact/impact-report, POST} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-impact/impact-metrics, POST} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mReportsController {/api/v1/reports}:[39m[38;5;3m +0ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/reports/templates, GET} route[39m[38;5;3m +2ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/reports/templates, POST} route[39m[38;5;3m +2ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/reports/templates/:id, GET} route[39m[38;5;3m +2ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/reports/generated, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/reports/generated/:id, GET} route[39m[38;5;3m +2ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/reports/generated/:id/download, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/reports/generate, POST} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/reports/schedule, POST} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/reports/scheduled, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/reports/scheduled/:id, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/reports/scheduled/:id/toggle, PUT} route[39m[38;5;3m +2ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/reports/scheduled/:id, DELETE} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/reports/statistics, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/reports/templates/:id/validate, POST} route[39m[38;5;3m +2ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/reports/preview/:templateId, GET} route[39m[38;5;3m +2ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/reports/data-sources, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/reports/data-sources/:source/schema, GET} route[39m[38;5;3m +2ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/reports/data-sources/:source/query, POST} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/reports/formats, GET} route[39m[38;5;3m +2ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/reports/exports, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/reports/generated/:id, DELETE} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/reports/templates/:id/usage, GET} route[39m[38;5;3m +2ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/reports/templates/:id/clone, POST} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/reports/history/:reportId, GET} route[39m[38;5;3m +2ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/reports/history/template/:templateId, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/reports/distributions/:reportHistoryId, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/reports/access-logs/:reportHistoryId, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/reports/access-logs/:reportHistoryId, POST} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/reports/integrity/:reportHistoryId, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/reports/versions/:reportId, GET} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/reports/audit/export, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/reports/history/statistics, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mScheduledReportsController {/api/v1/scheduled-reports}:[39m[38;5;3m +0ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/scheduled-reports, POST} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/scheduled-reports, GET} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/scheduled-reports/:id, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/scheduled-reports/:id, PUT} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/scheduled-reports/:id/toggle, PUT} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/scheduled-reports/:id, DELETE} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/scheduled-reports/:id/execute, POST} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mNotificationsController {/api/v1/notifications}:[39m[38;5;3m +0ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/notifications, POST} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/notifications/preferences, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/notifications/preferences, POST} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/notifications/preferences/:id, PUT} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/notifications/history, GET} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/notifications/unread-count, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/notifications/:id/read, PUT} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/notifications/smart-rules, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/notifications/calendar/sync, POST} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mMedicalImagingController {/api/v1/medical-imaging}:[39m[38;5;3m +0ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/medical-imaging/upload, POST} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/medical-imaging, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/medical-imaging/:id, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/medical-imaging/:id/file, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/medical-imaging/:id/thumbnail, GET} route[39m[38;5;3m +2ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/medical-imaging/:id, PUT} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/medical-imaging/:id, DELETE} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/medical-imaging/:id/categorize, PUT} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/medical-imaging/:id/annotations, POST} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mCaseReviewController {/api/v1/case-review}:[39m[38;5;3m +0ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/case-review, POST} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/case-review, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/case-review/statistics, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/case-review/:id, GET} route[39m[38;5;3m +2ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/case-review/:id/assign, POST} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/case-review/:id/comments, POST} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/case-review/:id/status, PUT} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/case-review/:id/complete, POST} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mPeerReviewController {/api/v1/peer-review}:[39m[38;5;3m +0ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/peer-review, POST} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/peer-review, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/peer-review/statistics, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/peer-review/:id, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/peer-review/:id/assign, PUT} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/peer-review/:id/comments, POST} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/peer-review/comments/:commentId/resolve, PUT} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/peer-review/:id/approve, POST} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/peer-review/:id/reject, POST} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/peer-review/:id/recognition, POST} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mOfflineQueueController {/api/v1/offline-queue}:[39m[38;5;3m +0ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/offline-queue/sync, POST} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/offline-queue/pending, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/offline-queue/statistics, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/offline-queue/sync-all, POST} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/offline-queue/:id/retry, PUT} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:04 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/offline-queue/:id/resolve-conflict, PUT} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:05 PM [32m    LOG[39m [38;5;3m[PrismaService] [39m[32mDatabase connected successfully[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:05 PM [32m    LOG[39m [38;5;3m[RedisService] [39m[32mRedis is disabled - running without cache[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:26 PM [32m    LOG[39m [38;5;3m[NestFactory] [39m[32mStarting Nest application...[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:26 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mBullModule dependencies initialized[39m[38;5;3m +52ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:26 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mDatabaseModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:26 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mPassportModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:26 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mThrottlerModule dependencies initialized[39m[38;5;3m +6ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:26 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mConfigHostModule dependencies initialized[39m[38;5;3m +2ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:26 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mCommonModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:26 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mUsersModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:26 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mHealthModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:26 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mDiscoveryModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:26 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mConfigModule dependencies initialized[39m[38;5;3m +3ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:26 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mConfigModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:26 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mScheduleModule dependencies initialized[39m[38;5;3m +2ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:26 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mAppModule dependencies initialized[39m[38;5;3m +114ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:26 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mJwtModule dependencies initialized[39m[38;5;3m +2ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:26 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mReportsModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:26 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mNotificationsModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:26 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mMedicalImagingModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:26 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mCaseReviewModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:26 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mPeerReviewModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:26 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mOfflineQueueModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:26 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mScheduledReportsModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:26 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mCentersModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:26 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mPatientsModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:26 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mResearchModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:26 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mPerformanceModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:26 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mResearchImpactModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:26 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mAnalyticsModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:26 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mAuthModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:26 PM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mHealthController {/api/v1/health}:[39m[38;5;3m +169ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:26 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/health, GET} route[39m[38;5;3m +5ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:26 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/health/detailed, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:26 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/health/readiness, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:26 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/health/liveness, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:26 PM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mAuthController {/api/v1/auth}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:26 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/auth/register, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:26 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/auth/login, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:26 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/auth/verify-mfa, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:26 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/auth/verify-email, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:26 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/auth/refresh-token, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:26 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/auth/profile, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:26 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/auth/logout, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:26 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/auth/mfa/setup, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:26 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/auth/mfa/enable, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:26 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/auth/mfa/disable, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:26 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/auth/mfa/verify, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:26 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/auth/mfa/backup-codes/regenerate, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:26 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/auth/mfa/backup-codes/verify, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:26 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/auth/mfa/status, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:26 PM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mCentersController {/api/v1/centers}:[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:26 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/centers, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:26 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/centers/statistics, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:26 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/centers/:id, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:26 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/centers/:id/users, GET} route[39m[38;5;3m +2ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:26 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/centers, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:26 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/centers/:id, PUT} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:26 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/centers/:id/activate, PUT} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:26 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/centers/:id/deactivate, PUT} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:26 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/centers/:id, DELETE} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:26 PM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mPatientsController {/api/v1/patients}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:26 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/patients, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:26 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/patients/search, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:26 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/patients/statistics, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:26 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/patients/:id, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:26 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/patients/nik/:nik, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:26 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/patients/mrn/:mrn, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:26 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/patients, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:26 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/patients/:id, PUT} route[39m[38;5;3m +2ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:26 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/patients/:id/vital-signs, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:26 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/patients/:id/diagnoses, GET} route[39m[38;5;3m +2ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:26 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/patients/:id/medications, GET} route[39m[38;5;3m +2ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:26 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/patients/:id/allergies, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:26 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/patients/:id/visits, GET} route[39m[38;5;3m +2ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:26 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/patients/:id/insurance, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:26 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/patients/chat/session, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:26 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/patients/chat/:sessionId/message, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:26 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/patients/chat/:sessionId, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:26 PM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mAnalyticsController {/api/v1/analytics}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:26 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/analytics/dashboard, GET} route[39m[38;5;3m +2ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:26 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/analytics/cancer-stats, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:26 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/analytics/trends, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:26 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/analytics/center-performance, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:26 PM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mEnhancedAnalyticsController {/api/v1/analytics/v2}:[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:26 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/analytics/v2/dashboard/executive, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:26 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/analytics/v2/dashboard/national-intelligence, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:26 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/analytics/v2/performance/benchmark, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:26 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/analytics/v2/performance/metrics/:centerId, GET} route[39m[38;5;3m +2ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:26 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/analytics/v2/predictive/trends, GET} route[39m[38;5;3m +2ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:26 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/analytics/v2/predictive/trends/:cancerType, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:26 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/analytics/v2/research/impact, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:26 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/analytics/v2/research/impact/summary, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:26 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/analytics/v2/real-time/metrics, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:26 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/analytics/v2/cache/stats, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:26 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/analytics/v2/cache/metrics, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:26 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/analytics/v2/cache/invalidate/all, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:26 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/analytics/v2/cache/invalidate/center/:centerId, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:26 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/analytics/v2/cache/invalidate/patient/:patientId, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:26 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/analytics/v2/materialized-views/refresh, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:26 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/analytics/v2/data-quality/summary, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:26 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/analytics/v2/health/analytics, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:26 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/analytics/v2/events/recent, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:26 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/analytics/v2/optimize/cache, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:26 PM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mPerformanceController {/api/v1/performance}:[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:26 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/performance/database/analysis, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:26 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/performance/application/metrics, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:26 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/performance/caching/strategy, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:26 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/performance/queries/optimize, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:26 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/performance/dashboard, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:26 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/performance/benchmark/run, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:26 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/performance/cache/info, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:26 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/performance/cache/clear, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:26 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/performance/monitor/metrics, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:26 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/performance/monitor/prometheus, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:26 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/performance/monitor/health, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:26 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/performance/stream/patients, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:26 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/performance/database/metrics, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:26 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/performance/database/slow-queries, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:26 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/performance/database/recommendations, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:26 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/performance/database/maintenance, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:26 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/performance/analytics/realtime, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:26 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/performance/cache/warm, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:26 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/performance/alerts, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:26 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/performance/export/metrics, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:26 PM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mResearchController {/api/v1/research}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:26 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/requests, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/requests, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/requests/:requestId, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/requests/:requestId, PUT} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/requests/:requestId/approve, PUT} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/requests/:requestId/reject, PUT} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/requests/:requestId/ethics/review, PUT} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/requests/:requestId/ethics/approve, PUT} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/requests/:requestId/export, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/statistics, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/requests/pending, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/requests/my-requests, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/ethics/pending, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/templates/observational-study, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/templates/clinical-outcome-study, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/templates/registry-based-study, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/templates/quality-improvement-study, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mResearchSprint3Controller {/api/v1/research-sprint3}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-sprint3/aggregate-statistics, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-sprint3/cancer-trends, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-sprint3/demographic-analysis, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-sprint3/geographic-data, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-sprint3/cancer-hotspots, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-sprint3/provincial-statistics, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-sprint3/research-requests, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-sprint3/research-requests, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-sprint3/research-requests/:id, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-sprint3/research-requests/:id, PUT} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-sprint3/approvals, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-sprint3/research-requests/:id/approvals, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-sprint3/approvals/:id, PUT} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-sprint3/my-approvals, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-sprint3/collaborations, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-sprint3/collaborations/:id/status, PUT} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-sprint3/research-requests/:id/collaborations, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-sprint3/my-collaborations, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-sprint3/data-access-sessions, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-sprint3/data-access-sessions/:id/end, PUT} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-sprint3/data-access-sessions, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-sprint3/my-data-access-sessions, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-sprint3/impact-metrics, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-sprint3/research-requests/:id/impact-metrics, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-sprint3/publications, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-sprint3/research-requests/:id/publications, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-sprint3/dashboard/overview, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-sprint3/analytics/workflow, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-sprint3/analytics/compliance, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-sprint3/stats/summary, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-sprint3/export/clean-data, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-sprint3/validate-request, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mResearchDiscoveryController {/api/v1/research/discovery}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/discovery/search/advanced, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/discovery/search/save, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/discovery/search/saved, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/discovery/search/saved/:id, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/discovery/search/saved/:id, PUT} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/discovery/search/saved/:id, DELETE} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/discovery/search/saved/:id/execute, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/discovery/search/suggestions, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/discovery/profiles, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/discovery/profiles/:userId, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/discovery/profiles/:userId, PUT} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/discovery/profiles, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/discovery/experts/find, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/discovery/projects, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/discovery/projects/:id, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/discovery/projects/:id, PUT} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/discovery/projects, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/discovery/projects/:projectId/members, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/discovery/projects/:projectId/members/:memberId, PUT} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/discovery/projects/:projectId/members/:memberId, DELETE} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/discovery/projects/:projectId/annotations, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/discovery/projects/:projectId/annotations, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/discovery/annotations/:id, PUT} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/discovery/annotations/:id, DELETE} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/discovery/planning/data-availability, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/discovery/planning/sample-size, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/discovery/planning/feasibility, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/discovery/planning/similar-studies, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/discovery/planning/similar-studies, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mResearchImpactController {/api/v1/research-impact}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-impact/publications, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-impact/publications/:id, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-impact/publications/:id, PUT} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-impact/publications/:id, DELETE} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-impact/publications/research/:researchRequestId, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-impact/citations, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-impact/citations/publication/:publicationId, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-impact/citations/analyze, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-impact/bibliometric-indicators, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-impact/researcher-contributions, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-impact/researcher-leaderboard, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-impact/collaboration-network, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-impact/innovations, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-impact/innovations/research/:researchRequestId, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-impact/roi-analysis, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-impact/impact-report, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-impact/impact-metrics, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mReportsController {/api/v1/reports}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/reports/templates, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/reports/templates, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/reports/templates/:id, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/reports/generated, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/reports/generated/:id, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/reports/generated/:id/download, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/reports/generate, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/reports/schedule, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/reports/scheduled, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/reports/scheduled/:id, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/reports/scheduled/:id/toggle, PUT} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/reports/scheduled/:id, DELETE} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/reports/statistics, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/reports/templates/:id/validate, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/reports/preview/:templateId, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/reports/data-sources, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/reports/data-sources/:source/schema, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/reports/data-sources/:source/query, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/reports/formats, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/reports/exports, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/reports/generated/:id, DELETE} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/reports/templates/:id/usage, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/reports/templates/:id/clone, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/reports/history/:reportId, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/reports/history/template/:templateId, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/reports/distributions/:reportHistoryId, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/reports/access-logs/:reportHistoryId, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/reports/access-logs/:reportHistoryId, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/reports/integrity/:reportHistoryId, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/reports/versions/:reportId, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/reports/audit/export, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/reports/history/statistics, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mScheduledReportsController {/api/v1/scheduled-reports}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/scheduled-reports, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/scheduled-reports, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/scheduled-reports/:id, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/scheduled-reports/:id, PUT} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/scheduled-reports/:id/toggle, PUT} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/scheduled-reports/:id, DELETE} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/scheduled-reports/:id/execute, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mNotificationsController {/api/v1/notifications}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/notifications, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/notifications/preferences, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/notifications/preferences, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/notifications/preferences/:id, PUT} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/notifications/history, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/notifications/unread-count, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/notifications/:id/read, PUT} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/notifications/smart-rules, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/notifications/calendar/sync, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mMedicalImagingController {/api/v1/medical-imaging}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/medical-imaging/upload, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/medical-imaging, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/medical-imaging/:id, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/medical-imaging/:id/file, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/medical-imaging/:id/thumbnail, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/medical-imaging/:id, PUT} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/medical-imaging/:id, DELETE} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/medical-imaging/:id/categorize, PUT} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/medical-imaging/:id/annotations, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mCaseReviewController {/api/v1/case-review}:[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/case-review, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/case-review, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/case-review/statistics, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/case-review/:id, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/case-review/:id/assign, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/case-review/:id/comments, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/case-review/:id/status, PUT} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/case-review/:id/complete, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mPeerReviewController {/api/v1/peer-review}:[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/peer-review, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/peer-review, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/peer-review/statistics, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/peer-review/:id, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/peer-review/:id/assign, PUT} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/peer-review/:id/comments, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/peer-review/comments/:commentId/resolve, PUT} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/peer-review/:id/approve, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/peer-review/:id/reject, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/peer-review/:id/recognition, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mOfflineQueueController {/api/v1/offline-queue}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/offline-queue/sync, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/offline-queue/pending, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/offline-queue/statistics, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/offline-queue/sync-all, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/offline-queue/:id/retry, PUT} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/offline-queue/:id/resolve-conflict, PUT} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[PrismaService] [39m[32mDatabase connected successfully[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RedisService] [39m[32mRedis is disabled - running without cache[39m
 prisma:query SELECT "system"."scheduled_reports"."id", "system"."scheduled_reports"."templateId", "system"."scheduled_reports"."name", "system"."scheduled_reports"."description", "system"."scheduled_reports"."schedule", "system"."scheduled_reports"."recipients", "system"."scheduled_reports"."parameters", "system"."scheduled_reports"."format"::text, "system"."scheduled_reports"."deliveryMethod"::text, "system"."scheduled_reports"."isActive", "system"."scheduled_reports"."lastRun", "system"."scheduled_reports"."nextRun", "system"."scheduled_reports"."successCount", "system"."scheduled_reports"."failureCount", "system"."scheduled_reports"."createdBy", "system"."scheduled_reports"."createdAt", "system"."scheduled_reports"."updatedAt" FROM "system"."scheduled_reports" WHERE "system"."scheduled_reports"."isActive" = $1 OFFSET $2
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:05 PM [32m    LOG[39m [38;5;3m[ScheduledReportsService] [39m[32mInitialized 0 scheduled reports[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[ScheduledReportsService] [39m[32mInitialized 0 scheduled reports[39m
 prisma:query SELECT "system"."scheduled_reports"."id", "system"."scheduled_reports"."templateId", "system"."scheduled_reports"."name", "system"."scheduled_reports"."description", "system"."scheduled_reports"."schedule", "system"."scheduled_reports"."recipients", "system"."scheduled_reports"."parameters", "system"."scheduled_reports"."format"::text, "system"."scheduled_reports"."deliveryMethod"::text, "system"."scheduled_reports"."isActive", "system"."scheduled_reports"."lastRun", "system"."scheduled_reports"."nextRun", "system"."scheduled_reports"."successCount", "system"."scheduled_reports"."failureCount", "system"."scheduled_reports"."createdBy", "system"."scheduled_reports"."createdAt", "system"."scheduled_reports"."updatedAt" FROM "system"."scheduled_reports" WHERE "system"."scheduled_reports"."isActive" = $1 OFFSET $2
 prisma:query CREATE INDEX CONCURRENTLY IF NOT EXISTS idx_patients_center_created ON medical.patients(centerId, createdAt);
 prisma:error 
@@ -317,17 +319,17 @@ Invalid `prisma.$executeRawUnsafe()` invocation:
 
 
 Raw query failed. Code: `42703`. Message: `column "centerid" does not exist`
-[33m[Nest] 362001  - [39m11/21/2025, 9:35:05 PM [33m   WARN[39m [38;5;3m[AnalyticsService] [39m[33mSome indexes could not be created:[39m
-[33m[Nest] 362001  - [39m11/21/2025, 9:35:05 PM [33m   WARN[39m [38;5;3m[AnalyticsService] [39m[33m
+[33m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [33m   WARN[39m [38;5;3m[AnalyticsService] [39m[33mSome indexes could not be created:[39m
+[33m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [33m   WARN[39m [38;5;3m[AnalyticsService] [39m[33m
 Invalid `prisma.$executeRawUnsafe()` invocation:
 
 
 Raw query failed. Code: `42703`. Message: `column "centerid" does not exist`[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:05 PM [32m    LOG[39m [38;5;3m[AnalyticsService] [39m[32mDatabase connection pool initialized[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:05 PM [32m    LOG[39m [38;5;3m[AnalyticsService] [39m[32mPerformance optimizations initialized[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:05 PM [32m    LOG[39m [38;5;3m[RedisService] [39m[32mRedis is disabled - running without cache[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:05 PM [32m    LOG[39m [38;5;3m[StreamingService] [39m[32mStreaming service initialized[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:05 PM [32m    LOG[39m [38;5;3m[PerformanceMonitorService] [39m[32mPerformance monitoring initialized[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[AnalyticsService] [39m[32mDatabase connection pool initialized[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[AnalyticsService] [39m[32mPerformance optimizations initialized[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[RedisService] [39m[32mRedis is disabled - running without cache[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[StreamingService] [39m[32mStreaming service initialized[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[PerformanceMonitorService] [39m[32mPerformance monitoring initialized[39m
 prisma:query CREATE EXTENSION IF NOT EXISTS pg_stat_statements;
 prisma:query 
         CREATE OR REPLACE VIEW slow_queries AS
@@ -348,37 +350,30 @@ Invalid `prisma.$executeRaw()` invocation:
 
 
 Raw query failed. Code: `42703`. Message: `column "first_exec_time" does not exist`
-[33m[Nest] 362001  - [39m11/21/2025, 9:35:05 PM [33m   WARN[39m [38;5;3m[DatabasePerformanceService] [39m[33mCould not create performance views:[39m
-[33m[Nest] 362001  - [39m11/21/2025, 9:35:05 PM [33m   WARN[39m [38;5;3m[DatabasePerformanceService] [39m[33m
+[33m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [33m   WARN[39m [38;5;3m[DatabasePerformanceService] [39m[33mCould not create performance views:[39m
+[33m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [33m   WARN[39m [38;5;3m[DatabasePerformanceService] [39m[33m
 Invalid `prisma.$executeRaw()` invocation:
 
 
 Raw query failed. Code: `42703`. Message: `column "first_exec_time" does not exist`[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:05 PM [32m    LOG[39m [38;5;3m[DatabasePerformanceService] [39m[32mDatabase monitoring extensions initialized[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:05 PM [32m    LOG[39m [38;5;3m[DatabasePerformanceService] [39m[32mDatabase performance monitoring initialized[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:05 PM [32m    LOG[39m [38;5;3m[PrismaService] [39m[32mDatabase connected successfully[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:05 PM [32m    LOG[39m [38;5;3m[PrismaService] [39m[32mDatabase connected successfully[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:05 PM [32m    LOG[39m [38;5;3m[PrismaService] [39m[32mDatabase connected successfully[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[DatabasePerformanceService] [39m[32mDatabase monitoring extensions initialized[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[DatabasePerformanceService] [39m[32mDatabase performance monitoring initialized[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[PrismaService] [39m[32mDatabase connected successfully[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[PrismaService] [39m[32mDatabase connected successfully[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[PrismaService] [39m[32mDatabase connected successfully[39m
 prisma:query SELECT "system"."scheduled_reports"."id", "system"."scheduled_reports"."templateId", "system"."scheduled_reports"."name", "system"."scheduled_reports"."description", "system"."scheduled_reports"."schedule", "system"."scheduled_reports"."recipients", "system"."scheduled_reports"."parameters", "system"."scheduled_reports"."format"::text, "system"."scheduled_reports"."deliveryMethod"::text, "system"."scheduled_reports"."isActive", "system"."scheduled_reports"."lastRun", "system"."scheduled_reports"."nextRun", "system"."scheduled_reports"."successCount", "system"."scheduled_reports"."failureCount", "system"."scheduled_reports"."createdBy", "system"."scheduled_reports"."createdAt", "system"."scheduled_reports"."updatedAt" FROM "system"."scheduled_reports" WHERE "system"."scheduled_reports"."isActive" = $1 OFFSET $2
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:06 PM [32m    LOG[39m [38;5;3m[ScheduledReportsService] [39m[32mInitialized 0 scheduled reports[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:06 PM [32m    LOG[39m [38;5;3m[PrismaService] [39m[32mDatabase connected successfully[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:06 PM [32m    LOG[39m [38;5;3m[PrismaService] [39m[32mDatabase connected successfully[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:07 PM [32m    LOG[39m [38;5;3m[PrismaService] [39m[32mDatabase connected successfully[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:07 PM [32m    LOG[39m [38;5;3m[PrismaService] [39m[32mDatabase connected successfully[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:07 PM [32m    LOG[39m [38;5;3m[PrismaService] [39m[32mDatabase connected successfully[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:07 PM [32m    LOG[39m [38;5;3m[NestApplication] [39m[32mNest application successfully started[39m[38;5;3m +77ms[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:07 PM [32m    LOG[39m [38;5;3m[Bootstrap] [39m[32m🚀 Application running on http://localhost:3002[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:07 PM [32m    LOG[39m [38;5;3m[Bootstrap] [39m[32m📚 API documentation available at http://localhost:3002/api/docs[39m
-[32m[Nest] 362001  - [39m11/21/2025, 9:35:07 PM [32m    LOG[39m [38;5;3m[Bootstrap] [39m[32m⚡ Powered by Fastify + Bun[39m
-[33m[Nest] 362001  - [39m11/21/2025, 9:35:35 PM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 112.81%[39m
-[33m[Nest] 362001  - [39m11/21/2025, 9:35:47 PM [33m   WARN[39m [38;5;3m[ValidationExceptionFilter] [39m[33mValidation Error: [{"field":"unknown","message":"res is not defined"}][39m
-[33m[Nest] 362001  - [39m11/21/2025, 9:35:47 PM [33m   WARN[39m [38;5;3m[ValidationExceptionFilter] [39m[33mObject:[39m
-{
-  "method": "POST",
-  "url": "/",
-  "query": {}
-}
-
-[33m[Nest] 362001  - [39m11/21/2025, 9:36:05 PM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 113.08%[39m
-[33m[Nest] 362001  - [39m11/21/2025, 9:36:35 PM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 113.10%[39m
-[33m[Nest] 362001  - [39m11/21/2025, 9:37:05 PM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 113.10%[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:27 PM [32m    LOG[39m [38;5;3m[ScheduledReportsService] [39m[32mInitialized 0 scheduled reports[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:28 PM [32m    LOG[39m [38;5;3m[PrismaService] [39m[32mDatabase connected successfully[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:28 PM [32m    LOG[39m [38;5;3m[PrismaService] [39m[32mDatabase connected successfully[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:28 PM [32m    LOG[39m [38;5;3m[PrismaService] [39m[32mDatabase connected successfully[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:28 PM [32m    LOG[39m [38;5;3m[PrismaService] [39m[32mDatabase connected successfully[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:28 PM [32m    LOG[39m [38;5;3m[PrismaService] [39m[32mDatabase connected successfully[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:28 PM [32m    LOG[39m [38;5;3m[NestApplication] [39m[32mNest application successfully started[39m[38;5;3m +40ms[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:28 PM [32m    LOG[39m [38;5;3m[Bootstrap] [39m[32m🚀 Application running on http://localhost:3002[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:28 PM [32m    LOG[39m [38;5;3m[Bootstrap] [39m[32m📚 API documentation available at http://localhost:3002/api/docs[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:37:28 PM [32m    LOG[39m [38;5;3m[Bootstrap] [39m[32m⚡ Powered by Fastify + Bun[39m
+[33m[Nest] 414653  - [39m11/22/2025, 5:37:57 PM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 112.59%[39m
+[33m[Nest] 414653  - [39m11/22/2025, 5:38:27 PM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 112.63%[39m
+[33m[Nest] 414653  - [39m11/22/2025, 5:38:57 PM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 112.65%[39m
+[33m[Nest] 414653  - [39m11/22/2025, 5:39:27 PM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 112.66%[39m
+[32m[Nest] 414653  - [39m11/22/2025, 5:40:00 PM [32m    LOG[39m [38;5;3m[ScheduledTasksService] [39m[32mReal-time metrics collected in 2ms[39m

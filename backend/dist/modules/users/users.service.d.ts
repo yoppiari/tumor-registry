@@ -197,6 +197,7 @@ export declare class UsersService {
         centerId: string;
     }>;
     getUserRole(userId: string): Promise<string>;
+    getUserPermissions(userId: string): Promise<any[]>;
     findAll(): Promise<{
         id: string;
         email: string;

@@ -260,4 +260,39 @@ export class PatientsController {
       insuranceInfos: patient.insuranceInfos || [],
     };
   }
+
+  // Chat-based patient entry endpoints
+  @Post('chat/session')
+  @ApiOperation({ summary: 'Create patient entry chat session' })
+  @ApiResponse({ status: 201, description: 'Chat session created' })
+  @HttpCode(HttpStatus.CREATED)
+  async createChatSession() {
+    return await this.patientsService.createChatSession();
+  }
+
+  @Post('chat/:sessionId/message')
+  @ApiOperation({ summary: 'Send message in patient entry chat' })
+  @ApiParam({ name: 'sessionId', description: 'Chat session ID' })
+  @ApiResponse({ status: 200, description: 'Message sent successfully' })
+  @ApiResponse({ status: 404, description: 'Session not found' })
+  async sendChatMessage(
+    @Param('sessionId') sessionId: string,
+    @Body() body: { content: string; fieldName?: string; formData?: any },
+  ) {
+    return await this.patientsService.sendChatMessage(
+      sessionId,
+      body.content,
+      body.fieldName,
+      body.formData,
+    );
+  }
+
+  @Get('chat/:sessionId')
+  @ApiOperation({ summary: 'Get chat session' })
+  @ApiParam({ name: 'sessionId', description: 'Chat session ID' })
+  @ApiResponse({ status: 200, description: 'Chat session retrieved' })
+  @ApiResponse({ status: 404, description: 'Session not found' })
+  async getChatSession(@Param('sessionId') sessionId: string) {
+    return await this.patientsService.getChatSession(sessionId);
+  }
 }

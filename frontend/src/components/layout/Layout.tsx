@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
 
 interface LayoutProps {
@@ -11,8 +11,10 @@ interface LayoutProps {
 export function Layout({ children }: LayoutProps) {
   const { user, logout } = useAuth();
   const router = useRouter();
+  const pathname = usePathname();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
+  const [expandedMenus, setExpandedMenus] = useState<string[]>([]);
 
   const handleLogout = async () => {
     try {
@@ -25,11 +27,77 @@ export function Layout({ children }: LayoutProps) {
 
   const navigation = [
     { name: 'Dashboard', href: '/dashboard', icon: '📊' },
-    { name: 'Data Pasien', href: '/patients', icon: '👥', roles: ['data_entry', 'doctor', 'nurse', 'researcher', 'admin', 'super_admin'] },
-    { name: 'Penelitian', href: '/research', icon: '🔬', roles: ['researcher', 'admin', 'super_admin'] },
-    { name: 'Analytics', href: '/analytics', icon: '📈', roles: ['researcher', 'admin', 'super_admin', 'national_stakeholder'] },
-    { name: 'Administrasi', href: '/admin', icon: '⚙️', roles: ['admin', 'super_admin', 'SYSTEM_ADMIN'] },
-    { name: 'Laporan', href: '/reports', icon: '📋', roles: ['researcher', 'admin', 'super_admin', 'national_stakeholder'] },
+    {
+      name: 'Data Pasien',
+      href: '/patients',
+      icon: '👥',
+      roles: ['DATA_ENTRY', 'MEDICAL_OFFICER', 'RESEARCHER', 'CENTER_ADMIN', 'NATIONAL_ADMIN', 'SYSTEM_ADMIN'],
+      submenu: [
+        { name: 'Daftar Pasien', href: '/patients', roles: ['DATA_ENTRY', 'MEDICAL_OFFICER', 'RESEARCHER', 'CENTER_ADMIN', 'NATIONAL_ADMIN', 'SYSTEM_ADMIN'] },
+        { name: 'Entry Data Baru', href: '/patients/new', roles: ['DATA_ENTRY', 'MEDICAL_OFFICER', 'CENTER_ADMIN', 'NATIONAL_ADMIN', 'SYSTEM_ADMIN'] },
+        { name: 'Upload Dokumen', href: '/patients/documents', roles: ['DATA_ENTRY', 'MEDICAL_OFFICER', 'CENTER_ADMIN', 'NATIONAL_ADMIN', 'SYSTEM_ADMIN'] },
+        { name: 'Quality Check', href: '/patients/quality', roles: ['CENTER_ADMIN', 'NATIONAL_ADMIN', 'SYSTEM_ADMIN'] },
+      ]
+    },
+    {
+      name: 'Penelitian',
+      href: '/research',
+      icon: '🔬',
+      roles: ['RESEARCHER', 'CENTER_ADMIN', 'NATIONAL_ADMIN', 'SYSTEM_ADMIN'],
+      submenu: [
+        { name: 'Browse Data', href: '/research', roles: ['RESEARCHER', 'CENTER_ADMIN', 'NATIONAL_ADMIN', 'SYSTEM_ADMIN'] },
+        { name: 'Permintaan Data', href: '/research/requests', roles: ['RESEARCHER', 'CENTER_ADMIN', 'NATIONAL_ADMIN', 'SYSTEM_ADMIN'] },
+        { name: 'Kolaborasi', href: '/research/collaboration', roles: ['RESEARCHER', 'CENTER_ADMIN', 'NATIONAL_ADMIN', 'SYSTEM_ADMIN'] },
+        { name: 'Publikasi', href: '/research/publications', roles: ['RESEARCHER', 'CENTER_ADMIN', 'NATIONAL_ADMIN', 'SYSTEM_ADMIN'] },
+      ]
+    },
+    {
+      name: 'Persetujuan',
+      href: '/approvals',
+      icon: '✅',
+      roles: ['CENTER_ADMIN', 'NATIONAL_ADMIN', 'SYSTEM_ADMIN'],
+      submenu: [
+        { name: 'Antrian Permintaan', href: '/approvals', roles: ['CENTER_ADMIN', 'NATIONAL_ADMIN', 'SYSTEM_ADMIN'] },
+        { name: 'Riwayat Persetujuan', href: '/approvals/history', roles: ['CENTER_ADMIN', 'NATIONAL_ADMIN', 'SYSTEM_ADMIN'] },
+      ]
+    },
+    {
+      name: 'Analytics',
+      href: '/analytics',
+      icon: '📈',
+      roles: ['RESEARCHER', 'CENTER_ADMIN', 'NATIONAL_ADMIN', 'SYSTEM_ADMIN'],
+      submenu: [
+        { name: 'Dashboard Analytics', href: '/analytics', roles: ['RESEARCHER', 'CENTER_ADMIN', 'NATIONAL_ADMIN', 'SYSTEM_ADMIN'] },
+        { name: 'Peta Distribusi', href: '/analytics/distribution', roles: ['RESEARCHER', 'CENTER_ADMIN', 'NATIONAL_ADMIN', 'SYSTEM_ADMIN'] },
+        { name: 'Trend Analysis', href: '/analytics/trends', roles: ['RESEARCHER', 'CENTER_ADMIN', 'NATIONAL_ADMIN', 'SYSTEM_ADMIN'] },
+        { name: 'Perbandingan Center', href: '/analytics/centers', roles: ['CENTER_ADMIN', 'NATIONAL_ADMIN', 'SYSTEM_ADMIN'] },
+        { name: 'Prediksi', href: '/analytics/predictions', roles: ['CENTER_ADMIN', 'NATIONAL_ADMIN', 'SYSTEM_ADMIN'] },
+      ]
+    },
+    {
+      name: 'Administrasi',
+      href: '/admin',
+      icon: '⚙️',
+      roles: ['CENTER_ADMIN', 'NATIONAL_ADMIN', 'SYSTEM_ADMIN'],
+      submenu: [
+        { name: 'User Management', href: '/admin/users', roles: ['CENTER_ADMIN', 'NATIONAL_ADMIN', 'SYSTEM_ADMIN'] },
+        { name: 'Center Management', href: '/admin/centers', roles: ['NATIONAL_ADMIN', 'SYSTEM_ADMIN'] },
+        { name: 'Audit Logs', href: '/admin/audit', roles: ['CENTER_ADMIN', 'NATIONAL_ADMIN', 'SYSTEM_ADMIN'] },
+        { name: 'Konfigurasi', href: '/admin/config', roles: ['NATIONAL_ADMIN', 'SYSTEM_ADMIN'] },
+      ]
+    },
+    {
+      name: 'Laporan',
+      href: '/reports',
+      icon: '📋',
+      roles: ['RESEARCHER', 'CENTER_ADMIN', 'NATIONAL_ADMIN', 'SYSTEM_ADMIN'],
+      submenu: [
+        { name: 'Generate Laporan', href: '/reports', roles: ['RESEARCHER', 'CENTER_ADMIN', 'NATIONAL_ADMIN', 'SYSTEM_ADMIN'] },
+        { name: 'Laporan Terjadwal', href: '/reports/scheduled', roles: ['CENTER_ADMIN', 'NATIONAL_ADMIN', 'SYSTEM_ADMIN'] },
+        { name: 'Riwayat Laporan', href: '/reports/history', roles: ['RESEARCHER', 'CENTER_ADMIN', 'NATIONAL_ADMIN', 'SYSTEM_ADMIN'] },
+        { name: 'Export Data', href: '/reports/export', roles: ['RESEARCHER', 'CENTER_ADMIN', 'NATIONAL_ADMIN', 'SYSTEM_ADMIN'] },
+      ]
+    },
     { name: 'Pengaturan', href: '/settings', icon: '🔧' },
   ];
 
@@ -53,8 +121,43 @@ export function Layout({ children }: LayoutProps) {
     return roleLabels[role] || role;
   };
 
+  // Get current page title based on pathname
+  const getPageTitle = () => {
+    // Check main menu
+    const page = navigation.find(item => item.href === pathname);
+    if (page) return page.name;
+
+    // Check submenus
+    for (const item of navigation) {
+      if (item.submenu) {
+        const subpage = item.submenu.find(sub => sub.href === pathname);
+        if (subpage) return subpage.name;
+      }
+    }
+
+    return 'Dashboard';
+  };
+
+  // Toggle submenu expansion
+  const toggleMenu = (menuName: string) => {
+    setExpandedMenus(prev =>
+      prev.includes(menuName)
+        ? prev.filter(name => name !== menuName)
+        : [...prev, menuName]
+    );
+  };
+
+  // Check if menu or submenu is active
+  const isMenuActive = (item: any) => {
+    if (item.href === pathname) return true;
+    if (item.submenu) {
+      return item.submenu.some((sub: any) => sub.href === pathname);
+    }
+    return false;
+  };
+
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 sm:flex">
       {/* Mobile menu backdrop */}
       {isMobileMenuOpen && (
         <div
@@ -82,18 +185,82 @@ export function Layout({ children }: LayoutProps) {
           </div>
 
           {/* Navigation */}
-          <nav className="flex-1 px-4 py-6 space-y-1">
-            {filteredNavigation.map((item) => (
-              <a
-                key={item.name}
-                href={item.href}
-                className="flex items-center px-3 py-2 text-sm font-medium rounded-lg text-gray-700 hover:text-gray-900 hover:bg-gray-100 group"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                <span className="mr-3 text-lg">{item.icon}</span>
-                {item.name}
-              </a>
-            ))}
+          <nav className="flex-1 px-4 py-6 space-y-1 overflow-y-auto">
+            {filteredNavigation.map((item) => {
+              const isActive = isMenuActive(item);
+              const hasSubmenu = item.submenu && item.submenu.length > 0;
+              const isExpanded = expandedMenus.includes(item.name);
+
+              return (
+                <div key={item.name}>
+                  {/* Main menu item */}
+                  {hasSubmenu ? (
+                    <button
+                      onClick={() => toggleMenu(item.name)}
+                      className={`w-full flex items-center justify-between px-3 py-2 text-sm font-medium rounded-lg group ${
+                        isActive
+                          ? 'bg-emerald-100 text-emerald-700'
+                          : 'text-gray-700 hover:text-gray-900 hover:bg-gray-100'
+                      }`}
+                    >
+                      <div className="flex items-center">
+                        <span className="mr-3 text-lg">{item.icon}</span>
+                        {item.name}
+                      </div>
+                      <svg
+                        className={`w-4 h-4 transition-transform ${isExpanded ? 'rotate-180' : ''}`}
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                      </svg>
+                    </button>
+                  ) : (
+                    <a
+                      href={item.href}
+                      className={`flex items-center px-3 py-2 text-sm font-medium rounded-lg group ${
+                        isActive
+                          ? 'bg-emerald-100 text-emerald-700'
+                          : 'text-gray-700 hover:text-gray-900 hover:bg-gray-100'
+                      }`}
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                      <span className="mr-3 text-lg">{item.icon}</span>
+                      {item.name}
+                    </a>
+                  )}
+
+                  {/* Submenu items */}
+                  {hasSubmenu && isExpanded && (
+                    <div className="ml-6 mt-1 space-y-1">
+                      {item.submenu
+                        .filter((subitem: any) => {
+                          if (!subitem.roles) return true;
+                          return !user?.role || subitem.roles.includes(user.role);
+                        })
+                        .map((subitem: any) => {
+                          const isSubActive = pathname === subitem.href;
+                          return (
+                            <a
+                              key={subitem.name}
+                              href={subitem.href}
+                              className={`flex items-center px-3 py-2 text-sm rounded-lg ${
+                                isSubActive
+                                  ? 'bg-emerald-50 text-emerald-700 font-medium'
+                                  : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
+                              }`}
+                              onClick={() => setIsMobileMenuOpen(false)}
+                            >
+                              {subitem.name}
+                            </a>
+                          );
+                        })}
+                    </div>
+                  )}
+                </div>
+              );
+            })}
           </nav>
 
           {/* User info */}
@@ -143,7 +310,7 @@ export function Layout({ children }: LayoutProps) {
             {/* Page title */}
             <div className="flex-1 flex items-center justify-between">
               <div className="max-w-lg">
-                <h2 className="text-2xl font-semibold text-gray-900">Dashboard</h2>
+                <h2 className="text-2xl font-semibold text-gray-900">{getPageTitle()}</h2>
               </div>
             </div>
 

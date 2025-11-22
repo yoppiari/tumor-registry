@@ -155,6 +155,33 @@ export class UsersService {
     return userRole?.role.code || 'STAFF';
   }
 
+  async getUserPermissions(userId: string) {
+    const userRoles = await this.prisma.userRole.findMany({
+      where: {
+        userId,
+        isActive: true,
+      },
+      include: {
+        role: {
+          include: {
+            permissions: {
+              include: {
+                permission: true,
+              },
+            },
+          },
+        },
+      },
+    });
+
+    // Extract all unique permissions from all user roles
+    const permissions = userRoles.flatMap(ur =>
+      ur.role.permissions?.map(rp => rp.permission.code) || []
+    );
+
+    return [...new Set(permissions)]; // Return unique permissions
+  }
+
   async findAll() {
     const users = await this.prisma.user.findMany({
       select: {

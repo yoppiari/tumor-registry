@@ -15,6 +15,7 @@ export function Layout({ children }: LayoutProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
   const [expandedMenus, setExpandedMenus] = useState<string[]>([]);
+  const [isNavigating, setIsNavigating] = useState(false);
 
   const handleLogout = async () => {
     try {
@@ -158,6 +159,18 @@ export function Layout({ children }: LayoutProps) {
 
   return (
     <div className="min-h-screen bg-gray-50 sm:flex">
+      {/* Loading Overlay */}
+      {isNavigating && (
+        <div className="fixed inset-0 z-50 bg-gray-900 bg-opacity-50 flex items-center justify-center">
+          <div className="bg-white rounded-lg p-6 shadow-xl">
+            <div className="flex items-center space-x-3">
+              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-emerald-600"></div>
+              <span className="text-gray-700 font-medium">Loading...</span>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Mobile menu backdrop */}
       {isMobileMenuOpen && (
         <div

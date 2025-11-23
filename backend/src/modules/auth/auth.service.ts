@@ -256,6 +256,27 @@ export class AuthService {
     return storedToken ? user : null;
   }
 
+  async getUserProfile(userId: string) {
+    const user = await this.usersService.findById(userId);
+
+    if (!user) {
+      throw new UnauthorizedException('User not found');
+    }
+
+    const userRole = await this.usersService.getUserRole(userId);
+
+    return {
+      id: user.id,
+      email: user.email,
+      name: user.name,
+      role: userRole,
+      centerId: user.centerId,
+      isActive: user.isActive,
+      isEmailVerified: user.isEmailVerified,
+      mfaEnabled: user.mfaEnabled,
+    };
+  }
+
   async logout(userId: string, refreshToken: string) {
     // Revoke all refresh tokens for the user
     await this.prisma.refreshToken.updateMany({

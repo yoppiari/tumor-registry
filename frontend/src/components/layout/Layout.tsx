@@ -16,6 +16,7 @@ export function Layout({ children }: LayoutProps) {
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
   const [expandedMenus, setExpandedMenus] = useState<string[]>([]);
   const [isNavigating, setIsNavigating] = useState(false);
+  const [isInitialized, setIsInitialized] = useState(false);
 
   const handleLogout = async () => {
     try {
@@ -156,6 +157,21 @@ export function Layout({ children }: LayoutProps) {
     }
     return false;
   };
+
+  // Auto-expand active menu on mount and pathname change
+  React.useEffect(() => {
+    const activeMenu = navigation.find(item => {
+      if (item.submenu) {
+        return item.submenu.some((sub: any) => sub.href === pathname);
+      }
+      return false;
+    });
+
+    if (activeMenu && !expandedMenus.includes(activeMenu.name)) {
+      setExpandedMenus(prev => [...prev, activeMenu.name]);
+    }
+    setIsInitialized(true);
+  }, [pathname]);
 
   return (
     <div className="min-h-screen bg-gray-50 sm:flex">

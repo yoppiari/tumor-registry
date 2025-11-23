@@ -1,1 +1,9 @@
-{}
+{
+  "/not-found": "app/not-found.js",
+  "/analytics/page": "app/analytics/page.js",
+  "/analytics/distribution/page": "app/analytics/distribution/page.js",
+  "/analytics/trends/page": "app/analytics/trends/page.js",
+  "/analytics/centers/page": "app/analytics/centers/page.js",
+  "/analytics/predictions/page": "app/analytics/predictions/page.js",
+  "/dashboard/page": "app/dashboard/page.js"
+}

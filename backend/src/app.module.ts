@@ -23,6 +23,12 @@ import { MedicalImagingModule } from './modules/medical-imaging/medical-imaging.
 import { CaseReviewModule } from './modules/case-review/case-review.module';
 import { PeerReviewModule } from './modules/peer-review/peer-review.module';
 import { OfflineQueueModule } from './modules/offline-queue/offline-queue.module';
+// Batch Implementation: All Missing Stories
+import { SsoModule } from './modules/sso/sso.module';
+import { PasswordPolicyModule } from './modules/password-policy/password-policy.module';
+import { SessionManagementModule } from './modules/session-management/session-management.module';
+import { SecurityMonitoringModule } from './modules/security-monitoring/security-monitoring.module';
+import { DataProvenanceModule } from './modules/data-provenance/data-provenance.module';
 // Temporarily commented out problematic modules
 // import { SystemAdministrationModule } from './modules/system-administration/system-administration.module';
 // import { BackupModule } from './modules/backup/backup.module';
@@ -66,6 +72,12 @@ import { SecurityMiddleware } from './modules/auth/middleware/security.middlewar
     CaseReviewModule,
     PeerReviewModule,
     OfflineQueueModule,
+    // Batch Implementation Modules (Nov 22, 2025)
+    SsoModule,
+    PasswordPolicyModule,
+    SessionManagementModule,
+    SecurityMonitoringModule,
+    DataProvenanceModule,
     // SystemAdministrationModule,
     // BackupModule,
   ],

@@ -9,6 +9,7 @@ import { EmailService } from './email.service';
 import { EncryptionService } from './services/encryption.service';
 import { UsersModule } from '../users/users.module';
 import { DatabaseModule } from '../../database/database.module';
+import { JwtStrategy } from './strategies/jwt.strategy';
 import { JwtRefreshStrategy } from './strategies/jwt-refresh.strategy';
 
 @Module({
@@ -34,6 +35,7 @@ import { JwtRefreshStrategy } from './strategies/jwt-refresh.strategy';
     MfaService,
     EmailService,
     EncryptionService,
+    JwtStrategy,
     JwtRefreshStrategy,
   ],
   exports: [AuthService, EmailService, EncryptionService],

@@ -46,6 +46,9 @@ model User {
   mfaEnabled                Boolean                 @default(false)
   mfaSecret                 String?
   lastLoginAt               DateTime?
+  isLocked                  Boolean                 @default(false)
+  lockedUntil               DateTime?
+  isSsoUser                 Boolean                 @default(false)
   createdAt                 DateTime                @default(now())
   updatedAt                 DateTime                @updatedAt
   centerId                  String
@@ -3545,6 +3548,21 @@ model PasswordHistory {
   @@schema("system")
 }
 
+model RefreshToken {
+  id        String   @id @default(cuid())
+  userId    String
+  token     String   @unique
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  isRevoked Boolean  @default(false)
+
+  @@index([userId])
+  @@index([token])
+  @@map("refresh_tokens")
+  @@schema("system")
+}
+
 model FailedLoginAttempt {
   id        String   @id @default(cuid())
   userId    String
@@ -3600,6 +3618,198 @@ model SecurityAlert {
   resolvedBy    String?
 
   @@map("security_alerts")
+  @@schema("system")
+}
+
+model SecurityIncident {
+  id          String   @id @default(cuid())
+  userId      String?
+  type        String
+  severity    String
+  description String
+  details     Json?
+  status      String   @default("OPEN")
+  priority    Int      @default(3)
+  assignedTo  String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([userId])
+  @@index([status])
+  @@index([severity])
+  @@index([priority])
+  @@map("security_incidents")
+  @@schema("system")
+}
+
+model ThreatScan {
+  id           String   @id @default(cuid())
+  userId       String?
+  threatType   String
+  severity     String
+  threatsFound Int      @default(0)
+  details      Json?
+  createdAt    DateTime @default(now())
+
+  @@index([userId])
+  @@index([threatType])
+  @@index([createdAt])
+  @@map("threat_scans")
+  @@schema("system")
+}
+
+model BehavioralBaseline {
+  id                 String   @id @default(cuid())
+  userId             String   @unique
+  avgActivityPerDay  Float?
+  commonActions      String[]
+  typicalHours       Int[]
+  dataPoints         Int
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  @@index([userId])
+  @@map("behavioral_baselines")
+  @@schema("system")
+}
+
+model SsoConfiguration {
+  id                String     @id @default(cuid())
+  centerId          String
+  provider          String
+  providerName      String
+  configuration     Json
+  isActive          Boolean    @default(true)
+  autoProvision     Boolean    @default(true)
+  defaultRole       String?
+  attributeMapping  Json?
+  createdById       String
+  createdAt         DateTime   @default(now())
+  updatedAt         DateTime   @updatedAt
+  ssoLogins         SsoLogin[]
+
+  @@index([centerId])
+  @@index([isActive])
+  @@map("sso_configurations")
+  @@schema("system")
+}
+
+model SsoLogin {
+  id             String           @id @default(cuid())
+  userId         String
+  configId       String
+  provider       String
+  externalUserId String?
+  attributes     Json?
+  createdAt      DateTime         @default(now())
+  config         SsoConfiguration @relation(fields: [configId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([configId])
+  @@index([createdAt])
+  @@map("sso_logins")
+  @@schema("system")
+}
+
+model DataProvenance {
+  id           String   @id @default(cuid())
+  entityType   String
+  entityId     String
+  fieldName    String
+  oldValue     String?
+  newValue     String?
+  userId       String
+  changeReason String?
+  dataSource   String   @default("MANUAL_ENTRY")
+  timestamp    DateTime @default(now())
+  hash         String
+
+  @@index([entityType, entityId])
+  @@index([userId])
+  @@index([timestamp])
+  @@index([fieldName])
+  @@index([dataSource])
+  @@map("data_provenance")
+  @@schema("system")
+}
+
+model ValidationRule {
+  id          String   @id @default(cuid())
+  centerId    String?
+  name        String
+  description String?
+  entityType  String
+  fieldName   String
+  ruleType    String
+  ruleConfig  Json
+  errorMessage String?
+  isActive    Boolean  @default(true)
+  createdById String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([centerId])
+  @@index([entityType])
+  @@index([isActive])
+  @@map("validation_rules")
+  @@schema("system")
+}
+
+model AiSuggestion {
+  id              String   @id @default(cuid())
+  entityType      String
+  fieldName       String
+  context         Json?
+  suggestion      String
+  confidenceScore Float?
+  modelVersion    String?
+  userId          String?
+  accepted        Boolean?
+  createdAt       DateTime @default(now())
+
+  @@index([entityType])
+  @@index([fieldName])
+  @@index([userId])
+  @@index([createdAt])
+  @@map("ai_suggestions")
+  @@schema("system")
+}
+
+model CancerPrediction {
+  id                 String   @id @default(cuid())
+  modelId            String
+  predictionType     String
+  geographicArea     String?
+  cancerType         String?
+  predictionData     Json
+  confidenceInterval Json?
+  predictedAt        DateTime @default(now())
+  validUntil         DateTime?
+
+  @@index([modelId])
+  @@index([predictionType])
+  @@index([geographicArea])
+  @@index([cancerType])
+  @@map("cancer_predictions")
+  @@schema("system")
+}
+
+model ClinicalDecision {
+  id               String   @id @default(cuid())
+  patientId        String?
+  decisionType     String
+  recommendation   String
+  evidenceBase     Json?
+  confidenceScore  Float?
+  similarCases     Int?
+  createdForUserId String?
+  createdAt        DateTime @default(now())
+
+  @@index([patientId])
+  @@index([decisionType])
+  @@index([createdForUserId])
+  @@index([createdAt])
+  @@map("clinical_decisions")
   @@schema("system")
 }
 

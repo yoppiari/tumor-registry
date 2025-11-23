@@ -60,7 +60,12 @@ export class AuthController {
   @Get('profile')
   @UseGuards(JwtAuthGuard)
   async getProfile(@Req() req: FastifyRequest) {
-    return req.user;
+    const jwtPayload: any = req.user;
+
+    // Get full user data from database
+    const user = await this.authService.getUserProfile(jwtPayload.userId || jwtPayload.sub);
+
+    return user;
   }
 
   @Post('logout')

@@ -5,7 +5,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { Layout } from '@/components/layout/Layout';
 
 export default function DashboardPage() {
-  const { user, isAuthenticated } = useAuth();
+  const { user, isAuthenticated, isLoading } = useAuth();
   const [stats, setStats] = useState({
     totalPatients: 0,
     newPatients: 0,
@@ -14,7 +14,8 @@ export default function DashboardPage() {
   });
 
   useEffect(() => {
-    if (!isAuthenticated) {
+    // Wait for auth check to complete before redirecting
+    if (!isLoading && !isAuthenticated) {
       window.location.href = '/login';
       return;
     }
@@ -23,7 +24,7 @@ export default function DashboardPage() {
     const fetchDashboardData = async () => {
       try {
         const token = localStorage.getItem('accessToken');
-        const response = await fetch('http://localhost:3004/api/v1/analytics/dashboard', {
+        const response = await fetch('/api/v1/analytics/dashboard', {
           headers: {
             'Authorization': `Bearer ${token}`,
           },
@@ -45,8 +46,22 @@ export default function DashboardPage() {
       }
     };
 
-    fetchDashboardData();
-  }, [isAuthenticated]);
+    if (isAuthenticated) {
+      fetchDashboardData();
+    }
+  }, [isAuthenticated, isLoading]);
+
+  // Show loading while checking authentication
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600 mx-auto"></div>
+          <p className="mt-4 text-gray-600">Loading...</p>
+        </div>
+      </div>
+    );
+  }
 
   if (!isAuthenticated) {
     return (

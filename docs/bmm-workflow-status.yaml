@@ -158,7 +158,36 @@ implementation_status:
       reports:
         - "/home/yopi/Projects/tumor-registry/docs/reports/SPRINT-2-IMPLEMENTATION-REPORT.md"
         - "/home/yopi/Projects/tumor-registry/BATCH_IMPLEMENTATION_REPORT.md"
-      notes: "✅ COMPLETE - WhatsApp-style chat entry, Quality Dashboard with AI recommendations, staff leaderboard, missing data heatmap, quality trends"
+      notes: "✅ COMPLETE - Multi-step wizard form with two-layer system (close/open questions), Quality Dashboard with AI recommendations, staff leaderboard, missing data heatmap, quality trends"
+      implementation_details:
+        story_2_1:
+          title: "Progressive Patient Data Entry"
+          status: "complete"
+          form_type: "Multi-step wizard with hybrid mode toggle"
+          sections:
+            close_questions:
+              count: 5
+              steps: ["Informasi Dasar", "Diagnosis Kanker", "Stadium & Grading", "Status Pengobatan", "Data Geografis"]
+              fields: 25
+              purpose: "National analytics database"
+            open_questions:
+              count: 5
+              steps: ["Identitas Lengkap", "Informasi Kontak", "Kontak Darurat", "Riwayat Medis", "Catatan Klinis"]
+              fields: 43
+              purpose: "Local center detailed records"
+          features:
+            - "Mode toggle: Quick Capture (5 steps) vs Full Detail (10 steps)"
+            - "Progress bar with percentage and step indicators"
+            - "Auto-save every 10 seconds to localStorage"
+            - "Draft recovery with 24-hour expiry"
+            - "Validation on submit per step"
+            - "Field help text for medical terminology (ICD-O-3, TNM)"
+            - "Mobile responsive design for tablet data entry"
+            - "All fields non-mandatory for demo purposes"
+          files:
+            - "/home/yopi/Projects/tumor-registry/frontend/src/config/patientFormConfig.ts (685 lines, 68 fields)"
+            - "/home/yopi/Projects/tumor-registry/frontend/src/components/patients/PatientEntryForm.tsx (782 lines)"
+          date_completed: "2025-11-23"
 
     - epic: 3
       name: "Research Discovery & Collaboration"
@@ -212,7 +241,7 @@ current_status:
   backend_progress: 95
   frontend_progress: 95
   testing_progress: 20
-  last_update: "2025-11-23 - All 27 frontend pages completed"
+  last_update: "2025-11-23 - Multi-step patient entry form implemented with two-layer system"
   audit_document: "COMPREHENSIVE_AUDIT_2025-11-22.md"
   total_stories: 57
   stories_complete: 57
@@ -247,7 +276,7 @@ current_status:
     - "Approvals - Approval queue with priority"
     - "Approvals/History - Approvals history with timeline"
     - "Patients - Patient list and search"
-    - "Patients/New - WhatsApp-style chat data entry"
+    - "Patients/New - Multi-step wizard data entry (two-layer: close/open questions)"
     - "Patients/Quality - Quality dashboard with metrics"
     - "Patients/Documents - Document upload"
     - "Settings - User settings and preferences"
@@ -304,7 +333,7 @@ completed_stories_nov_22:
 completed_frontend_work_nov_23:
   all_27_pages_completed:
     epic_2:
-      - "✅ Story 2.1: WhatsApp-inspired Progressive UI - COMPLETE"
+      - "✅ Story 2.1: Multi-Step Wizard Progressive UI with Two-Layer System - COMPLETE"
       - "✅ Story 2.7: Quality Dashboard with AI recommendations - COMPLETE"
       - "✅ Story 2.2: Medical Imaging Management - Document upload page"
       - "✅ Story 2.4: Automated Quality Scoring - Quality metrics"

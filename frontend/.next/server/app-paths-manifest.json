@@ -1,7 +1,3 @@
 {
-  "/patients/page": "app/patients/page.js",
-  "/research/collaboration/page": "app/research/collaboration/page.js",
-  "/research/publications/page": "app/research/publications/page.js",
-  "/login/page": "app/login/page.js",
   "/patients/new/page": "app/patients/new/page.js"
 }

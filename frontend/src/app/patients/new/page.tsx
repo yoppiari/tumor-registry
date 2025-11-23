@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { Layout } from '@/components/layout/Layout';
 import { PatientProvider } from '@/contexts/PatientContext';
-import PatientChatEntry from '@/components/patients/PatientChatEntry';
+import PatientEntryForm from '@/components/patients/PatientEntryForm';
 
 function NewPatientContent() {
   const { isAuthenticated, isLoading } = useAuth();
@@ -32,11 +32,18 @@ function NewPatientContent() {
   return (
     <Layout>
       <div className="mb-6">
-        <h1 className="text-2xl font-bold text-gray-900">Entry Data Pasien Baru</h1>
-        <p className="text-gray-600">Masukkan data pasien kanker baru ke dalam sistem</p>
+        <h1 className="text-3xl font-bold text-gray-900">Entry Data Pasien Baru</h1>
+        <p className="text-gray-600 mt-2">
+          Pilih mode <strong>Quick Capture</strong> untuk data essential (database nasional) atau{' '}
+          <strong>Full Detail</strong> untuk data lengkap termasuk riwayat medis
+        </p>
       </div>
 
-      <PatientChatEntry />
+      <PatientEntryForm
+        onSuccess={() => {
+          window.location.href = '/patients';
+        }}
+      />
     </Layout>
   );
 }

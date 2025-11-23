@@ -1,11 +1,34 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect } from 'react';
+import { useAuth } from '@/contexts/AuthContext';
 import { Layout } from '@/components/layout/Layout';
 import { PatientProvider } from '@/contexts/PatientContext';
 import PatientChatEntry from '@/components/patients/PatientChatEntry';
 
 function NewPatientContent() {
+  const { isAuthenticated, isLoading } = useAuth();
+
+  useEffect(() => {
+    if (!isLoading && !isAuthenticated) {
+      window.location.href = '/login';
+    }
+  }, [isAuthenticated, isLoading]);
+
+  if (isLoading) {
+    return (
+      <Layout>
+        <div className="min-h-screen flex items-center justify-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600"></div>
+        </div>
+      </Layout>
+    );
+  }
+
+  if (!isAuthenticated) {
+    return null;
+  }
+
   return (
     <Layout>
       <div className="mb-6">
@@ -13,7 +36,7 @@ function NewPatientContent() {
         <p className="text-gray-600">Masukkan data pasien kanker baru ke dalam sistem</p>
       </div>
 
-      <PatientChatEntry onShowListView={() => window.location.href = '/patients'} />
+      <PatientChatEntry />
     </Layout>
   );
 }

@@ -106,7 +106,11 @@ const formSteps: FormStep[] = [
   }
 ];
 
-export default function PatientChatEntry() {
+interface PatientChatEntryProps {
+  onShowListView?: () => void;
+}
+
+export default function PatientChatEntry({ onShowListView }: PatientChatEntryProps = {}) {
   const {
     createChatSession,
     sendChatMessage,

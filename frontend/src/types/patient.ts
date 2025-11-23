@@ -216,7 +216,7 @@ export interface ChatMessage {
   id: string;
   type: 'user' | 'system' | 'form';
   content: string;
-  timestamp: string;
+  timestamp: string | Date;
   fieldName?: string;
   validation?: {
     isValid: boolean;
@@ -276,7 +276,7 @@ export interface PatientContextType {
 export interface FormStep {
   id: string;
   title: string;
-  fieldName: keyof Patient;
+  fieldName: string;
   type: 'text' | 'select' | 'date' | 'phone' | 'options';
   required: boolean;
   placeholder?: string;

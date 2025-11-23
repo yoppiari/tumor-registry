@@ -1079,3 +1079,829 @@ prisma:query SELECT "system"."notification_digests"."id", "system"."notification
 prisma:error Error in PostgreSQL connection: Error { kind: Closed, cause: None }
 [32m[Nest] 439871  - [39m11/23/2025, 8:15:00 AM [32m    LOG[39m [38;5;3m[ScheduledTasksService] [39m[32mReal-time metrics collected in 0ms[39m
 [32m[Nest] 439871  - [39m11/23/2025, 8:20:00 AM [32m    LOG[39m [38;5;3m[ScheduledTasksService] [39m[32mReal-time metrics collected in 1ms[39m
+[32m[Nest] 439871  - [39m11/23/2025, 8:25:00 AM [32m    LOG[39m [38;5;3m[ScheduledTasksService] [39m[32mReal-time metrics collected in 0ms[39m
+[32m[Nest] 439871  - [39m11/23/2025, 8:30:00 AM [32m    LOG[39m [38;5;3m[ScheduledTasksService] [39m[32mReal-time metrics collected in 0ms[39m
+[32m[Nest] 439871  - [39m11/23/2025, 8:35:00 AM [32m    LOG[39m [38;5;3m[ScheduledTasksService] [39m[32mReal-time metrics collected in 1ms[39m
+[33m[Nest] 439871  - [39m11/23/2025, 8:35:12 AM [33m   WARN[39m [38;5;3m[ValidationExceptionFilter] [39m[33mValidation Error: [{"field":"unknown","message":"Unauthorized"}][39m
+[33m[Nest] 439871  - [39m11/23/2025, 8:35:12 AM [33m   WARN[39m [38;5;3m[ValidationExceptionFilter] [39m[33mObject:[39m
+{
+  "method": "GET",
+  "url": "/api/v1/auth/profile",
+  "query": {}
+}
+
+[33m[Nest] 439871  - [39m11/23/2025, 8:35:12 AM [33m   WARN[39m [38;5;3m[ValidationExceptionFilter] [39m[33mValidation Error: [{"field":"unknown","message":"Unauthorized"}][39m
+[33m[Nest] 439871  - [39m11/23/2025, 8:35:12 AM [33m   WARN[39m [38;5;3m[ValidationExceptionFilter] [39m[33mObject:[39m
+{
+  "method": "GET",
+  "url": "/api/v1/auth/profile",
+  "query": {}
+}
+
+[33m[Nest] 439871  - [39m11/23/2025, 8:35:13 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 82.21%[39m
+prisma:query SELECT "system"."users"."id", "system"."users"."email", "system"."users"."name", "system"."users"."kolegiumId", "system"."users"."passwordHash", "system"."users"."phone", "system"."users"."nik", "system"."users"."isActive", "system"."users"."isEmailVerified", "system"."users"."mfaEnabled", "system"."users"."mfaSecret", "system"."users"."lastLoginAt", "system"."users"."isLocked", "system"."users"."lockedUntil", "system"."users"."isSsoUser", "system"."users"."createdAt", "system"."users"."updatedAt", "system"."users"."centerId" FROM "system"."users" WHERE ("system"."users"."email" = $1 AND 1=1) LIMIT $2 OFFSET $3
+prisma:query SELECT "system"."centers"."id", "system"."centers"."name", "system"."centers"."code", "system"."centers"."province", "system"."centers"."regency", "system"."centers"."address", "system"."centers"."isActive", "system"."centers"."createdAt", "system"."centers"."updatedAt" FROM "system"."centers" WHERE "system"."centers"."id" IN ($1) OFFSET $2
+prisma:query SELECT "system"."user_roles"."id", "system"."user_roles"."userId", "system"."user_roles"."roleId", "system"."user_roles"."isActive", "system"."user_roles"."createdAt" FROM "system"."user_roles" WHERE ("system"."user_roles"."isActive" = $1 AND "system"."user_roles"."userId" IN ($2)) OFFSET $3
+prisma:query SELECT "system"."roles"."id", "system"."roles"."name", "system"."roles"."code", "system"."roles"."description", "system"."roles"."level" FROM "system"."roles" WHERE "system"."roles"."id" IN ($1) OFFSET $2
+prisma:query BEGIN
+prisma:query UPDATE "system"."users" SET "lastLoginAt" = $1, "updatedAt" = $2 WHERE ("system"."users"."id" = $3 AND 1=1) RETURNING "system"."users"."id", "system"."users"."email", "system"."users"."name", "system"."users"."kolegiumId", "system"."users"."passwordHash", "system"."users"."phone", "system"."users"."nik", "system"."users"."isActive", "system"."users"."isEmailVerified", "system"."users"."mfaEnabled", "system"."users"."mfaSecret", "system"."users"."lastLoginAt", "system"."users"."isLocked", "system"."users"."lockedUntil", "system"."users"."isSsoUser", "system"."users"."createdAt", "system"."users"."updatedAt", "system"."users"."centerId"
+prisma:query SELECT "system"."users"."id", "system"."users"."email", "system"."users"."name", "system"."users"."kolegiumId", "system"."users"."passwordHash", "system"."users"."phone", "system"."users"."nik", "system"."users"."isActive", "system"."users"."isEmailVerified", "system"."users"."mfaEnabled", "system"."users"."mfaSecret", "system"."users"."lastLoginAt", "system"."users"."isLocked", "system"."users"."lockedUntil", "system"."users"."isSsoUser", "system"."users"."createdAt", "system"."users"."updatedAt", "system"."users"."centerId" FROM "system"."users" WHERE "system"."users"."id" = $1 LIMIT $2 OFFSET $3
+prisma:query SELECT "system"."centers"."id", "system"."centers"."name", "system"."centers"."code", "system"."centers"."province", "system"."centers"."regency", "system"."centers"."address", "system"."centers"."isActive", "system"."centers"."createdAt", "system"."centers"."updatedAt" FROM "system"."centers" WHERE "system"."centers"."id" IN ($1) OFFSET $2
+prisma:query SELECT "system"."user_roles"."id", "system"."user_roles"."userId", "system"."user_roles"."roleId", "system"."user_roles"."isActive", "system"."user_roles"."createdAt" FROM "system"."user_roles" WHERE ("system"."user_roles"."isActive" = $1 AND "system"."user_roles"."userId" IN ($2)) OFFSET $3
+prisma:query SELECT "system"."roles"."id", "system"."roles"."name", "system"."roles"."code", "system"."roles"."description", "system"."roles"."level" FROM "system"."roles" WHERE "system"."roles"."id" IN ($1) OFFSET $2
+prisma:query COMMIT
+prisma:query SELECT "system"."user_roles"."id", "system"."user_roles"."userId", "system"."user_roles"."roleId", "system"."user_roles"."isActive", "system"."user_roles"."createdAt" FROM "system"."user_roles" WHERE ("system"."user_roles"."userId" = $1 AND "system"."user_roles"."isActive" = $2) LIMIT $3 OFFSET $4
+prisma:query SELECT "system"."roles"."id", "system"."roles"."name", "system"."roles"."code", "system"."roles"."description", "system"."roles"."level" FROM "system"."roles" WHERE "system"."roles"."id" IN ($1) OFFSET $2
+prisma:query SELECT "system"."user_roles"."id", "system"."user_roles"."userId", "system"."user_roles"."roleId", "system"."user_roles"."isActive", "system"."user_roles"."createdAt" FROM "system"."user_roles" WHERE ("system"."user_roles"."userId" = $1 AND "system"."user_roles"."isActive" = $2) OFFSET $3
+prisma:query SELECT "system"."roles"."id", "system"."roles"."name", "system"."roles"."code", "system"."roles"."description", "system"."roles"."level" FROM "system"."roles" WHERE "system"."roles"."id" IN ($1) OFFSET $2
+prisma:query SELECT "system"."role_permissions"."id", "system"."role_permissions"."roleId", "system"."role_permissions"."permissionId", "system"."role_permissions"."createdAt" FROM "system"."role_permissions" WHERE "system"."role_permissions"."roleId" IN ($1) OFFSET $2
+prisma:query SELECT "system"."permissions"."id", "system"."permissions"."name", "system"."permissions"."code", "system"."permissions"."resource", "system"."permissions"."action", "system"."permissions"."description" FROM "system"."permissions" WHERE "system"."permissions"."id" IN ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24,$25,$26,$27,$28,$29,$30,$31,$32,$33,$34,$35,$36,$37,$38,$39,$40,$41,$42,$43,$44,$45,$46,$47,$48,$49,$50,$51,$52,$53,$54,$55,$56,$57,$58,$59,$60,$61,$62) OFFSET $63
+prisma:query DELETE FROM "system"."refresh_tokens" WHERE "system"."refresh_tokens"."expiresAt" < $1
+prisma:query INSERT INTO "system"."refresh_tokens" ("id","userId","token","expiresAt","createdAt","updatedAt","isRevoked") VALUES ($1,$2,$3,$4,$5,$6,$7) RETURNING "system"."refresh_tokens"."id", "system"."refresh_tokens"."userId", "system"."refresh_tokens"."token", "system"."refresh_tokens"."expiresAt", "system"."refresh_tokens"."createdAt", "system"."refresh_tokens"."updatedAt", "system"."refresh_tokens"."isRevoked"
+prisma:query SELECT "system"."user_roles"."id", "system"."user_roles"."userId", "system"."user_roles"."roleId", "system"."user_roles"."isActive", "system"."user_roles"."createdAt" FROM "system"."user_roles" WHERE ("system"."user_roles"."userId" = $1 AND "system"."user_roles"."isActive" = $2) LIMIT $3 OFFSET $4
+prisma:query SELECT "system"."roles"."id", "system"."roles"."name", "system"."roles"."code", "system"."roles"."description", "system"."roles"."level" FROM "system"."roles" WHERE "system"."roles"."id" IN ($1) OFFSET $2
+[33m[Nest] 439871  - [39m11/23/2025, 8:35:19 AM [33m   WARN[39m [38;5;3m[ValidationExceptionFilter] [39m[33mValidation Error: [{"field":"unknown","message":"undefined is not an object (evaluating 'request.path.toLowerCase')"}][39m
+[33m[Nest] 439871  - [39m11/23/2025, 8:35:19 AM [33m   WARN[39m [38;5;3m[ValidationExceptionFilter] [39m[33mObject:[39m
+{
+  "method": "GET",
+  "url": "/api/v1/analytics/dashboard",
+  "query": {}
+}
+
+[33m[Nest] 439871  - [39m11/23/2025, 8:35:19 AM [33m   WARN[39m [38;5;3m[ValidationExceptionFilter] [39m[33mValidation Error: [{"field":"unknown","message":"undefined is not an object (evaluating 'request.path.toLowerCase')"}][39m
+[33m[Nest] 439871  - [39m11/23/2025, 8:35:19 AM [33m   WARN[39m [38;5;3m[ValidationExceptionFilter] [39m[33mObject:[39m
+{
+  "method": "GET",
+  "url": "/api/v1/analytics/dashboard",
+  "query": {}
+}
+
+prisma:query SELECT "system"."users"."id", "system"."users"."email", "system"."users"."name", "system"."users"."kolegiumId", "system"."users"."passwordHash", "system"."users"."phone", "system"."users"."nik", "system"."users"."isActive", "system"."users"."isEmailVerified", "system"."users"."mfaEnabled", "system"."users"."mfaSecret", "system"."users"."lastLoginAt", "system"."users"."isLocked", "system"."users"."lockedUntil", "system"."users"."isSsoUser", "system"."users"."createdAt", "system"."users"."updatedAt", "system"."users"."centerId" FROM "system"."users" WHERE ("system"."users"."id" = $1 AND 1=1) LIMIT $2 OFFSET $3
+prisma:query SELECT "system"."centers"."id", "system"."centers"."name", "system"."centers"."code", "system"."centers"."province", "system"."centers"."regency", "system"."centers"."address", "system"."centers"."isActive", "system"."centers"."createdAt", "system"."centers"."updatedAt" FROM "system"."centers" WHERE "system"."centers"."id" IN ($1) OFFSET $2
+prisma:query SELECT "system"."user_roles"."id", "system"."user_roles"."userId", "system"."user_roles"."roleId", "system"."user_roles"."isActive", "system"."user_roles"."createdAt" FROM "system"."user_roles" WHERE ("system"."user_roles"."isActive" = $1 AND "system"."user_roles"."userId" IN ($2)) OFFSET $3
+prisma:query SELECT "system"."roles"."id", "system"."roles"."name", "system"."roles"."code", "system"."roles"."description", "system"."roles"."level" FROM "system"."roles" WHERE "system"."roles"."id" IN ($1) OFFSET $2
+prisma:query SELECT "system"."user_roles"."id", "system"."user_roles"."userId", "system"."user_roles"."roleId", "system"."user_roles"."isActive", "system"."user_roles"."createdAt" FROM "system"."user_roles" WHERE ("system"."user_roles"."userId" = $1 AND "system"."user_roles"."isActive" = $2) LIMIT $3 OFFSET $4
+prisma:query SELECT "system"."roles"."id", "system"."roles"."name", "system"."roles"."code", "system"."roles"."description", "system"."roles"."level" FROM "system"."roles" WHERE "system"."roles"."id" IN ($1) OFFSET $2
+prisma:query SELECT "system"."users"."id", "system"."users"."email", "system"."users"."name", "system"."users"."kolegiumId", "system"."users"."passwordHash", "system"."users"."phone", "system"."users"."nik", "system"."users"."isActive", "system"."users"."isEmailVerified", "system"."users"."mfaEnabled", "system"."users"."mfaSecret", "system"."users"."lastLoginAt", "system"."users"."isLocked", "system"."users"."lockedUntil", "system"."users"."isSsoUser", "system"."users"."createdAt", "system"."users"."updatedAt", "system"."users"."centerId" FROM "system"."users" WHERE ("system"."users"."id" = $1 AND 1=1) LIMIT $2 OFFSET $3
+prisma:query SELECT "system"."centers"."id", "system"."centers"."name", "system"."centers"."code", "system"."centers"."province", "system"."centers"."regency", "system"."centers"."address", "system"."centers"."isActive", "system"."centers"."createdAt", "system"."centers"."updatedAt" FROM "system"."centers" WHERE "system"."centers"."id" IN ($1) OFFSET $2
+prisma:query SELECT "system"."user_roles"."id", "system"."user_roles"."userId", "system"."user_roles"."roleId", "system"."user_roles"."isActive", "system"."user_roles"."createdAt" FROM "system"."user_roles" WHERE ("system"."user_roles"."isActive" = $1 AND "system"."user_roles"."userId" IN ($2)) OFFSET $3
+prisma:query SELECT "system"."roles"."id", "system"."roles"."name", "system"."roles"."code", "system"."roles"."description", "system"."roles"."level" FROM "system"."roles" WHERE "system"."roles"."id" IN ($1) OFFSET $2
+prisma:query SELECT "system"."user_roles"."id", "system"."user_roles"."userId", "system"."user_roles"."roleId", "system"."user_roles"."isActive", "system"."user_roles"."createdAt" FROM "system"."user_roles" WHERE ("system"."user_roles"."userId" = $1 AND "system"."user_roles"."isActive" = $2) LIMIT $3 OFFSET $4
+prisma:query SELECT "system"."roles"."id", "system"."roles"."name", "system"."roles"."code", "system"."roles"."description", "system"."roles"."level" FROM "system"."roles" WHERE "system"."roles"."id" IN ($1) OFFSET $2
+[33m[Nest] 439871  - [39m11/23/2025, 8:35:43 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.40%[39m
+prisma:query SELECT 1
+prisma:query SELECT "system"."users"."id", "system"."users"."email", "system"."users"."name", "system"."users"."kolegiumId", "system"."users"."passwordHash", "system"."users"."phone", "system"."users"."nik", "system"."users"."isActive", "system"."users"."isEmailVerified", "system"."users"."mfaEnabled", "system"."users"."mfaSecret", "system"."users"."lastLoginAt", "system"."users"."isLocked", "system"."users"."lockedUntil", "system"."users"."isSsoUser", "system"."users"."createdAt", "system"."users"."updatedAt", "system"."users"."centerId" FROM "system"."users" WHERE ("system"."users"."id" = $1 AND 1=1) LIMIT $2 OFFSET $3
+prisma:query SELECT "system"."centers"."id", "system"."centers"."name", "system"."centers"."code", "system"."centers"."province", "system"."centers"."regency", "system"."centers"."address", "system"."centers"."isActive", "system"."centers"."createdAt", "system"."centers"."updatedAt" FROM "system"."centers" WHERE "system"."centers"."id" IN ($1) OFFSET $2
+prisma:query SELECT "system"."user_roles"."id", "system"."user_roles"."userId", "system"."user_roles"."roleId", "system"."user_roles"."isActive", "system"."user_roles"."createdAt" FROM "system"."user_roles" WHERE ("system"."user_roles"."isActive" = $1 AND "system"."user_roles"."userId" IN ($2)) OFFSET $3
+prisma:query SELECT "system"."roles"."id", "system"."roles"."name", "system"."roles"."code", "system"."roles"."description", "system"."roles"."level" FROM "system"."roles" WHERE "system"."roles"."id" IN ($1) OFFSET $2
+prisma:query SELECT "system"."user_roles"."id", "system"."user_roles"."userId", "system"."user_roles"."roleId", "system"."user_roles"."isActive", "system"."user_roles"."createdAt" FROM "system"."user_roles" WHERE ("system"."user_roles"."userId" = $1 AND "system"."user_roles"."isActive" = $2) LIMIT $3 OFFSET $4
+prisma:query SELECT "system"."roles"."id", "system"."roles"."name", "system"."roles"."code", "system"."roles"."description", "system"."roles"."level" FROM "system"."roles" WHERE "system"."roles"."id" IN ($1) OFFSET $2
+prisma:query SELECT "system"."users"."id", "system"."users"."email", "system"."users"."name", "system"."users"."kolegiumId", "system"."users"."passwordHash", "system"."users"."phone", "system"."users"."nik", "system"."users"."isActive", "system"."users"."isEmailVerified", "system"."users"."mfaEnabled", "system"."users"."mfaSecret", "system"."users"."lastLoginAt", "system"."users"."isLocked", "system"."users"."lockedUntil", "system"."users"."isSsoUser", "system"."users"."createdAt", "system"."users"."updatedAt", "system"."users"."centerId" FROM "system"."users" WHERE ("system"."users"."id" = $1 AND 1=1) LIMIT $2 OFFSET $3
+prisma:query SELECT "system"."centers"."id", "system"."centers"."name", "system"."centers"."code", "system"."centers"."province", "system"."centers"."regency", "system"."centers"."address", "system"."centers"."isActive", "system"."centers"."createdAt", "system"."centers"."updatedAt" FROM "system"."centers" WHERE "system"."centers"."id" IN ($1) OFFSET $2
+prisma:query SELECT "system"."user_roles"."id", "system"."user_roles"."userId", "system"."user_roles"."roleId", "system"."user_roles"."isActive", "system"."user_roles"."createdAt" FROM "system"."user_roles" WHERE ("system"."user_roles"."isActive" = $1 AND "system"."user_roles"."userId" IN ($2)) OFFSET $3
+prisma:query SELECT "system"."roles"."id", "system"."roles"."name", "system"."roles"."code", "system"."roles"."description", "system"."roles"."level" FROM "system"."roles" WHERE "system"."roles"."id" IN ($1) OFFSET $2
+prisma:query SELECT "system"."user_roles"."id", "system"."user_roles"."userId", "system"."user_roles"."roleId", "system"."user_roles"."isActive", "system"."user_roles"."createdAt" FROM "system"."user_roles" WHERE ("system"."user_roles"."userId" = $1 AND "system"."user_roles"."isActive" = $2) LIMIT $3 OFFSET $4
+prisma:query SELECT "system"."roles"."id", "system"."roles"."name", "system"."roles"."code", "system"."roles"."description", "system"."roles"."level" FROM "system"."roles" WHERE "system"."roles"."id" IN ($1) OFFSET $2
+prisma:query SELECT "system"."users"."id", "system"."users"."email", "system"."users"."name", "system"."users"."kolegiumId", "system"."users"."passwordHash", "system"."users"."phone", "system"."users"."nik", "system"."users"."isActive", "system"."users"."isEmailVerified", "system"."users"."mfaEnabled", "system"."users"."mfaSecret", "system"."users"."lastLoginAt", "system"."users"."isLocked", "system"."users"."lockedUntil", "system"."users"."isSsoUser", "system"."users"."createdAt", "system"."users"."updatedAt", "system"."users"."centerId" FROM "system"."users" WHERE ("system"."users"."id" = $1 AND 1=1) LIMIT $2 OFFSET $3
+prisma:query SELECT "system"."centers"."id", "system"."centers"."name", "system"."centers"."code", "system"."centers"."province", "system"."centers"."regency", "system"."centers"."address", "system"."centers"."isActive", "system"."centers"."createdAt", "system"."centers"."updatedAt" FROM "system"."centers" WHERE "system"."centers"."id" IN ($1) OFFSET $2
+prisma:query SELECT "system"."user_roles"."id", "system"."user_roles"."userId", "system"."user_roles"."roleId", "system"."user_roles"."isActive", "system"."user_roles"."createdAt" FROM "system"."user_roles" WHERE ("system"."user_roles"."isActive" = $1 AND "system"."user_roles"."userId" IN ($2)) OFFSET $3
+prisma:query SELECT "system"."roles"."id", "system"."roles"."name", "system"."roles"."code", "system"."roles"."description", "system"."roles"."level" FROM "system"."roles" WHERE "system"."roles"."id" IN ($1) OFFSET $2
+prisma:query SELECT "system"."user_roles"."id", "system"."user_roles"."userId", "system"."user_roles"."roleId", "system"."user_roles"."isActive", "system"."user_roles"."createdAt" FROM "system"."user_roles" WHERE ("system"."user_roles"."userId" = $1 AND "system"."user_roles"."isActive" = $2) LIMIT $3 OFFSET $4
+prisma:query SELECT "system"."roles"."id", "system"."roles"."name", "system"."roles"."code", "system"."roles"."description", "system"."roles"."level" FROM "system"."roles" WHERE "system"."roles"."id" IN ($1) OFFSET $2
+prisma:query SELECT "system"."users"."id", "system"."users"."email", "system"."users"."name", "system"."users"."kolegiumId", "system"."users"."passwordHash", "system"."users"."phone", "system"."users"."nik", "system"."users"."isActive", "system"."users"."isEmailVerified", "system"."users"."mfaEnabled", "system"."users"."mfaSecret", "system"."users"."lastLoginAt", "system"."users"."isLocked", "system"."users"."lockedUntil", "system"."users"."isSsoUser", "system"."users"."createdAt", "system"."users"."updatedAt", "system"."users"."centerId" FROM "system"."users" WHERE ("system"."users"."id" = $1 AND 1=1) LIMIT $2 OFFSET $3
+prisma:query SELECT "system"."centers"."id", "system"."centers"."name", "system"."centers"."code", "system"."centers"."province", "system"."centers"."regency", "system"."centers"."address", "system"."centers"."isActive", "system"."centers"."createdAt", "system"."centers"."updatedAt" FROM "system"."centers" WHERE "system"."centers"."id" IN ($1) OFFSET $2
+prisma:query SELECT "system"."user_roles"."id", "system"."user_roles"."userId", "system"."user_roles"."roleId", "system"."user_roles"."isActive", "system"."user_roles"."createdAt" FROM "system"."user_roles" WHERE ("system"."user_roles"."isActive" = $1 AND "system"."user_roles"."userId" IN ($2)) OFFSET $3
+prisma:query SELECT "system"."roles"."id", "system"."roles"."name", "system"."roles"."code", "system"."roles"."description", "system"."roles"."level" FROM "system"."roles" WHERE "system"."roles"."id" IN ($1) OFFSET $2
+prisma:query SELECT "system"."user_roles"."id", "system"."user_roles"."userId", "system"."user_roles"."roleId", "system"."user_roles"."isActive", "system"."user_roles"."createdAt" FROM "system"."user_roles" WHERE ("system"."user_roles"."userId" = $1 AND "system"."user_roles"."isActive" = $2) LIMIT $3 OFFSET $4
+prisma:query SELECT "system"."roles"."id", "system"."roles"."name", "system"."roles"."code", "system"."roles"."description", "system"."roles"."level" FROM "system"."roles" WHERE "system"."roles"."id" IN ($1) OFFSET $2
+[33m[Nest] 439871  - [39m11/23/2025, 8:36:13 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.58%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 8:36:43 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.59%[39m
+prisma:query SELECT 1
+prisma:query SELECT "system"."users"."id", "system"."users"."email", "system"."users"."name", "system"."users"."kolegiumId", "system"."users"."passwordHash", "system"."users"."phone", "system"."users"."nik", "system"."users"."isActive", "system"."users"."isEmailVerified", "system"."users"."mfaEnabled", "system"."users"."mfaSecret", "system"."users"."lastLoginAt", "system"."users"."isLocked", "system"."users"."lockedUntil", "system"."users"."isSsoUser", "system"."users"."createdAt", "system"."users"."updatedAt", "system"."users"."centerId" FROM "system"."users" WHERE ("system"."users"."id" = $1 AND 1=1) LIMIT $2 OFFSET $3
+prisma:query SELECT "system"."centers"."id", "system"."centers"."name", "system"."centers"."code", "system"."centers"."province", "system"."centers"."regency", "system"."centers"."address", "system"."centers"."isActive", "system"."centers"."createdAt", "system"."centers"."updatedAt" FROM "system"."centers" WHERE "system"."centers"."id" IN ($1) OFFSET $2
+prisma:query SELECT "system"."user_roles"."id", "system"."user_roles"."userId", "system"."user_roles"."roleId", "system"."user_roles"."isActive", "system"."user_roles"."createdAt" FROM "system"."user_roles" WHERE ("system"."user_roles"."isActive" = $1 AND "system"."user_roles"."userId" IN ($2)) OFFSET $3
+prisma:query SELECT "system"."roles"."id", "system"."roles"."name", "system"."roles"."code", "system"."roles"."description", "system"."roles"."level" FROM "system"."roles" WHERE "system"."roles"."id" IN ($1) OFFSET $2
+prisma:query SELECT "system"."user_roles"."id", "system"."user_roles"."userId", "system"."user_roles"."roleId", "system"."user_roles"."isActive", "system"."user_roles"."createdAt" FROM "system"."user_roles" WHERE ("system"."user_roles"."userId" = $1 AND "system"."user_roles"."isActive" = $2) LIMIT $3 OFFSET $4
+prisma:query SELECT "system"."roles"."id", "system"."roles"."name", "system"."roles"."code", "system"."roles"."description", "system"."roles"."level" FROM "system"."roles" WHERE "system"."roles"."id" IN ($1) OFFSET $2
+prisma:query SELECT "system"."users"."id", "system"."users"."email", "system"."users"."name", "system"."users"."kolegiumId", "system"."users"."passwordHash", "system"."users"."phone", "system"."users"."nik", "system"."users"."isActive", "system"."users"."isEmailVerified", "system"."users"."mfaEnabled", "system"."users"."mfaSecret", "system"."users"."lastLoginAt", "system"."users"."isLocked", "system"."users"."lockedUntil", "system"."users"."isSsoUser", "system"."users"."createdAt", "system"."users"."updatedAt", "system"."users"."centerId" FROM "system"."users" WHERE ("system"."users"."id" = $1 AND 1=1) LIMIT $2 OFFSET $3
+prisma:query SELECT "system"."centers"."id", "system"."centers"."name", "system"."centers"."code", "system"."centers"."province", "system"."centers"."regency", "system"."centers"."address", "system"."centers"."isActive", "system"."centers"."createdAt", "system"."centers"."updatedAt" FROM "system"."centers" WHERE "system"."centers"."id" IN ($1) OFFSET $2
+prisma:query SELECT "system"."user_roles"."id", "system"."user_roles"."userId", "system"."user_roles"."roleId", "system"."user_roles"."isActive", "system"."user_roles"."createdAt" FROM "system"."user_roles" WHERE ("system"."user_roles"."isActive" = $1 AND "system"."user_roles"."userId" IN ($2)) OFFSET $3
+prisma:query SELECT "system"."roles"."id", "system"."roles"."name", "system"."roles"."code", "system"."roles"."description", "system"."roles"."level" FROM "system"."roles" WHERE "system"."roles"."id" IN ($1) OFFSET $2
+prisma:query SELECT "system"."user_roles"."id", "system"."user_roles"."userId", "system"."user_roles"."roleId", "system"."user_roles"."isActive", "system"."user_roles"."createdAt" FROM "system"."user_roles" WHERE ("system"."user_roles"."userId" = $1 AND "system"."user_roles"."isActive" = $2) LIMIT $3 OFFSET $4
+prisma:query SELECT "system"."roles"."id", "system"."roles"."name", "system"."roles"."code", "system"."roles"."description", "system"."roles"."level" FROM "system"."roles" WHERE "system"."roles"."id" IN ($1) OFFSET $2
+[33m[Nest] 439871  - [39m11/23/2025, 8:37:13 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.61%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 8:37:43 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.61%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 8:38:13 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.62%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 8:38:43 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.62%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 8:39:13 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.62%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 8:39:43 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.63%[39m
+[32m[Nest] 439871  - [39m11/23/2025, 8:40:00 AM [32m    LOG[39m [38;5;3m[ScheduledTasksService] [39m[32mReal-time metrics collected in 0ms[39m
+[33m[Nest] 439871  - [39m11/23/2025, 8:40:13 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.63%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 8:40:43 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.64%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 8:41:13 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.64%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 8:41:43 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.64%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 8:42:13 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.65%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 8:42:43 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.65%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 8:43:13 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.65%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 8:43:43 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.66%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 8:44:13 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.66%[39m
+[32m[Nest] 439871  - [39m11/23/2025, 8:45:00 AM [32m    LOG[39m [38;5;3m[ScheduledTasksService] [39m[32mReal-time metrics collected in 0ms[39m
+prisma:error Error in PostgreSQL connection: Error { kind: Closed, cause: None }
+[32m[Nest] 439871  - [39m11/23/2025, 8:50:00 AM [32m    LOG[39m [38;5;3m[ScheduledTasksService] [39m[32mReal-time metrics collected in 0ms[39m
+[32m[Nest] 439871  - [39m11/23/2025, 8:55:00 AM [32m    LOG[39m [38;5;3m[ScheduledTasksService] [39m[32mReal-time metrics collected in 0ms[39m
+[33m[Nest] 439871  - [39m11/23/2025, 9:00:00 AM [33m   WARN[39m [38;5;3m[ScheduledTasksService] [39m[33mALERT: REDIS_HEALTH_ISSUE - Redis service health check failed[39m
+[32m[Nest] 439871  - [39m11/23/2025, 9:00:00 AM [32m    LOG[39m [38;5;3m[ScheduledTasksService] [39m[32mHourly cache update completed[39m
+[32m[Nest] 439871  - [39m11/23/2025, 9:00:00 AM [32m    LOG[39m [38;5;3m[ScheduledTasksService] [39m[32mHourly alert generation completed[39m
+[32m[Nest] 439871  - [39m11/23/2025, 9:00:00 AM [32m    LOG[39m [38;5;3m[ScheduledTasksService] [39m[32mHourly data quality validation completed[39m
+[32m[Nest] 439871  - [39m11/23/2025, 9:00:00 AM [32m    LOG[39m [38;5;3m[ScheduledTasksService] [39m[32mHourly analytics update completed in 1ms[39m
+[32m[Nest] 439871  - [39m11/23/2025, 9:00:00 AM [32m    LOG[39m [38;5;3m[ScheduledTasksService] [39m[32mReal-time metrics collected in 0ms[39m
+prisma:query SELECT "system"."notification_digests"."id", "system"."notification_digests"."userId", "system"."notification_digests"."category"::text, "system"."notification_digests"."frequency"::text, "system"."notification_digests"."lastSentAt", "system"."notification_digests"."nextScheduledAt", "system"."notification_digests"."notificationCount", "system"."notification_digests"."notificationIds", "system"."notification_digests"."status"::text, "system"."notification_digests"."createdAt", "system"."notification_digests"."updatedAt" FROM "system"."notification_digests" WHERE ("system"."notification_digests"."status" = CAST($1::text AS "system"."digest_statuses") AND "system"."notification_digests"."nextScheduledAt" <= $2) OFFSET $3
+[33m[Nest] 439871  - [39m11/23/2025, 9:02:12 AM [33m   WARN[39m [38;5;3m[ValidationExceptionFilter] [39m[33mValidation Error: [{"field":"unknown","message":"Unauthorized"}][39m
+[33m[Nest] 439871  - [39m11/23/2025, 9:02:12 AM [33m   WARN[39m [38;5;3m[ValidationExceptionFilter] [39m[33mObject:[39m
+{
+  "method": "GET",
+  "url": "/api/v1/auth/profile",
+  "query": {}
+}
+
+[33m[Nest] 439871  - [39m11/23/2025, 9:02:12 AM [33m   WARN[39m [38;5;3m[ValidationExceptionFilter] [39m[33mValidation Error: [{"field":"unknown","message":"Unauthorized"}][39m
+[33m[Nest] 439871  - [39m11/23/2025, 9:02:12 AM [33m   WARN[39m [38;5;3m[ValidationExceptionFilter] [39m[33mObject:[39m
+{
+  "method": "GET",
+  "url": "/api/v1/auth/profile",
+  "query": {}
+}
+
+[33m[Nest] 439871  - [39m11/23/2025, 9:02:13 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 80.54%[39m
+prisma:query SELECT "system"."users"."id", "system"."users"."email", "system"."users"."name", "system"."users"."kolegiumId", "system"."users"."passwordHash", "system"."users"."phone", "system"."users"."nik", "system"."users"."isActive", "system"."users"."isEmailVerified", "system"."users"."mfaEnabled", "system"."users"."mfaSecret", "system"."users"."lastLoginAt", "system"."users"."isLocked", "system"."users"."lockedUntil", "system"."users"."isSsoUser", "system"."users"."createdAt", "system"."users"."updatedAt", "system"."users"."centerId" FROM "system"."users" WHERE ("system"."users"."email" = $1 AND 1=1) LIMIT $2 OFFSET $3
+prisma:query SELECT "system"."centers"."id", "system"."centers"."name", "system"."centers"."code", "system"."centers"."province", "system"."centers"."regency", "system"."centers"."address", "system"."centers"."isActive", "system"."centers"."createdAt", "system"."centers"."updatedAt" FROM "system"."centers" WHERE "system"."centers"."id" IN ($1) OFFSET $2
+prisma:query SELECT "system"."user_roles"."id", "system"."user_roles"."userId", "system"."user_roles"."roleId", "system"."user_roles"."isActive", "system"."user_roles"."createdAt" FROM "system"."user_roles" WHERE ("system"."user_roles"."isActive" = $1 AND "system"."user_roles"."userId" IN ($2)) OFFSET $3
+prisma:query SELECT "system"."roles"."id", "system"."roles"."name", "system"."roles"."code", "system"."roles"."description", "system"."roles"."level" FROM "system"."roles" WHERE "system"."roles"."id" IN ($1) OFFSET $2
+prisma:query BEGIN
+prisma:query UPDATE "system"."users" SET "lastLoginAt" = $1, "updatedAt" = $2 WHERE ("system"."users"."id" = $3 AND 1=1) RETURNING "system"."users"."id", "system"."users"."email", "system"."users"."name", "system"."users"."kolegiumId", "system"."users"."passwordHash", "system"."users"."phone", "system"."users"."nik", "system"."users"."isActive", "system"."users"."isEmailVerified", "system"."users"."mfaEnabled", "system"."users"."mfaSecret", "system"."users"."lastLoginAt", "system"."users"."isLocked", "system"."users"."lockedUntil", "system"."users"."isSsoUser", "system"."users"."createdAt", "system"."users"."updatedAt", "system"."users"."centerId"
+prisma:query SELECT "system"."users"."id", "system"."users"."email", "system"."users"."name", "system"."users"."kolegiumId", "system"."users"."passwordHash", "system"."users"."phone", "system"."users"."nik", "system"."users"."isActive", "system"."users"."isEmailVerified", "system"."users"."mfaEnabled", "system"."users"."mfaSecret", "system"."users"."lastLoginAt", "system"."users"."isLocked", "system"."users"."lockedUntil", "system"."users"."isSsoUser", "system"."users"."createdAt", "system"."users"."updatedAt", "system"."users"."centerId" FROM "system"."users" WHERE "system"."users"."id" = $1 LIMIT $2 OFFSET $3
+prisma:query SELECT "system"."centers"."id", "system"."centers"."name", "system"."centers"."code", "system"."centers"."province", "system"."centers"."regency", "system"."centers"."address", "system"."centers"."isActive", "system"."centers"."createdAt", "system"."centers"."updatedAt" FROM "system"."centers" WHERE "system"."centers"."id" IN ($1) OFFSET $2
+prisma:query SELECT "system"."user_roles"."id", "system"."user_roles"."userId", "system"."user_roles"."roleId", "system"."user_roles"."isActive", "system"."user_roles"."createdAt" FROM "system"."user_roles" WHERE ("system"."user_roles"."isActive" = $1 AND "system"."user_roles"."userId" IN ($2)) OFFSET $3
+prisma:query SELECT "system"."roles"."id", "system"."roles"."name", "system"."roles"."code", "system"."roles"."description", "system"."roles"."level" FROM "system"."roles" WHERE "system"."roles"."id" IN ($1) OFFSET $2
+prisma:query COMMIT
+prisma:query SELECT "system"."user_roles"."id", "system"."user_roles"."userId", "system"."user_roles"."roleId", "system"."user_roles"."isActive", "system"."user_roles"."createdAt" FROM "system"."user_roles" WHERE ("system"."user_roles"."userId" = $1 AND "system"."user_roles"."isActive" = $2) LIMIT $3 OFFSET $4
+prisma:query SELECT "system"."roles"."id", "system"."roles"."name", "system"."roles"."code", "system"."roles"."description", "system"."roles"."level" FROM "system"."roles" WHERE "system"."roles"."id" IN ($1) OFFSET $2
+prisma:query SELECT "system"."user_roles"."id", "system"."user_roles"."userId", "system"."user_roles"."roleId", "system"."user_roles"."isActive", "system"."user_roles"."createdAt" FROM "system"."user_roles" WHERE ("system"."user_roles"."userId" = $1 AND "system"."user_roles"."isActive" = $2) OFFSET $3
+prisma:query SELECT "system"."roles"."id", "system"."roles"."name", "system"."roles"."code", "system"."roles"."description", "system"."roles"."level" FROM "system"."roles" WHERE "system"."roles"."id" IN ($1) OFFSET $2
+prisma:query SELECT "system"."role_permissions"."id", "system"."role_permissions"."roleId", "system"."role_permissions"."permissionId", "system"."role_permissions"."createdAt" FROM "system"."role_permissions" WHERE "system"."role_permissions"."roleId" IN ($1) OFFSET $2
+prisma:query SELECT "system"."permissions"."id", "system"."permissions"."name", "system"."permissions"."code", "system"."permissions"."resource", "system"."permissions"."action", "system"."permissions"."description" FROM "system"."permissions" WHERE "system"."permissions"."id" IN ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24,$25,$26,$27,$28,$29,$30,$31,$32,$33,$34,$35,$36,$37,$38,$39,$40,$41,$42,$43,$44,$45,$46,$47,$48,$49,$50,$51,$52,$53,$54,$55,$56,$57,$58,$59,$60,$61,$62) OFFSET $63
+prisma:query DELETE FROM "system"."refresh_tokens" WHERE "system"."refresh_tokens"."expiresAt" < $1
+prisma:query INSERT INTO "system"."refresh_tokens" ("id","userId","token","expiresAt","createdAt","updatedAt","isRevoked") VALUES ($1,$2,$3,$4,$5,$6,$7) RETURNING "system"."refresh_tokens"."id", "system"."refresh_tokens"."userId", "system"."refresh_tokens"."token", "system"."refresh_tokens"."expiresAt", "system"."refresh_tokens"."createdAt", "system"."refresh_tokens"."updatedAt", "system"."refresh_tokens"."isRevoked"
+prisma:query SELECT "system"."user_roles"."id", "system"."user_roles"."userId", "system"."user_roles"."roleId", "system"."user_roles"."isActive", "system"."user_roles"."createdAt" FROM "system"."user_roles" WHERE ("system"."user_roles"."userId" = $1 AND "system"."user_roles"."isActive" = $2) LIMIT $3 OFFSET $4
+prisma:query SELECT "system"."roles"."id", "system"."roles"."name", "system"."roles"."code", "system"."roles"."description", "system"."roles"."level" FROM "system"."roles" WHERE "system"."roles"."id" IN ($1) OFFSET $2
+[33m[Nest] 439871  - [39m11/23/2025, 9:02:21 AM [33m   WARN[39m [38;5;3m[ValidationExceptionFilter] [39m[33mValidation Error: [{"field":"unknown","message":"undefined is not an object (evaluating 'request.path.toLowerCase')"}][39m
+[33m[Nest] 439871  - [39m11/23/2025, 9:02:21 AM [33m   WARN[39m [38;5;3m[ValidationExceptionFilter] [39m[33mObject:[39m
+{
+  "method": "GET",
+  "url": "/api/v1/analytics/dashboard",
+  "query": {}
+}
+
+[33m[Nest] 439871  - [39m11/23/2025, 9:02:21 AM [33m   WARN[39m [38;5;3m[ValidationExceptionFilter] [39m[33mValidation Error: [{"field":"unknown","message":"undefined is not an object (evaluating 'request.path.toLowerCase')"}][39m
+[33m[Nest] 439871  - [39m11/23/2025, 9:02:21 AM [33m   WARN[39m [38;5;3m[ValidationExceptionFilter] [39m[33mObject:[39m
+{
+  "method": "GET",
+  "url": "/api/v1/analytics/dashboard",
+  "query": {}
+}
+
+prisma:query SELECT 1
+prisma:query SELECT "system"."users"."id", "system"."users"."email", "system"."users"."name", "system"."users"."kolegiumId", "system"."users"."passwordHash", "system"."users"."phone", "system"."users"."nik", "system"."users"."isActive", "system"."users"."isEmailVerified", "system"."users"."mfaEnabled", "system"."users"."mfaSecret", "system"."users"."lastLoginAt", "system"."users"."isLocked", "system"."users"."lockedUntil", "system"."users"."isSsoUser", "system"."users"."createdAt", "system"."users"."updatedAt", "system"."users"."centerId" FROM "system"."users" WHERE ("system"."users"."id" = $1 AND 1=1) LIMIT $2 OFFSET $3
+prisma:query SELECT "system"."centers"."id", "system"."centers"."name", "system"."centers"."code", "system"."centers"."province", "system"."centers"."regency", "system"."centers"."address", "system"."centers"."isActive", "system"."centers"."createdAt", "system"."centers"."updatedAt" FROM "system"."centers" WHERE "system"."centers"."id" IN ($1) OFFSET $2
+prisma:query SELECT "system"."user_roles"."id", "system"."user_roles"."userId", "system"."user_roles"."roleId", "system"."user_roles"."isActive", "system"."user_roles"."createdAt" FROM "system"."user_roles" WHERE ("system"."user_roles"."isActive" = $1 AND "system"."user_roles"."userId" IN ($2)) OFFSET $3
+prisma:query SELECT "system"."roles"."id", "system"."roles"."name", "system"."roles"."code", "system"."roles"."description", "system"."roles"."level" FROM "system"."roles" WHERE "system"."roles"."id" IN ($1) OFFSET $2
+prisma:query SELECT "system"."user_roles"."id", "system"."user_roles"."userId", "system"."user_roles"."roleId", "system"."user_roles"."isActive", "system"."user_roles"."createdAt" FROM "system"."user_roles" WHERE ("system"."user_roles"."userId" = $1 AND "system"."user_roles"."isActive" = $2) LIMIT $3 OFFSET $4
+prisma:query SELECT "system"."roles"."id", "system"."roles"."name", "system"."roles"."code", "system"."roles"."description", "system"."roles"."level" FROM "system"."roles" WHERE "system"."roles"."id" IN ($1) OFFSET $2
+prisma:query SELECT "system"."users"."id", "system"."users"."email", "system"."users"."name", "system"."users"."kolegiumId", "system"."users"."passwordHash", "system"."users"."phone", "system"."users"."nik", "system"."users"."isActive", "system"."users"."isEmailVerified", "system"."users"."mfaEnabled", "system"."users"."mfaSecret", "system"."users"."lastLoginAt", "system"."users"."isLocked", "system"."users"."lockedUntil", "system"."users"."isSsoUser", "system"."users"."createdAt", "system"."users"."updatedAt", "system"."users"."centerId" FROM "system"."users" WHERE ("system"."users"."id" = $1 AND 1=1) LIMIT $2 OFFSET $3
+prisma:query SELECT "system"."centers"."id", "system"."centers"."name", "system"."centers"."code", "system"."centers"."province", "system"."centers"."regency", "system"."centers"."address", "system"."centers"."isActive", "system"."centers"."createdAt", "system"."centers"."updatedAt" FROM "system"."centers" WHERE "system"."centers"."id" IN ($1) OFFSET $2
+prisma:query SELECT "system"."user_roles"."id", "system"."user_roles"."userId", "system"."user_roles"."roleId", "system"."user_roles"."isActive", "system"."user_roles"."createdAt" FROM "system"."user_roles" WHERE ("system"."user_roles"."isActive" = $1 AND "system"."user_roles"."userId" IN ($2)) OFFSET $3
+prisma:query SELECT "system"."roles"."id", "system"."roles"."name", "system"."roles"."code", "system"."roles"."description", "system"."roles"."level" FROM "system"."roles" WHERE "system"."roles"."id" IN ($1) OFFSET $2
+prisma:query SELECT "system"."user_roles"."id", "system"."user_roles"."userId", "system"."user_roles"."roleId", "system"."user_roles"."isActive", "system"."user_roles"."createdAt" FROM "system"."user_roles" WHERE ("system"."user_roles"."userId" = $1 AND "system"."user_roles"."isActive" = $2) LIMIT $3 OFFSET $4
+prisma:query SELECT "system"."roles"."id", "system"."roles"."name", "system"."roles"."code", "system"."roles"."description", "system"."roles"."level" FROM "system"."roles" WHERE "system"."roles"."id" IN ($1) OFFSET $2
+[33m[Nest] 439871  - [39m11/23/2025, 9:02:43 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 82.34%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 9:03:13 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 82.34%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 9:03:43 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 82.34%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 9:04:13 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 82.37%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 9:04:43 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 82.38%[39m
+[32m[Nest] 439871  - [39m11/23/2025, 9:05:00 AM [32m    LOG[39m [38;5;3m[ScheduledTasksService] [39m[32mReal-time metrics collected in 0ms[39m
+[33m[Nest] 439871  - [39m11/23/2025, 9:05:13 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.11%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 9:05:43 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.12%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 9:06:13 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.14%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 9:06:43 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.14%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 9:07:13 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.15%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 9:07:43 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.15%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 9:08:13 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.15%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 9:08:43 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.16%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 9:09:13 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.16%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 9:09:43 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.16%[39m
+[32m[Nest] 439871  - [39m11/23/2025, 9:10:00 AM [32m    LOG[39m [38;5;3m[ScheduledTasksService] [39m[32mReal-time metrics collected in 0ms[39m
+prisma:error Error in PostgreSQL connection: Error { kind: Closed, cause: None }
+[33m[Nest] 439871  - [39m11/23/2025, 9:10:13 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.20%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 9:10:43 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.20%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 9:11:13 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.21%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 9:11:43 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.21%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 9:12:13 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.21%[39m
+prisma:error Error in PostgreSQL connection: Error { kind: Closed, cause: None }
+[33m[Nest] 439871  - [39m11/23/2025, 9:12:43 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.22%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 9:13:13 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.22%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 9:13:43 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.22%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 9:14:13 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.23%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 9:14:43 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.23%[39m
+[32m[Nest] 439871  - [39m11/23/2025, 9:15:00 AM [32m    LOG[39m [38;5;3m[ScheduledTasksService] [39m[32mReal-time metrics collected in 0ms[39m
+[33m[Nest] 439871  - [39m11/23/2025, 9:15:13 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.23%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 9:15:43 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.23%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 9:16:13 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.24%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 9:16:43 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.24%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 9:17:13 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.24%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 9:17:43 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.25%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 9:18:13 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.25%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 9:18:43 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.25%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 9:19:13 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.26%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 9:19:43 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.26%[39m
+[32m[Nest] 439871  - [39m11/23/2025, 9:20:00 AM [32m    LOG[39m [38;5;3m[ScheduledTasksService] [39m[32mReal-time metrics collected in 0ms[39m
+[33m[Nest] 439871  - [39m11/23/2025, 9:20:13 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.26%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 9:20:43 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.27%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 9:21:13 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.27%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 9:21:43 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.27%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 9:22:13 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.28%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 9:22:43 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.28%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 9:23:13 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.28%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 9:23:43 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.29%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 9:24:13 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.29%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 9:24:43 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.29%[39m
+[32m[Nest] 439871  - [39m11/23/2025, 9:25:00 AM [32m    LOG[39m [38;5;3m[ScheduledTasksService] [39m[32mReal-time metrics collected in 0ms[39m
+[33m[Nest] 439871  - [39m11/23/2025, 9:25:13 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.29%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 9:25:43 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.30%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 9:26:13 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.30%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 9:26:43 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.30%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 9:27:13 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.31%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 9:27:43 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.31%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 9:28:13 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.31%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 9:28:43 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.31%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 9:29:13 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.32%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 9:29:43 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.32%[39m
+[32m[Nest] 439871  - [39m11/23/2025, 9:30:00 AM [32m    LOG[39m [38;5;3m[ScheduledTasksService] [39m[32mReal-time metrics collected in 0ms[39m
+[33m[Nest] 439871  - [39m11/23/2025, 9:30:13 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.32%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 9:30:43 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.32%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 9:31:13 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.33%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 9:31:43 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.33%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 9:32:13 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.33%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 9:32:43 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.34%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 9:33:13 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.34%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 9:33:43 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.34%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 9:34:13 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.35%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 9:34:43 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.35%[39m
+[32m[Nest] 439871  - [39m11/23/2025, 9:35:00 AM [32m    LOG[39m [38;5;3m[ScheduledTasksService] [39m[32mReal-time metrics collected in 1ms[39m
+[33m[Nest] 439871  - [39m11/23/2025, 9:35:13 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.35%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 9:35:43 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.35%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 9:36:13 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.36%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 9:36:43 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.36%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 9:37:13 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.36%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 9:37:43 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.37%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 9:38:13 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.37%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 9:38:43 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.37%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 9:39:13 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.37%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 9:39:43 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.38%[39m
+[32m[Nest] 439871  - [39m11/23/2025, 9:40:00 AM [32m    LOG[39m [38;5;3m[ScheduledTasksService] [39m[32mReal-time metrics collected in 5ms[39m
+[33m[Nest] 439871  - [39m11/23/2025, 9:40:13 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.38%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 9:40:43 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.38%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 9:41:13 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.38%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 9:41:43 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.39%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 9:42:13 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.39%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 9:42:43 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.39%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 9:43:13 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.40%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 9:43:43 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.40%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 9:44:13 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.40%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 9:44:43 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.40%[39m
+[32m[Nest] 439871  - [39m11/23/2025, 9:45:00 AM [32m    LOG[39m [38;5;3m[ScheduledTasksService] [39m[32mReal-time metrics collected in 0ms[39m
+[33m[Nest] 439871  - [39m11/23/2025, 9:45:13 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.41%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 9:45:43 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.41%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 9:46:13 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.41%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 9:46:43 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.41%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 9:47:13 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.42%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 9:47:43 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.42%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 9:48:13 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.42%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 9:48:43 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.43%[39m
+[32m[Nest] 439871  - [39m11/23/2025, 9:50:00 AM [32m    LOG[39m [38;5;3m[ScheduledTasksService] [39m[32mReal-time metrics collected in 0ms[39m
+[33m[Nest] 439871  - [39m11/23/2025, 9:53:12 AM [33m   WARN[39m [38;5;3m[ValidationExceptionFilter] [39m[33mValidation Error: [{"field":"unknown","message":"Unauthorized"}][39m
+[33m[Nest] 439871  - [39m11/23/2025, 9:53:12 AM [33m   WARN[39m [38;5;3m[ValidationExceptionFilter] [39m[33mObject:[39m
+{
+  "method": "GET",
+  "url": "/api/v1/auth/profile",
+  "query": {}
+}
+
+[33m[Nest] 439871  - [39m11/23/2025, 9:53:12 AM [33m   WARN[39m [38;5;3m[ValidationExceptionFilter] [39m[33mValidation Error: [{"field":"unknown","message":"Unauthorized"}][39m
+[33m[Nest] 439871  - [39m11/23/2025, 9:53:12 AM [33m   WARN[39m [38;5;3m[ValidationExceptionFilter] [39m[33mObject:[39m
+{
+  "method": "GET",
+  "url": "/api/v1/auth/profile",
+  "query": {}
+}
+
+[33m[Nest] 439871  - [39m11/23/2025, 9:53:13 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 81.57%[39m
+prisma:query SELECT "system"."users"."id", "system"."users"."email", "system"."users"."name", "system"."users"."kolegiumId", "system"."users"."passwordHash", "system"."users"."phone", "system"."users"."nik", "system"."users"."isActive", "system"."users"."isEmailVerified", "system"."users"."mfaEnabled", "system"."users"."mfaSecret", "system"."users"."lastLoginAt", "system"."users"."isLocked", "system"."users"."lockedUntil", "system"."users"."isSsoUser", "system"."users"."createdAt", "system"."users"."updatedAt", "system"."users"."centerId" FROM "system"."users" WHERE ("system"."users"."email" = $1 AND 1=1) LIMIT $2 OFFSET $3
+prisma:query SELECT "system"."centers"."id", "system"."centers"."name", "system"."centers"."code", "system"."centers"."province", "system"."centers"."regency", "system"."centers"."address", "system"."centers"."isActive", "system"."centers"."createdAt", "system"."centers"."updatedAt" FROM "system"."centers" WHERE "system"."centers"."id" IN ($1) OFFSET $2
+prisma:query SELECT "system"."user_roles"."id", "system"."user_roles"."userId", "system"."user_roles"."roleId", "system"."user_roles"."isActive", "system"."user_roles"."createdAt" FROM "system"."user_roles" WHERE ("system"."user_roles"."isActive" = $1 AND "system"."user_roles"."userId" IN ($2)) OFFSET $3
+prisma:query SELECT "system"."roles"."id", "system"."roles"."name", "system"."roles"."code", "system"."roles"."description", "system"."roles"."level" FROM "system"."roles" WHERE "system"."roles"."id" IN ($1) OFFSET $2
+prisma:query BEGIN
+prisma:query UPDATE "system"."users" SET "lastLoginAt" = $1, "updatedAt" = $2 WHERE ("system"."users"."id" = $3 AND 1=1) RETURNING "system"."users"."id", "system"."users"."email", "system"."users"."name", "system"."users"."kolegiumId", "system"."users"."passwordHash", "system"."users"."phone", "system"."users"."nik", "system"."users"."isActive", "system"."users"."isEmailVerified", "system"."users"."mfaEnabled", "system"."users"."mfaSecret", "system"."users"."lastLoginAt", "system"."users"."isLocked", "system"."users"."lockedUntil", "system"."users"."isSsoUser", "system"."users"."createdAt", "system"."users"."updatedAt", "system"."users"."centerId"
+prisma:query SELECT "system"."users"."id", "system"."users"."email", "system"."users"."name", "system"."users"."kolegiumId", "system"."users"."passwordHash", "system"."users"."phone", "system"."users"."nik", "system"."users"."isActive", "system"."users"."isEmailVerified", "system"."users"."mfaEnabled", "system"."users"."mfaSecret", "system"."users"."lastLoginAt", "system"."users"."isLocked", "system"."users"."lockedUntil", "system"."users"."isSsoUser", "system"."users"."createdAt", "system"."users"."updatedAt", "system"."users"."centerId" FROM "system"."users" WHERE "system"."users"."id" = $1 LIMIT $2 OFFSET $3
+prisma:query SELECT "system"."centers"."id", "system"."centers"."name", "system"."centers"."code", "system"."centers"."province", "system"."centers"."regency", "system"."centers"."address", "system"."centers"."isActive", "system"."centers"."createdAt", "system"."centers"."updatedAt" FROM "system"."centers" WHERE "system"."centers"."id" IN ($1) OFFSET $2
+prisma:query SELECT "system"."user_roles"."id", "system"."user_roles"."userId", "system"."user_roles"."roleId", "system"."user_roles"."isActive", "system"."user_roles"."createdAt" FROM "system"."user_roles" WHERE ("system"."user_roles"."isActive" = $1 AND "system"."user_roles"."userId" IN ($2)) OFFSET $3
+prisma:query SELECT "system"."roles"."id", "system"."roles"."name", "system"."roles"."code", "system"."roles"."description", "system"."roles"."level" FROM "system"."roles" WHERE "system"."roles"."id" IN ($1) OFFSET $2
+prisma:query COMMIT
+prisma:query SELECT "system"."user_roles"."id", "system"."user_roles"."userId", "system"."user_roles"."roleId", "system"."user_roles"."isActive", "system"."user_roles"."createdAt" FROM "system"."user_roles" WHERE ("system"."user_roles"."userId" = $1 AND "system"."user_roles"."isActive" = $2) LIMIT $3 OFFSET $4
+prisma:query SELECT "system"."roles"."id", "system"."roles"."name", "system"."roles"."code", "system"."roles"."description", "system"."roles"."level" FROM "system"."roles" WHERE "system"."roles"."id" IN ($1) OFFSET $2
+prisma:query SELECT "system"."user_roles"."id", "system"."user_roles"."userId", "system"."user_roles"."roleId", "system"."user_roles"."isActive", "system"."user_roles"."createdAt" FROM "system"."user_roles" WHERE ("system"."user_roles"."userId" = $1 AND "system"."user_roles"."isActive" = $2) OFFSET $3
+prisma:query SELECT "system"."roles"."id", "system"."roles"."name", "system"."roles"."code", "system"."roles"."description", "system"."roles"."level" FROM "system"."roles" WHERE "system"."roles"."id" IN ($1) OFFSET $2
+prisma:query SELECT "system"."role_permissions"."id", "system"."role_permissions"."roleId", "system"."role_permissions"."permissionId", "system"."role_permissions"."createdAt" FROM "system"."role_permissions" WHERE "system"."role_permissions"."roleId" IN ($1) OFFSET $2
+prisma:query SELECT "system"."permissions"."id", "system"."permissions"."name", "system"."permissions"."code", "system"."permissions"."resource", "system"."permissions"."action", "system"."permissions"."description" FROM "system"."permissions" WHERE "system"."permissions"."id" IN ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24,$25,$26,$27,$28,$29,$30,$31,$32,$33,$34,$35,$36,$37,$38,$39,$40,$41,$42,$43,$44,$45,$46,$47,$48,$49,$50,$51,$52,$53,$54,$55,$56,$57,$58,$59,$60,$61,$62) OFFSET $63
+prisma:query DELETE FROM "system"."refresh_tokens" WHERE "system"."refresh_tokens"."expiresAt" < $1
+prisma:query INSERT INTO "system"."refresh_tokens" ("id","userId","token","expiresAt","createdAt","updatedAt","isRevoked") VALUES ($1,$2,$3,$4,$5,$6,$7) RETURNING "system"."refresh_tokens"."id", "system"."refresh_tokens"."userId", "system"."refresh_tokens"."token", "system"."refresh_tokens"."expiresAt", "system"."refresh_tokens"."createdAt", "system"."refresh_tokens"."updatedAt", "system"."refresh_tokens"."isRevoked"
+prisma:query SELECT "system"."user_roles"."id", "system"."user_roles"."userId", "system"."user_roles"."roleId", "system"."user_roles"."isActive", "system"."user_roles"."createdAt" FROM "system"."user_roles" WHERE ("system"."user_roles"."userId" = $1 AND "system"."user_roles"."isActive" = $2) LIMIT $3 OFFSET $4
+prisma:query SELECT "system"."roles"."id", "system"."roles"."name", "system"."roles"."code", "system"."roles"."description", "system"."roles"."level" FROM "system"."roles" WHERE "system"."roles"."id" IN ($1) OFFSET $2
+[33m[Nest] 439871  - [39m11/23/2025, 9:53:16 AM [33m   WARN[39m [38;5;3m[ValidationExceptionFilter] [39m[33mValidation Error: [{"field":"unknown","message":"undefined is not an object (evaluating 'request.path.toLowerCase')"}][39m
+[33m[Nest] 439871  - [39m11/23/2025, 9:53:16 AM [33m   WARN[39m [38;5;3m[ValidationExceptionFilter] [39m[33mObject:[39m
+{
+  "method": "GET",
+  "url": "/api/v1/analytics/dashboard",
+  "query": {}
+}
+
+[33m[Nest] 439871  - [39m11/23/2025, 9:53:16 AM [33m   WARN[39m [38;5;3m[ValidationExceptionFilter] [39m[33mValidation Error: [{"field":"unknown","message":"undefined is not an object (evaluating 'request.path.toLowerCase')"}][39m
+[33m[Nest] 439871  - [39m11/23/2025, 9:53:16 AM [33m   WARN[39m [38;5;3m[ValidationExceptionFilter] [39m[33mObject:[39m
+{
+  "method": "GET",
+  "url": "/api/v1/analytics/dashboard",
+  "query": {}
+}
+
+[33m[Nest] 439871  - [39m11/23/2025, 9:53:43 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.10%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 9:54:13 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.11%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 9:54:43 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.11%[39m
+[32m[Nest] 439871  - [39m11/23/2025, 9:55:00 AM [32m    LOG[39m [38;5;3m[ScheduledTasksService] [39m[32mReal-time metrics collected in 0ms[39m
+[33m[Nest] 439871  - [39m11/23/2025, 9:55:13 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.12%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 9:55:43 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.13%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 9:56:13 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.13%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 9:56:43 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.13%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 9:57:13 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.13%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 9:57:43 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.14%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 9:58:13 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.14%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 9:58:43 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.14%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 9:59:13 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.14%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 9:59:43 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.14%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 10:00:00 AM [33m   WARN[39m [38;5;3m[ScheduledTasksService] [39m[33mALERT: REDIS_HEALTH_ISSUE - Redis service health check failed[39m
+[32m[Nest] 439871  - [39m11/23/2025, 10:00:00 AM [32m    LOG[39m [38;5;3m[ScheduledTasksService] [39m[32mHourly cache update completed[39m
+[32m[Nest] 439871  - [39m11/23/2025, 10:00:00 AM [32m    LOG[39m [38;5;3m[ScheduledTasksService] [39m[32mHourly alert generation completed[39m
+[32m[Nest] 439871  - [39m11/23/2025, 10:00:00 AM [32m    LOG[39m [38;5;3m[ScheduledTasksService] [39m[32mHourly data quality validation completed[39m
+[32m[Nest] 439871  - [39m11/23/2025, 10:00:00 AM [32m    LOG[39m [38;5;3m[ScheduledTasksService] [39m[32mHourly analytics update completed in 1ms[39m
+[32m[Nest] 439871  - [39m11/23/2025, 10:00:00 AM [32m    LOG[39m [38;5;3m[ScheduledTasksService] [39m[32mReal-time metrics collected in 0ms[39m
+prisma:query SELECT "system"."notification_digests"."id", "system"."notification_digests"."userId", "system"."notification_digests"."category"::text, "system"."notification_digests"."frequency"::text, "system"."notification_digests"."lastSentAt", "system"."notification_digests"."nextScheduledAt", "system"."notification_digests"."notificationCount", "system"."notification_digests"."notificationIds", "system"."notification_digests"."status"::text, "system"."notification_digests"."createdAt", "system"."notification_digests"."updatedAt" FROM "system"."notification_digests" WHERE ("system"."notification_digests"."status" = CAST($1::text AS "system"."digest_statuses") AND "system"."notification_digests"."nextScheduledAt" <= $2) OFFSET $3
+[33m[Nest] 439871  - [39m11/23/2025, 10:00:13 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.29%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 10:00:43 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.29%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 10:01:13 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.29%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 10:01:43 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.29%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 10:02:13 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.30%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 10:02:43 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.30%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 10:03:13 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.30%[39m
+prisma:error Error in PostgreSQL connection: Error { kind: Closed, cause: None }
+[33m[Nest] 439871  - [39m11/23/2025, 10:03:43 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.33%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 10:04:13 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.33%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 10:04:43 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.33%[39m
+[32m[Nest] 439871  - [39m11/23/2025, 10:05:00 AM [32m    LOG[39m [38;5;3m[ScheduledTasksService] [39m[32mReal-time metrics collected in 0ms[39m
+[33m[Nest] 439871  - [39m11/23/2025, 10:05:13 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.33%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 10:05:43 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.34%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 10:06:13 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.34%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 10:06:43 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.34%[39m
+[32m[Nest] 439871  - [39m11/23/2025, 10:10:00 AM [32m    LOG[39m [38;5;3m[ScheduledTasksService] [39m[32mReal-time metrics collected in 1ms[39m
+prisma:error Error in PostgreSQL connection: Error { kind: Closed, cause: None }
+[32m[Nest] 439871  - [39m11/23/2025, 10:15:00 AM [32m    LOG[39m [38;5;3m[ScheduledTasksService] [39m[32mReal-time metrics collected in 0ms[39m
+[32m[Nest] 439871  - [39m11/23/2025, 10:20:00 AM [32m    LOG[39m [38;5;3m[ScheduledTasksService] [39m[32mReal-time metrics collected in 0ms[39m
+[33m[Nest] 439871  - [39m11/23/2025, 10:23:00 AM [33m   WARN[39m [38;5;3m[ValidationExceptionFilter] [39m[33mValidation Error: [{"field":"unknown","message":"Unauthorized"}][39m
+[33m[Nest] 439871  - [39m11/23/2025, 10:23:00 AM [33m   WARN[39m [38;5;3m[ValidationExceptionFilter] [39m[33mObject:[39m
+{
+  "method": "GET",
+  "url": "/api/v1/auth/profile",
+  "query": {}
+}
+
+[33m[Nest] 439871  - [39m11/23/2025, 10:23:00 AM [33m   WARN[39m [38;5;3m[ValidationExceptionFilter] [39m[33mValidation Error: [{"field":"unknown","message":"Unauthorized"}][39m
+[33m[Nest] 439871  - [39m11/23/2025, 10:23:00 AM [33m   WARN[39m [38;5;3m[ValidationExceptionFilter] [39m[33mObject:[39m
+{
+  "method": "GET",
+  "url": "/api/v1/auth/profile",
+  "query": {}
+}
+
+prisma:query SELECT "system"."users"."id", "system"."users"."email", "system"."users"."name", "system"."users"."kolegiumId", "system"."users"."passwordHash", "system"."users"."phone", "system"."users"."nik", "system"."users"."isActive", "system"."users"."isEmailVerified", "system"."users"."mfaEnabled", "system"."users"."mfaSecret", "system"."users"."lastLoginAt", "system"."users"."isLocked", "system"."users"."lockedUntil", "system"."users"."isSsoUser", "system"."users"."createdAt", "system"."users"."updatedAt", "system"."users"."centerId" FROM "system"."users" WHERE ("system"."users"."email" = $1 AND 1=1) LIMIT $2 OFFSET $3
+prisma:query SELECT "system"."centers"."id", "system"."centers"."name", "system"."centers"."code", "system"."centers"."province", "system"."centers"."regency", "system"."centers"."address", "system"."centers"."isActive", "system"."centers"."createdAt", "system"."centers"."updatedAt" FROM "system"."centers" WHERE "system"."centers"."id" IN ($1) OFFSET $2
+prisma:query SELECT "system"."user_roles"."id", "system"."user_roles"."userId", "system"."user_roles"."roleId", "system"."user_roles"."isActive", "system"."user_roles"."createdAt" FROM "system"."user_roles" WHERE ("system"."user_roles"."isActive" = $1 AND "system"."user_roles"."userId" IN ($2)) OFFSET $3
+prisma:query SELECT "system"."roles"."id", "system"."roles"."name", "system"."roles"."code", "system"."roles"."description", "system"."roles"."level" FROM "system"."roles" WHERE "system"."roles"."id" IN ($1) OFFSET $2
+prisma:query BEGIN
+prisma:query UPDATE "system"."users" SET "lastLoginAt" = $1, "updatedAt" = $2 WHERE ("system"."users"."id" = $3 AND 1=1) RETURNING "system"."users"."id", "system"."users"."email", "system"."users"."name", "system"."users"."kolegiumId", "system"."users"."passwordHash", "system"."users"."phone", "system"."users"."nik", "system"."users"."isActive", "system"."users"."isEmailVerified", "system"."users"."mfaEnabled", "system"."users"."mfaSecret", "system"."users"."lastLoginAt", "system"."users"."isLocked", "system"."users"."lockedUntil", "system"."users"."isSsoUser", "system"."users"."createdAt", "system"."users"."updatedAt", "system"."users"."centerId"
+prisma:query SELECT "system"."users"."id", "system"."users"."email", "system"."users"."name", "system"."users"."kolegiumId", "system"."users"."passwordHash", "system"."users"."phone", "system"."users"."nik", "system"."users"."isActive", "system"."users"."isEmailVerified", "system"."users"."mfaEnabled", "system"."users"."mfaSecret", "system"."users"."lastLoginAt", "system"."users"."isLocked", "system"."users"."lockedUntil", "system"."users"."isSsoUser", "system"."users"."createdAt", "system"."users"."updatedAt", "system"."users"."centerId" FROM "system"."users" WHERE "system"."users"."id" = $1 LIMIT $2 OFFSET $3
+prisma:query SELECT "system"."centers"."id", "system"."centers"."name", "system"."centers"."code", "system"."centers"."province", "system"."centers"."regency", "system"."centers"."address", "system"."centers"."isActive", "system"."centers"."createdAt", "system"."centers"."updatedAt" FROM "system"."centers" WHERE "system"."centers"."id" IN ($1) OFFSET $2
+prisma:query SELECT "system"."user_roles"."id", "system"."user_roles"."userId", "system"."user_roles"."roleId", "system"."user_roles"."isActive", "system"."user_roles"."createdAt" FROM "system"."user_roles" WHERE ("system"."user_roles"."isActive" = $1 AND "system"."user_roles"."userId" IN ($2)) OFFSET $3
+prisma:query SELECT "system"."roles"."id", "system"."roles"."name", "system"."roles"."code", "system"."roles"."description", "system"."roles"."level" FROM "system"."roles" WHERE "system"."roles"."id" IN ($1) OFFSET $2
+prisma:query COMMIT
+prisma:query SELECT "system"."user_roles"."id", "system"."user_roles"."userId", "system"."user_roles"."roleId", "system"."user_roles"."isActive", "system"."user_roles"."createdAt" FROM "system"."user_roles" WHERE ("system"."user_roles"."userId" = $1 AND "system"."user_roles"."isActive" = $2) LIMIT $3 OFFSET $4
+prisma:query SELECT "system"."roles"."id", "system"."roles"."name", "system"."roles"."code", "system"."roles"."description", "system"."roles"."level" FROM "system"."roles" WHERE "system"."roles"."id" IN ($1) OFFSET $2
+prisma:query SELECT "system"."user_roles"."id", "system"."user_roles"."userId", "system"."user_roles"."roleId", "system"."user_roles"."isActive", "system"."user_roles"."createdAt" FROM "system"."user_roles" WHERE ("system"."user_roles"."userId" = $1 AND "system"."user_roles"."isActive" = $2) OFFSET $3
+prisma:query SELECT "system"."roles"."id", "system"."roles"."name", "system"."roles"."code", "system"."roles"."description", "system"."roles"."level" FROM "system"."roles" WHERE "system"."roles"."id" IN ($1) OFFSET $2
+prisma:query SELECT "system"."role_permissions"."id", "system"."role_permissions"."roleId", "system"."role_permissions"."permissionId", "system"."role_permissions"."createdAt" FROM "system"."role_permissions" WHERE "system"."role_permissions"."roleId" IN ($1) OFFSET $2
+prisma:query SELECT "system"."permissions"."id", "system"."permissions"."name", "system"."permissions"."code", "system"."permissions"."resource", "system"."permissions"."action", "system"."permissions"."description" FROM "system"."permissions" WHERE "system"."permissions"."id" IN ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24,$25,$26,$27,$28,$29,$30,$31,$32,$33,$34,$35,$36,$37,$38,$39,$40,$41,$42,$43,$44,$45,$46,$47,$48,$49,$50,$51,$52,$53,$54,$55,$56,$57,$58,$59,$60,$61,$62) OFFSET $63
+prisma:query DELETE FROM "system"."refresh_tokens" WHERE "system"."refresh_tokens"."expiresAt" < $1
+prisma:query INSERT INTO "system"."refresh_tokens" ("id","userId","token","expiresAt","createdAt","updatedAt","isRevoked") VALUES ($1,$2,$3,$4,$5,$6,$7) RETURNING "system"."refresh_tokens"."id", "system"."refresh_tokens"."userId", "system"."refresh_tokens"."token", "system"."refresh_tokens"."expiresAt", "system"."refresh_tokens"."createdAt", "system"."refresh_tokens"."updatedAt", "system"."refresh_tokens"."isRevoked"
+prisma:query SELECT "system"."user_roles"."id", "system"."user_roles"."userId", "system"."user_roles"."roleId", "system"."user_roles"."isActive", "system"."user_roles"."createdAt" FROM "system"."user_roles" WHERE ("system"."user_roles"."userId" = $1 AND "system"."user_roles"."isActive" = $2) LIMIT $3 OFFSET $4
+prisma:query SELECT "system"."roles"."id", "system"."roles"."name", "system"."roles"."code", "system"."roles"."description", "system"."roles"."level" FROM "system"."roles" WHERE "system"."roles"."id" IN ($1) OFFSET $2
+[33m[Nest] 439871  - [39m11/23/2025, 10:23:04 AM [33m   WARN[39m [38;5;3m[ValidationExceptionFilter] [39m[33mValidation Error: [{"field":"unknown","message":"undefined is not an object (evaluating 'request.path.toLowerCase')"}][39m
+[33m[Nest] 439871  - [39m11/23/2025, 10:23:04 AM [33m   WARN[39m [38;5;3m[ValidationExceptionFilter] [39m[33mObject:[39m
+{
+  "method": "GET",
+  "url": "/api/v1/analytics/dashboard",
+  "query": {}
+}
+
+[33m[Nest] 439871  - [39m11/23/2025, 10:23:04 AM [33m   WARN[39m [38;5;3m[ValidationExceptionFilter] [39m[33mValidation Error: [{"field":"unknown","message":"undefined is not an object (evaluating 'request.path.toLowerCase')"}][39m
+[33m[Nest] 439871  - [39m11/23/2025, 10:23:04 AM [33m   WARN[39m [38;5;3m[ValidationExceptionFilter] [39m[33mObject:[39m
+{
+  "method": "GET",
+  "url": "/api/v1/analytics/dashboard",
+  "query": {}
+}
+
+prisma:query SELECT "system"."users"."id", "system"."users"."email", "system"."users"."name", "system"."users"."kolegiumId", "system"."users"."passwordHash", "system"."users"."phone", "system"."users"."nik", "system"."users"."isActive", "system"."users"."isEmailVerified", "system"."users"."mfaEnabled", "system"."users"."mfaSecret", "system"."users"."lastLoginAt", "system"."users"."isLocked", "system"."users"."lockedUntil", "system"."users"."isSsoUser", "system"."users"."createdAt", "system"."users"."updatedAt", "system"."users"."centerId" FROM "system"."users" WHERE ("system"."users"."id" = $1 AND 1=1) LIMIT $2 OFFSET $3
+prisma:query SELECT "system"."centers"."id", "system"."centers"."name", "system"."centers"."code", "system"."centers"."province", "system"."centers"."regency", "system"."centers"."address", "system"."centers"."isActive", "system"."centers"."createdAt", "system"."centers"."updatedAt" FROM "system"."centers" WHERE "system"."centers"."id" IN ($1) OFFSET $2
+prisma:query SELECT "system"."user_roles"."id", "system"."user_roles"."userId", "system"."user_roles"."roleId", "system"."user_roles"."isActive", "system"."user_roles"."createdAt" FROM "system"."user_roles" WHERE ("system"."user_roles"."isActive" = $1 AND "system"."user_roles"."userId" IN ($2)) OFFSET $3
+prisma:query SELECT "system"."roles"."id", "system"."roles"."name", "system"."roles"."code", "system"."roles"."description", "system"."roles"."level" FROM "system"."roles" WHERE "system"."roles"."id" IN ($1) OFFSET $2
+prisma:query SELECT "system"."user_roles"."id", "system"."user_roles"."userId", "system"."user_roles"."roleId", "system"."user_roles"."isActive", "system"."user_roles"."createdAt" FROM "system"."user_roles" WHERE ("system"."user_roles"."userId" = $1 AND "system"."user_roles"."isActive" = $2) LIMIT $3 OFFSET $4
+prisma:query SELECT "system"."roles"."id", "system"."roles"."name", "system"."roles"."code", "system"."roles"."description", "system"."roles"."level" FROM "system"."roles" WHERE "system"."roles"."id" IN ($1) OFFSET $2
+prisma:query SELECT "system"."users"."id", "system"."users"."email", "system"."users"."name", "system"."users"."kolegiumId", "system"."users"."passwordHash", "system"."users"."phone", "system"."users"."nik", "system"."users"."isActive", "system"."users"."isEmailVerified", "system"."users"."mfaEnabled", "system"."users"."mfaSecret", "system"."users"."lastLoginAt", "system"."users"."isLocked", "system"."users"."lockedUntil", "system"."users"."isSsoUser", "system"."users"."createdAt", "system"."users"."updatedAt", "system"."users"."centerId" FROM "system"."users" WHERE ("system"."users"."id" = $1 AND 1=1) LIMIT $2 OFFSET $3
+prisma:query SELECT "system"."centers"."id", "system"."centers"."name", "system"."centers"."code", "system"."centers"."province", "system"."centers"."regency", "system"."centers"."address", "system"."centers"."isActive", "system"."centers"."createdAt", "system"."centers"."updatedAt" FROM "system"."centers" WHERE "system"."centers"."id" IN ($1) OFFSET $2
+prisma:query SELECT "system"."user_roles"."id", "system"."user_roles"."userId", "system"."user_roles"."roleId", "system"."user_roles"."isActive", "system"."user_roles"."createdAt" FROM "system"."user_roles" WHERE ("system"."user_roles"."isActive" = $1 AND "system"."user_roles"."userId" IN ($2)) OFFSET $3
+prisma:query SELECT "system"."roles"."id", "system"."roles"."name", "system"."roles"."code", "system"."roles"."description", "system"."roles"."level" FROM "system"."roles" WHERE "system"."roles"."id" IN ($1) OFFSET $2
+prisma:query SELECT "system"."user_roles"."id", "system"."user_roles"."userId", "system"."user_roles"."roleId", "system"."user_roles"."isActive", "system"."user_roles"."createdAt" FROM "system"."user_roles" WHERE ("system"."user_roles"."userId" = $1 AND "system"."user_roles"."isActive" = $2) LIMIT $3 OFFSET $4
+prisma:query SELECT "system"."roles"."id", "system"."roles"."name", "system"."roles"."code", "system"."roles"."description", "system"."roles"."level" FROM "system"."roles" WHERE "system"."roles"."id" IN ($1) OFFSET $2
+[33m[Nest] 439871  - [39m11/23/2025, 10:23:13 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.43%[39m
+prisma:query SELECT 1
+prisma:query SELECT "system"."users"."id", "system"."users"."email", "system"."users"."name", "system"."users"."kolegiumId", "system"."users"."passwordHash", "system"."users"."phone", "system"."users"."nik", "system"."users"."isActive", "system"."users"."isEmailVerified", "system"."users"."mfaEnabled", "system"."users"."mfaSecret", "system"."users"."lastLoginAt", "system"."users"."isLocked", "system"."users"."lockedUntil", "system"."users"."isSsoUser", "system"."users"."createdAt", "system"."users"."updatedAt", "system"."users"."centerId" FROM "system"."users" WHERE ("system"."users"."id" = $1 AND 1=1) LIMIT $2 OFFSET $3
+prisma:query SELECT "system"."centers"."id", "system"."centers"."name", "system"."centers"."code", "system"."centers"."province", "system"."centers"."regency", "system"."centers"."address", "system"."centers"."isActive", "system"."centers"."createdAt", "system"."centers"."updatedAt" FROM "system"."centers" WHERE "system"."centers"."id" IN ($1) OFFSET $2
+prisma:query SELECT "system"."user_roles"."id", "system"."user_roles"."userId", "system"."user_roles"."roleId", "system"."user_roles"."isActive", "system"."user_roles"."createdAt" FROM "system"."user_roles" WHERE ("system"."user_roles"."isActive" = $1 AND "system"."user_roles"."userId" IN ($2)) OFFSET $3
+prisma:query SELECT "system"."roles"."id", "system"."roles"."name", "system"."roles"."code", "system"."roles"."description", "system"."roles"."level" FROM "system"."roles" WHERE "system"."roles"."id" IN ($1) OFFSET $2
+prisma:query SELECT "system"."user_roles"."id", "system"."user_roles"."userId", "system"."user_roles"."roleId", "system"."user_roles"."isActive", "system"."user_roles"."createdAt" FROM "system"."user_roles" WHERE ("system"."user_roles"."userId" = $1 AND "system"."user_roles"."isActive" = $2) LIMIT $3 OFFSET $4
+prisma:query SELECT "system"."roles"."id", "system"."roles"."name", "system"."roles"."code", "system"."roles"."description", "system"."roles"."level" FROM "system"."roles" WHERE "system"."roles"."id" IN ($1) OFFSET $2
+prisma:query SELECT "system"."users"."id", "system"."users"."email", "system"."users"."name", "system"."users"."kolegiumId", "system"."users"."passwordHash", "system"."users"."phone", "system"."users"."nik", "system"."users"."isActive", "system"."users"."isEmailVerified", "system"."users"."mfaEnabled", "system"."users"."mfaSecret", "system"."users"."lastLoginAt", "system"."users"."isLocked", "system"."users"."lockedUntil", "system"."users"."isSsoUser", "system"."users"."createdAt", "system"."users"."updatedAt", "system"."users"."centerId" FROM "system"."users" WHERE ("system"."users"."id" = $1 AND 1=1) LIMIT $2 OFFSET $3
+prisma:query SELECT "system"."centers"."id", "system"."centers"."name", "system"."centers"."code", "system"."centers"."province", "system"."centers"."regency", "system"."centers"."address", "system"."centers"."isActive", "system"."centers"."createdAt", "system"."centers"."updatedAt" FROM "system"."centers" WHERE "system"."centers"."id" IN ($1) OFFSET $2
+prisma:query SELECT "system"."user_roles"."id", "system"."user_roles"."userId", "system"."user_roles"."roleId", "system"."user_roles"."isActive", "system"."user_roles"."createdAt" FROM "system"."user_roles" WHERE ("system"."user_roles"."isActive" = $1 AND "system"."user_roles"."userId" IN ($2)) OFFSET $3
+prisma:query SELECT "system"."roles"."id", "system"."roles"."name", "system"."roles"."code", "system"."roles"."description", "system"."roles"."level" FROM "system"."roles" WHERE "system"."roles"."id" IN ($1) OFFSET $2
+prisma:query SELECT "system"."user_roles"."id", "system"."user_roles"."userId", "system"."user_roles"."roleId", "system"."user_roles"."isActive", "system"."user_roles"."createdAt" FROM "system"."user_roles" WHERE ("system"."user_roles"."userId" = $1 AND "system"."user_roles"."isActive" = $2) LIMIT $3 OFFSET $4
+prisma:query SELECT "system"."roles"."id", "system"."roles"."name", "system"."roles"."code", "system"."roles"."description", "system"."roles"."level" FROM "system"."roles" WHERE "system"."roles"."id" IN ($1) OFFSET $2
+[33m[Nest] 439871  - [39m11/23/2025, 10:23:43 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.52%[39m
+prisma:query SELECT 1
+prisma:query SELECT "system"."users"."id", "system"."users"."email", "system"."users"."name", "system"."users"."kolegiumId", "system"."users"."passwordHash", "system"."users"."phone", "system"."users"."nik", "system"."users"."isActive", "system"."users"."isEmailVerified", "system"."users"."mfaEnabled", "system"."users"."mfaSecret", "system"."users"."lastLoginAt", "system"."users"."isLocked", "system"."users"."lockedUntil", "system"."users"."isSsoUser", "system"."users"."createdAt", "system"."users"."updatedAt", "system"."users"."centerId" FROM "system"."users" WHERE ("system"."users"."id" = $1 AND 1=1) LIMIT $2 OFFSET $3
+prisma:query SELECT "system"."centers"."id", "system"."centers"."name", "system"."centers"."code", "system"."centers"."province", "system"."centers"."regency", "system"."centers"."address", "system"."centers"."isActive", "system"."centers"."createdAt", "system"."centers"."updatedAt" FROM "system"."centers" WHERE "system"."centers"."id" IN ($1) OFFSET $2
+prisma:query SELECT "system"."user_roles"."id", "system"."user_roles"."userId", "system"."user_roles"."roleId", "system"."user_roles"."isActive", "system"."user_roles"."createdAt" FROM "system"."user_roles" WHERE ("system"."user_roles"."isActive" = $1 AND "system"."user_roles"."userId" IN ($2)) OFFSET $3
+prisma:query SELECT "system"."roles"."id", "system"."roles"."name", "system"."roles"."code", "system"."roles"."description", "system"."roles"."level" FROM "system"."roles" WHERE "system"."roles"."id" IN ($1) OFFSET $2
+prisma:query SELECT "system"."user_roles"."id", "system"."user_roles"."userId", "system"."user_roles"."roleId", "system"."user_roles"."isActive", "system"."user_roles"."createdAt" FROM "system"."user_roles" WHERE ("system"."user_roles"."userId" = $1 AND "system"."user_roles"."isActive" = $2) LIMIT $3 OFFSET $4
+prisma:query SELECT "system"."roles"."id", "system"."roles"."name", "system"."roles"."code", "system"."roles"."description", "system"."roles"."level" FROM "system"."roles" WHERE "system"."roles"."id" IN ($1) OFFSET $2
+prisma:query SELECT "system"."users"."id", "system"."users"."email", "system"."users"."name", "system"."users"."kolegiumId", "system"."users"."passwordHash", "system"."users"."phone", "system"."users"."nik", "system"."users"."isActive", "system"."users"."isEmailVerified", "system"."users"."mfaEnabled", "system"."users"."mfaSecret", "system"."users"."lastLoginAt", "system"."users"."isLocked", "system"."users"."lockedUntil", "system"."users"."isSsoUser", "system"."users"."createdAt", "system"."users"."updatedAt", "system"."users"."centerId" FROM "system"."users" WHERE ("system"."users"."id" = $1 AND 1=1) LIMIT $2 OFFSET $3
+prisma:query SELECT "system"."centers"."id", "system"."centers"."name", "system"."centers"."code", "system"."centers"."province", "system"."centers"."regency", "system"."centers"."address", "system"."centers"."isActive", "system"."centers"."createdAt", "system"."centers"."updatedAt" FROM "system"."centers" WHERE "system"."centers"."id" IN ($1) OFFSET $2
+prisma:query SELECT "system"."user_roles"."id", "system"."user_roles"."userId", "system"."user_roles"."roleId", "system"."user_roles"."isActive", "system"."user_roles"."createdAt" FROM "system"."user_roles" WHERE ("system"."user_roles"."isActive" = $1 AND "system"."user_roles"."userId" IN ($2)) OFFSET $3
+prisma:query SELECT "system"."roles"."id", "system"."roles"."name", "system"."roles"."code", "system"."roles"."description", "system"."roles"."level" FROM "system"."roles" WHERE "system"."roles"."id" IN ($1) OFFSET $2
+prisma:query SELECT "system"."user_roles"."id", "system"."user_roles"."userId", "system"."user_roles"."roleId", "system"."user_roles"."isActive", "system"."user_roles"."createdAt" FROM "system"."user_roles" WHERE ("system"."user_roles"."userId" = $1 AND "system"."user_roles"."isActive" = $2) LIMIT $3 OFFSET $4
+prisma:query SELECT "system"."roles"."id", "system"."roles"."name", "system"."roles"."code", "system"."roles"."description", "system"."roles"."level" FROM "system"."roles" WHERE "system"."roles"."id" IN ($1) OFFSET $2
+prisma:query SELECT 1
+prisma:query SELECT "system"."users"."id", "system"."users"."email", "system"."users"."name", "system"."users"."kolegiumId", "system"."users"."passwordHash", "system"."users"."phone", "system"."users"."nik", "system"."users"."isActive", "system"."users"."isEmailVerified", "system"."users"."mfaEnabled", "system"."users"."mfaSecret", "system"."users"."lastLoginAt", "system"."users"."isLocked", "system"."users"."lockedUntil", "system"."users"."isSsoUser", "system"."users"."createdAt", "system"."users"."updatedAt", "system"."users"."centerId" FROM "system"."users" WHERE ("system"."users"."id" = $1 AND 1=1) LIMIT $2 OFFSET $3
+prisma:query SELECT "system"."centers"."id", "system"."centers"."name", "system"."centers"."code", "system"."centers"."province", "system"."centers"."regency", "system"."centers"."address", "system"."centers"."isActive", "system"."centers"."createdAt", "system"."centers"."updatedAt" FROM "system"."centers" WHERE "system"."centers"."id" IN ($1) OFFSET $2
+prisma:query SELECT "system"."user_roles"."id", "system"."user_roles"."userId", "system"."user_roles"."roleId", "system"."user_roles"."isActive", "system"."user_roles"."createdAt" FROM "system"."user_roles" WHERE ("system"."user_roles"."isActive" = $1 AND "system"."user_roles"."userId" IN ($2)) OFFSET $3
+prisma:query SELECT "system"."roles"."id", "system"."roles"."name", "system"."roles"."code", "system"."roles"."description", "system"."roles"."level" FROM "system"."roles" WHERE "system"."roles"."id" IN ($1) OFFSET $2
+prisma:query SELECT "system"."user_roles"."id", "system"."user_roles"."userId", "system"."user_roles"."roleId", "system"."user_roles"."isActive", "system"."user_roles"."createdAt" FROM "system"."user_roles" WHERE ("system"."user_roles"."userId" = $1 AND "system"."user_roles"."isActive" = $2) LIMIT $3 OFFSET $4
+prisma:query SELECT "system"."roles"."id", "system"."roles"."name", "system"."roles"."code", "system"."roles"."description", "system"."roles"."level" FROM "system"."roles" WHERE "system"."roles"."id" IN ($1) OFFSET $2
+prisma:query SELECT "system"."users"."id", "system"."users"."email", "system"."users"."name", "system"."users"."kolegiumId", "system"."users"."passwordHash", "system"."users"."phone", "system"."users"."nik", "system"."users"."isActive", "system"."users"."isEmailVerified", "system"."users"."mfaEnabled", "system"."users"."mfaSecret", "system"."users"."lastLoginAt", "system"."users"."isLocked", "system"."users"."lockedUntil", "system"."users"."isSsoUser", "system"."users"."createdAt", "system"."users"."updatedAt", "system"."users"."centerId" FROM "system"."users" WHERE ("system"."users"."id" = $1 AND 1=1) LIMIT $2 OFFSET $3
+prisma:query SELECT "system"."centers"."id", "system"."centers"."name", "system"."centers"."code", "system"."centers"."province", "system"."centers"."regency", "system"."centers"."address", "system"."centers"."isActive", "system"."centers"."createdAt", "system"."centers"."updatedAt" FROM "system"."centers" WHERE "system"."centers"."id" IN ($1) OFFSET $2
+prisma:query SELECT "system"."user_roles"."id", "system"."user_roles"."userId", "system"."user_roles"."roleId", "system"."user_roles"."isActive", "system"."user_roles"."createdAt" FROM "system"."user_roles" WHERE ("system"."user_roles"."isActive" = $1 AND "system"."user_roles"."userId" IN ($2)) OFFSET $3
+prisma:query SELECT "system"."roles"."id", "system"."roles"."name", "system"."roles"."code", "system"."roles"."description", "system"."roles"."level" FROM "system"."roles" WHERE "system"."roles"."id" IN ($1) OFFSET $2
+prisma:query SELECT "system"."user_roles"."id", "system"."user_roles"."userId", "system"."user_roles"."roleId", "system"."user_roles"."isActive", "system"."user_roles"."createdAt" FROM "system"."user_roles" WHERE ("system"."user_roles"."userId" = $1 AND "system"."user_roles"."isActive" = $2) LIMIT $3 OFFSET $4
+prisma:query SELECT "system"."roles"."id", "system"."roles"."name", "system"."roles"."code", "system"."roles"."description", "system"."roles"."level" FROM "system"."roles" WHERE "system"."roles"."id" IN ($1) OFFSET $2
+[33m[Nest] 439871  - [39m11/23/2025, 10:24:13 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 81.62%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 10:24:43 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 81.72%[39m
+prisma:query SELECT 1
+prisma:query SELECT "system"."users"."id", "system"."users"."email", "system"."users"."name", "system"."users"."kolegiumId", "system"."users"."passwordHash", "system"."users"."phone", "system"."users"."nik", "system"."users"."isActive", "system"."users"."isEmailVerified", "system"."users"."mfaEnabled", "system"."users"."mfaSecret", "system"."users"."lastLoginAt", "system"."users"."isLocked", "system"."users"."lockedUntil", "system"."users"."isSsoUser", "system"."users"."createdAt", "system"."users"."updatedAt", "system"."users"."centerId" FROM "system"."users" WHERE ("system"."users"."id" = $1 AND 1=1) LIMIT $2 OFFSET $3
+prisma:query SELECT "system"."centers"."id", "system"."centers"."name", "system"."centers"."code", "system"."centers"."province", "system"."centers"."regency", "system"."centers"."address", "system"."centers"."isActive", "system"."centers"."createdAt", "system"."centers"."updatedAt" FROM "system"."centers" WHERE "system"."centers"."id" IN ($1) OFFSET $2
+prisma:query SELECT "system"."user_roles"."id", "system"."user_roles"."userId", "system"."user_roles"."roleId", "system"."user_roles"."isActive", "system"."user_roles"."createdAt" FROM "system"."user_roles" WHERE ("system"."user_roles"."isActive" = $1 AND "system"."user_roles"."userId" IN ($2)) OFFSET $3
+prisma:query SELECT "system"."roles"."id", "system"."roles"."name", "system"."roles"."code", "system"."roles"."description", "system"."roles"."level" FROM "system"."roles" WHERE "system"."roles"."id" IN ($1) OFFSET $2
+prisma:query SELECT "system"."user_roles"."id", "system"."user_roles"."userId", "system"."user_roles"."roleId", "system"."user_roles"."isActive", "system"."user_roles"."createdAt" FROM "system"."user_roles" WHERE ("system"."user_roles"."userId" = $1 AND "system"."user_roles"."isActive" = $2) LIMIT $3 OFFSET $4
+prisma:query SELECT "system"."roles"."id", "system"."roles"."name", "system"."roles"."code", "system"."roles"."description", "system"."roles"."level" FROM "system"."roles" WHERE "system"."roles"."id" IN ($1) OFFSET $2
+prisma:query SELECT "system"."users"."id", "system"."users"."email", "system"."users"."name", "system"."users"."kolegiumId", "system"."users"."passwordHash", "system"."users"."phone", "system"."users"."nik", "system"."users"."isActive", "system"."users"."isEmailVerified", "system"."users"."mfaEnabled", "system"."users"."mfaSecret", "system"."users"."lastLoginAt", "system"."users"."isLocked", "system"."users"."lockedUntil", "system"."users"."isSsoUser", "system"."users"."createdAt", "system"."users"."updatedAt", "system"."users"."centerId" FROM "system"."users" WHERE ("system"."users"."id" = $1 AND 1=1) LIMIT $2 OFFSET $3
+prisma:query SELECT "system"."centers"."id", "system"."centers"."name", "system"."centers"."code", "system"."centers"."province", "system"."centers"."regency", "system"."centers"."address", "system"."centers"."isActive", "system"."centers"."createdAt", "system"."centers"."updatedAt" FROM "system"."centers" WHERE "system"."centers"."id" IN ($1) OFFSET $2
+prisma:query SELECT "system"."user_roles"."id", "system"."user_roles"."userId", "system"."user_roles"."roleId", "system"."user_roles"."isActive", "system"."user_roles"."createdAt" FROM "system"."user_roles" WHERE ("system"."user_roles"."isActive" = $1 AND "system"."user_roles"."userId" IN ($2)) OFFSET $3
+prisma:query SELECT "system"."roles"."id", "system"."roles"."name", "system"."roles"."code", "system"."roles"."description", "system"."roles"."level" FROM "system"."roles" WHERE "system"."roles"."id" IN ($1) OFFSET $2
+prisma:query SELECT "system"."user_roles"."id", "system"."user_roles"."userId", "system"."user_roles"."roleId", "system"."user_roles"."isActive", "system"."user_roles"."createdAt" FROM "system"."user_roles" WHERE ("system"."user_roles"."userId" = $1 AND "system"."user_roles"."isActive" = $2) LIMIT $3 OFFSET $4
+prisma:query SELECT "system"."roles"."id", "system"."roles"."name", "system"."roles"."code", "system"."roles"."description", "system"."roles"."level" FROM "system"."roles" WHERE "system"."roles"."id" IN ($1) OFFSET $2
+[32m[Nest] 439871  - [39m11/23/2025, 10:25:00 AM [32m    LOG[39m [38;5;3m[ScheduledTasksService] [39m[32mReal-time metrics collected in 0ms[39m
+prisma:query SELECT "system"."users"."id", "system"."users"."email", "system"."users"."name", "system"."users"."kolegiumId", "system"."users"."passwordHash", "system"."users"."phone", "system"."users"."nik", "system"."users"."isActive", "system"."users"."isEmailVerified", "system"."users"."mfaEnabled", "system"."users"."mfaSecret", "system"."users"."lastLoginAt", "system"."users"."isLocked", "system"."users"."lockedUntil", "system"."users"."isSsoUser", "system"."users"."createdAt", "system"."users"."updatedAt", "system"."users"."centerId" FROM "system"."users" WHERE ("system"."users"."id" = $1 AND 1=1) LIMIT $2 OFFSET $3
+prisma:query SELECT "system"."centers"."id", "system"."centers"."name", "system"."centers"."code", "system"."centers"."province", "system"."centers"."regency", "system"."centers"."address", "system"."centers"."isActive", "system"."centers"."createdAt", "system"."centers"."updatedAt" FROM "system"."centers" WHERE "system"."centers"."id" IN ($1) OFFSET $2
+prisma:query SELECT "system"."user_roles"."id", "system"."user_roles"."userId", "system"."user_roles"."roleId", "system"."user_roles"."isActive", "system"."user_roles"."createdAt" FROM "system"."user_roles" WHERE ("system"."user_roles"."isActive" = $1 AND "system"."user_roles"."userId" IN ($2)) OFFSET $3
+prisma:query SELECT "system"."roles"."id", "system"."roles"."name", "system"."roles"."code", "system"."roles"."description", "system"."roles"."level" FROM "system"."roles" WHERE "system"."roles"."id" IN ($1) OFFSET $2
+prisma:query SELECT "system"."user_roles"."id", "system"."user_roles"."userId", "system"."user_roles"."roleId", "system"."user_roles"."isActive", "system"."user_roles"."createdAt" FROM "system"."user_roles" WHERE ("system"."user_roles"."userId" = $1 AND "system"."user_roles"."isActive" = $2) LIMIT $3 OFFSET $4
+prisma:query SELECT "system"."roles"."id", "system"."roles"."name", "system"."roles"."code", "system"."roles"."description", "system"."roles"."level" FROM "system"."roles" WHERE "system"."roles"."id" IN ($1) OFFSET $2
+prisma:query SELECT "system"."users"."id", "system"."users"."email", "system"."users"."name", "system"."users"."kolegiumId", "system"."users"."passwordHash", "system"."users"."phone", "system"."users"."nik", "system"."users"."isActive", "system"."users"."isEmailVerified", "system"."users"."mfaEnabled", "system"."users"."mfaSecret", "system"."users"."lastLoginAt", "system"."users"."isLocked", "system"."users"."lockedUntil", "system"."users"."isSsoUser", "system"."users"."createdAt", "system"."users"."updatedAt", "system"."users"."centerId" FROM "system"."users" WHERE ("system"."users"."id" = $1 AND 1=1) LIMIT $2 OFFSET $3
+prisma:query SELECT "system"."centers"."id", "system"."centers"."name", "system"."centers"."code", "system"."centers"."province", "system"."centers"."regency", "system"."centers"."address", "system"."centers"."isActive", "system"."centers"."createdAt", "system"."centers"."updatedAt" FROM "system"."centers" WHERE "system"."centers"."id" IN ($1) OFFSET $2
+prisma:query SELECT "system"."user_roles"."id", "system"."user_roles"."userId", "system"."user_roles"."roleId", "system"."user_roles"."isActive", "system"."user_roles"."createdAt" FROM "system"."user_roles" WHERE ("system"."user_roles"."isActive" = $1 AND "system"."user_roles"."userId" IN ($2)) OFFSET $3
+prisma:query SELECT "system"."roles"."id", "system"."roles"."name", "system"."roles"."code", "system"."roles"."description", "system"."roles"."level" FROM "system"."roles" WHERE "system"."roles"."id" IN ($1) OFFSET $2
+prisma:query SELECT "system"."user_roles"."id", "system"."user_roles"."userId", "system"."user_roles"."roleId", "system"."user_roles"."isActive", "system"."user_roles"."createdAt" FROM "system"."user_roles" WHERE ("system"."user_roles"."userId" = $1 AND "system"."user_roles"."isActive" = $2) LIMIT $3 OFFSET $4
+prisma:query SELECT "system"."roles"."id", "system"."roles"."name", "system"."roles"."code", "system"."roles"."description", "system"."roles"."level" FROM "system"."roles" WHERE "system"."roles"."id" IN ($1) OFFSET $2
+[33m[Nest] 439871  - [39m11/23/2025, 10:25:13 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 82.60%[39m
+prisma:query SELECT 1
+prisma:query SELECT "system"."users"."id", "system"."users"."email", "system"."users"."name", "system"."users"."kolegiumId", "system"."users"."passwordHash", "system"."users"."phone", "system"."users"."nik", "system"."users"."isActive", "system"."users"."isEmailVerified", "system"."users"."mfaEnabled", "system"."users"."mfaSecret", "system"."users"."lastLoginAt", "system"."users"."isLocked", "system"."users"."lockedUntil", "system"."users"."isSsoUser", "system"."users"."createdAt", "system"."users"."updatedAt", "system"."users"."centerId" FROM "system"."users" WHERE ("system"."users"."id" = $1 AND 1=1) LIMIT $2 OFFSET $3
+prisma:query SELECT "system"."centers"."id", "system"."centers"."name", "system"."centers"."code", "system"."centers"."province", "system"."centers"."regency", "system"."centers"."address", "system"."centers"."isActive", "system"."centers"."createdAt", "system"."centers"."updatedAt" FROM "system"."centers" WHERE "system"."centers"."id" IN ($1) OFFSET $2
+prisma:query SELECT "system"."user_roles"."id", "system"."user_roles"."userId", "system"."user_roles"."roleId", "system"."user_roles"."isActive", "system"."user_roles"."createdAt" FROM "system"."user_roles" WHERE ("system"."user_roles"."isActive" = $1 AND "system"."user_roles"."userId" IN ($2)) OFFSET $3
+prisma:query SELECT "system"."roles"."id", "system"."roles"."name", "system"."roles"."code", "system"."roles"."description", "system"."roles"."level" FROM "system"."roles" WHERE "system"."roles"."id" IN ($1) OFFSET $2
+prisma:query SELECT "system"."user_roles"."id", "system"."user_roles"."userId", "system"."user_roles"."roleId", "system"."user_roles"."isActive", "system"."user_roles"."createdAt" FROM "system"."user_roles" WHERE ("system"."user_roles"."userId" = $1 AND "system"."user_roles"."isActive" = $2) LIMIT $3 OFFSET $4
+prisma:query SELECT "system"."roles"."id", "system"."roles"."name", "system"."roles"."code", "system"."roles"."description", "system"."roles"."level" FROM "system"."roles" WHERE "system"."roles"."id" IN ($1) OFFSET $2
+prisma:query SELECT "system"."users"."id", "system"."users"."email", "system"."users"."name", "system"."users"."kolegiumId", "system"."users"."passwordHash", "system"."users"."phone", "system"."users"."nik", "system"."users"."isActive", "system"."users"."isEmailVerified", "system"."users"."mfaEnabled", "system"."users"."mfaSecret", "system"."users"."lastLoginAt", "system"."users"."isLocked", "system"."users"."lockedUntil", "system"."users"."isSsoUser", "system"."users"."createdAt", "system"."users"."updatedAt", "system"."users"."centerId" FROM "system"."users" WHERE ("system"."users"."id" = $1 AND 1=1) LIMIT $2 OFFSET $3
+prisma:query SELECT "system"."centers"."id", "system"."centers"."name", "system"."centers"."code", "system"."centers"."province", "system"."centers"."regency", "system"."centers"."address", "system"."centers"."isActive", "system"."centers"."createdAt", "system"."centers"."updatedAt" FROM "system"."centers" WHERE "system"."centers"."id" IN ($1) OFFSET $2
+prisma:query SELECT "system"."user_roles"."id", "system"."user_roles"."userId", "system"."user_roles"."roleId", "system"."user_roles"."isActive", "system"."user_roles"."createdAt" FROM "system"."user_roles" WHERE ("system"."user_roles"."isActive" = $1 AND "system"."user_roles"."userId" IN ($2)) OFFSET $3
+prisma:query SELECT "system"."roles"."id", "system"."roles"."name", "system"."roles"."code", "system"."roles"."description", "system"."roles"."level" FROM "system"."roles" WHERE "system"."roles"."id" IN ($1) OFFSET $2
+prisma:query SELECT "system"."user_roles"."id", "system"."user_roles"."userId", "system"."user_roles"."roleId", "system"."user_roles"."isActive", "system"."user_roles"."createdAt" FROM "system"."user_roles" WHERE ("system"."user_roles"."userId" = $1 AND "system"."user_roles"."isActive" = $2) LIMIT $3 OFFSET $4
+prisma:query SELECT "system"."roles"."id", "system"."roles"."name", "system"."roles"."code", "system"."roles"."description", "system"."roles"."level" FROM "system"."roles" WHERE "system"."roles"."id" IN ($1) OFFSET $2
+prisma:query SELECT "system"."users"."id", "system"."users"."email", "system"."users"."name", "system"."users"."kolegiumId", "system"."users"."passwordHash", "system"."users"."phone", "system"."users"."nik", "system"."users"."isActive", "system"."users"."isEmailVerified", "system"."users"."mfaEnabled", "system"."users"."mfaSecret", "system"."users"."lastLoginAt", "system"."users"."isLocked", "system"."users"."lockedUntil", "system"."users"."isSsoUser", "system"."users"."createdAt", "system"."users"."updatedAt", "system"."users"."centerId" FROM "system"."users" WHERE ("system"."users"."id" = $1 AND 1=1) LIMIT $2 OFFSET $3
+prisma:query SELECT "system"."centers"."id", "system"."centers"."name", "system"."centers"."code", "system"."centers"."province", "system"."centers"."regency", "system"."centers"."address", "system"."centers"."isActive", "system"."centers"."createdAt", "system"."centers"."updatedAt" FROM "system"."centers" WHERE "system"."centers"."id" IN ($1) OFFSET $2
+prisma:query SELECT "system"."user_roles"."id", "system"."user_roles"."userId", "system"."user_roles"."roleId", "system"."user_roles"."isActive", "system"."user_roles"."createdAt" FROM "system"."user_roles" WHERE ("system"."user_roles"."isActive" = $1 AND "system"."user_roles"."userId" IN ($2)) OFFSET $3
+prisma:query SELECT "system"."roles"."id", "system"."roles"."name", "system"."roles"."code", "system"."roles"."description", "system"."roles"."level" FROM "system"."roles" WHERE "system"."roles"."id" IN ($1) OFFSET $2
+prisma:query SELECT "system"."user_roles"."id", "system"."user_roles"."userId", "system"."user_roles"."roleId", "system"."user_roles"."isActive", "system"."user_roles"."createdAt" FROM "system"."user_roles" WHERE ("system"."user_roles"."userId" = $1 AND "system"."user_roles"."isActive" = $2) LIMIT $3 OFFSET $4
+prisma:query SELECT "system"."roles"."id", "system"."roles"."name", "system"."roles"."code", "system"."roles"."description", "system"."roles"."level" FROM "system"."roles" WHERE "system"."roles"."id" IN ($1) OFFSET $2
+prisma:query SELECT "system"."users"."id", "system"."users"."email", "system"."users"."name", "system"."users"."kolegiumId", "system"."users"."passwordHash", "system"."users"."phone", "system"."users"."nik", "system"."users"."isActive", "system"."users"."isEmailVerified", "system"."users"."mfaEnabled", "system"."users"."mfaSecret", "system"."users"."lastLoginAt", "system"."users"."isLocked", "system"."users"."lockedUntil", "system"."users"."isSsoUser", "system"."users"."createdAt", "system"."users"."updatedAt", "system"."users"."centerId" FROM "system"."users" WHERE ("system"."users"."id" = $1 AND 1=1) LIMIT $2 OFFSET $3
+prisma:query SELECT "system"."centers"."id", "system"."centers"."name", "system"."centers"."code", "system"."centers"."province", "system"."centers"."regency", "system"."centers"."address", "system"."centers"."isActive", "system"."centers"."createdAt", "system"."centers"."updatedAt" FROM "system"."centers" WHERE "system"."centers"."id" IN ($1) OFFSET $2
+prisma:query SELECT "system"."user_roles"."id", "system"."user_roles"."userId", "system"."user_roles"."roleId", "system"."user_roles"."isActive", "system"."user_roles"."createdAt" FROM "system"."user_roles" WHERE ("system"."user_roles"."isActive" = $1 AND "system"."user_roles"."userId" IN ($2)) OFFSET $3
+prisma:query SELECT "system"."roles"."id", "system"."roles"."name", "system"."roles"."code", "system"."roles"."description", "system"."roles"."level" FROM "system"."roles" WHERE "system"."roles"."id" IN ($1) OFFSET $2
+prisma:query SELECT "system"."user_roles"."id", "system"."user_roles"."userId", "system"."user_roles"."roleId", "system"."user_roles"."isActive", "system"."user_roles"."createdAt" FROM "system"."user_roles" WHERE ("system"."user_roles"."userId" = $1 AND "system"."user_roles"."isActive" = $2) LIMIT $3 OFFSET $4
+prisma:query SELECT "system"."roles"."id", "system"."roles"."name", "system"."roles"."code", "system"."roles"."description", "system"."roles"."level" FROM "system"."roles" WHERE "system"."roles"."id" IN ($1) OFFSET $2
+[33m[Nest] 439871  - [39m11/23/2025, 10:25:43 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 82.69%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 10:26:13 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 82.71%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 10:26:43 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 82.72%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 10:27:13 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 82.72%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 10:27:43 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 82.72%[39m
+prisma:query SELECT 1
+prisma:query SELECT "system"."users"."id", "system"."users"."email", "system"."users"."name", "system"."users"."kolegiumId", "system"."users"."passwordHash", "system"."users"."phone", "system"."users"."nik", "system"."users"."isActive", "system"."users"."isEmailVerified", "system"."users"."mfaEnabled", "system"."users"."mfaSecret", "system"."users"."lastLoginAt", "system"."users"."isLocked", "system"."users"."lockedUntil", "system"."users"."isSsoUser", "system"."users"."createdAt", "system"."users"."updatedAt", "system"."users"."centerId" FROM "system"."users" WHERE ("system"."users"."id" = $1 AND 1=1) LIMIT $2 OFFSET $3
+prisma:query SELECT "system"."centers"."id", "system"."centers"."name", "system"."centers"."code", "system"."centers"."province", "system"."centers"."regency", "system"."centers"."address", "system"."centers"."isActive", "system"."centers"."createdAt", "system"."centers"."updatedAt" FROM "system"."centers" WHERE "system"."centers"."id" IN ($1) OFFSET $2
+prisma:query SELECT "system"."user_roles"."id", "system"."user_roles"."userId", "system"."user_roles"."roleId", "system"."user_roles"."isActive", "system"."user_roles"."createdAt" FROM "system"."user_roles" WHERE ("system"."user_roles"."isActive" = $1 AND "system"."user_roles"."userId" IN ($2)) OFFSET $3
+prisma:query SELECT "system"."roles"."id", "system"."roles"."name", "system"."roles"."code", "system"."roles"."description", "system"."roles"."level" FROM "system"."roles" WHERE "system"."roles"."id" IN ($1) OFFSET $2
+prisma:query SELECT "system"."user_roles"."id", "system"."user_roles"."userId", "system"."user_roles"."roleId", "system"."user_roles"."isActive", "system"."user_roles"."createdAt" FROM "system"."user_roles" WHERE ("system"."user_roles"."userId" = $1 AND "system"."user_roles"."isActive" = $2) LIMIT $3 OFFSET $4
+prisma:query SELECT "system"."roles"."id", "system"."roles"."name", "system"."roles"."code", "system"."roles"."description", "system"."roles"."level" FROM "system"."roles" WHERE "system"."roles"."id" IN ($1) OFFSET $2
+prisma:query SELECT "system"."users"."id", "system"."users"."email", "system"."users"."name", "system"."users"."kolegiumId", "system"."users"."passwordHash", "system"."users"."phone", "system"."users"."nik", "system"."users"."isActive", "system"."users"."isEmailVerified", "system"."users"."mfaEnabled", "system"."users"."mfaSecret", "system"."users"."lastLoginAt", "system"."users"."isLocked", "system"."users"."lockedUntil", "system"."users"."isSsoUser", "system"."users"."createdAt", "system"."users"."updatedAt", "system"."users"."centerId" FROM "system"."users" WHERE ("system"."users"."id" = $1 AND 1=1) LIMIT $2 OFFSET $3
+prisma:query SELECT "system"."centers"."id", "system"."centers"."name", "system"."centers"."code", "system"."centers"."province", "system"."centers"."regency", "system"."centers"."address", "system"."centers"."isActive", "system"."centers"."createdAt", "system"."centers"."updatedAt" FROM "system"."centers" WHERE "system"."centers"."id" IN ($1) OFFSET $2
+prisma:query SELECT "system"."user_roles"."id", "system"."user_roles"."userId", "system"."user_roles"."roleId", "system"."user_roles"."isActive", "system"."user_roles"."createdAt" FROM "system"."user_roles" WHERE ("system"."user_roles"."isActive" = $1 AND "system"."user_roles"."userId" IN ($2)) OFFSET $3
+prisma:query SELECT "system"."roles"."id", "system"."roles"."name", "system"."roles"."code", "system"."roles"."description", "system"."roles"."level" FROM "system"."roles" WHERE "system"."roles"."id" IN ($1) OFFSET $2
+prisma:query SELECT "system"."user_roles"."id", "system"."user_roles"."userId", "system"."user_roles"."roleId", "system"."user_roles"."isActive", "system"."user_roles"."createdAt" FROM "system"."user_roles" WHERE ("system"."user_roles"."userId" = $1 AND "system"."user_roles"."isActive" = $2) LIMIT $3 OFFSET $4
+prisma:query SELECT "system"."roles"."id", "system"."roles"."name", "system"."roles"."code", "system"."roles"."description", "system"."roles"."level" FROM "system"."roles" WHERE "system"."roles"."id" IN ($1) OFFSET $2
+[33m[Nest] 439871  - [39m11/23/2025, 10:27:53 AM [33m   WARN[39m [38;5;3m[ValidationExceptionFilter] [39m[33mValidation Error: [{"field":"unknown","message":"Body cannot be empty when content-type is set to 'application/json'"}][39m
+[33m[Nest] 439871  - [39m11/23/2025, 10:27:53 AM [33m   WARN[39m [38;5;3m[ValidationExceptionFilter] [39m[33mObject:[39m
+{
+  "method": "POST",
+  "url": "/api/v1/patients/chat/session",
+  "query": {}
+}
+
+[33m[Nest] 439871  - [39m11/23/2025, 10:27:53 AM [33m   WARN[39m [38;5;3m[ValidationExceptionFilter] [39m[33mValidation Error: [{"field":"unknown","message":"Body cannot be empty when content-type is set to 'application/json'"}][39m
+[33m[Nest] 439871  - [39m11/23/2025, 10:27:53 AM [33m   WARN[39m [38;5;3m[ValidationExceptionFilter] [39m[33mObject:[39m
+{
+  "method": "POST",
+  "url": "/api/v1/patients/chat/session",
+  "query": {}
+}
+
+prisma:query SELECT "system"."users"."id", "system"."users"."email", "system"."users"."name", "system"."users"."kolegiumId", "system"."users"."passwordHash", "system"."users"."phone", "system"."users"."nik", "system"."users"."isActive", "system"."users"."isEmailVerified", "system"."users"."mfaEnabled", "system"."users"."mfaSecret", "system"."users"."lastLoginAt", "system"."users"."isLocked", "system"."users"."lockedUntil", "system"."users"."isSsoUser", "system"."users"."createdAt", "system"."users"."updatedAt", "system"."users"."centerId" FROM "system"."users" WHERE ("system"."users"."id" = $1 AND 1=1) LIMIT $2 OFFSET $3
+prisma:query SELECT "system"."centers"."id", "system"."centers"."name", "system"."centers"."code", "system"."centers"."province", "system"."centers"."regency", "system"."centers"."address", "system"."centers"."isActive", "system"."centers"."createdAt", "system"."centers"."updatedAt" FROM "system"."centers" WHERE "system"."centers"."id" IN ($1) OFFSET $2
+prisma:query SELECT "system"."user_roles"."id", "system"."user_roles"."userId", "system"."user_roles"."roleId", "system"."user_roles"."isActive", "system"."user_roles"."createdAt" FROM "system"."user_roles" WHERE ("system"."user_roles"."isActive" = $1 AND "system"."user_roles"."userId" IN ($2)) OFFSET $3
+prisma:query SELECT "system"."roles"."id", "system"."roles"."name", "system"."roles"."code", "system"."roles"."description", "system"."roles"."level" FROM "system"."roles" WHERE "system"."roles"."id" IN ($1) OFFSET $2
+prisma:query SELECT "system"."user_roles"."id", "system"."user_roles"."userId", "system"."user_roles"."roleId", "system"."user_roles"."isActive", "system"."user_roles"."createdAt" FROM "system"."user_roles" WHERE ("system"."user_roles"."userId" = $1 AND "system"."user_roles"."isActive" = $2) LIMIT $3 OFFSET $4
+prisma:query SELECT "system"."roles"."id", "system"."roles"."name", "system"."roles"."code", "system"."roles"."description", "system"."roles"."level" FROM "system"."roles" WHERE "system"."roles"."id" IN ($1) OFFSET $2
+prisma:query SELECT "system"."users"."id", "system"."users"."email", "system"."users"."name", "system"."users"."kolegiumId", "system"."users"."passwordHash", "system"."users"."phone", "system"."users"."nik", "system"."users"."isActive", "system"."users"."isEmailVerified", "system"."users"."mfaEnabled", "system"."users"."mfaSecret", "system"."users"."lastLoginAt", "system"."users"."isLocked", "system"."users"."lockedUntil", "system"."users"."isSsoUser", "system"."users"."createdAt", "system"."users"."updatedAt", "system"."users"."centerId" FROM "system"."users" WHERE ("system"."users"."id" = $1 AND 1=1) LIMIT $2 OFFSET $3
+prisma:query SELECT "system"."centers"."id", "system"."centers"."name", "system"."centers"."code", "system"."centers"."province", "system"."centers"."regency", "system"."centers"."address", "system"."centers"."isActive", "system"."centers"."createdAt", "system"."centers"."updatedAt" FROM "system"."centers" WHERE "system"."centers"."id" IN ($1) OFFSET $2
+prisma:query SELECT "system"."user_roles"."id", "system"."user_roles"."userId", "system"."user_roles"."roleId", "system"."user_roles"."isActive", "system"."user_roles"."createdAt" FROM "system"."user_roles" WHERE ("system"."user_roles"."isActive" = $1 AND "system"."user_roles"."userId" IN ($2)) OFFSET $3
+prisma:query SELECT "system"."roles"."id", "system"."roles"."name", "system"."roles"."code", "system"."roles"."description", "system"."roles"."level" FROM "system"."roles" WHERE "system"."roles"."id" IN ($1) OFFSET $2
+prisma:query SELECT "system"."user_roles"."id", "system"."user_roles"."userId", "system"."user_roles"."roleId", "system"."user_roles"."isActive", "system"."user_roles"."createdAt" FROM "system"."user_roles" WHERE ("system"."user_roles"."userId" = $1 AND "system"."user_roles"."isActive" = $2) LIMIT $3 OFFSET $4
+prisma:query SELECT "system"."roles"."id", "system"."roles"."name", "system"."roles"."code", "system"."roles"."description", "system"."roles"."level" FROM "system"."roles" WHERE "system"."roles"."id" IN ($1) OFFSET $2
+[33m[Nest] 439871  - [39m11/23/2025, 10:28:13 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 82.98%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 10:28:43 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 82.99%[39m
+prisma:query SELECT "system"."users"."id", "system"."users"."email", "system"."users"."name", "system"."users"."kolegiumId", "system"."users"."passwordHash", "system"."users"."phone", "system"."users"."nik", "system"."users"."isActive", "system"."users"."isEmailVerified", "system"."users"."mfaEnabled", "system"."users"."mfaSecret", "system"."users"."lastLoginAt", "system"."users"."isLocked", "system"."users"."lockedUntil", "system"."users"."isSsoUser", "system"."users"."createdAt", "system"."users"."updatedAt", "system"."users"."centerId" FROM "system"."users" WHERE ("system"."users"."id" = $1 AND 1=1) LIMIT $2 OFFSET $3
+prisma:query SELECT "system"."centers"."id", "system"."centers"."name", "system"."centers"."code", "system"."centers"."province", "system"."centers"."regency", "system"."centers"."address", "system"."centers"."isActive", "system"."centers"."createdAt", "system"."centers"."updatedAt" FROM "system"."centers" WHERE "system"."centers"."id" IN ($1) OFFSET $2
+prisma:query SELECT "system"."user_roles"."id", "system"."user_roles"."userId", "system"."user_roles"."roleId", "system"."user_roles"."isActive", "system"."user_roles"."createdAt" FROM "system"."user_roles" WHERE ("system"."user_roles"."isActive" = $1 AND "system"."user_roles"."userId" IN ($2)) OFFSET $3
+prisma:query SELECT "system"."roles"."id", "system"."roles"."name", "system"."roles"."code", "system"."roles"."description", "system"."roles"."level" FROM "system"."roles" WHERE "system"."roles"."id" IN ($1) OFFSET $2
+prisma:query SELECT "system"."user_roles"."id", "system"."user_roles"."userId", "system"."user_roles"."roleId", "system"."user_roles"."isActive", "system"."user_roles"."createdAt" FROM "system"."user_roles" WHERE ("system"."user_roles"."userId" = $1 AND "system"."user_roles"."isActive" = $2) LIMIT $3 OFFSET $4
+prisma:query SELECT "system"."roles"."id", "system"."roles"."name", "system"."roles"."code", "system"."roles"."description", "system"."roles"."level" FROM "system"."roles" WHERE "system"."roles"."id" IN ($1) OFFSET $2
+prisma:query SELECT "system"."users"."id", "system"."users"."email", "system"."users"."name", "system"."users"."kolegiumId", "system"."users"."passwordHash", "system"."users"."phone", "system"."users"."nik", "system"."users"."isActive", "system"."users"."isEmailVerified", "system"."users"."mfaEnabled", "system"."users"."mfaSecret", "system"."users"."lastLoginAt", "system"."users"."isLocked", "system"."users"."lockedUntil", "system"."users"."isSsoUser", "system"."users"."createdAt", "system"."users"."updatedAt", "system"."users"."centerId" FROM "system"."users" WHERE ("system"."users"."id" = $1 AND 1=1) LIMIT $2 OFFSET $3
+prisma:query SELECT "system"."centers"."id", "system"."centers"."name", "system"."centers"."code", "system"."centers"."province", "system"."centers"."regency", "system"."centers"."address", "system"."centers"."isActive", "system"."centers"."createdAt", "system"."centers"."updatedAt" FROM "system"."centers" WHERE "system"."centers"."id" IN ($1) OFFSET $2
+prisma:query SELECT "system"."user_roles"."id", "system"."user_roles"."userId", "system"."user_roles"."roleId", "system"."user_roles"."isActive", "system"."user_roles"."createdAt" FROM "system"."user_roles" WHERE ("system"."user_roles"."isActive" = $1 AND "system"."user_roles"."userId" IN ($2)) OFFSET $3
+prisma:query SELECT "system"."roles"."id", "system"."roles"."name", "system"."roles"."code", "system"."roles"."description", "system"."roles"."level" FROM "system"."roles" WHERE "system"."roles"."id" IN ($1) OFFSET $2
+prisma:query SELECT "system"."user_roles"."id", "system"."user_roles"."userId", "system"."user_roles"."roleId", "system"."user_roles"."isActive", "system"."user_roles"."createdAt" FROM "system"."user_roles" WHERE ("system"."user_roles"."userId" = $1 AND "system"."user_roles"."isActive" = $2) LIMIT $3 OFFSET $4
+prisma:query SELECT "system"."roles"."id", "system"."roles"."name", "system"."roles"."code", "system"."roles"."description", "system"."roles"."level" FROM "system"."roles" WHERE "system"."roles"."id" IN ($1) OFFSET $2
+[33m[Nest] 439871  - [39m11/23/2025, 10:29:13 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.07%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 10:29:43 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.07%[39m
+[32m[Nest] 439871  - [39m11/23/2025, 10:30:00 AM [32m    LOG[39m [38;5;3m[ScheduledTasksService] [39m[32mReal-time metrics collected in 0ms[39m
+[33m[Nest] 439871  - [39m11/23/2025, 10:30:13 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.09%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 10:30:43 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.09%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 10:31:13 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.09%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 10:31:43 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.09%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 10:32:13 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.10%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 10:32:43 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.10%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 10:33:13 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.10%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 10:33:43 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.10%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 10:34:13 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 83.11%[39m
+[32m[Nest] 439871  - [39m11/23/2025, 10:35:00 AM [32m    LOG[39m [38;5;3m[ScheduledTasksService] [39m[32mReal-time metrics collected in 1ms[39m
+prisma:error Error in PostgreSQL connection: Error { kind: Closed, cause: None }
+[32m[Nest] 439871  - [39m11/23/2025, 10:40:00 AM [32m    LOG[39m [38;5;3m[ScheduledTasksService] [39m[32mReal-time metrics collected in 1ms[39m
+[32m[Nest] 439871  - [39m11/23/2025, 10:45:00 AM [32m    LOG[39m [38;5;3m[ScheduledTasksService] [39m[32mReal-time metrics collected in 0ms[39m
+[32m[Nest] 439871  - [39m11/23/2025, 10:50:00 AM [32m    LOG[39m [38;5;3m[ScheduledTasksService] [39m[32mReal-time metrics collected in 0ms[39m
+[32m[Nest] 439871  - [39m11/23/2025, 10:55:00 AM [32m    LOG[39m [38;5;3m[ScheduledTasksService] [39m[32mReal-time metrics collected in 0ms[39m
+[33m[Nest] 439871  - [39m11/23/2025, 10:58:43 AM [33m   WARN[39m [38;5;3m[ValidationExceptionFilter] [39m[33mValidation Error: [{"field":"unknown","message":"Body cannot be empty when content-type is set to 'application/json'"}][39m
+[33m[Nest] 439871  - [39m11/23/2025, 10:58:43 AM [33m   WARN[39m [38;5;3m[ValidationExceptionFilter] [39m[33mObject:[39m
+{
+  "method": "POST",
+  "url": "/api/v1/patients/chat/session",
+  "query": {}
+}
+
+[33m[Nest] 439871  - [39m11/23/2025, 10:58:43 AM [33m   WARN[39m [38;5;3m[ValidationExceptionFilter] [39m[33mValidation Error: [{"field":"unknown","message":"Unauthorized"}][39m
+[33m[Nest] 439871  - [39m11/23/2025, 10:58:43 AM [33m   WARN[39m [38;5;3m[ValidationExceptionFilter] [39m[33mObject:[39m
+{
+  "method": "GET",
+  "url": "/api/v1/auth/profile",
+  "query": {}
+}
+
+[33m[Nest] 439871  - [39m11/23/2025, 10:58:43 AM [33m   WARN[39m [38;5;3m[ValidationExceptionFilter] [39m[33mValidation Error: [{"field":"unknown","message":"Body cannot be empty when content-type is set to 'application/json'"}][39m
+[33m[Nest] 439871  - [39m11/23/2025, 10:58:43 AM [33m   WARN[39m [38;5;3m[ValidationExceptionFilter] [39m[33mObject:[39m
+{
+  "method": "POST",
+  "url": "/api/v1/patients/chat/session",
+  "query": {}
+}
+
+[33m[Nest] 439871  - [39m11/23/2025, 10:58:43 AM [33m   WARN[39m [38;5;3m[ValidationExceptionFilter] [39m[33mValidation Error: [{"field":"unknown","message":"Unauthorized"}][39m
+[33m[Nest] 439871  - [39m11/23/2025, 10:58:43 AM [33m   WARN[39m [38;5;3m[ValidationExceptionFilter] [39m[33mObject:[39m
+{
+  "method": "GET",
+  "url": "/api/v1/auth/profile",
+  "query": {}
+}
+
+[33m[Nest] 439871  - [39m11/23/2025, 10:58:43 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 80.68%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 10:59:13 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 80.78%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 10:59:43 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 80.84%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 10:59:50 AM [33m   WARN[39m [38;5;3m[ValidationExceptionFilter] [39m[33mValidation Error: [{"field":"unknown","message":"Cannot GET /health"}][39m
+[33m[Nest] 439871  - [39m11/23/2025, 10:59:50 AM [33m   WARN[39m [38;5;3m[ValidationExceptionFilter] [39m[33mObject:[39m
+{
+  "method": "GET",
+  "url": "/health",
+  "query": {}
+}
+
+[33m[Nest] 439871  - [39m11/23/2025, 10:59:56 AM [33m   WARN[39m [38;5;3m[ValidationExceptionFilter] [39m[33mValidation Error: [{"field":"unknown","message":"Body cannot be empty when content-type is set to 'application/json'"}][39m
+[33m[Nest] 439871  - [39m11/23/2025, 10:59:56 AM [33m   WARN[39m [38;5;3m[ValidationExceptionFilter] [39m[33mObject:[39m
+{
+  "method": "POST",
+  "url": "/api/v1/patients/chat/session",
+  "query": {}
+}
+
+[32m[Nest] 439871  - [39m11/23/2025, 11:00:00 AM [32m    LOG[39m [38;5;3m[ScheduledTasksService] [39m[32mReal-time metrics collected in 1ms[39m
+[33m[Nest] 439871  - [39m11/23/2025, 11:00:00 AM [33m   WARN[39m [38;5;3m[ScheduledTasksService] [39m[33mALERT: REDIS_HEALTH_ISSUE - Redis service health check failed[39m
+[32m[Nest] 439871  - [39m11/23/2025, 11:00:00 AM [32m    LOG[39m [38;5;3m[ScheduledTasksService] [39m[32mHourly cache update completed[39m
+[32m[Nest] 439871  - [39m11/23/2025, 11:00:00 AM [32m    LOG[39m [38;5;3m[ScheduledTasksService] [39m[32mHourly alert generation completed[39m
+[32m[Nest] 439871  - [39m11/23/2025, 11:00:00 AM [32m    LOG[39m [38;5;3m[ScheduledTasksService] [39m[32mHourly data quality validation completed[39m
+[32m[Nest] 439871  - [39m11/23/2025, 11:00:00 AM [32m    LOG[39m [38;5;3m[ScheduledTasksService] [39m[32mHourly analytics update completed in 0ms[39m
+prisma:query SELECT "system"."notification_digests"."id", "system"."notification_digests"."userId", "system"."notification_digests"."category"::text, "system"."notification_digests"."frequency"::text, "system"."notification_digests"."lastSentAt", "system"."notification_digests"."nextScheduledAt", "system"."notification_digests"."notificationCount", "system"."notification_digests"."notificationIds", "system"."notification_digests"."status"::text, "system"."notification_digests"."createdAt", "system"."notification_digests"."updatedAt" FROM "system"."notification_digests" WHERE ("system"."notification_digests"."status" = CAST($1::text AS "system"."digest_statuses") AND "system"."notification_digests"."nextScheduledAt" <= $2) OFFSET $3
+[33m[Nest] 439871  - [39m11/23/2025, 11:00:00 AM [33m   WARN[39m [38;5;3m[ValidationExceptionFilter] [39m[33mValidation Error: [{"field":"unknown","message":"Unauthorized"}][39m
+[33m[Nest] 439871  - [39m11/23/2025, 11:00:00 AM [33m   WARN[39m [38;5;3m[ValidationExceptionFilter] [39m[33mObject:[39m
+{
+  "method": "POST",
+  "url": "/api/v1/patients/chat/session",
+  "body": {},
+  "query": {}
+}
+
+[33m[Nest] 439871  - [39m11/23/2025, 11:00:13 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 82.18%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 11:00:14 AM [33m   WARN[39m [38;5;3m[ValidationExceptionFilter] [39m[33mValidation Error: [{"field":"unknown","message":"Body cannot be empty when content-type is set to 'application/json'"}][39m
+[33m[Nest] 439871  - [39m11/23/2025, 11:00:14 AM [33m   WARN[39m [38;5;3m[ValidationExceptionFilter] [39m[33mObject:[39m
+{
+  "method": "POST",
+  "url": "/api/v1/patients/chat/session",
+  "query": {}
+}
+
+[33m[Nest] 439871  - [39m11/23/2025, 11:00:14 AM [33m   WARN[39m [38;5;3m[ValidationExceptionFilter] [39m[33mValidation Error: [{"field":"unknown","message":"Body cannot be empty when content-type is set to 'application/json'"}][39m
+[33m[Nest] 439871  - [39m11/23/2025, 11:00:14 AM [33m   WARN[39m [38;5;3m[ValidationExceptionFilter] [39m[33mObject:[39m
+{
+  "method": "POST",
+  "url": "/api/v1/patients/chat/session",
+  "query": {}
+}
+
+[33m[Nest] 439871  - [39m11/23/2025, 11:00:43 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 82.19%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 11:00:53 AM [33m   WARN[39m [38;5;3m[ValidationExceptionFilter] [39m[33mValidation Error: [{"field":"unknown","message":"Body is not valid JSON but content-type is set to 'application/json'"}][39m
+[33m[Nest] 439871  - [39m11/23/2025, 11:00:53 AM [33m   WARN[39m [38;5;3m[ValidationExceptionFilter] [39m[33mObject:[39m
+{
+  "method": "POST",
+  "url": "/api/v1/auth/login",
+  "query": {}
+}
+
+[33m[Nest] 439871  - [39m11/23/2025, 11:00:56 AM [33m   WARN[39m [38;5;3m[ValidationExceptionFilter] [39m[33mValidation Error: [{"field":"unknown","message":"Body is not valid JSON but content-type is set to 'application/json'"}][39m
+[33m[Nest] 439871  - [39m11/23/2025, 11:00:56 AM [33m   WARN[39m [38;5;3m[ValidationExceptionFilter] [39m[33mObject:[39m
+{
+  "method": "POST",
+  "url": "/api/v1/auth/login",
+  "query": {}
+}
+
+[33m[Nest] 439871  - [39m11/23/2025, 11:01:01 AM [33m   WARN[39m [38;5;3m[ValidationExceptionFilter] [39m[33mValidation Error: [{"field":"unknown","message":"Body is not valid JSON but content-type is set to 'application/json'"}][39m
+[33m[Nest] 439871  - [39m11/23/2025, 11:01:01 AM [33m   WARN[39m [38;5;3m[ValidationExceptionFilter] [39m[33mObject:[39m
+{
+  "method": "POST",
+  "url": "/api/v1/auth/login",
+  "query": {}
+}
+
+[33m[Nest] 439871  - [39m11/23/2025, 11:01:13 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 82.23%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 11:01:15 AM [33m   WARN[39m [38;5;3m[ValidationExceptionFilter] [39m[33mValidation Error: [{"field":"unknown","message":"Unauthorized"}][39m
+[33m[Nest] 439871  - [39m11/23/2025, 11:01:15 AM [33m   WARN[39m [38;5;3m[ValidationExceptionFilter] [39m[33mObject:[39m
+{
+  "method": "POST",
+  "url": "/api/v1/patients/chat/session",
+  "body": {},
+  "query": {}
+}
+
+[33m[Nest] 439871  - [39m11/23/2025, 11:01:15 AM [33m   WARN[39m [38;5;3m[ValidationExceptionFilter] [39m[33mValidation Error: [{"field":"unknown","message":"Unauthorized"}][39m
+[33m[Nest] 439871  - [39m11/23/2025, 11:01:15 AM [33m   WARN[39m [38;5;3m[ValidationExceptionFilter] [39m[33mObject:[39m
+{
+  "method": "POST",
+  "url": "/api/v1/patients/chat/session",
+  "body": {},
+  "query": {}
+}
+
+[33m[Nest] 439871  - [39m11/23/2025, 11:01:35 AM [33m   WARN[39m [38;5;3m[ValidationExceptionFilter] [39m[33mValidation Error: [{"field":"unknown","message":"Unauthorized"}][39m
+[33m[Nest] 439871  - [39m11/23/2025, 11:01:35 AM [33m   WARN[39m [38;5;3m[ValidationExceptionFilter] [39m[33mObject:[39m
+{
+  "method": "POST",
+  "url": "/api/v1/patients/chat/session",
+  "body": {},
+  "query": {}
+}
+
+[33m[Nest] 439871  - [39m11/23/2025, 11:01:35 AM [33m   WARN[39m [38;5;3m[ValidationExceptionFilter] [39m[33mValidation Error: [{"field":"unknown","message":"Unauthorized"}][39m
+[33m[Nest] 439871  - [39m11/23/2025, 11:01:35 AM [33m   WARN[39m [38;5;3m[ValidationExceptionFilter] [39m[33mObject:[39m
+{
+  "method": "POST",
+  "url": "/api/v1/patients/chat/session",
+  "body": {},
+  "query": {}
+}
+
+[33m[Nest] 439871  - [39m11/23/2025, 11:01:43 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 82.25%[39m
+[33m[Nest] 439871  - [39m11/23/2025, 11:01:46 AM [33m   WARN[39m [38;5;3m[ValidationExceptionFilter] [39m[33mValidation Error: [{"field":"unknown","message":"Unauthorized"}][39m
+[33m[Nest] 439871  - [39m11/23/2025, 11:01:46 AM [33m   WARN[39m [38;5;3m[ValidationExceptionFilter] [39m[33mObject:[39m
+{
+  "method": "POST",
+  "url": "/api/v1/patients/chat/session",
+  "body": {},
+  "query": {}
+}
+
+[33m[Nest] 439871  - [39m11/23/2025, 11:01:46 AM [33m   WARN[39m [38;5;3m[ValidationExceptionFilter] [39m[33mValidation Error: [{"field":"unknown","message":"Unauthorized"}][39m
+[33m[Nest] 439871  - [39m11/23/2025, 11:01:46 AM [33m   WARN[39m [38;5;3m[ValidationExceptionFilter] [39m[33mObject:[39m
+{
+  "method": "POST",
+  "url": "/api/v1/patients/chat/session",
+  "body": {},
+  "query": {}
+}
+
+[33m[Nest] 439871  - [39m11/23/2025, 11:01:56 AM [33m   WARN[39m [38;5;3m[ValidationExceptionFilter] [39m[33mValidation Error: [{"field":"unknown","message":"Unauthorized"}][39m
+[33m[Nest] 439871  - [39m11/23/2025, 11:01:56 AM [33m   WARN[39m [38;5;3m[ValidationExceptionFilter] [39m[33mObject:[39m
+{
+  "method": "POST",
+  "url": "/api/v1/patients/chat/session",
+  "body": {},
+  "query": {}
+}
+
+[33m[Nest] 439871  - [39m11/23/2025, 11:01:56 AM [33m   WARN[39m [38;5;3m[ValidationExceptionFilter] [39m[33mValidation Error: [{"field":"unknown","message":"Unauthorized"}][39m
+[33m[Nest] 439871  - [39m11/23/2025, 11:01:56 AM [33m   WARN[39m [38;5;3m[ValidationExceptionFilter] [39m[33mObject:[39m
+{
+  "method": "POST",
+  "url": "/api/v1/patients/chat/session",
+  "body": {},
+  "query": {}
+}
+
+[33m[Nest] 439871  - [39m11/23/2025, 11:02:13 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 82.25%[39m

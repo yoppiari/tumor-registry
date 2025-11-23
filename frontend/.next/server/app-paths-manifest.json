@@ -1,9 +1,7 @@
 {
-  "/not-found": "app/not-found.js",
-  "/analytics/page": "app/analytics/page.js",
-  "/analytics/distribution/page": "app/analytics/distribution/page.js",
-  "/analytics/trends/page": "app/analytics/trends/page.js",
-  "/analytics/centers/page": "app/analytics/centers/page.js",
-  "/analytics/predictions/page": "app/analytics/predictions/page.js",
-  "/dashboard/page": "app/dashboard/page.js"
+  "/patients/page": "app/patients/page.js",
+  "/research/collaboration/page": "app/research/collaboration/page.js",
+  "/research/publications/page": "app/research/publications/page.js",
+  "/login/page": "app/login/page.js",
+  "/patients/new/page": "app/patients/new/page.js"
 }

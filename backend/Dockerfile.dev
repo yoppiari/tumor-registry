@@ -1,9 +1,8 @@
-FROM --platform=linux/amd64 oven/bun:1-alpine
+FROM --platform=linux/amd64 node:18-alpine
 
 # Install system dependencies for Prisma
 RUN apk add --no-cache \
     openssl \
-    openssl-dev \
     libffi-dev \
     python3 \
     make \
@@ -14,14 +13,11 @@ RUN apk add --no-cache \
 WORKDIR /app
 
 # Install dependencies
-COPY package*.json bun.lock* bunfig.toml ./
-RUN bun install
+COPY package*.json ./
+RUN npm install --legacy-peer-deps
 
 # Copy source code
 COPY . .
-
-# Generate Prisma client
-RUN bun run db:generate
 
 # Create logs directory
 RUN mkdir -p logs
@@ -30,4 +26,4 @@ RUN mkdir -p logs
 EXPOSE 3001
 
 # Start development server
-CMD ["bun", "run", "start:dev"]
+CMD ["npm", "run", "start:dev"]

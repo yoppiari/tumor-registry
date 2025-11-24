@@ -22,7 +22,7 @@ import { PatientSearchDto } from './dto/patient-search.dto';
 import { QuickPatientEntryDto, ChatMessageDto } from './dto/quick-patient-entry.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { Roles } from '../auth/decorators/roles.decorator';
-import { Patient } from './interfaces/patient.interface';
+import { Patient, UpdatePatientDto as UpdatePatientInterface } from './interfaces/patient.interface';
 
 @ApiTags('patients')
 @Controller('patients')
@@ -241,7 +241,7 @@ export class PatientsController {
   @ApiResponse({ status: 200, description: 'Patients found' })
   @ApiResponse({ status: 401, description: 'Unauthorized' })
   async searchByName(@Param('name') name: string) {
-    return this.patients.service.findAll({ name });
+    return this.patientsService.findAll({ name });
   }
 
   // Export endpoints

@@ -7,10 +7,14 @@ import {
   PatientSearchDto,
   PatientListResponse,
   PatientStatistics,
-  QuickPatientEntryDto,
+  QuickPatientEntry,
   PatientEntrySession,
   ChatMessage,
 } from './interfaces/patient.interface';
+
+// Import DTOs for type annotations
+import { UpdatePatientDto as UpdatePatientDtoClass } from './dto/update-patient.dto';
+import { QuickPatientEntryDto } from './dto/quick-patient-entry.dto';
 
 @Injectable()
 export class PatientsService {
@@ -378,7 +382,7 @@ export class PatientsService {
     };
   }
 
-  async update(id: string, updatePatientDto: UpdatePatientDto, updatedBy: string): Promise<Patient> {
+  async update(id: string, updatePatientDto: UpdatePatientDtoClass, updatedBy: string): Promise<Patient> {
     const patientIndex = this.patients.findIndex(p => p.id === id);
     if (patientIndex === -1) {
       throw new NotFoundException('Patient not found');

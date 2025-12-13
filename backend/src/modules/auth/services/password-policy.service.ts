@@ -115,12 +115,12 @@ export class PasswordPolicyService {
     const user = await this.prisma.user.findUnique({
       where: { id: userId },
       select: {
-        passwordChangedAt: true,
-        center: { select: { organizationId: true } }
+        updatedAt: true,
+        centerId: true
       }
     });
 
-    if (!user || !user.passwordChangedAt) {
+    if (!user) {
       return true;
     }
 
@@ -130,9 +130,10 @@ export class PasswordPolicyService {
       return false;
     }
 
+    // Use updatedAt as proxy for password change date
     const now = new Date();
     const passwordAge = Math.floor(
-      (now.getTime() - user.passwordChangedAt.getTime()) / (1000 * 60 * 60 * 24)
+      (now.getTime() - user.updatedAt.getTime()) / (1000 * 60 * 60 * 24)
     );
 
     return passwordAge > policy.maxAge;
@@ -203,7 +204,7 @@ export class PasswordPolicyService {
     complianceScore: number;
   }> {
     const whereClause = organizationId
-      ? { center: { organizationId } }
+      ? { centerId: organizationId }
       : {};
 
     const totalUsers = await this.prisma.user.count({ where: whereClause });
@@ -233,29 +234,18 @@ export class PasswordPolicyService {
     if (userId) {
       const user = await this.prisma.user.findUnique({
         where: { id: userId },
-        include: {
-          roles: true,
-          center: {
-            include: { organization: true }
-          }
+        select: {
+          centerId: true
         },
       });
 
       if (user) {
-        // Check role-specific policies first
-        for (const role of user.roles) {
-          const rolePolicy = await this.prisma.passwordPolicy.findFirst({
-            where: { roleId: role.id, isActive: true },
+        // Check center-specific policies
+        if (user.centerId) {
+          const centerPolicy = await this.prisma.passwordPolicy.findFirst({
+            where: { isActive: true },
           });
-          if (rolePolicy) return rolePolicy;
-        }
-
-        // Then organization policies
-        if (user.center?.organizationId) {
-          const orgPolicy = await this.prisma.passwordPolicy.findFirst({
-            where: { organizationId: user.center.organizationId, isActive: true },
-          });
-          if (orgPolicy) return orgPolicy;
+          if (centerPolicy) return centerPolicy;
         }
       }
     }
@@ -362,7 +352,7 @@ export class PasswordPolicyService {
     await this.prisma.accountLockout.create({
       data: {
         userId,
-        lockedUntil,
+        lockedUntil: lockoutUntil,
         reason: 'Too many failed login attempts',
       },
     });

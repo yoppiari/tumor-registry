@@ -1,4 +1,4 @@
-import { IsString, IsEmail, IsDate, IsEnum, IsOptional, IsObject, ValidateNested, IsArray, IsPhoneNumber, MinLength, MaxLength, Matches } from 'class-validator';
+import { IsString, IsEmail, IsDateString, IsEnum, IsOptional, IsObject, ValidateNested, IsArray, IsPhoneNumber, MinLength, MaxLength, Matches } from 'class-validator';
 import { Type } from 'class-transformer';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
@@ -130,10 +130,9 @@ export class MolecularMarkerDto {
   result: 'positive' | 'negative' | 'unknown';
 
   @IsOptional()
-  @IsDate()
-  @Type(() => Date)
+  @IsDateString()
   @ApiPropertyOptional({ description: 'Test date', type: 'string', format: 'date' })
-  testDate?: Date;
+  testDate?: string;
 
   @IsOptional()
   @IsString()
@@ -162,10 +161,9 @@ export class CreatePatientDto {
   @ApiProperty({ description: 'Patient full name', example: 'John Doe' })
   name: string;
 
-  @IsDate()
-  @Type(() => Date)
+  @IsDateString()
   @ApiProperty({ description: 'Date of birth', type: 'string', format: 'date' })
-  dateOfBirth: Date;
+  dateOfBirth: string;
 
   @IsEnum(['male', 'female'])
   @ApiProperty({ enum: ['male', 'female'], description: 'Gender' })
@@ -279,16 +277,14 @@ export class CreatePatientDto {
   treatmentStatus: 'new' | 'ongoing' | 'completed' | 'palliative' | 'lost_to_followup' | 'deceased';
 
   @IsOptional()
-  @IsDate()
-  @Type(() => Date)
+  @IsDateString()
   @ApiPropertyOptional({ description: 'Date of diagnosis', type: 'string', format: 'date' })
-  dateOfDiagnosis?: Date;
+  dateOfDiagnosis?: string;
 
   @IsOptional()
-  @IsDate()
-  @Type(() => Date)
+  @IsDateString()
   @ApiPropertyOptional({ description: 'Date of first visit', type: 'string', format: 'date' })
-  dateOfFirstVisit?: Date;
+  dateOfFirstVisit?: string;
 
   @IsString()
   @ApiProperty({ description: 'Treatment center ID' })

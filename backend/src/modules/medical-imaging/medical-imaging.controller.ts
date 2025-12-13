@@ -46,11 +46,11 @@ export class MedicalImagingController {
         patientId: { type: 'string' },
         imageType: { type: 'string', enum: ['HISTOLOGY', 'RADIOLOGY', 'CLINICAL_PHOTO', 'PATHOLOGY', 'ENDOSCOPY', 'ULTRASOUND', 'CT_SCAN', 'MRI', 'XRAY', 'PET_SCAN', 'MAMMOGRAPHY', 'OTHER'] },
         category: { type: 'string', enum: ['HISTOLOGY', 'RADIOLOGY', 'CLINICAL', 'PATHOLOGY', 'DIAGNOSTIC', 'SURGICAL', 'FOLLOW_UP', 'SCREENING', 'OTHER'] },
-        description: { type: 'string', required: false },
-        findings: { type: 'string', required: false },
-        bodyPart: { type: 'string', required: false },
-        modality: { type: 'string', required: false },
-        studyDate: { type: 'string', format: 'date-time', required: false },
+        description: { type: 'string' },
+        findings: { type: 'string' },
+        bodyPart: { type: 'string' },
+        modality: { type: 'string' },
+        studyDate: { type: 'string', format: 'date-time' },
       },
     },
   })
@@ -58,7 +58,7 @@ export class MedicalImagingController {
   @ApiResponse({ status: 400, description: 'Invalid input' })
   @HttpCode(HttpStatus.CREATED)
   async uploadImage(
-    @UploadedFile() file: Express.Multer.File,
+    @UploadedFile() file: any,
     @Body() uploadDto: UploadImageDto,
     @Req() req: any,
   ) {
@@ -106,7 +106,7 @@ export class MedicalImagingController {
   @ApiResponse({ status: 404, description: 'Image not found' })
   async getImageFile(
     @Param('id', ParseUUIDPipe) id: string,
-    @Res() reply: FastifyReply,
+    @Res() res: any,
   ) {
     const { filePath, mimeType, fileName } = await this.medicalImagingService.getImageFile(id);
 
@@ -124,7 +124,7 @@ export class MedicalImagingController {
   @ApiResponse({ status: 404, description: 'Thumbnail not found' })
   async getThumbnail(
     @Param('id', ParseUUIDPipe) id: string,
-    @Res() reply: FastifyReply,
+    @Res() res: any,
   ) {
     const { filePath, mimeType } = await this.medicalImagingService.getThumbnail(id);
 

@@ -1,7 +1,6 @@
 import { PartialType } from '@nestjs/swagger';
 import { CreatePatientDto } from './create-patient.dto';
-import { IsOptional, IsDate, IsBoolean, IsEnum, IsString, MinLength, MaxLength } from 'class-validator';
-import { Type } from 'class-transformer';
+import { IsOptional, IsDateString, IsBoolean, IsEnum, IsString, MinLength, MaxLength } from 'class-validator';
 import { ApiPropertyOptional } from '@nestjs/swagger';
 
 export class UpdatePatientDto extends PartialType(CreatePatientDto) {
@@ -26,10 +25,9 @@ export class UpdatePatientDto extends PartialType(CreatePatientDto) {
   isDeceased?: boolean;
 
   @IsOptional()
-  @IsDate()
-  @Type(() => Date)
+  @IsDateString()
   @ApiPropertyOptional({ description: 'Date of death', type: 'string', format: 'date' })
-  dateOfDeath?: Date;
+  dateOfDeath?: string;
 
   @IsOptional()
   @IsString()

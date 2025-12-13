@@ -3,6 +3,8 @@ import type { FastifyRequest, FastifyReply } from 'fastify';
 import { PerformanceMonitorService } from './performance-monitor.service';
 import { RedisService } from './redis.service';
 
+type DoneFunction = (error?: Error | any) => void;
+
 export interface ApiPerformanceMetrics {
   requestId: string;
   method: string;
@@ -31,7 +33,7 @@ export class ApiPerformanceMiddleware implements NestMiddleware {
     private redisService: RedisService,
   ) {}
 
-  async use(req: FastifyRequest, reply: FastifyReply, next: NextFunction) {
+  async use(req: FastifyRequest, reply: FastifyReply, done: DoneFunction) {
     const startTime = Date.now();
     const requestId = this.generateRequestId();
 
@@ -39,15 +41,15 @@ export class ApiPerformanceMiddleware implements NestMiddleware {
     const metrics: ApiPerformanceMetrics = {
       requestId,
       method: req.method,
-      url: req.originalUrl || req.url,
-      userAgent: req.get('User-Agent') || 'unknown',
+      url: req.url,
+      userAgent: req.headers['user-agent'] || 'unknown',
       ip: this.getClientIp(req),
       userId: this.getUserId(req),
       startTime,
     };
 
     // Add request ID to response headers
-    res.setHeader('X-Request-ID', requestId);
+    reply.header('X-Request-ID', requestId);
 
     // Check cache for GET requests
     let isCached = false;
@@ -60,11 +62,11 @@ export class ApiPerformanceMiddleware implements NestMiddleware {
           const cached = JSON.parse(cachedResponse);
 
           // Set cached response headers
-          res.setHeader('X-Cache', 'HIT');
-          res.setHeader('X-Cache-Key', cacheKey);
+          reply.header('X-Cache', 'HIT');
+          reply.header('X-Cache-Key', cacheKey);
 
           // Send cached response
-          res.status(cached.statusCode).json(cached.data);
+          reply.status(cached.statusCode).send(cached.data);
 
           // Record cache hit metrics
           metrics.endTime = Date.now();
@@ -80,63 +82,46 @@ export class ApiPerformanceMiddleware implements NestMiddleware {
           this.logger.warn('Invalid cached response:', error);
         }
       } else {
-        res.setHeader('X-Cache', 'MISS');
-        res.setHeader('X-Cache-Key', cacheKey);
+        reply.header('X-Cache', 'MISS');
+        reply.header('X-Cache-Key', cacheKey);
       }
     }
 
-    // Intercept response to capture metrics
-    const originalSend = res.send;
-    res.send = function(body: any) {
+    // TODO: Implement response interception for Fastify
+    // For now, just record basic metrics
+    const slowRequestTimer = setTimeout(() => {
+      this.logger.warn(
+        `Slow request detected: ${req.method} ${req.url} - ${Date.now() - startTime}ms (ID: ${requestId})`
+      );
+
+      this.performanceMonitor.emit('slowRequest', {
+        requestId,
+        method: req.method,
+        url: req.url,
+        duration: Date.now() - startTime,
+        timestamp: new Date(),
+      });
+    }, this.SLOW_REQUEST_THRESHOLD);
+
+    // Record metrics when request completes
+    reply.raw.on('finish', () => {
+      clearTimeout(slowRequestTimer);
       metrics.endTime = Date.now();
       metrics.duration = metrics.endTime - metrics.startTime;
-      metrics.statusCode = res.statusCode;
-      metrics.responseSize = Buffer.byteLength(body || '', 'utf8');
-
-      // Cache successful GET responses
-      if (
-        this.CACHEABLE_METHODS.includes(req.method) &&
-        this.CACHEABLE_STATUS_CODES.includes(res.statusCode) &&
-        !isCached
-      ) {
-        this.cacheResponse(req, res, body);
-      }
-
-      // Record metrics
+      metrics.statusCode = reply.statusCode;
       this.recordMetrics(metrics);
-
-      return originalSend.call(this, body);
-    }.bind(this);
+    });
 
     // Handle request errors
-    res.on('error', (error) => {
+    reply.raw.on('error', (error) => {
+      clearTimeout(slowRequestTimer);
       metrics.endTime = Date.now();
       metrics.duration = metrics.endTime - metrics.startTime;
       metrics.error = error.message;
       this.recordMetrics(metrics);
     });
 
-    // Track slow requests
-    const slowRequestTimer = setTimeout(() => {
-      this.logger.warn(
-        `Slow request detected: ${req.method} ${req.originalUrl} - ${Date.now() - startTime}ms (ID: ${requestId})`
-      );
-
-      this.performanceMonitor.emit('slowRequest', {
-        requestId,
-        method: req.method,
-        url: req.originalUrl,
-        duration: Date.now() - startTime,
-        timestamp: new Date(),
-      });
-    }, this.SLOW_REQUEST_THRESHOLD);
-
-    // Clear timer on response completion
-    res.on('finish', () => {
-      clearTimeout(slowRequestTimer);
-    });
-
-    next();
+    done();
   }
 
   private generateRequestId(): string {
@@ -146,9 +131,7 @@ export class ApiPerformanceMiddleware implements NestMiddleware {
   private getClientIp(req: FastifyRequest): string {
     return (
       req.ip ||
-      req.connection.remoteAddress ||
-      req.socket.remoteAddress ||
-      (req.connection as any)?.socket?.remoteAddress ||
+      req.socket?.remoteAddress ||
       'unknown'
     );
   }
@@ -169,7 +152,7 @@ export class ApiPerformanceMiddleware implements NestMiddleware {
   }
 
   private getCacheKey(req: FastifyRequest): string {
-    const url = req.originalUrl || req.url;
+    const url = req.url;
     const query = JSON.stringify(req.query);
     const hash = Buffer.from(`${req.method}:${url}:${query}`).toString('base64');
     return `api_cache:${hash}`;
@@ -181,10 +164,10 @@ export class ApiPerformanceMiddleware implements NestMiddleware {
       const ttl = this.getCacheTTL(req);
 
       const cacheData = {
-        statusCode: res.statusCode,
+        statusCode: reply.statusCode,
         data: typeof body === 'string' ? body : JSON.parse(body),
         headers: {
-          'content-type': res.get('content-type'),
+          'content-type': reply.getHeader('content-type'),
         },
         cachedAt: new Date().toISOString(),
       };
@@ -196,7 +179,7 @@ export class ApiPerformanceMiddleware implements NestMiddleware {
   }
 
   private getCacheTTL(req: FastifyRequest): number {
-    const url = req.originalUrl || req.url;
+    const url = req.url;
 
     // Different TTL for different endpoints
     if (url.includes('/analytics/')) return 600; // 10 minutes for analytics

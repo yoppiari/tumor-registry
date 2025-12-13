@@ -260,7 +260,7 @@ export default function ReportsExportPage() {
     if (allSelected) {
       setSelectedFields(prev => prev.filter(id => !categoryFields.includes(id)));
     } else {
-      setSelectedFields(prev => [...new Set([...prev, ...categoryFields])]);
+      setSelectedFields(prev => Array.from(new Set([...prev, ...categoryFields])));
     }
   };
 
@@ -287,7 +287,7 @@ export default function ReportsExportPage() {
     }, 300);
   };
 
-  const categories = [...new Set(dataFields.map(f => f.category))];
+  const categories = Array.from(new Set(dataFields.map(f => f.category)));
 
   if (isLoading || loading) {
     return (

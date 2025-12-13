@@ -59,7 +59,7 @@ export class ConfigurationService {
 
     return configs.map(config => ({
       ...config,
-      value: config.isEncrypted ? JSON.parse(this.decryptValue(config.value)) : config.value,
+      value: config.isEncrypted ? JSON.parse(this.decryptValue(config.value as string)) : config.value,
     }));
   }
 
@@ -77,7 +77,7 @@ export class ConfigurationService {
 
     return {
       ...config,
-      value: config.isEncrypted ? JSON.parse(this.decryptValue(config.value)) : config.value,
+      value: config.isEncrypted ? JSON.parse(this.decryptValue(config.value as string)) : config.value,
     };
   }
 
@@ -97,7 +97,7 @@ export class ConfigurationService {
 
     return {
       ...config,
-      value: config.isEncrypted ? JSON.parse(this.decryptValue(config.value)) : config.value,
+      value: config.isEncrypted ? JSON.parse(this.decryptValue(config.value as string)) : config.value,
     };
   }
 
@@ -120,7 +120,6 @@ export class ConfigurationService {
       data: {
         ...updateData,
         value,
-        lastModifiedBy: updateData.lastModifiedBy || null,
       },
       include: {
         center: true,
@@ -131,7 +130,7 @@ export class ConfigurationService {
 
     return {
       ...config,
-      value: config.isEncrypted ? JSON.parse(this.decryptValue(config.value)) : config.value,
+      value: config.isEncrypted ? JSON.parse(this.decryptValue(config.value as string)) : config.value,
     };
   }
 

@@ -32,7 +32,7 @@ export class MedicalRecordsController {
   @ApiResponse({ status: 404, description: 'Patient not found' })
   @RequirePermissions('MEDICAL_RECORDS_CREATE')
   @HttpCode(HttpStatus.CREATED)
-  @AuditLog('CREATE_MEDICAL_RECORD')
+  @AuditLog('CREATE', 'medical_record')
   async createMedicalRecord(@Body() createRecordDto: {
     patientId: string;
     recordType: RecordType;
@@ -140,7 +140,7 @@ export class MedicalRecordsController {
   @ApiResponse({ status: 200, description: 'Medical record updated successfully' })
   @ApiResponse({ status: 404, description: 'Medical record not found' })
   @RequirePermissions('MEDICAL_RECORDS_UPDATE')
-  @AuditLog('UPDATE_MEDICAL_RECORD')
+  @AuditLog('UPDATE', 'medical_record')
   async updateMedicalRecord(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() updateRecordDto: {
@@ -171,7 +171,7 @@ export class MedicalRecordsController {
   @ApiOperation({ summary: 'Create initial visit medical record template' })
   @RequirePermissions('MEDICAL_RECORDS_CREATE')
   @HttpCode(HttpStatus.CREATED)
-  @AuditLog('CREATE_INITIAL_VISIT_RECORD')
+  @AuditLog('CREATE', 'initial_visit_record')
   async createInitialVisitRecord(@Body() createRecordDto: {
     patientId: string;
     chiefComplaint: string;
@@ -197,7 +197,7 @@ export class MedicalRecordsController {
   @ApiOperation({ summary: 'Create progress note medical record template' })
   @RequirePermissions('MEDICAL_RECORDS_CREATE')
   @HttpCode(HttpStatus.CREATED)
-  @AuditLog('CREATE_PROGRESS_NOTE')
+  @AuditLog('CREATE', 'progress_note')
   async createProgressNote(@Body() createRecordDto: {
     patientId: string;
     chiefComplaint?: string;
@@ -217,7 +217,7 @@ export class MedicalRecordsController {
   @ApiOperation({ summary: 'Create discharge summary medical record template' })
   @RequirePermissions('MEDICAL_RECORDS_CREATE')
   @HttpCode(HttpStatus.CREATED)
-  @AuditLog('CREATE_DISCHARGE_SUMMARY')
+  @AuditLog('CREATE', 'discharge_summary')
   async createDischargeSummary(@Body() createRecordDto: {
     patientId: string;
     assessment?: string;
@@ -236,7 +236,7 @@ export class MedicalRecordsController {
   @ApiOperation({ summary: 'Create consultation medical record template' })
   @RequirePermissions('MEDICAL_RECORDS_CREATE')
   @HttpCode(HttpStatus.CREATED)
-  @AuditLog('CREATE_CONSULTATION_RECORD')
+  @AuditLog('CREATE', 'consultation_record')
   async createConsultationRecord(@Body() createRecordDto: {
     patientId: string;
     chiefComplaint?: string;
@@ -257,7 +257,7 @@ export class MedicalRecordsController {
   @ApiOperation({ summary: 'Create emergency medical record template' })
   @RequirePermissions('MEDICAL_RECORDS_CREATE')
   @HttpCode(HttpStatus.CREATED)
-  @AuditLog('CREATE_EMERGENCY_RECORD')
+  @AuditLog('CREATE', 'emergency_record')
   async createEmergencyRecord(@Body() createRecordDto: {
     patientId: string;
     chiefComplaint: string;

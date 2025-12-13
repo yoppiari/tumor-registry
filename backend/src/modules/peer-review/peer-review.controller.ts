@@ -161,7 +161,7 @@ export class PeerReviewController {
         reviewerId: { type: 'string' },
         recognitionType: { type: 'string', enum: ['EXCELLENT_REVIEW', 'THOROUGH_ANALYSIS', 'QUICK_TURNAROUND', 'HELPFUL_FEEDBACK', 'QUALITY_IMPROVEMENT', 'EXCEPTIONAL_INSIGHT', 'COLLABORATIVE_APPROACH', 'MENTORSHIP'] },
         title: { type: 'string' },
-        description: { type: 'string', required: false },
+        description: { type: 'string' },
         points: { type: 'number', default: 10 },
       },
     },

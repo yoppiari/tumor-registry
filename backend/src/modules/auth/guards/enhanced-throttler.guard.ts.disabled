@@ -1,0 +1,253 @@
+import {
+  Injectable,
+  CanActivate,
+  ExecutionContext,
+  HttpException,
+  HttpStatus,
+  Inject,
+} from '@nestjs/common';
+import { Reflector } from '@nestjs/core';
+import { ThrottlerStorage, ThrottlerModuleOptions } from '@nestjs/throttler';
+import type { FastifyRequest, FastifyReply } from 'fastify';
+import { ConfigService } from '@nestjs/config';
+
+@Injectable()
+export class EnhancedThrottlerGuard implements CanActivate {
+  constructor(
+    private readonly reflector: Reflector,
+    private readonly configService: ConfigService,
+  ) {}
+
+  async canActivate(context: ExecutionContext): Promise<boolean> {
+    const request = context.switchToHttp().getRequest<FastifyRequest>();
+    const response = context.switchToHttp().getResponse<FastifyReply>();
+
+    // Get custom throttle metadata if present
+    const throttleOptions = this.reflector.get<{ ttl: number; limit: number }>(
+      'throttle',
+      context.getHandler(),
+    ) || this.reflector.get<{ ttl: number; limit: number }>(
+      'throttle',
+      context.getClass(),
+    );
+
+    // Set default limits based on user role and endpoint type
+    const limits = this.getLimits(request, throttleOptions);
+
+    // Check rate limit
+    const isAllowed = await this.checkRateLimit(request, limits);
+
+    if (!isAllowed) {
+      this.setRateLimitHeaders(response, limits);
+      throw new HttpException(
+        {
+          success: false,
+          error: {
+            code: 'TOO_MANY_REQUESTS',
+            message: 'Too many requests. Please try again later.',
+            timestamp: new Date().toISOString(),
+            path: request.url,
+            retryAfter: limits.ttl,
+          },
+        },
+        HttpStatus.TOO_MANY_REQUESTS,
+      );
+    }
+
+    this.setRateLimitHeaders(response, limits);
+    return true;
+  }
+
+  private getLimits(request: FastifyRequest, customOptions?: { ttl: number; limit: number }) {
+    const user = (request as any).user;
+    const role = user?.role || 'ANONYMOUS';
+    const endpoint = this.getEndpointType(request);
+
+    // Rate limit configuration based on role and endpoint
+    const limitsConfig = {
+      // Anonymous users (no authentication)
+      ANONYMOUS: {
+        auth: { ttl: 900, limit: 5 },    // 5 requests per 15 minutes
+        public: { ttl: 60, limit: 10 },   // 10 requests per minute
+        search: { ttl: 60, limit: 20 },   // 20 searches per minute
+      },
+      // Regular authenticated users
+      STAFF: {
+        auth: { ttl: 900, limit: 20 },    // 20 requests per 15 minutes
+        data: { ttl: 60, limit: 100 },    // 100 data requests per minute
+        search: { ttl: 60, limit: 200 },  // 200 searches per minute
+        export: { ttl: 3600, limit: 5 },  // 5 exports per hour
+      },
+      DATA_ENTRY: {
+        auth: { ttl: 900, limit: 30 },
+        data: { ttl: 60, limit: 200 },
+        search: { ttl: 60, limit: 300 },
+        export: { ttl: 3600, limit: 10 },
+      },
+      // Researchers have higher limits for data analysis
+      RESEARCHER: {
+        auth: { ttl: 900, limit: 25 },
+        analytics: { ttl: 60, limit: 150 },
+        research: { ttl: 60, limit: 100 },
+        export: { ttl: 3600, limit: 15 },
+      },
+      // Center administrators
+      CENTER_ADMIN: {
+        auth: { ttl: 900, limit: 40 },
+        data: { ttl: 60, limit: 300 },
+        admin: { ttl: 60, limit: 200 },
+        export: { ttl: 3600, limit: 20 },
+      },
+      // National administrators have highest limits
+      NATIONAL_ADMIN: {
+        auth: { ttl: 900, limit: 50 },
+        data: { ttl: 60, limit: 500 },
+        admin: { ttl: 60, limit: 400 },
+        analytics: { ttl: 60, limit: 300 },
+        export: { ttl: 3600, limit: 50 },
+      },
+    };
+
+    const roleLimits = limitsConfig[role as keyof typeof limitsConfig] || limitsConfig.ANONYMOUS;
+    const endpointLimits = roleLimits[endpoint as keyof typeof roleLimits] || ('data' in roleLimits ? roleLimits.data : roleLimits.public);
+
+    // Use custom options if provided, otherwise use calculated limits
+    return customOptions || endpointLimits;
+  }
+
+  private getEndpointType(request: FastifyRequest): string {
+    const path = request.url.toLowerCase();
+    const method = request.method.toLowerCase();
+
+    // Authentication endpoints
+    if (path.includes('/auth/') || path.includes('/login') || path.includes('/register')) {
+      return 'auth';
+    }
+
+    // Public endpoints
+    if (path.includes('/public/') || path.includes('/health')) {
+      return 'public';
+    }
+
+    // Analytics endpoints
+    if (path.includes('/analytics/') || path.includes('/dashboard')) {
+      return 'analytics';
+    }
+
+    // Research endpoints
+    if (path.includes('/research/')) {
+      return 'research';
+    }
+
+    // Search endpoints
+    if (path.includes('/search') || method === 'get' && (path.includes('/patients') || path.includes('/centers'))) {
+      return 'search';
+    }
+
+    // Export endpoints
+    if (path.includes('/export') || path.includes('/download')) {
+      return 'export';
+    }
+
+    // Admin endpoints
+    if (path.includes('/admin/') || path.includes('/system-administration/')) {
+      return 'admin';
+    }
+
+    // Default: data endpoints
+    return 'data';
+  }
+
+  private async checkRateLimit(request: FastifyRequest, limits: { ttl: number; limit: number }): Promise<boolean> {
+    const clientIp = this.getClientIp(request);
+    const user = (request as any).user;
+    const key = user ? `user:${user.sub}` : `ip:${clientIp}`;
+    const endpoint = this.getEndpointType(request);
+
+    // Use Redis for distributed rate limiting in production
+    const storage = this.getRateLimitStorage();
+    const storageKey = `rate_limit:${key}:${endpoint}`;
+
+    try {
+      const current = await storage.increment(storageKey, limits.ttl);
+      return current <= limits.limit;
+    } catch (error) {
+      // Fallback to in-memory storage if Redis fails
+      return this.checkInMemoryRateLimit(storageKey, limits);
+    }
+  }
+
+  private getRateLimitStorage() {
+    // In production, this would return Redis storage
+    // For now, implementing in-memory storage
+    return new InMemoryRateLimitStorage();
+  }
+
+  private checkInMemoryRateLimit(key: string, limits: { ttl: number; limit: number }): boolean {
+    if (!global.rateLimitStorage) {
+      global.rateLimitStorage = new Map();
+    }
+
+    const storage = global.rateLimitStorage as Map<string, { count: number; resetTime: number }>;
+    const now = Date.now();
+
+    const existing = storage.get(key);
+    if (!existing || now > existing.resetTime) {
+      storage.set(key, {
+        count: 1,
+        resetTime: now + (limits.ttl * 1000),
+      });
+      return true;
+    }
+
+    existing.count++;
+    return existing.count <= limits.limit;
+  }
+
+  private setRateLimitHeaders(response: FastifyReply, limits: { ttl: number; limit: number }) {
+    response.header('X-RateLimit-Limit', limits.limit.toString());
+    response.header('X-RateLimit-Window', limits.ttl.toString());
+    response.header('X-RateLimit-Remaining', Math.max(0, limits.limit - 1).toString());
+  }
+
+  private getClientIp(request: FastifyRequest): string {
+    return (
+      (request.headers['x-forwarded-for'] as string)?.split(',')[0] ||
+      (request.headers['x-real-ip'] as string) ||
+      request.socket?.remoteAddress ||
+      request.ip ||
+      '127.0.0.1'
+    );
+  }
+}
+
+// Simple in-memory rate limit storage for development
+class InMemoryRateLimitStorage {
+  private storage = new Map<string, { count: number; resetTime: number }>();
+
+  async increment(key: string, ttlSeconds: number): Promise<number> {
+    const now = Date.now();
+    const existing = this.storage.get(key);
+
+    if (!existing || now > existing.resetTime) {
+      this.storage.set(key, {
+        count: 1,
+        resetTime: now + (ttlSeconds * 1000),
+      });
+      return 1;
+    }
+
+    existing.count++;
+    this.cleanupExpired();
+    return existing.count;
+  }
+
+  private cleanupExpired() {
+    const now = Date.now();
+    for (const [key, value] of this.storage.entries()) {
+      if (now > value.resetTime) {
+        this.storage.delete(key);
+      }
+    }
+  }
+}

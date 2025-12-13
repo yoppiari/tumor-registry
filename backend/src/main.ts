@@ -13,11 +13,12 @@ async function bootstrap() {
   const adapter = new FastifyAdapter({
     logger: false,
     trustProxy: true,
+    bodyLimit: 10485760, // 10MB
   });
 
   const app = await NestFactory.create<NestFastifyApplication>(
     AppModule,
-    adapter,
+    adapter as any,
   );
 
   const configService = app.get(ConfigService);
@@ -46,10 +47,12 @@ async function bootstrap() {
     credentials: true,
   });
 
+  // Register multipart only for multipart/form-data content type
   await app.register(multipart, {
     limits: {
       fileSize: 10 * 1024 * 1024, // 10MB
     },
+    attachFieldsToBody: false, // Don't interfere with JSON parsing
   });
 
   // Global validation pipe

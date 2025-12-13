@@ -8,6 +8,8 @@ import {
   Param,
   Query,
   UseGuards,
+  UseInterceptors,
+  UploadedFile as NestUploadedFile,
   HttpCode,
   HttpStatus,
   ParseFilePipe,
@@ -19,7 +21,6 @@ import { PermissionsGuard } from '@/auth/guards/permissions.guard';
 import { RequirePermissions } from '@/auth/decorators/permissions.decorator';
 import { AuditLog } from '@/common/decorators/audit-log.decorator';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { UploadedFile } from './types/uploaded-file.type';
 
 @ApiTags('Data Migration')
 @Controller('data-migration')
@@ -33,7 +34,7 @@ export class DataMigrationController {
   @RequirePermissions('DATA_MIGRATION_CREATE')
   @UseInterceptors(FileInterceptor('file'))
   @ApiConsumes('multipart/form-data')
-  @AuditLog('IMPORT_PATIENT_DATA')
+  @AuditLog('IMPORT', 'patient_data')
   async importPatientData(
     @Body() importConfig: {
       format: 'csv' | 'json' | 'excel' | 'xml';
@@ -45,7 +46,7 @@ export class DataMigrationController {
         generateMRN?: boolean;
       };
     },
-    @UploadedFile() file: Express.Multer.File
+    @NestUploadedFile() file: Express.Multer.File
   ) {
     return await this.dataMigrationService.importPatientData({
       format: importConfig.format,
@@ -59,7 +60,7 @@ export class DataMigrationController {
   @ApiOperation({ summary: 'Export patient data' })
   @ApiResponse({ status: 200, description: 'Patient data export initiated successfully' })
   @RequirePermissions('DATA_MIGRATION_EXPORT')
-  @AuditLog('EXPORT_PATIENT_DATA')
+  @AuditLog('EXPORT', 'patient_data')
   async exportPatientData(@Body() exportConfig: {
     format: 'csv' | 'json' | 'excel' | 'fhir' | 'hl7';
     filters?: {
@@ -83,7 +84,7 @@ export class DataMigrationController {
   @ApiOperation({ summary: 'Perform bulk data migration' })
   @ApiResponse({ status: 200, description: 'Bulk data migration completed successfully' })
   @RequirePermissions('DATA_MIGRATION_CREATE')
-  @AuditLog('BULK_DATA_MIGRATION')
+  @AuditLog('MIGRATE', 'bulk_data')
   async bulkDataMigration(@Body() migrationConfig: {
     sourceSystem: {
       type: 'hl7' | 'dicom' | 'fhir' | 'csv' | 'database';
@@ -114,7 +115,7 @@ export class DataMigrationController {
   @ApiOperation({ summary: 'Validate data integrity' })
   @ApiResponse({ status: 200, description: 'Data integrity validation completed' })
   @RequirePermissions('DATA_MIGRATION_READ')
-  @AuditLog('VALIDATE_DATA_INTEGRITY')
+  @AuditLog('VALIDATE', 'data_integrity')
   async validateDataIntegrity(@Body() validationConfig: {
     entities: string[];
     validationRules: {
@@ -135,7 +136,7 @@ export class DataMigrationController {
   @ApiOperation({ summary: 'Create data backup' })
   @ApiResponse({ status: 200, description: 'Data backup created successfully' })
   @RequirePermissions('BACKUP_CREATE')
-  @AuditLog('CREATE_DATA_BACKUP')
+  @AuditLog('CREATE', 'data_backup')
   async createDataBackup(@Body() backupConfig: {
     type: 'full' | 'incremental' | 'differential';
     entities: string[];
@@ -160,7 +161,7 @@ export class DataMigrationController {
   @ApiOperation({ summary: 'Restore data from backup' })
   @ApiResponse({ status: 200, description: 'Data restore completed successfully' })
   @RequirePermissions('BACKUP_CREATE')
-  @AuditLog('RESTORE_FROM_BACKUP')
+  @AuditLog('RESTORE', 'backup')
   async restoreFromBackup(@Body() restoreConfig: {
     backupId: string;
     entities?: string[];
@@ -397,7 +398,7 @@ export class DataMigrationController {
   @ApiResponse({ status: 201, description: 'Import template created successfully' })
   @RequirePermissions('DATA_MIGRATION_CREATE')
   @HttpCode(HttpStatus.CREATED)
-  @AuditLog('CREATE_IMPORT_TEMPLATE')
+  @AuditLog('CREATE', 'import_template')
   async createImportTemplate(@Body() templateData: {
     name: string;
     description: string;
@@ -510,7 +511,7 @@ export class DataMigrationController {
   @ApiOperation({ summary: 'Perform data cleansing' })
   @ApiResponse({ status: 200, description: 'Data cleansing completed successfully' })
   @RequirePermissions('DATA_MIGRATION_UPDATE')
-  @AuditLog('DATA_CLEANSING')
+  @AuditLog('CLEANSE', 'data')
   async performDataCleansing(@Body() cleansingConfig: {
     entityType: string;
     operations: {

@@ -33,7 +33,7 @@ export class DiagnosisController {
   @ApiResponse({ status: 409, description: 'Diagnosis already exists' })
   @RequirePermissions('MEDICAL_RECORDS_CREATE')
   @HttpCode(HttpStatus.CREATED)
-  @AuditLog('CREATE_DIAGNOSIS')
+  @AuditLog('CREATE', 'diagnosis')
   async createDiagnosis(@Body() createDiagnosisDto: {
     patientId: string;
     diagnosisCode: string;
@@ -155,7 +155,7 @@ export class DiagnosisController {
   @ApiResponse({ status: 200, description: 'Diagnosis updated successfully' })
   @ApiResponse({ status: 404, description: 'Diagnosis not found' })
   @RequirePermissions('MEDICAL_RECORDS_UPDATE')
-  @AuditLog('UPDATE_DIAGNOSIS')
+  @AuditLog('UPDATE', 'diagnosis')
   async updateDiagnosis(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() updateDiagnosisDto: {
@@ -184,7 +184,7 @@ export class DiagnosisController {
   @ApiResponse({ status: 200, description: 'Diagnosis resolved successfully' })
   @ApiResponse({ status: 404, description: 'Diagnosis not found' })
   @RequirePermissions('MEDICAL_RECORDS_UPDATE')
-  @AuditLog('RESOLVE_DIAGNOSIS')
+  @AuditLog('RESOLVE', 'diagnosis')
   async resolveDiagnosis(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() resolveDto: {
@@ -205,7 +205,7 @@ export class DiagnosisController {
   @ApiOperation({ summary: 'Create primary cancer diagnosis template' })
   @RequirePermissions('MEDICAL_RECORDS_CREATE')
   @HttpCode(HttpStatus.CREATED)
-  @AuditLog('CREATE_PRIMARY_CANCER_DIAGNOSIS')
+  @AuditLog('CREATE', 'primary_cancer_diagnosis')
   async createPrimaryCancerDiagnosis(@Body() createDiagnosisDto: {
     patientId: string;
     diagnosisCode: string;
@@ -228,7 +228,7 @@ export class DiagnosisController {
   @ApiOperation({ summary: 'Create metastasis diagnosis template' })
   @RequirePermissions('MEDICAL_RECORDS_CREATE')
   @HttpCode(HttpStatus.CREATED)
-  @AuditLog('CREATE_METASTASIS_DIAGNOSIS')
+  @AuditLog('CREATE', 'metastasis_diagnosis')
   async createMetastasisDiagnosis(@Body() createDiagnosisDto: {
     patientId: string;
     diagnosisCode: string;
@@ -251,7 +251,7 @@ export class DiagnosisController {
   @ApiOperation({ summary: 'Create complication diagnosis template' })
   @RequirePermissions('MEDICAL_RECORDS_CREATE')
   @HttpCode(HttpStatus.CREATED)
-  @AuditLog('CREATE_COMPLICATION_DIAGNOSIS')
+  @AuditLog('CREATE', 'complication_diagnosis')
   async createComplicationDiagnosis(@Body() createDiagnosisDto: {
     patientId: string;
     diagnosisCode: string;
@@ -274,7 +274,7 @@ export class DiagnosisController {
   @ApiOperation({ summary: 'Create admitting diagnosis template' })
   @RequirePermissions('MEDICAL_RECORDS_CREATE')
   @HttpCode(HttpStatus.CREATED)
-  @AuditLog('CREATE_ADMITTING_DIAGNOSIS')
+  @AuditLog('CREATE', 'admitting_diagnosis')
   async createAdmittingDiagnosis(@Body() createDiagnosisDto: {
     patientId: string;
     diagnosisCode: string;
@@ -297,7 +297,7 @@ export class DiagnosisController {
   @ApiOperation({ summary: 'Create discharge diagnosis template' })
   @RequirePermissions('MEDICAL_RECORDS_CREATE')
   @HttpCode(HttpStatus.CREATED)
-  @AuditLog('CREATE_DISCHARGE_DIAGNOSIS')
+  @AuditLog('CREATE', 'discharge_diagnosis')
   async createDischargeDiagnosis(@Body() createDiagnosisDto: {
     patientId: string;
     diagnosisCode: string;

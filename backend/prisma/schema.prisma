@@ -1,5 +1,6 @@
 generator client {
   provider        = "prisma-client-js"
+  binaryTargets   = ["native", "debian-openssl-3.0.x"]
   previewFeatures = ["multiSchema"]
 }
 
@@ -67,9 +68,12 @@ model User {
   userRoles                 UserRole[]
   userActivity              UserActivityLog[]       @relation("UserActivity")
   securityEvents            SecurityEvent[]         @relation("SecurityEvents")
+  securityAlerts            SecurityAlert[]         @relation("SecurityAlerts")
+  notifications             Notification[]          @relation("UserNotifications")
   apiUsage                  ApiUsage[]              @relation("ApiUsage")
   center                    Center                  @relation(fields: [centerId], references: [id], onDelete: Cascade)
   offlineDataQueue          OfflineDataQueue[]
+  providerDiagnoses         PatientDiagnosis[]      @relation("ProviderDiagnoses")
 
   @@map("users")
   @@schema("system")
@@ -143,9 +147,9 @@ model AuditLog {
 }
 
 model Patient {
-  id                  String              @id @default(cuid())
-  medicalRecordNumber String              @unique
-  nik                 String              @unique
+  id                  String         @id @default(cuid())
+  medicalRecordNumber String         @unique
+  nik                 String         @unique
   name                String
   dateOfBirth         DateTime
   placeOfBirth        String?
@@ -164,28 +168,113 @@ model Patient {
   village             String?
   postalCode          String?
   emergencyContact    Json?
-  isActive            Boolean             @default(true)
-  isDeceased          Boolean             @default(false)
+  isActive            Boolean        @default(true)
+  isDeceased          Boolean        @default(false)
   dateOfDeath         DateTime?
   causeOfDeath        String?
   centerId            String
-  createdAt           DateTime            @default(now())
-  updatedAt           DateTime            @updatedAt
-  laboratoryResults   LaboratoryResult[]
-  medicalRecords      MedicalRecord[]
-  allergies           PatientAllergy[]
-  consents            PatientConsent[]
-  diagnoses           PatientDiagnosis[]
-  insuranceInfos      PatientInsurance[]
-  medications         PatientMedication[]
-  procedures          PatientProcedure[]
-  visits              PatientVisit[]
-  // TODO: Add MedicalImage model
-  //   center              Center              @relation(fields: [centerId], references: [id], onDelete: Cascade)
-  radiologyResults    RadiologyResult[]
-  vitalSigns          VitalSign[]
-  Center              Center              @relation(fields: [centerId], references: [id])
 
+  // ========== MUSCULOSKELETAL TUMOR REGISTRY FIELDS ==========
+
+  // Section 1: Pathology Type
+  pathologyType String? // "bone_tumor", "soft_tissue_tumor", "metastatic_bone_disease"
+
+  // Section 3: Clinical Data
+  chiefComplaint          String?
+  onsetDate               DateTime?
+  symptomDuration         Int? // in months
+  presentingSymptoms      String? // JSON: pain, swelling, mass, pathologicalFracture, functionalImpairment
+  tumorSizeAtPresentation Float? // in cm
+  familyHistoryCancer     String?
+  tumorSyndromeId         String? // FK to TumorSyndrome
+  karnofskysScore         Int? // 0-100
+
+  // Section 4: Diagnostic Investigations
+  biopsyDate     DateTime?
+  biopsyType     String? // "Incisional", "Excisional", "Core needle", "Fine needle aspiration"
+  biopsyResult   String?
+  imagingStudies String? // JSON: xray, ct, mri, boneScan, petCt
+
+  // Section 5: Diagnosis & Location
+  whoBoneTumorId       String? // FK to WhoBoneTumorClassification
+  whoSoftTissueTumorId String? // FK to WhoSoftTissueTumorClassification
+  boneLocationId       String? // FK to BoneLocation
+  softTissueLocationId String? // FK to SoftTissueLocation
+  laterality           String? // "Left", "Right", "Bilateral", "Midline"
+  histopathologyGrade  String? // "Low grade", "High grade", "Grade I", "Grade II", "Grade III"
+  mitosisCount         Int? // per 10 HPF
+  necrosisPercentage   Float? // 0-100%
+
+  // Section 6: Staging
+  ennekingStage     String? // "IA", "IB", "IIA", "IIB", "III"
+  ajccStage         String? // "IA", "IB", "IIA", "IIB", "III", "IVA", "IVB"
+  tumorSizeT1       Float? // Tumor dimension 1 in cm
+  tumorSizeT2       Float? // Tumor dimension 2 in cm
+  tumorSizeT3       Float? // Tumor dimension 3 in cm
+  mirrelScore       Int? // 0-12 (pathological fracture risk)
+  metastasisPresent Boolean?
+  metastasisSites   String?
+
+  // Section 7: CPC Conference
+  cpcDate           DateTime?
+  cpcRecommendation String?
+
+  // Section 8: Treatment Intent
+  intendedTreatment String? // "Curative", "Palliative", "Supportive"
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  laboratoryResults  LaboratoryResult[]
+  medicalRecords     MedicalRecord[]
+  allergies          PatientAllergy[]
+  consents           PatientConsent[]
+  diagnoses          PatientDiagnosis[]
+  insuranceInfos     PatientInsurance[]
+  medications        PatientMedication[]
+  procedures         PatientProcedure[]
+  visits             PatientVisit[]
+  medicalImages      MedicalImage[]
+  pathologyReports   PathologyReport[]
+  radiologyResults   RadiologyResult[]
+  vitalSigns         VitalSign[]
+  Center             Center                            @relation(fields: [centerId], references: [id])
+  whoBoneTumor       WhoBoneTumorClassification?       @relation(fields: [whoBoneTumorId], references: [id])
+  whoSoftTissueTumor WhoSoftTissueTumorClassification? @relation(fields: [whoSoftTissueTumorId], references: [id])
+  boneLocation       BoneLocation?                     @relation(fields: [boneLocationId], references: [id])
+  softTissueLocation SoftTissueLocation?               @relation(fields: [softTissueLocationId], references: [id])
+  tumorSyndrome      TumorSyndrome?                    @relation(fields: [tumorSyndromeId], references: [id])
+  mstsScores         MstsScore[]
+  followUpVisits     FollowUpVisit[]
+  cpcConferences     CpcConference[]
+  treatments         TreatmentManagement[]
+
+  // New musculoskeletal tumor clinical data relations
+  clinicalPresentation      ClinicalPresentation?
+  clinicalPhotos            ClinicalPhoto[]
+  laboratoryResultsExtended LaboratoryResult_Extended[]
+  radiologyFindings         RadiologyFinding[]
+  mirrelScores              MirrelScore[]
+  pathologyReportsExtended  PathologyReport_Extended[]
+  huvosGrades               HuvosGrade[]
+  stagingData               StagingData?
+  cpcRecords                CpcRecord[]
+  chemotherapyRecords       ChemotherapyRecord[]
+  surgicalRecords           SurgicalRecord[]
+  radiotherapyRecords       RadiotherapyRecord[]
+  followUpVisitsEnhanced    FollowUpVisit_Enhanced[]
+  mstsScoresEnhanced        MstsScore_Enhanced[]
+  recurrenceTracking        RecurrenceTracking[]
+  complicationTracking      ComplicationTracking[]
+
+  @@index([pathologyType])
+  @@index([whoBoneTumorId])
+  @@index([whoSoftTissueTumorId])
+  @@index([boneLocationId])
+  @@index([softTissueLocationId])
+  @@index([ennekingStage])
+  @@index([ajccStage])
   @@map("patients")
   @@schema("medical")
 }
@@ -234,6 +323,7 @@ model PatientDiagnosis {
   createdAt      DateTime           @default(now())
   updatedAt      DateTime           @updatedAt
   patient        Patient            @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  provider       User               @relation("ProviderDiagnoses", fields: [providerId], references: [id])
 
   @@map("patient_diagnoses")
   @@schema("medical")
@@ -404,6 +494,85 @@ model PatientVisit {
   patient        Patient     @relation(fields: [patientId], references: [id], onDelete: Cascade)
 
   @@map("patient_visits")
+  @@schema("medical")
+}
+
+model MedicalImage {
+  id               String    @id @default(cuid())
+  patientId        String
+  recordId         String?
+  imageType        String
+  category         String
+  fileName         String
+  originalFileName String
+  filePath         String
+  fileSize         BigInt
+  mimeType         String
+  width            Int?
+  height           Int?
+  isDicom          Boolean   @default(false)
+  dicomMetadata    Json?
+  thumbnailPath    String?
+  compressedPath   String?
+  annotations      Json?
+  description      String?
+  findings         String?
+  bodyPart         String?
+  modality         String?
+  studyDate        DateTime?
+  seriesNumber     String?
+  instanceNumber   String?
+  isCompressed     Boolean   @default(false)
+  compressionRatio Float?
+  tags             String[]  @default([])
+  uploadedBy       String
+  uploadedAt       DateTime  @default(now())
+  quality          String?
+  reviewedBy       String?
+  reviewedAt       DateTime?
+  isActive         Boolean   @default(true)
+  isDeleted        Boolean   @default(false)
+  deletedBy        String?
+  deletedAt        DateTime?
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+  patient          Patient   @relation(fields: [patientId], references: [id], onDelete: Cascade)
+
+  @@map("medical_images")
+  @@schema("medical")
+}
+
+model PathologyReport {
+  id                     String    @id @default(cuid())
+  patientId              String
+  reportNumber           String    @unique
+  biopsyType             String
+  biopsyDate             DateTime
+  specimenReceivedDate   DateTime?
+  specimenSite           String
+  specimenDescription    String?
+  grossDescription       String
+  microscopicDescription String
+  diagnosis              String
+  tumorGrade             String?
+  mitosisCount           String?
+  necrosisPercentage     String?
+  cellularity            String?
+  immunohistochemistry   String?
+  molecularFindings      String?
+  marginsStatus          String?
+  isMalignant            Boolean?
+  status                 String
+  comments               String?
+  pathologistId          String
+  reportDate             DateTime?
+  specialStains          String[]  @default([])
+  ihcMarkers             String[]  @default([])
+  createdAt              DateTime  @default(now())
+  updatedAt              DateTime  @updatedAt
+  patient                Patient   @relation(fields: [patientId], references: [id], onDelete: Cascade)
+
+  @@map("pathology_reports")
   @@schema("medical")
 }
 
@@ -1994,6 +2163,7 @@ model NotificationTemplate {
 model Notification {
   id               String                @id @default(cuid())
   templateId       String?
+  userId           String
   recipientId      String? // user ID or email/phone
   recipientType    RecipientType         @default(USER)
   channel          NotificationChannel
@@ -2017,6 +2187,7 @@ model Notification {
   createdBy        String?
   createdAt        DateTime              @default(now())
   updatedAt        DateTime              @updatedAt
+  user             User                  @relation("UserNotifications", fields: [userId], references: [id], onDelete: Cascade)
   template         NotificationTemplate? @relation(fields: [templateId], references: [id], onDelete: SetNull)
 
   @@map("notifications")
@@ -3517,22 +3688,24 @@ enum OutcomeType {
 // Epic 1: User Management & Security - Additional Models
 
 model PasswordPolicy {
-  id                  String   @id @default(cuid())
-  name                String   @unique
-  minLength           Int?     @default(8)
-  requireUppercase    Boolean  @default(true)
-  requireLowercase    Boolean  @default(true)
-  requireNumbers      Boolean  @default(true)
-  requireSpecialChars Boolean  @default(true)
-  preventReuse        Int?     @default(5)
-  maxAge              Int? // days
-  lockoutThreshold    Int?     @default(5)
-  lockoutDuration     Int? // minutes
-  organizationId      String?
-  roleId              String?
-  isActive            Boolean  @default(true)
-  createdAt           DateTime @default(now())
-  updatedAt           DateTime @updatedAt
+  id                    String   @id @default(cuid())
+  name                  String   @unique
+  minLength             Int?     @default(8)
+  requireUppercase      Boolean  @default(true)
+  requireLowercase      Boolean  @default(true)
+  requireNumbers        Boolean  @default(true)
+  requireSpecialChars   Boolean  @default(true)
+  preventReuse          Int?     @default(5)
+  maxAge                Int? // days
+  lockoutThreshold      Int?     @default(5)
+  lockoutDuration       Int? // minutes
+  maxConcurrentSessions Int?
+  organizationId        String?
+  roleId                String?
+  centerId              String?
+  isActive              Boolean  @default(true)
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
 
   @@map("password_policies")
   @@schema("system")
@@ -3589,13 +3762,14 @@ model AccountLockout {
 model UserSession {
   id                String    @id @default(cuid())
   userId            String
+  token             String
   deviceFingerprint String?
   userAgent         String
   ipAddress         String
   deviceType        String?   @default("unknown")
   location          Json? // { country, city, latitude, longitude }
   isActive          Boolean   @default(true)
-  lastActivity      DateTime  @default(now())
+  lastActivityAt    DateTime  @default(now())
   createdAt         DateTime  @default(now())
   expiresAt         DateTime
   terminatedAt      DateTime?
@@ -3607,6 +3781,7 @@ model UserSession {
 
 model SecurityAlert {
   id            String                @id @default(cuid())
+  userId        String?
   threatType    String
   severity      SecurityEventSeverity
   affectedUsers String[]
@@ -3616,6 +3791,7 @@ model SecurityAlert {
   isActive      Boolean               @default(true)
   resolvedAt    DateTime?
   resolvedBy    String?
+  user          User?                 @relation("SecurityAlerts", fields: [userId], references: [id], onDelete: SetNull)
 
   @@map("security_alerts")
   @@schema("system")
@@ -3659,14 +3835,14 @@ model ThreatScan {
 }
 
 model BehavioralBaseline {
-  id                 String   @id @default(cuid())
-  userId             String   @unique
-  avgActivityPerDay  Float?
-  commonActions      String[]
-  typicalHours       Int[]
-  dataPoints         Int
-  createdAt          DateTime @default(now())
-  updatedAt          DateTime @updatedAt
+  id                String   @id @default(cuid())
+  userId            String   @unique
+  avgActivityPerDay Float?
+  commonActions     String[]
+  typicalHours      Int[]
+  dataPoints        Int
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
 
   @@index([userId])
   @@map("behavioral_baselines")
@@ -3674,19 +3850,19 @@ model BehavioralBaseline {
 }
 
 model SsoConfiguration {
-  id                String     @id @default(cuid())
-  centerId          String
-  provider          String
-  providerName      String
-  configuration     Json
-  isActive          Boolean    @default(true)
-  autoProvision     Boolean    @default(true)
-  defaultRole       String?
-  attributeMapping  Json?
-  createdById       String
-  createdAt         DateTime   @default(now())
-  updatedAt         DateTime   @updatedAt
-  ssoLogins         SsoLogin[]
+  id               String     @id @default(cuid())
+  centerId         String
+  provider         String
+  providerName     String
+  configuration    Json
+  isActive         Boolean    @default(true)
+  autoProvision    Boolean    @default(true)
+  defaultRole      String?
+  attributeMapping Json?
+  createdById      String
+  createdAt        DateTime   @default(now())
+  updatedAt        DateTime   @updatedAt
+  ssoLogins        SsoLogin[]
 
   @@index([centerId])
   @@index([isActive])
@@ -3734,19 +3910,19 @@ model DataProvenance {
 }
 
 model ValidationRule {
-  id          String   @id @default(cuid())
-  centerId    String?
-  name        String
-  description String?
-  entityType  String
-  fieldName   String
-  ruleType    String
-  ruleConfig  Json
+  id           String   @id @default(cuid())
+  centerId     String?
+  name         String
+  description  String?
+  entityType   String
+  fieldName    String
+  ruleType     String
+  ruleConfig   Json
   errorMessage String?
-  isActive    Boolean  @default(true)
-  createdById String
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  isActive     Boolean  @default(true)
+  createdById  String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 
   @@index([centerId])
   @@index([entityType])
@@ -3776,14 +3952,14 @@ model AiSuggestion {
 }
 
 model CancerPrediction {
-  id                 String   @id @default(cuid())
+  id                 String    @id @default(cuid())
   modelId            String
   predictionType     String
   geographicArea     String?
   cancerType         String?
   predictionData     Json
   confidenceInterval Json?
-  predictedAt        DateTime @default(now())
+  predictedAt        DateTime  @default(now())
   validUntil         DateTime?
 
   @@index([modelId])
@@ -3878,17 +4054,1221 @@ enum OfflineQueueStatus {
 }
 
 model QualityMetric {
-  id                    String   @id @default(cuid())
-  patientId             String
-  score                 Int
-  completeness          Int
-  requiredCompleteness  Int
-  medicalCompleteness   Int
-  imageCount            Int
-  recommendations       Int
-  createdAt             DateTime @default(now())
-  updatedAt             DateTime @updatedAt
+  id                   String   @id @default(cuid())
+  patientId            String
+  score                Int
+  completeness         Int
+  requiredCompleteness Int
+  medicalCompleteness  Int
+  imageCount           Int
+  recommendations      Int
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
 
   @@map("quality_metrics")
+  @@schema("medical")
+}
+
+// ============================================================================
+// MUSCULOSKELETAL TUMOR REGISTRY MODELS
+// ============================================================================
+
+model PathologyType {
+  id          String   @id @default(cuid())
+  code        String   @unique
+  name        String
+  description String?
+  isActive    Boolean  @default(true)
+  sortOrder   Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("pathology_types")
+  @@schema("medical")
+}
+
+model WhoBoneTumorClassification {
+  id            String   @id @default(cuid())
+  category      String
+  subcategory   String
+  diagnosis     String
+  icdO3Code     String?
+  pageReference String?
+  isMalignant   Boolean  @default(false)
+  sortOrder     Int      @default(0)
+  isActive      Boolean  @default(true)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  patients Patient[]
+
+  @@unique([category, diagnosis])
+  @@index([category])
+  @@index([isMalignant])
+  @@map("who_bone_tumor_classifications")
+  @@schema("medical")
+}
+
+model WhoSoftTissueTumorClassification {
+  id          String   @id @default(cuid())
+  category    String
+  subcategory String
+  diagnosis   String
+  icdO3Code   String?
+  isMalignant Boolean  @default(false)
+  sortOrder   Int      @default(0)
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  patients Patient[]
+
+  @@unique([category, diagnosis])
+  @@index([category])
+  @@index([isMalignant])
+  @@map("who_soft_tissue_tumor_classifications")
+  @@schema("medical")
+}
+
+model BoneLocation {
+  id        String         @id @default(cuid())
+  code      String         @unique
+  level     Int
+  region    String
+  boneName  String?
+  segment   String?
+  parentId  String?
+  sortOrder Int            @default(0)
+  isActive  Boolean        @default(true)
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
+  parent    BoneLocation?  @relation("BoneLocationHierarchy", fields: [parentId], references: [id])
+  children  BoneLocation[] @relation("BoneLocationHierarchy")
+  patients  Patient[]
+
+  @@index([level])
+  @@index([region])
+  @@index([parentId])
+  @@map("bone_locations")
+  @@schema("medical")
+}
+
+model SoftTissueLocation {
+  id               String   @id @default(cuid())
+  code             String   @unique
+  anatomicalRegion String
+  specificLocation String
+  sortOrder        Int      @default(0)
+  isActive         Boolean  @default(true)
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  patients Patient[]
+
+  @@index([anatomicalRegion])
+  @@map("soft_tissue_locations")
+  @@schema("medical")
+}
+
+model TumorSyndrome {
+  id               String   @id @default(cuid())
+  name             String   @unique
+  geneticMarker    String?
+  description      String?
+  associatedTumors String?
+  isActive         Boolean  @default(true)
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  patients Patient[]
+
+  @@map("tumor_syndromes")
+  @@schema("medical")
+}
+
+model MstsScore {
+  id                  String   @id @default(cuid())
+  patientId           String
+  followUpVisitId     String?
+  pain                Int // 0-5 points
+  function            Int // 0-5 points
+  emotionalAcceptance Int // 0-5 points
+  supports            Int // 0-5 points
+  walking             Int // 0-5 points
+  gait                Int // 0-5 points
+  totalScore          Int // 0-30 points (sum of all domains)
+  assessmentDate      DateTime
+  assessedBy          String
+  notes               String?
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+
+  patient Patient @relation(fields: [patientId], references: [id], onDelete: Cascade)
+
+  @@index([patientId])
+  @@index([followUpVisitId])
+  @@index([assessmentDate])
+  @@map("msts_scores")
+  @@schema("medical")
+}
+
+model FollowUpVisit {
+  id                String    @id @default(cuid())
+  patientId         String
+  visitNumber       Int // 1-14
+  scheduledDate     DateTime
+  actualDate        DateTime?
+  visitType         String // "3-month", "6-month", "annual"
+  status            String // "scheduled", "completed", "missed", "cancelled"
+  clinicalStatus    String? // "NED", "AWD", "DOD", etc.
+  localRecurrence   Boolean?
+  distantMetastasis Boolean?
+  metastasisSites   String?
+  currentTreatment  String?
+  mstsScoreId       String?
+  karnofskyScore    Int? // 0-100
+  imagingPerformed  String? // "X-ray", "CT", "MRI", "Bone scan", "PET-CT"
+  imagingFindings   String?
+  labResults        String?
+  complications     String?
+  nextVisitDate     DateTime?
+  completedBy       String?
+  notes             String?
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  patient Patient @relation(fields: [patientId], references: [id], onDelete: Cascade)
+
+  @@unique([patientId, visitNumber])
+  @@index([patientId])
+  @@index([scheduledDate])
+  @@index([status])
+  @@map("follow_up_visits")
+  @@schema("medical")
+}
+
+model CpcConference {
+  id                 String   @id @default(cuid())
+  patientId          String
+  conferenceDate     DateTime
+  attendees          String // JSON array of names/roles
+  presentation       String?
+  recommendation     String
+  recommendationType String // "Surgery", "Chemotherapy", "Radiotherapy", "Combination", "Palliative", "Watch and Wait"
+  rationale          String?
+  alternativeOptions String?
+  consensus          Boolean  @default(true)
+  dissent            String? // If not unanimous
+  documentedBy       String
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  patient Patient @relation(fields: [patientId], references: [id], onDelete: Cascade)
+
+  @@index([patientId])
+  @@index([conferenceDate])
+  @@map("cpc_conferences")
+  @@schema("medical")
+}
+
+model TreatmentManagement {
+  id            String @id @default(cuid())
+  patientId     String
+  treatmentType String // "Surgery", "Chemotherapy", "Radiotherapy", "Targeted Therapy", "Immunotherapy"
+
+  // Surgery fields
+  surgeryType          String? // "Limb Salvage", "Amputation", "Wide Excision", "Curettage", "Biopsy"
+  reconstructionMethod String?
+  surgicalMargin       String? // "Wide", "Marginal", "Intralesional", "Contaminated"
+  marginDistance       Float? // in mm
+  amputationLevel      String?
+
+  // Chemotherapy fields
+  chemotherapyProtocol String?
+  numberOfCycles       Int?
+  cyclesCompleted      Int?
+
+  // Radiotherapy fields
+  radiotherapyDose   Float? // in Gy
+  numberOfFractions  Int?
+  fractionsCompleted Int?
+
+  // Common fields
+  startDate     DateTime?
+  endDate       DateTime?
+  status        String // "Planned", "Ongoing", "Completed", "Discontinued"
+  response      String? // "Complete", "Partial", "Stable", "Progressive"
+  huvosGrade    String? // I, II, III, IV (chemo response for osteosarcoma)
+  complications String?
+  adverseEvents String?
+  notes         String?
+  performedBy   String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  patient Patient @relation(fields: [patientId], references: [id], onDelete: Cascade)
+
+  @@index([patientId])
+  @@index([treatmentType])
+  @@index([status])
+  @@map("treatment_management")
+  @@schema("medical")
+}
+
+// ========== SPRINT 2: DATA ENTRY & QUALITY ASSURANCE MODELS ==========
+
+// Story 2.5: Complex Case Review
+model CaseReview {
+  id                 String             @id @default(cuid())
+  patientId          String
+  caseType           String // UNUSUAL_PRESENTATION, RARE_DIAGNOSIS, COMPLEX_COMORBIDITY, etc.
+  complexity         String             @default("STANDARD") // SIMPLE, STANDARD, MODERATE, COMPLEX, HIGHLY_COMPLEX
+  flagReason         String
+  description        String
+  clinicalData       Json // relevant clinical data snapshot
+  diagnosisIds       String[]           @default([])
+  findings           Json?
+  recommendedActions Json?
+  specialty          String? // ONCOLOGY, HEMATOLOGY, SURGICAL_ONCOLOGY, etc.
+  priority           String             @default("MEDIUM") // LOW, MEDIUM, HIGH, URGENT, CRITICAL
+  status             String             @default("PENDING") // PENDING, IN_REVIEW, ASSIGNED, IN_PROGRESS, COMPLETED, ESCALATED, CANCELLED, ON_HOLD
+  flaggedBy          String
+  flaggedAt          DateTime           @default(now())
+  reviewedBy         String?
+  reviewedAt         DateTime?
+  reviewNotes        String?
+  outcome            String? // RESOLVED, REQUIRES_ACTION, ESCALATED, DEFERRED, NO_ACTION_NEEDED, TRAINING_OPPORTUNITY
+  resolution         String?
+  similarCases       Json? // similar case matches
+  dueDate            DateTime?
+  completedAt        DateTime?
+  tags               String[]           @default([])
+  isActive           Boolean            @default(true)
+  createdAt          DateTime           @default(now())
+  updatedAt          DateTime           @updatedAt
+  assignments        ReviewAssignment[]
+  comments           ReviewComment[]
+
+  @@index([patientId])
+  @@index([caseType])
+  @@index([status])
+  @@index([specialty])
+  @@index([flaggedAt])
+  @@map("case_reviews")
+  @@schema("medical")
+}
+
+model ReviewAssignment {
+  id           String     @id @default(cuid())
+  caseReviewId String
+  assignedTo   String
+  assignedBy   String
+  specialty    String? // MedicalSpecialty
+  role         String?
+  status       String     @default("ASSIGNED") // ASSIGNED, ACCEPTED, IN_PROGRESS, COMPLETED, DECLINED, REASSIGNED
+  priority     String     @default("MEDIUM") // ReviewPriority
+  dueDate      DateTime?
+  startedAt    DateTime?
+  completedAt  DateTime?
+  notes        String?
+  timeSpent    Int? // minutes
+  isActive     Boolean    @default(true)
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  caseReview   CaseReview @relation(fields: [caseReviewId], references: [id], onDelete: Cascade)
+
+  @@index([caseReviewId])
+  @@index([assignedTo])
+  @@index([status])
+  @@map("review_assignments")
+  @@schema("medical")
+}
+
+model ReviewComment {
+  id           String          @id @default(cuid())
+  caseReviewId String
+  parentId     String? // for threaded comments
+  userId       String
+  comment      String
+  commentType  String          @default("GENERAL") // GENERAL, QUESTION, CONCERN, SUGGESTION, APPROVAL, REJECTION, CLARIFICATION, FOLLOW_UP
+  isInternal   Boolean         @default(false)
+  mentions     String[]        @default([])
+  attachments  Json?
+  isEdited     Boolean         @default(false)
+  editedAt     DateTime?
+  isDeleted    Boolean         @default(false)
+  deletedAt    DateTime?
+  createdAt    DateTime        @default(now())
+  updatedAt    DateTime        @updatedAt
+  caseReview   CaseReview      @relation(fields: [caseReviewId], references: [id], onDelete: Cascade)
+  parent       ReviewComment?  @relation("CommentThread", fields: [parentId], references: [id])
+  replies      ReviewComment[] @relation("CommentThread")
+
+  @@index([caseReviewId])
+  @@index([parentId])
+  @@index([userId])
+  @@map("review_comments")
+  @@schema("medical")
+}
+
+// Story 2.8: Peer Review Validation
+model PeerReview {
+  id              String              @id @default(cuid())
+  entityType      String // PATIENT_RECORD, DIAGNOSIS, TREATMENT_PLAN, MEDICAL_RECORD, etc.
+  entityId        String
+  reviewType      String              @default("QUALITY_CHECK") // QUALITY_CHECK, DATA_VALIDATION, CLINICAL_REVIEW, etc.
+  requestedBy     String
+  requestedAt     DateTime            @default(now())
+  assignedTo      String?
+  assignedAt      DateTime?
+  status          String              @default("PENDING") // PENDING, ASSIGNED, IN_PROGRESS, COMPLETED, APPROVED, REJECTED, CANCELLED
+  priority        String              @default("MEDIUM") // ReviewPriority
+  dueDate         DateTime?
+  title           String
+  description     String?
+  context         Json? // entity data snapshot
+  checklist       Json? // review checklist items
+  findings        Json? // review findings
+  score           Float? // quality score 0-100
+  recommendation  String? // APPROVE, APPROVE_WITH_CHANGES, MINOR_REVISION, MAJOR_REVISION, REJECT, ESCALATE, NEEDS_DISCUSSION
+  requiresChanges Boolean             @default(false)
+  approvedBy      String?
+  approvedAt      DateTime?
+  rejectedBy      String?
+  rejectedAt      DateTime?
+  rejectionReason String?
+  completedAt     DateTime?
+  timeSpent       Int? // minutes
+  tags            String[]            @default([])
+  isActive        Boolean             @default(true)
+  createdAt       DateTime            @default(now())
+  updatedAt       DateTime            @updatedAt
+  comments        PeerReviewComment[]
+  recognitions    ReviewRecognition[]
+
+  @@index([entityType])
+  @@index([entityId])
+  @@index([status])
+  @@index([assignedTo])
+  @@index([requestedAt])
+  @@map("peer_reviews")
+  @@schema("medical")
+}
+
+model PeerReviewComment {
+  id            String              @id @default(cuid())
+  peerReviewId  String
+  parentId      String? // for threaded comments
+  userId        String
+  comment       String
+  commentType   String              @default("GENERAL") // CommentType
+  severity      String              @default("INFO") // INFO, LOW, MEDIUM, HIGH, CRITICAL
+  lineReference String? // reference to specific data field
+  suggestion    String?
+  isResolved    Boolean             @default(false)
+  resolvedBy    String?
+  resolvedAt    DateTime?
+  isInternal    Boolean             @default(false)
+  mentions      String[]            @default([])
+  attachments   Json?
+  isEdited      Boolean             @default(false)
+  editedAt      DateTime?
+  isDeleted     Boolean             @default(false)
+  deletedAt     DateTime?
+  createdAt     DateTime            @default(now())
+  updatedAt     DateTime            @updatedAt
+  peerReview    PeerReview          @relation(fields: [peerReviewId], references: [id], onDelete: Cascade)
+  parent        PeerReviewComment?  @relation("PeerCommentThread", fields: [parentId], references: [id])
+  replies       PeerReviewComment[] @relation("PeerCommentThread")
+
+  @@index([peerReviewId])
+  @@index([parentId])
+  @@index([userId])
+  @@map("peer_review_comments")
+  @@schema("medical")
+}
+
+model ReviewRecognition {
+  id              String     @id @default(cuid())
+  peerReviewId    String
+  reviewerId      String
+  recognitionType String // EXCELLENT_REVIEW, THOROUGH_ANALYSIS, QUICK_TURNAROUND, etc.
+  awardedBy       String
+  title           String
+  description     String?
+  points          Int        @default(0)
+  badge           String?
+  isPublic        Boolean    @default(true)
+  awardedAt       DateTime   @default(now())
+  peerReview      PeerReview @relation(fields: [peerReviewId], references: [id], onDelete: Cascade)
+
+  @@index([peerReviewId])
+  @@index([reviewerId])
+  @@map("review_recognitions")
+  @@schema("medical")
+}
+
+// ========== INTEGRATION & EXTERNAL SYSTEMS ==========
+
+// External System Integration (for HL7, FHIR, DICOM, EMR systems)
+model ExternalSystem {
+  id             String    @id @default(cuid())
+  name           String
+  type           String // hl7, fhir, dicom, emr, lims, pacs, ris
+  vendor         String?
+  version        String?
+  description    String?
+  endpoint       String
+  protocol       String? // tcp, http, https, mllp
+  port           Int?
+  authentication Json? // credentials and auth config
+  configuration  Json? // system-specific settings
+  dataMapping    Json? // field mappings
+  isActive       Boolean   @default(true)
+  status         String    @default("inactive") // active, inactive, error, maintenance
+  lastSync       DateTime?
+  lastSyncStatus String? // success, error, partial
+  nextSync       DateTime?
+  syncFrequency  String? // cron expression
+  errorCount     Int       @default(0)
+  lastError      String?
+  lastErrorAt    DateTime?
+  successCount   Int       @default(0)
+  failureCount   Int       @default(0)
+  timeout        Int       @default(30000) // milliseconds
+  retryPolicy    Json?
+  rateLimit      Json?
+  statistics     Json? // performance metrics
+  centerId       String?
+  createdBy      String
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  @@index([type])
+  @@index([status])
+  @@index([centerId])
+  @@map("external_systems")
+  @@schema("system")
+}
+
+// DICOM Medical Imaging
+model DicomImage {
+  id                  String    @id @default(cuid())
+  patientId           String
+  patientName         String?
+  studyInstanceUID    String
+  seriesInstanceUID   String
+  sopInstanceUID      String    @unique
+  modality            String // CT, MRI, X-RAY, US, CR, DR, MG, PT, NM
+  studyDate           DateTime?
+  studyTime           String?
+  studyDescription    String?
+  seriesDescription   String?
+  seriesNumber        String?
+  instanceNumber      String?
+  bodyPart            String?
+  viewPosition        String?
+  imageType           String[]  @default([])
+  rows                Int?
+  columns             Int?
+  bitsAllocated       Int?
+  pixelSpacing        String?
+  sliceThickness      Float?
+  acquisitionDate     DateTime?
+  institutionName     String?
+  referringPhysician  String?
+  performingPhysician String?
+  imagePath           String // file storage path
+  thumbnailPath       String?
+  fileSize            BigInt?
+  transferSyntax      String?
+  metadata            Json? // full DICOM tags
+  processingStatus    String    @default("received") // received, processing, processed, error
+  processingError     String?
+  isArchived          Boolean   @default(false)
+  archivedAt          DateTime?
+  tags                String[]  @default([])
+  centerId            String?
+  uploadedBy          String?
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
+
+  @@index([patientId])
+  @@index([studyInstanceUID])
+  @@index([seriesInstanceUID])
+  @@index([modality])
+  @@index([studyDate])
+  @@map("dicom_images")
+  @@schema("medical")
+}
+
+// Research Data Export (for research module)
+model ResearchDataExport {
+  id               String    @id @default(cuid())
+  requestId        String // ResearchRequest ID
+  requestedBy      String // User ID
+  exportFormat     String // CSV, XLSX, JSON, XML, SPSS, STATA, R
+  exportType       String? // full, partial, deidentified, aggregate
+  status           String    @default("PENDING") // PENDING, PROCESSING, COMPLETED, FAILED, CANCELLED
+  progress         Float     @default(0) // 0-100
+  dataCount        Int? // number of records exported
+  fileSize         BigInt? // bytes
+  filePath         String? // storage path
+  fileName         String?
+  downloadUrl      String?
+  checksum         String? // file integrity check
+  encryption       Boolean   @default(false)
+  encryptionKey    String?
+  compression      Boolean   @default(true)
+  deidentified     Boolean   @default(true)
+  dataFields       Json? // list of exported fields
+  filters          Json? // applied filters
+  transformations  Json? // data transformations applied
+  qualityMetrics   Json? // data quality stats
+  exportDate       DateTime  @default(now())
+  completedDate    DateTime?
+  expiresAt        DateTime? // download expiration
+  downloadCount    Int       @default(0)
+  lastDownloadedAt DateTime?
+  errorMessage     String?
+  errorDetails     Json?
+  auditLog         Json? // export audit trail
+  notes            String?
+  centerId         String?
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+
+  @@index([requestId])
+  @@index([requestedBy])
+  @@index([status])
+  @@index([exportDate])
+  @@index([centerId])
+  @@map("research_data_exports")
+  @@schema("medical")
+}
+
+// ========== MUSCULOSKELETAL TUMOR CLINICAL DATA MODELS ==========
+// Comprehensive clinical data models for 10-section tumor registry form
+// Based on GAP_ANALYSIS_AND_TRANSFORMATION_PLAN.md
+// Schema: "medical" for clinical data
+
+// Section 3: Clinical Presentation
+model ClinicalPresentation {
+  id                      String    @id @default(cuid())
+  patientId               String    @unique
+  karnofskyScore          Int? // 0-100, Karnofsky Performance Score
+  painScale               Int? // 0-10, Visual Analog Scale
+  bmi                     Decimal?  @db.Decimal(5, 2)
+  chiefComplaint          String?   @db.Text
+  comorbidities           String?   @db.Text
+  cancerHistory           String?   @db.Text
+  familyCancerHistory     String?   @db.Text
+  physicalExamination     Json? // Structured physical exam findings
+  symptomDuration         Int? // Duration in months
+  presentingSymptoms      Json? // pain, swelling, mass, pathologicalFracture, functionalImpairment
+  tumorSizeAtPresentation Decimal?  @db.Decimal(6, 2) // in cm
+  onsetDate               DateTime?
+  createdAt               DateTime  @default(now())
+  updatedAt               DateTime  @updatedAt
+
+  patient Patient @relation(fields: [patientId], references: [id], onDelete: Cascade)
+
+  @@index([patientId])
+  @@index([karnofskyScore])
+  @@map("clinical_presentations")
+  @@schema("medical")
+}
+
+// Section 3: Clinical Photo Upload
+model ClinicalPhoto {
+  id                 String   @id @default(cuid())
+  patientId          String
+  fileUrl            String
+  fileName           String
+  fileSize           Int? // in bytes
+  mimeType           String?
+  anatomicalLocation String? // e.g., "Right femur", "Left shoulder"
+  viewType           String? // e.g., "Anterior", "Posterior", "Lateral"
+  description        String?  @db.Text
+  uploadDate         DateTime @default(now())
+  uploadedBy         String?
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  patient Patient @relation(fields: [patientId], references: [id], onDelete: Cascade)
+
+  @@index([patientId])
+  @@index([uploadDate])
+  @@map("clinical_photos")
+  @@schema("medical")
+}
+
+// Section 4: Laboratory Results (Tumor-Specific Markers)
+model LaboratoryResult_Extended {
+  id           String   @id @default(cuid())
+  patientId    String
+  testDate     DateTime
+  alp          Decimal? @db.Decimal(10, 2) // Alkaline Phosphatase (U/L)
+  ldh          Decimal? @db.Decimal(10, 2) // Lactate Dehydrogenase (U/L)
+  calcium      Decimal? @db.Decimal(6, 2) // Calcium (mg/dL)
+  phosphate    Decimal? @db.Decimal(6, 2) // Phosphate (mg/dL)
+  tumorMarkers Json? // Additional tumor markers as key-value pairs
+  hemoglobin   Decimal? @db.Decimal(5, 2) // g/dL
+  albumin      Decimal? @db.Decimal(5, 2) // g/dL
+  esr          Int? // Erythrocyte Sedimentation Rate (mm/hr)
+  crp          Decimal? @db.Decimal(8, 2) // C-Reactive Protein (mg/L)
+  notes        String?  @db.Text
+  orderedBy    String?
+  performedBy  String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  patient Patient @relation(fields: [patientId], references: [id], onDelete: Cascade)
+
+  @@index([patientId])
+  @@index([testDate])
+  @@map("laboratory_results_extended")
+  @@schema("medical")
+}
+
+// Section 4: Radiology Findings
+model RadiologyFinding {
+  id                       String            @id @default(cuid())
+  patientId                String
+  modalityType             RadiologyModality
+  studyDate                DateTime
+  findings                 String            @db.Text
+  impression               String?           @db.Text
+  imageUrls                String[]          @default([])
+  reportDate               DateTime
+  reportedBy               String?
+  tumorSize                Decimal?          @db.Decimal(6, 2) // Largest dimension in cm
+  tumorVolume              Decimal?          @db.Decimal(10, 2) // in cm³
+  corticalBreakthrough     Boolean?
+  softTissueExtension      Boolean?
+  neurovascularInvolvement Boolean?
+  skipLesions              Boolean?
+  pathologicalFracture     Boolean?
+  createdAt                DateTime          @default(now())
+  updatedAt                DateTime          @updatedAt
+
+  patient Patient @relation(fields: [patientId], references: [id], onDelete: Cascade)
+
+  @@index([patientId])
+  @@index([modalityType])
+  @@index([studyDate])
+  @@map("radiology_findings")
+  @@schema("medical")
+}
+
+// Section 4: Mirrel Score (Pathological Fracture Risk)
+model MirrelScore {
+  id             String           @id @default(cuid())
+  patientId      String
+  siteScore      Int // 1-3 points (Upper limb=1, Lower limb=2, Peritrochanteric=3)
+  painScore      Int // 1-3 points (Mild=1, Moderate=2, Functional=3)
+  lesionType     MirrelLesionType // Blastic=1, Mixed=2, Lytic=3
+  sizeScore      Int // 1-3 points (<1/3=1, 1/3-2/3=2, >2/3=3)
+  totalScore     Int // 3-12 points (sum of all components)
+  fractureRisk   FractureRisk // LOW (≤7), MODERATE (8-10), HIGH (≥11)
+  assessmentDate DateTime
+  assessedBy     String?
+  notes          String?          @db.Text
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+
+  patient Patient @relation(fields: [patientId], references: [id], onDelete: Cascade)
+
+  @@index([patientId])
+  @@index([fractureRisk])
+  @@index([assessmentDate])
+  @@map("mirrel_scores")
+  @@schema("medical")
+}
+
+// Section 4: Pathology Report (Enhanced)
+model PathologyReport_Extended {
+  id                  String              @id @default(cuid())
+  patientId           String
+  reportType          PathologyReportType
+  biopsyDate          DateTime?
+  reportDate          DateTime
+  grossDescription    String?             @db.Text
+  microscopicFindings String?             @db.Text
+  diagnosis           String              @db.Text
+  ihcMarkers          Json? // Immunohistochemistry markers
+  molecularMarkers    Json? // Molecular/genetic markers
+  tumorGrade          TumorGrade?
+  mitosisCount        Int? // per 10 HPF
+  necrosisPercentage  Decimal?            @db.Decimal(5, 2) // 0-100%
+  tumorSize           Decimal?            @db.Decimal(6, 2) // in cm
+  margins             String?
+  pathologistName     String?
+  pathologyLab        String?
+  specimenType        String?
+  notes               String?             @db.Text
+  createdAt           DateTime            @default(now())
+  updatedAt           DateTime            @updatedAt
+
+  patient Patient @relation(fields: [patientId], references: [id], onDelete: Cascade)
+
+  @@index([patientId])
+  @@index([reportType])
+  @@index([reportDate])
+  @@map("pathology_reports_extended")
+  @@schema("medical")
+}
+
+// Section 4: HUVOS Grade (Chemotherapy Response for Osteosarcoma)
+model HuvosGrade {
+  id                      String         @id @default(cuid())
+  patientId               String
+  grade                   HuvosGradeType
+  tumorNecrosisPercentage Decimal        @db.Decimal(5, 2) // 0-100%
+  viableTumorPercentage   Decimal?       @db.Decimal(5, 2) // 0-100%
+  assessmentDate          DateTime
+  specimenType            String? // "Post-neoadjuvant surgical specimen"
+  assessedBy              String?
+  notes                   String?        @db.Text
+  createdAt               DateTime       @default(now())
+  updatedAt               DateTime       @updatedAt
+
+  patient Patient @relation(fields: [patientId], references: [id], onDelete: Cascade)
+
+  @@index([patientId])
+  @@index([grade])
+  @@index([assessmentDate])
+  @@map("huvos_grades")
+  @@schema("medical")
+}
+
+// Section 6: Staging Data (Enneking & AJCC)
+model StagingData {
+  id                    String         @id @default(cuid())
+  patientId             String         @unique
+  ennekingStage         EnnekingStage?
+  ajccStage             AjccStage?
+  tumorGrade            TumorGrade?
+  tumorSize             Decimal?       @db.Decimal(6, 2) // Largest dimension in cm
+  tumorDepth            TumorDepth?
+  compartmentStatus     String? // "Intracompartmental" or "Extracompartmental"
+  metastasisAtDiagnosis Boolean        @default(false)
+  metastasisSites       String[] // e.g., ["Lung", "Bone"]
+  regionalLymphNodes    Boolean        @default(false)
+  tumorLocation         String? // Anatomical location
+  stagingDate           DateTime?
+  stagedBy              String?
+  notes                 String?        @db.Text
+  createdAt             DateTime       @default(now())
+  updatedAt             DateTime       @updatedAt
+
+  patient Patient @relation(fields: [patientId], references: [id], onDelete: Cascade)
+
+  @@index([patientId])
+  @@index([ennekingStage])
+  @@index([ajccStage])
+  @@map("staging_data")
+  @@schema("medical")
+}
+
+// Section 7: CPC Record (Cancer Patient Conference) - Enhanced
+model CpcRecord {
+  id                   String   @id @default(cuid())
+  patientId            String
+  cpcDate              DateTime
+  attendingConsultants String[] // Names/roles of attending physicians
+  presentation         String?  @db.Text
+  treatmentDecision    String   @db.Text
+  treatmentIntent      String? // "Curative", "Palliative", "Supportive"
+  recommendationType   String? // "Surgery", "Chemotherapy", "Radiotherapy", "Combination"
+  rationale            String?  @db.Text
+  alternativeOptions   String?  @db.Text
+  consensus            Boolean  @default(true)
+  dissent              String?  @db.Text
+  notes                String?  @db.Text
+  documentedBy         String
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+
+  patient Patient @relation(fields: [patientId], references: [id], onDelete: Cascade)
+
+  @@index([patientId])
+  @@index([cpcDate])
+  @@map("cpc_records")
+  @@schema("medical")
+}
+
+// Section 8: Chemotherapy Record
+model ChemotherapyRecord {
+  id                String             @id @default(cuid())
+  patientId         String
+  timing            ChemotherapyTiming
+  regimen           String // e.g., "MAP", "HDMTX", "Doxorubicin + Cisplatin"
+  cycles            Int // Total planned cycles
+  cyclesCompleted   Int                @default(0)
+  startDate         DateTime
+  endDate           DateTime?
+  response          String?            @db.Text // Response assessment
+  complications     String?            @db.Text
+  adverseEvents     Json? // Structured AE data
+  doseModifications Json? // Dose adjustments
+  performedBy       String?
+  notes             String?            @db.Text
+  createdAt         DateTime           @default(now())
+  updatedAt         DateTime           @updatedAt
+
+  patient Patient @relation(fields: [patientId], references: [id], onDelete: Cascade)
+
+  @@index([patientId])
+  @@index([timing])
+  @@index([startDate])
+  @@map("chemotherapy_records")
+  @@schema("medical")
+}
+
+// Section 8: Surgical Record (CRITICAL - Limb Salvage vs Ablation)
+model SurgicalRecord {
+  id                   String         @id @default(cuid())
+  patientId            String
+  surgeryDate          DateTime
+  surgeryType          SurgeryType // LIMB_SALVAGE or LIMB_ABLATION
+  surgicalProcedure    String // Detailed procedure name
+  surgicalMargin       SurgicalMargin
+  marginDistance       Decimal?       @db.Decimal(6, 2) // in mm
+  reconstructionMethod String? // e.g., "Megaprosthesis", "Bone graft", "Soft tissue flap"
+  amputationLevel      String? // If LIMB_ABLATION
+  operativeDuration    Int? // in minutes
+  bloodLoss            Decimal?       @db.Decimal(8, 2) // in ml
+  complications        String?        @db.Text
+  adverseEvents        String?        @db.Text
+  surgeonName          String?
+  assistantSurgeons    String[] // Names of assisting surgeons
+  anesthesiaType       String?
+  notes                String?        @db.Text
+  createdAt            DateTime       @default(now())
+  updatedAt            DateTime       @updatedAt
+
+  patient Patient @relation(fields: [patientId], references: [id], onDelete: Cascade)
+
+  @@index([patientId])
+  @@index([surgeryType])
+  @@index([surgicalMargin])
+  @@index([surgeryDate])
+  @@map("surgical_records")
+  @@schema("medical")
+}
+
+// Section 8: Radiotherapy Record
+model RadiotherapyRecord {
+  id                  String             @id @default(cuid())
+  patientId           String
+  timing              RadiotherapyTiming
+  totalDose           Decimal            @db.Decimal(7, 2) // in Gy
+  fractions           Int
+  fractionsCompleted  Int                @default(0)
+  dosePerFraction     Decimal?           @db.Decimal(6, 2) // in Gy
+  technique           String? // e.g., "IMRT", "3D-CRT", "Brachytherapy"
+  targetVolume        String? // e.g., "Primary tumor bed", "Whole limb"
+  startDate           DateTime
+  endDate             DateTime?
+  complications       String?            @db.Text
+  adverseEvents       Json?
+  radiationOncologist String?
+  notes               String?            @db.Text
+  createdAt           DateTime           @default(now())
+  updatedAt           DateTime           @updatedAt
+
+  patient Patient @relation(fields: [patientId], references: [id], onDelete: Cascade)
+
+  @@index([patientId])
+  @@index([timing])
+  @@index([startDate])
+  @@map("radiotherapy_records")
+  @@schema("medical")
+}
+
+// Section 9: Follow-Up Visit (Enhanced for 14-visit structure)
+model FollowUpVisit_Enhanced {
+  id               String            @id @default(cuid())
+  patientId        String
+  visitNumber      Int // 1-14
+  visitType        FollowUpVisitType
+  scheduledDate    DateTime
+  actualDate       DateTime?
+  status           FollowUpStatus
+  clinicalStatus   String? // "NED", "AWD", "DOD", "DOC"
+  karnofskyScore   Int? // 0-100
+  painScale        Int? // 0-10
+  functionalStatus String?           @db.Text
+  imagingPerformed String[] // e.g., ["X-ray", "CT", "MRI"]
+  imagingFindings  String?           @db.Text
+  labResults       String?           @db.Text
+  currentTreatment String?           @db.Text
+  complications    String?           @db.Text
+  nextVisitDate    DateTime?
+  completedBy      String?
+  notes            String?           @db.Text
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
+
+  patient              Patient                @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  mstsScores           MstsScore_Enhanced[]
+  recurrenceTracking   RecurrenceTracking[]
+  complicationTracking ComplicationTracking[]
+
+  @@unique([patientId, visitNumber])
+  @@index([patientId])
+  @@index([visitType])
+  @@index([status])
+  @@index([scheduledDate])
+  @@map("follow_up_visits_enhanced")
+  @@schema("medical")
+}
+
+// Section 9: MSTS Score (Musculoskeletal Tumor Society Score)
+model MstsScore_Enhanced {
+  id                  String   @id @default(cuid())
+  patientId           String
+  followUpVisitId     String?
+  pain                Int // 0-5 points
+  function            Int // 0-5 points
+  emotionalAcceptance Int // 0-5 points
+  handPositioning     Int // 0-5 points (upper extremity)
+  manualDexterity     Int // 0-5 points (upper extremity)
+  liftingAbility      Int // 0-5 points (upper extremity)
+  supports            Int? // 0-5 points (lower extremity)
+  walking             Int? // 0-5 points (lower extremity)
+  gait                Int? // 0-5 points (lower extremity)
+  totalScore          Int // 0-30 points (sum of 6 domains)
+  extremityType       String? // "Upper" or "Lower"
+  assessmentDate      DateTime
+  assessedBy          String?
+  notes               String?  @db.Text
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+
+  patient       Patient                 @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  followUpVisit FollowUpVisit_Enhanced? @relation(fields: [followUpVisitId], references: [id], onDelete: SetNull)
+
+  @@index([patientId])
+  @@index([followUpVisitId])
+  @@index([assessmentDate])
+  @@map("msts_scores_enhanced")
+  @@schema("medical")
+}
+
+// Section 9: Recurrence Tracking
+model RecurrenceTracking {
+  id               String         @id @default(cuid())
+  patientId        String
+  followUpVisitId  String?
+  recurrenceType   RecurrenceType
+  detectionDate    DateTime
+  location         String
+  diagnosticMethod String? // e.g., "Imaging", "Biopsy", "Clinical examination"
+  treatment        String?        @db.Text
+  outcome          String?        @db.Text
+  notes            String?        @db.Text
+  documentedBy     String?
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
+
+  patient       Patient                 @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  followUpVisit FollowUpVisit_Enhanced? @relation(fields: [followUpVisitId], references: [id], onDelete: SetNull)
+
+  @@index([patientId])
+  @@index([followUpVisitId])
+  @@index([recurrenceType])
+  @@index([detectionDate])
+  @@map("recurrence_tracking")
+  @@schema("medical")
+}
+
+// Section 9: Complication Tracking
+model ComplicationTracking {
+  id               String               @id @default(cuid())
+  patientId        String
+  followUpVisitId  String?
+  complicationType String
+  severity         ComplicationSeverity
+  onsetDate        DateTime
+  description      String               @db.Text
+  management       String?              @db.Text
+  resolution       String? // "Resolved", "Ongoing", "Worsened"
+  resolutionDate   DateTime?
+  notes            String?              @db.Text
+  documentedBy     String?
+  createdAt        DateTime             @default(now())
+  updatedAt        DateTime             @updatedAt
+
+  patient       Patient                 @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  followUpVisit FollowUpVisit_Enhanced? @relation(fields: [followUpVisitId], references: [id], onDelete: SetNull)
+
+  @@index([patientId])
+  @@index([followUpVisitId])
+  @@index([severity])
+  @@index([onsetDate])
+  @@map("complication_tracking")
+  @@schema("medical")
+}
+
+// ========== ENUMS FOR MUSCULOSKELETAL TUMOR MODELS ==========
+
+enum RadiologyModality {
+  XRAY
+  MRI
+  CT
+  BONE_SCAN
+  PET_CT
+  ULTRASOUND
+  ANGIOGRAPHY
+
+  @@schema("medical")
+}
+
+enum MirrelLesionType {
+  BLASTIC // Score: 1
+  MIXED // Score: 2
+  LYTIC // Score: 3
+
+  @@schema("medical")
+}
+
+enum FractureRisk {
+  LOW // Mirrel score ≤7
+  MODERATE // Mirrel score 8-10
+  HIGH // Mirrel score ≥11
+
+  @@schema("medical")
+}
+
+enum PathologyReportType {
+  FNAB // Fine Needle Aspiration Biopsy
+  CORE_BIOPSY // Core Needle Biopsy
+  OPEN_BIOPSY // Open/Incisional Biopsy
+  IHK // Immunohistochemistry
+  EXCISIONAL // Excisional Biopsy
+  FROZEN_SECTION
+
+  @@schema("medical")
+}
+
+enum TumorGrade {
+  BENIGN
+  GRADE_1 // Low grade
+  GRADE_2 // Intermediate grade
+  GRADE_3 // High grade
+  GRADE_X // Cannot be assessed
+
+  @@schema("medical")
+}
+
+enum HuvosGradeType {
+  GRADE_I // Little or no necrosis (0-49%)
+  GRADE_II // 50-89% necrosis
+  GRADE_III // 90-99% necrosis
+  GRADE_IV // 100% necrosis (good response)
+
+  @@schema("medical")
+}
+
+enum EnnekingStage {
+  IA // Low grade, intracompartmental, no metastasis
+  IB // Low grade, extracompartmental, no metastasis
+  IIA // High grade, intracompartmental, no metastasis
+  IIB // High grade, extracompartmental, no metastasis
+  III // Any grade, any compartment, with metastasis
+
+  @@schema("medical")
+}
+
+enum AjccStage {
+  IA
+  IB
+  IIA
+  IIB
+  III
+  IVA // Distant metastasis
+  IVB // Multiple distant metastases
+
+  @@schema("medical")
+}
+
+enum TumorDepth {
+  SUPERFICIAL // Above fascia
+  DEEP // Below fascia
+
+  @@schema("medical")
+}
+
+enum ChemotherapyTiming {
+  NEO_ADJUVANT // Before surgery
+  ADJUVANT // After surgery
+  PALLIATIVE
+  CONCURRENT // With radiotherapy
+
+  @@schema("medical")
+}
+
+enum SurgeryType {
+  LIMB_SALVAGE // Limb-sparing surgery
+  LIMB_ABLATION // Amputation/Disarticulation
+
+  @@schema("medical")
+}
+
+enum SurgicalMargin {
+  WIDE_R0 // Wide margin, no residual tumor
+  MARGINAL_R0 // Marginal margin, no residual tumor
+  R1 // Microscopic residual tumor
+  R2 // Macroscopic residual tumor
+  INTRALESIONAL // Tumor violation
+
+  @@schema("medical")
+}
+
+enum RadiotherapyTiming {
+  NEO_ADJUVANT // Before surgery
+  ADJUVANT // After surgery
+  PALLIATIVE
+  DEFINITIVE // Primary treatment
+
+  @@schema("medical")
+}
+
+enum FollowUpVisitType {
+  YEAR_1_2_Q3M // Year 1-2: Every 3 months (Visits 1-8)
+  YEAR_3_5_Q6M // Year 3-5: Every 6 months (Visits 9-14)
+  UNSCHEDULED
+  AD_HOC
+
+  @@schema("medical")
+}
+
+enum FollowUpStatus {
+  SCHEDULED
+  COMPLETED
+  MISSED
+  CANCELLED
+  RESCHEDULED
+
+  @@schema("medical")
+}
+
+enum RecurrenceType {
+  LOCAL // Local recurrence at primary site
+  DISTANT_METASTASIS // Distant metastatic disease
+  REGIONAL // Regional lymph node recurrence
+
+  @@schema("medical")
+}
+
+enum ComplicationSeverity {
+  MILD
+  MODERATE
+  SEVERE
+  LIFE_THREATENING
+
   @@schema("medical")
 }

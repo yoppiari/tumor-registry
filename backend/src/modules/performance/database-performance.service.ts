@@ -470,7 +470,7 @@ export class DatabasePerformanceService implements OnModuleInit {
       const tables = ['patients', 'patient_diagnoses', 'cancer_geographic_data', 'medical_records'];
 
       for (const table of tables) {
-        await this.prisma.$executeRawUnsafe`ANALYZE medical.${table}`;
+        await this.prisma.$executeRawUnsafe(`ANALYZE medical.${table}`);
       }
 
       this.logger.debug('Table statistics updated');
@@ -552,11 +552,11 @@ export class DatabasePerformanceService implements OnModuleInit {
     }
 
     // Index usage alerts
-    if (metrics.indexUsage.hitRatio < 85) {
+    if (metrics.indexUsage.hitRate < 85) {
       alerts.push({
         type: 'index_usage',
         severity: 'medium',
-        message: `Low index hit ratio: ${metrics.indexUsage.hitRatio}%`,
+        message: `Low index hit ratio: ${metrics.indexUsage.hitRate}%`,
       });
     }
 
@@ -614,7 +614,7 @@ export class DatabasePerformanceService implements OnModuleInit {
 
       if (metrics.connectionPool.waiting > 0) alerts.push('Connection pool contention');
       if (metrics.queryPerformance.slowQueries > 5) alerts.push('Multiple slow queries');
-      if (metrics.indexUsage.hitRatio < 90) alerts.push('Low index hit ratio');
+      if (metrics.indexUsage.hitRate < 90) alerts.push('Low index hit ratio');
       if (metrics.cachePerformance.hitRatio < 85) alerts.push('Low cache hit ratio');
 
       let status: 'healthy' | 'degraded' | 'unhealthy' = 'healthy';

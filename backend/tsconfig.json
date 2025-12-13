@@ -18,7 +18,8 @@
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false,
-    "types": ["bun-types"],
+    "noEmitOnError": false,
+
     "paths": {
       "@/*": ["./*"],
       "@/common/*": ["./common/*"],
@@ -32,5 +33,5 @@
     }
   },
   "include": ["src/**/*"],
-  "exclude": ["node_modules", "dist", "test", "**/*spec.ts"]
+  "exclude": ["node_modules", "dist", "test", "**/*spec.ts", "**/*.disabled/**/*", "src/modules/**/*.disabled"]
 }

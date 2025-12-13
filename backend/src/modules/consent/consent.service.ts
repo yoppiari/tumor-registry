@@ -81,11 +81,11 @@ export class ConsentService {
         this.prisma.patientConsent.findMany({
           where,
           include: {
-            provider: {
+            patient: {
               select: {
                 id: true,
                 name: true,
-                email: true,
+                dateOfBirth: true,
               },
             },
           },
@@ -126,13 +126,6 @@ export class ConsentService {
               name: true,
               medicalRecordNumber: true,
               dateOfBirth: true,
-            },
-          },
-          provider: {
-            select: {
-              id: true,
-              name: true,
-              email: true,
             },
           },
         },
@@ -324,13 +317,6 @@ export class ConsentService {
               medicalRecordNumber: true,
             },
           },
-          provider: {
-            select: {
-              id: true,
-              name: true,
-              email: true,
-            },
-          },
         },
         orderBy: [
           { expiredDate: 'asc' },
@@ -371,7 +357,7 @@ export class ConsentService {
     }
   }
 
-  private isConsentActive(consent: PatientConsent): boolean {
+  private isConsentActive(consent: Pick<PatientConsent, 'isConsented' | 'expiredDate'>): boolean {
     if (!consent.isConsented) {
       return false;
     }

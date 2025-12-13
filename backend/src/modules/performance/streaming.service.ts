@@ -143,8 +143,8 @@ export class StreamingService implements OnModuleInit {
 
   // Patient data streaming with pagination
   async streamPatientsWithPagination(
-    centerId?: string,
     processor: (patients: any[], batchNumber: number) => Promise<void>,
+    centerId?: string,
     options: StreamOptions = {}
   ): Promise<{ totalProcessed: number; duration: number }> {
     return this.streamLargeDataset(
@@ -208,9 +208,6 @@ export class StreamingService implements OnModuleInit {
 
         return await this.prisma.cancerGeographicData.findMany({
           where: whereClause,
-          include: {
-            // Include related data carefully to avoid N+1
-          },
           orderBy: { year: 'desc' },
           skip: offset,
           take: limit,

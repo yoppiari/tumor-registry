@@ -65,7 +65,9 @@ export class BackupController {
   @ApiOperation({ summary: 'Get backup job by ID' })
   @ApiResponse({ status: 200, description: 'Backup job retrieved successfully' })
   async getBackupJob(@Param('id') id: string) {
-    return this.backupService.getBackupJob(id);
+    // TODO: Implement getBackupJob
+    const jobs = await this.backupService.getBackupJobs();
+    return jobs.find((job: any) => job.id === id);
   }
 
   @Put('jobs/:id/toggle')
@@ -73,7 +75,8 @@ export class BackupController {
   @ApiOperation({ summary: 'Toggle backup job active status' })
   @ApiResponse({ status: 200, description: 'Backup job status updated successfully' })
   async toggleBackupJob(@Param('id') id: string) {
-    return this.backupService.toggleBackupJob(id);
+    // TODO: Implement toggleBackupJob
+    throw new Error('Not implemented');
   }
 
   @Delete('jobs/:id')
@@ -120,7 +123,9 @@ export class BackupController {
   @ApiOperation({ summary: 'Get backup execution by ID' })
   @ApiResponse({ status: 200, description: 'Backup execution retrieved successfully' })
   async getBackupExecution(@Param('id') id: string) {
-    return this.backupService.getBackupExecution(id);
+    // TODO: Implement getBackupExecution
+    const executions = await this.backupService.getBackupExecutions();
+    return executions.find((exec: any) => exec.id === id);
   }
 
   @Delete('executions/:id')
@@ -207,7 +212,8 @@ export class BackupController {
       centerId?: string;
     },
   ) {
-    return this.backupService.updateRetentionPolicy(retentionPolicyPolicy);
+    // TODO: Implement updateRetentionPolicy
+    throw new Error('Not implemented');
   }
 
   @Get('restore-history')
@@ -245,7 +251,8 @@ export class BackupController {
   @ApiOperation({ summary: 'Get storage configurations' })
   @ApiResponse({ status: 200, description: 'Storage configurations retrieved successfully' })
   async getStorageConfigurations() {
-    return this.backupService.getStorageConfigurations();
+    // TODO: Implement getStorageConfigurations
+    throw new Error('Not implemented');
   }
 
   @Post('configs/storage')
@@ -253,7 +260,8 @@ export class BackupController {
   @ApiOperation({ summary: 'Add storage configuration' })
   @ApiResponse({ status: 201, description: 'Storage configuration added successfully' })
   async addStorageConfiguration(@Body() storageConfig: any) {
-    return this.backupService.addStorageConfiguration(storageConfig);
+    // TODO: Implement addStorageConfiguration
+    throw new Error('Not implemented');
   }
 
   @Get('templates')
@@ -261,7 +269,8 @@ export class BackupController {
   @ApiOperation({ summary: 'Get backup job templates' })
   @ApiResponse({ status: 200, description: 'Backup templates retrieved successfully' })
   async getBackupTemplates() {
-    return this.backupService.getBackupTemplates();
+    // TODO: Implement getBackupTemplates
+    throw new Error('Not implemented');
   }
 
   @Post('templates')

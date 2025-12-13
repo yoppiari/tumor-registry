@@ -42,6 +42,42 @@ export function Layout({ children }: LayoutProps) {
       ]
     },
     {
+      name: 'Follow-up & MSTS',
+      href: '/follow-up',
+      icon: '📅',
+      roles: ['DATA_ENTRY', 'MEDICAL_OFFICER', 'CENTER_ADMIN', 'NATIONAL_ADMIN', 'SYSTEM_ADMIN'],
+      submenu: [
+        { name: '14-Visit Protocol', href: '/follow-up', roles: ['DATA_ENTRY', 'MEDICAL_OFFICER', 'CENTER_ADMIN', 'NATIONAL_ADMIN', 'SYSTEM_ADMIN'] },
+        { name: 'MSTS Calculator', href: '/demo/msts-calculator', roles: ['DATA_ENTRY', 'MEDICAL_OFFICER', 'CENTER_ADMIN', 'NATIONAL_ADMIN', 'SYSTEM_ADMIN'] },
+        { name: 'Compliance Tracking', href: '/follow-up/compliance', roles: ['CENTER_ADMIN', 'NATIONAL_ADMIN', 'SYSTEM_ADMIN'] },
+        { name: 'Reminder Management', href: '/follow-up/reminders', roles: ['DATA_ENTRY', 'MEDICAL_OFFICER', 'CENTER_ADMIN'] },
+      ]
+    },
+    {
+      name: 'Clinical Media',
+      href: '/media',
+      icon: '🖼️',
+      roles: ['DATA_ENTRY', 'MEDICAL_OFFICER', 'RESEARCHER', 'CENTER_ADMIN', 'NATIONAL_ADMIN', 'SYSTEM_ADMIN'],
+      submenu: [
+        { name: 'Clinical Photos', href: '/media/photos', roles: ['DATA_ENTRY', 'MEDICAL_OFFICER', 'CENTER_ADMIN', 'NATIONAL_ADMIN', 'SYSTEM_ADMIN'] },
+        { name: 'Radiology Images', href: '/media/radiology', roles: ['DATA_ENTRY', 'MEDICAL_OFFICER', 'CENTER_ADMIN', 'NATIONAL_ADMIN', 'SYSTEM_ADMIN'] },
+        { name: 'Pathology Reports', href: '/media/pathology', roles: ['MEDICAL_OFFICER', 'RESEARCHER', 'CENTER_ADMIN', 'NATIONAL_ADMIN', 'SYSTEM_ADMIN'] },
+        { name: 'Media Gallery', href: '/media', roles: ['MEDICAL_OFFICER', 'RESEARCHER', 'CENTER_ADMIN', 'NATIONAL_ADMIN', 'SYSTEM_ADMIN'] },
+      ]
+    },
+    {
+      name: 'CPC Conference',
+      href: '/cpc',
+      icon: '🏥',
+      roles: ['MEDICAL_OFFICER', 'CENTER_ADMIN', 'NATIONAL_ADMIN', 'SYSTEM_ADMIN'],
+      submenu: [
+        { name: 'Scheduled CPC', href: '/cpc', roles: ['MEDICAL_OFFICER', 'CENTER_ADMIN', 'NATIONAL_ADMIN', 'SYSTEM_ADMIN'] },
+        { name: 'CPC Minutes', href: '/cpc/minutes', roles: ['MEDICAL_OFFICER', 'CENTER_ADMIN', 'NATIONAL_ADMIN', 'SYSTEM_ADMIN'] },
+        { name: 'Case Presentations', href: '/cpc/presentations', roles: ['MEDICAL_OFFICER', 'CENTER_ADMIN', 'NATIONAL_ADMIN', 'SYSTEM_ADMIN'] },
+        { name: 'Treatment Consensus', href: '/cpc/consensus', roles: ['MEDICAL_OFFICER', 'CENTER_ADMIN', 'NATIONAL_ADMIN', 'SYSTEM_ADMIN'] },
+      ]
+    },
+    {
       name: 'Penelitian',
       href: '/research',
       icon: '🔬',
@@ -67,13 +103,16 @@ export function Layout({ children }: LayoutProps) {
       name: 'Analytics',
       href: '/analytics',
       icon: '📈',
-      roles: ['RESEARCHER', 'CENTER_ADMIN', 'NATIONAL_ADMIN', 'SYSTEM_ADMIN'],
+      roles: ['DATA_ENTRY', 'MEDICAL_OFFICER', 'RESEARCHER', 'CENTER_ADMIN', 'NATIONAL_ADMIN', 'SYSTEM_ADMIN'],
       submenu: [
-        { name: 'Dashboard Analytics', href: '/analytics', roles: ['RESEARCHER', 'CENTER_ADMIN', 'NATIONAL_ADMIN', 'SYSTEM_ADMIN'] },
-        { name: 'Peta Distribusi', href: '/analytics/distribution', roles: ['RESEARCHER', 'CENTER_ADMIN', 'NATIONAL_ADMIN', 'SYSTEM_ADMIN'] },
-        { name: 'Trend Analysis', href: '/analytics/trends', roles: ['RESEARCHER', 'CENTER_ADMIN', 'NATIONAL_ADMIN', 'SYSTEM_ADMIN'] },
-        { name: 'Perbandingan Center', href: '/analytics/centers', roles: ['CENTER_ADMIN', 'NATIONAL_ADMIN', 'SYSTEM_ADMIN'] },
-        { name: 'Prediksi', href: '/analytics/predictions', roles: ['CENTER_ADMIN', 'NATIONAL_ADMIN', 'SYSTEM_ADMIN'] },
+        { name: 'Dashboard Analytics', href: '/analytics', roles: ['DATA_ENTRY', 'MEDICAL_OFFICER', 'RESEARCHER', 'CENTER_ADMIN', 'NATIONAL_ADMIN', 'SYSTEM_ADMIN'] },
+        { name: 'Limb Salvage Outcomes', href: '/analytics/limb-salvage', roles: ['DATA_ENTRY', 'MEDICAL_OFFICER', 'RESEARCHER', 'CENTER_ADMIN', 'NATIONAL_ADMIN', 'SYSTEM_ADMIN'] },
+        { name: 'Tumor Distribution Map', href: '/analytics/distribution', roles: ['DATA_ENTRY', 'MEDICAL_OFFICER', 'RESEARCHER', 'CENTER_ADMIN', 'NATIONAL_ADMIN', 'SYSTEM_ADMIN'] },
+        { name: 'Staging Analysis', href: '/analytics/staging', roles: ['DATA_ENTRY', 'MEDICAL_OFFICER', 'RESEARCHER', 'CENTER_ADMIN', 'NATIONAL_ADMIN', 'SYSTEM_ADMIN'] },
+        { name: 'Treatment Outcomes', href: '/analytics/treatment', roles: ['MEDICAL_OFFICER', 'RESEARCHER', 'CENTER_ADMIN', 'NATIONAL_ADMIN', 'SYSTEM_ADMIN'] },
+        { name: 'Survival Curves', href: '/analytics/survival', roles: ['MEDICAL_OFFICER', 'RESEARCHER', 'CENTER_ADMIN', 'NATIONAL_ADMIN', 'SYSTEM_ADMIN'] },
+        { name: 'MSTS Trends', href: '/analytics/msts', roles: ['DATA_ENTRY', 'MEDICAL_OFFICER', 'RESEARCHER', 'CENTER_ADMIN', 'NATIONAL_ADMIN', 'SYSTEM_ADMIN'] },
+        { name: 'Center Performance', href: '/analytics/centers', roles: ['CENTER_ADMIN', 'NATIONAL_ADMIN', 'SYSTEM_ADMIN'] },
       ]
     },
     {
@@ -92,11 +131,11 @@ export function Layout({ children }: LayoutProps) {
       name: 'Laporan',
       href: '/reports',
       icon: '📋',
-      roles: ['RESEARCHER', 'CENTER_ADMIN', 'NATIONAL_ADMIN', 'SYSTEM_ADMIN'],
+      roles: ['DATA_ENTRY', 'MEDICAL_OFFICER', 'RESEARCHER', 'CENTER_ADMIN', 'NATIONAL_ADMIN', 'SYSTEM_ADMIN'],
       submenu: [
-        { name: 'Generate Laporan', href: '/reports', roles: ['RESEARCHER', 'CENTER_ADMIN', 'NATIONAL_ADMIN', 'SYSTEM_ADMIN'] },
+        { name: 'Generate Laporan', href: '/reports', roles: ['DATA_ENTRY', 'MEDICAL_OFFICER', 'RESEARCHER', 'CENTER_ADMIN', 'NATIONAL_ADMIN', 'SYSTEM_ADMIN'] },
         { name: 'Laporan Terjadwal', href: '/reports/scheduled', roles: ['CENTER_ADMIN', 'NATIONAL_ADMIN', 'SYSTEM_ADMIN'] },
-        { name: 'Riwayat Laporan', href: '/reports/history', roles: ['RESEARCHER', 'CENTER_ADMIN', 'NATIONAL_ADMIN', 'SYSTEM_ADMIN'] },
+        { name: 'Riwayat Laporan', href: '/reports/history', roles: ['DATA_ENTRY', 'MEDICAL_OFFICER', 'RESEARCHER', 'CENTER_ADMIN', 'NATIONAL_ADMIN', 'SYSTEM_ADMIN'] },
         { name: 'Export Data', href: '/reports/export', roles: ['RESEARCHER', 'CENTER_ADMIN', 'NATIONAL_ADMIN', 'SYSTEM_ADMIN'] },
       ]
     },
@@ -174,7 +213,7 @@ export function Layout({ children }: LayoutProps) {
   }, [pathname]);
 
   return (
-    <div className="min-h-screen bg-gray-50 sm:flex">
+    <div className="min-h-screen bg-gray-50 flex">
       {/* Loading Overlay */}
       {isNavigating && (
         <div className="fixed inset-0 z-50 bg-gray-900 bg-opacity-50 flex items-center justify-center">
@@ -196,8 +235,8 @@ export function Layout({ children }: LayoutProps) {
       )}
 
       {/* Sidebar */}
-      <div className={`fixed inset-y-0 left-0 z-50 w-64 bg-white shadow-lg transform transition-transform duration-200 ease-in-out lg:translate-x-0 lg:static lg:inset-0 ${
-        isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'
+      <div className={`fixed inset-y-0 left-0 z-50 w-64 bg-white shadow-lg transform transition-transform duration-200 ease-in-out lg:relative lg:translate-x-0 ${
+        isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
       }`}>
         <div className="flex flex-col h-full">
           {/* Logo */}
@@ -208,7 +247,7 @@ export function Layout({ children }: LayoutProps) {
               </div>
               <div>
                 <h1 className="text-white font-bold text-lg">INAMSOS</h1>
-                <p className="text-emerald-100 text-xs">Cancer Database System</p>
+                <p className="text-emerald-100 text-xs">Musculoskeletal Tumor Registry</p>
               </div>
             </div>
           </div>
@@ -319,7 +358,7 @@ export function Layout({ children }: LayoutProps) {
       </div>
 
       {/* Main content */}
-      <div className="lg:pl-64">
+      <div className="flex-1 flex flex-col lg:pl-0">
         {/* Top navigation bar */}
         <div className="bg-white shadow-sm border-b border-gray-200">
           <div className="flex items-center justify-between h-16 px-4 sm:px-6 lg:px-8">

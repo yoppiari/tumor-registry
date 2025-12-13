@@ -11,7 +11,7 @@ interface PatientDetailProps {
 }
 
 export default function PatientDetail({ patient, onEdit, className = '' }: PatientDetailProps) {
-  const { updatePatient, markAsDeceased } = usePatient();
+  const { updatePatient } = usePatient();
   const [isEditing, setIsEditing] = useState(false);
   const [showDeceasedModal, setShowDeceasedModal] = useState(false);
   const [deceasedData, setDeceasedData] = useState({

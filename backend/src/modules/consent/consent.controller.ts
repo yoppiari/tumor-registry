@@ -33,7 +33,7 @@ export class ConsentController {
   @ApiResponse({ status: 404, description: 'Patient not found' })
   @RequirePermissions('PATIENTS_UPDATE')
   @HttpCode(HttpStatus.CREATED)
-  @AuditLog('CREATE_CONSENT')
+  @AuditLog('CREATE', 'consent')
   async createConsent(@Body() createConsentDto: {
     patientId: string;
     consentType: ConsentType;
@@ -138,7 +138,7 @@ export class ConsentController {
   @ApiResponse({ status: 200, description: 'Consent updated successfully' })
   @ApiResponse({ status: 404, description: 'Consent not found' })
   @RequirePermissions('PATIENTS_UPDATE')
-  @AuditLog('UPDATE_CONSENT')
+  @AuditLog('UPDATE', 'consent')
   async updateConsent(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() updateConsentDto: {
@@ -167,7 +167,7 @@ export class ConsentController {
   @ApiResponse({ status: 200, description: 'Consent revoked successfully' })
   @ApiResponse({ status: 400, description: 'Consent is already revoked' })
   @RequirePermissions('PATIENTS_UPDATE')
-  @AuditLog('REVOKE_CONSENT')
+  @AuditLog('REVOKE', 'consent')
   async revokeConsent(
     @Param('id', ParseUUIDPipe) id: string,
     @Body('reason') reason: string,
@@ -181,7 +181,7 @@ export class ConsentController {
   @ApiOperation({ summary: 'Create treatment consent template' })
   @RequirePermissions('PATIENTS_UPDATE')
   @HttpCode(HttpStatus.CREATED)
-  @AuditLog('CREATE_TREATMENT_CONSENT')
+  @AuditLog('CREATE', 'treatment_consent')
   async createTreatmentConsent(@Body() createConsentDto: {
     patientId: string;
     description: string;
@@ -205,7 +205,7 @@ export class ConsentController {
   @ApiOperation({ summary: 'Create surgery consent template' })
   @RequirePermissions('PATIENTS_UPDATE')
   @HttpCode(HttpStatus.CREATED)
-  @AuditLog('CREATE_SURGERY_CONSENT')
+  @AuditLog('CREATE', 'surgery_consent')
   async createSurgeryConsent(@Body() createConsentDto: {
     patientId: string;
     description: string;
@@ -229,7 +229,7 @@ export class ConsentController {
   @ApiOperation({ summary: 'Create anesthesia consent template' })
   @RequirePermissions('PATIENTS_UPDATE')
   @HttpCode(HttpStatus.CREATED)
-  @AuditLog('CREATE_ANESTHESIA_CONSENT')
+  @AuditLog('CREATE', 'anesthesia_consent')
   async createAnesthesiaConsent(@Body() createConsentDto: {
     patientId: string;
     description: string;
@@ -253,7 +253,7 @@ export class ConsentController {
   @ApiOperation({ summary: 'Create blood transfusion consent template' })
   @RequirePermissions('PATIENTS_UPDATE')
   @HttpCode(HttpStatus.CREATED)
-  @AuditLog('CREATE_BLOOD_TRANSFUSION_CONSENT')
+  @AuditLog('CREATE', 'blood_transfusion_consent')
   async createBloodTransfusionConsent(@Body() createConsentDto: {
     patientId: string;
     description: string;
@@ -277,7 +277,7 @@ export class ConsentController {
   @ApiOperation({ summary: 'Create research consent template' })
   @RequirePermissions('PATIENTS_UPDATE')
   @HttpCode(HttpStatus.CREATED)
-  @AuditLog('CREATE_RESEARCH_CONSENT')
+  @AuditLog('CREATE', 'research_consent')
   async createResearchConsent(@Body() createConsentDto: {
     patientId: string;
     description: string;
@@ -301,7 +301,7 @@ export class ConsentController {
   @ApiOperation({ summary: 'Create photography consent template' })
   @RequirePermissions('PATIENTS_UPDATE')
   @HttpCode(HttpStatus.CREATED)
-  @AuditLog('CREATE_PHOTOGRAPHY_CONSENT')
+  @AuditLog('CREATE', 'photography_consent')
   async createPhotographyConsent(@Body() createConsentDto: {
     patientId: string;
     description: string;
@@ -325,7 +325,7 @@ export class ConsentController {
   @ApiOperation({ summary: 'Create telehealth consent template' })
   @RequirePermissions('PATIENTS_UPDATE')
   @HttpCode(HttpStatus.CREATED)
-  @AuditLog('CREATE_TELEHEALTH_CONSENT')
+  @AuditLog('CREATE', 'telehealth_consent')
   async createTelehealthConsent(@Body() createConsentDto: {
     patientId: string;
     description: string;
@@ -349,7 +349,7 @@ export class ConsentController {
   @ApiOperation({ summary: 'Create privacy consent template' })
   @RequirePermissions('PATIENTS_UPDATE')
   @HttpCode(HttpStatus.CREATED)
-  @AuditLog('CREATE_PRIVACY_CONSENT')
+  @AuditLog('CREATE', 'privacy_consent')
   async createPrivacyConsent(@Body() createConsentDto: {
     patientId: string;
     description: string;

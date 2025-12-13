@@ -1,16 +1,19 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import MobilePage, { MobileStatusCard, MobileStats, MobileCard, MobileAlert } from '../page';
+import MobilePage, { MobileStatusCard, MobileStats, MobileCard, MobileAlert, MobileLoading, MobileListItem } from '@/components/mobile/MobilePage';
 import {
+  HomeIcon,
+  UserIcon,
   ChartBarIcon,
   UserGroupIcon,
   CalendarIcon,
   HeartIcon,
   DocumentTextIcon,
   ClockIcon,
-  TrendingUpIcon,
-  TrendingDownIcon,
+  PlusIcon,
+  ArrowTrendingUpIcon as TrendingUpIcon,
+  ArrowTrendingDownIcon as TrendingDownIcon,
   CheckCircleIcon,
   ExclamationTriangleIcon
 } from '@heroicons/react/24/outline';
@@ -175,7 +178,7 @@ export default function MobileDashboard() {
             showChevron={true}
           />
           <MobileListItem
-            title Ahmad Wijaya"
+            title="Ahmad Wijaya"
             subtitle="Kanker Paru - Stadium I"
             badge="Respons Baik"
             icon={<UserGroupIcon />}
@@ -319,14 +322,15 @@ export default function MobileDashboard() {
       />
 
       {/* Treatment Alerts */}
-      <MobileCard title="Perlu Perhatian" color="orange">
+      <MobileCard title="Perlu Perhatian" color="yellow">
         <div className="space-y-3">
           <MobileAlert
             type="warning"
             title="3 Pasien Perlu Evaluasi"
             message="Perlu evaluasi sebelum melanjutkan siklus berikutnya"
           />
-        </MobileCard>
+        </div>
+      </MobileCard>
 
       {/* Active Treatments */}
       <MobileCard title="Pengobatan Aktif" color="red">
@@ -337,7 +341,7 @@ export default function MobileDashboard() {
             badge="65%"
             icon={<HeartIcon />}
           />
-          <MaleListItem
+          <MobileListItem
             title="Radioterapi"
             subtitle="Sarah Putri - Hari ke 15 dari 25"
             badge="60%"
@@ -402,7 +406,7 @@ export default function MobileDashboard() {
             icon={<ChartBarIcon />}
           />
           <MobileListItem
-            title "Kualitas Care Dashboard"
+            title="Kualitas Care Dashboard"
             subtitle="Diunduh pada 10 Oktober 2024"
             badge="PDF"
             icon={<ChartBarIcon />}

@@ -257,7 +257,7 @@ const UploadProgress: React.FC<UploadProgressProps> = ({
   };
 
   const extractTags = (filename: string, category: MedicalImage['category']): string[] => {
-    const tags = [category];
+    const tags: string[] = [category];
     const name = filename.toLowerCase();
 
     // Extract common medical terms from filename

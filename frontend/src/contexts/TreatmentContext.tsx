@@ -34,8 +34,11 @@ type TreatmentAction =
   | { type: 'ADD_MEDICAL_RECORD'; payload: MedicalRecord }
   | { type: 'UPDATE_MEDICAL_RECORD'; payload: MedicalRecord };
 
+// State-only type (without methods)
+type TreatmentState = Pick<TreatmentContextType, 'treatmentPlans' | 'currentTreatmentPlan' | 'treatmentSessions' | 'medicalRecords' | 'qualityMetrics' | 'isLoading' | 'error'>;
+
 // Initial state
-const initialState: Omit<TreatmentContextType, 'actions'> = {
+const initialState: TreatmentState = {
   treatmentPlans: [],
   currentTreatmentPlan: null,
   treatmentSessions: [],

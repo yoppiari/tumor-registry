@@ -82,7 +82,7 @@ export class RolesController {
   @ApiResponse({ status: 409, description: 'Role already exists' })
   @RequirePermissions('ROLES_CREATE')
   @HttpCode(HttpStatus.CREATED)
-  @AuditLog('CREATE_ROLE')
+  @AuditLog('CREATE', 'role')
   async create(@Body() createRoleDto: {
     name: string;
     code: string;
@@ -100,7 +100,7 @@ export class RolesController {
   @ApiResponse({ status: 404, description: 'Role not found' })
   @ApiResponse({ status: 403, description: 'Cannot modify system roles' })
   @RequirePermissions('ROLES_UPDATE')
-  @AuditLog('UPDATE_ROLE')
+  @AuditLog('UPDATE', 'role')
   async update(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() updateRoleDto: {
@@ -119,7 +119,7 @@ export class RolesController {
   @ApiResponse({ status: 200, description: 'Role permissions updated successfully' })
   @ApiResponse({ status: 404, description: 'Role not found' })
   @RequirePermissions('ROLES_UPDATE')
-  @AuditLog('UPDATE_ROLE_PERMISSIONS')
+  @AuditLog('UPDATE', 'role_permissions')
   async updateRolePermissions(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() updatePermissionsDto: {
@@ -138,7 +138,7 @@ export class RolesController {
   @ApiResponse({ status: 403, description: 'Cannot delete system roles or roles with active users' })
   @RequirePermissions('ROLES_DELETE')
   @HttpCode(HttpStatus.NO_CONTENT)
-  @AuditLog('DELETE_ROLE')
+  @AuditLog('DELETE', 'role')
   async delete(@Param('id', ParseUUIDPipe) id: string) {
     await this.rolesService.delete(id);
   }

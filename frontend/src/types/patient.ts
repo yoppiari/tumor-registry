@@ -135,7 +135,7 @@ export interface UpdatePatientDto {
   tnmClassification?: TNMClassification;
   histology?: string;
   molecularMarkers?: MolecularMarker[];
-  treatmentStatus: 'new' | 'ongoing' | 'completed' | 'palliative' | 'lost_to_followup' | 'deceased';
+  treatmentStatus?: 'new' | 'ongoing' | 'completed' | 'palliative' | 'lost_to_followup' | 'deceased';
   isDeceased?: boolean;
   dateOfDeath?: string;
   causeOfDeath?: string;

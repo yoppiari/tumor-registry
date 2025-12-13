@@ -150,7 +150,7 @@ export class BackupService {
 
       // Verify checksum if available
       if (execution.checksum && options.verifyIntegrity !== false) {
-        const isValid = await this.verifyBackupIntegrity(execution.filePath, execution.checksum);
+        const isValid = await this.verifyBackupChecksum(execution.filePath, execution.checksum);
         if (!isValid) {
           throw new BadRequestException('Backup file integrity check failed');
         }
@@ -192,7 +192,7 @@ export class BackupService {
     if (filters?.backupType) where.backupType = filters.backupType;
     if (filters?.dataSource) where.dataSource = filters.dataSource;
     if (filters?.isActive !== undefined) where.isActive = filters.isActive;
-    if (filters?.centerId) where.centerId = filters.centerId;
+    // Note: centerId is not part of BackupJob schema
 
     return this.prisma.backupJob.findMany({
       where,
@@ -211,7 +211,6 @@ export class BackupService {
           orderBy: { executionTime: 'desc' },
           take: 5,
         },
-        center: filters?.centerId ? true : false,
       },
       orderBy: { createdAt: 'desc' },
     });
@@ -245,8 +244,9 @@ export class BackupService {
   }
 
   async getBackupStatistics(centerId?: string): Promise<BackupStatistics> {
-    const jobWhere = centerId ? { centerId } : {};
-    const executionWhere = centerId ? { backupJob: { centerId } } : {};
+    // Note: centerId is not part of BackupJob schema, so we ignore it
+    const jobWhere = {};
+    const executionWhere = {};
 
     const [
       totalJobs,
@@ -414,7 +414,6 @@ export class BackupService {
           this.logger.error(`Scheduled backup failed: ${backupJob.name}`, error);
         });
       }, {
-        scheduled: true,
         timezone: 'UTC',
       });
 
@@ -430,7 +429,7 @@ export class BackupService {
     const filename = `${backupJob.name}_${timestamp}_${executionId}`;
 
     const baseDir = process.env.BACKUP_STORAGE_PATH || './backups';
-    const subDir = backupJob.centerId ? `${backupJob.centerId}/${backupJob.backupType}` : backupJob.backupType;
+    const subDir = backupJob.backupType;
     const outputDir = path.join(baseDir, subDir);
 
     // Ensure directory exists
@@ -455,13 +454,13 @@ export class BackupService {
 
     // Test if storage location is accessible
     if (storageLocation.startsWith('local:') || storageLocation.startsWith('/')) {
-      const path = storageLocation.replace('local:', '');
+      const storagePath = storageLocation.replace('local:', '');
       try {
-        if (!fs.existsSync(path)) {
-          fs.mkdirSync(path, { recursive: true });
+        if (!fs.existsSync(storagePath)) {
+          fs.mkdirSync(storagePath, { recursive: true });
         }
         // Test write permissions
-        const testFile = path.join(path, '.backup_test');
+        const testFile = path.join(storagePath, '.backup_test');
         fs.writeFileSync(testFile, 'test');
         fs.unlinkSync(testFile);
       } catch (error) {
@@ -470,7 +469,7 @@ export class BackupService {
     }
   }
 
-  private async verifyBackupIntegrity(filePath: string, expectedChecksum: string): Promise<boolean> {
+  private async verifyBackupChecksum(filePath: string, expectedChecksum: string): Promise<boolean> {
     try {
       const crypto = require('crypto');
       const hash = crypto.createHash('sha256');
@@ -519,11 +518,11 @@ export class BackupService {
   }
 
   private async calculateStorageUsed(centerId?: string): Promise<bigint> {
+    // Note: centerId is not part of BackupJob schema
     const executions = await this.prisma.backupExecution.findMany({
       where: {
         status: 'COMPLETED',
         fileSize: { not: null },
-        backupJob: centerId ? { centerId } : undefined,
       },
       select: { fileSize: true },
     });
@@ -532,11 +531,11 @@ export class BackupService {
   }
 
   private async calculateAverageBackupTime(centerId?: string): Promise<number> {
+    // Note: centerId is not part of BackupJob schema
     const executions = await this.prisma.backupExecution.findMany({
       where: {
         status: 'COMPLETED',
         duration: { not: null },
-        backupJob: centerId ? { centerId } : undefined,
         executionTime: {
           gte: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000), // Last 30 days
         },
@@ -551,10 +550,10 @@ export class BackupService {
   }
 
   private async getLastBackupTime(centerId?: string): Promise<Date | null> {
+    // Note: centerId is not part of BackupJob schema
     const lastBackup = await this.prisma.backupExecution.findFirst({
       where: {
         status: 'COMPLETED',
-        backupJob: centerId ? { centerId } : undefined,
       },
       orderBy: { executionTime: 'desc' },
       select: { executionTime: true },
@@ -564,11 +563,11 @@ export class BackupService {
   }
 
   private async getNextScheduledBackup(centerId?: string): Promise<Date | null> {
+    // Note: centerId is not part of BackupJob schema
     const nextBackup = await this.prisma.backupJob.findFirst({
       where: {
         isActive: true,
         nextBackup: { not: null },
-        centerId: centerId || null,
       },
       orderBy: { nextBackup: 'asc' },
       select: { nextBackup: true },
@@ -578,9 +577,9 @@ export class BackupService {
   }
 
   private async getStorageDistribution(centerId?: string): Promise<Record<string, bigint>> {
+    // Note: centerId is not part of BackupJob schema
     const jobs = await this.prisma.backupJob.groupBy({
       by: ['storageLocation'],
-      where: centerId ? { centerId } : {},
       _sum: { totalSize: true },
     });
 
@@ -591,22 +590,22 @@ export class BackupService {
   }
 
   private async getFailedBackupCount(centerId?: string): Promise<number> {
+    // Note: centerId is not part of BackupJob schema
     return this.prisma.backupExecution.count({
       where: {
         status: 'FAILED',
         executionTime: {
           gte: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000), // Last 7 days
         },
-        backupJob: centerId ? { centerId } : undefined,
       },
     });
   }
 
   private async getLastSuccessfulBackup(centerId?: string): Promise<Date | null> {
+    // Note: centerId is not part of BackupJob schema
     const lastSuccess = await this.prisma.backupExecution.findFirst({
       where: {
         status: 'COMPLETED',
-        backupJob: centerId ? { centerId } : undefined,
       },
       orderBy: { executionTime: 'desc' },
       select: { executionTime: true },
@@ -626,6 +625,7 @@ export class BackupService {
   }
 
   private async getUpcomingBackups(centerId?: string): Promise<any[]> {
+    // Note: centerId is not part of BackupJob schema
     const upcoming = await this.prisma.backupJob.findMany({
       where: {
         isActive: true,
@@ -633,7 +633,6 @@ export class BackupService {
           gte: new Date(),
           lte: new Date(Date.now() + 24 * 60 * 60 * 1000), // Next 24 hours
         },
-        centerId: centerId || null,
       },
       select: {
         id: true,
@@ -650,7 +649,7 @@ export class BackupService {
       jobId: job.id,
       jobName: job.name,
       scheduledTime: job.nextBackup,
-      estimatedDuration: this.estimateBackupDuration(job.backupType, job.estimatedSize),
+      estimatedDuration: this.estimateBackupDuration(job.backupType, job.estimatedSize || BigInt(0)),
     }));
   }
 
@@ -708,5 +707,223 @@ export class BackupService {
       default:
         return 300; // 5 minutes default
     }
+  }
+
+  // Additional public methods required by controller
+  async performCleanup(options: {
+    retentionDays?: number;
+    dryRun?: boolean;
+    backupJobId?: string;
+    centerId?: string;
+  }): Promise<any> {
+    this.logger.log(`Performing cleanup with options: ${JSON.stringify(options)}`);
+
+    const retentionDays = options.retentionDays || 30;
+    const cutoffDate = new Date(Date.now() - retentionDays * 24 * 60 * 60 * 1000);
+
+    const where: any = {
+      executionTime: { lt: cutoffDate },
+      status: 'COMPLETED',
+    };
+
+    if (options.backupJobId) where.backupJobId = options.backupJobId;
+
+    const executions = await this.prisma.backupExecution.findMany({
+      where,
+      include: { backupJob: true },
+    });
+
+    if (options.dryRun) {
+      return {
+        deletedBackups: executions.length,
+        freedSpace: executions.reduce((sum, exec) => sum + (exec.fileSize || BigInt(0)), BigInt(0)),
+        errors: [],
+        deletedFiles: executions.map(e => e.filePath).filter(Boolean),
+      };
+    }
+
+    let deletedBackups = 0;
+    let freedSpace = BigInt(0);
+    const errors: string[] = [];
+    const deletedFiles: string[] = [];
+
+    for (const execution of executions) {
+      try {
+        if (execution.filePath && fs.existsSync(execution.filePath)) {
+          fs.unlinkSync(execution.filePath);
+          deletedFiles.push(execution.filePath);
+          freedSpace += execution.fileSize || BigInt(0);
+        }
+
+        await this.prisma.backupExecution.delete({
+          where: { id: execution.id },
+        });
+
+        deletedBackups++;
+      } catch (error) {
+        errors.push(`Failed to delete execution ${execution.id}: ${error.message}`);
+      }
+    }
+
+    return {
+      deletedBackups,
+      freedSpace,
+      errors,
+      deletedFiles,
+    };
+  }
+
+  async getStorageUsage(centerId?: string): Promise<any> {
+    const storageUsed = await this.calculateStorageUsed(centerId);
+    const storageDistribution = await this.getStorageDistribution(centerId);
+
+    return {
+      totalUsed: storageUsed,
+      byLocation: storageDistribution,
+      capacity: await this.getStorageCapacity(),
+    };
+  }
+
+  async getRetentionPolicy(centerId?: string): Promise<any> {
+    // This would typically be stored in a configuration table
+    // For now, return default policy
+    return {
+      dailyBackups: 7,
+      weeklyBackups: 4,
+      monthlyBackups: 12,
+      yearlyBackups: 5,
+    };
+  }
+
+  async getRestoreHistory(filters: {
+    backupJobId?: string;
+    executionId?: string;
+    startDate?: Date;
+    endDate?: Date;
+    limit?: number;
+  }): Promise<any[]> {
+    // This would query a restore history table
+    // For now, return empty array
+    this.logger.log(`Getting restore history with filters: ${JSON.stringify(filters)}`);
+    return [];
+  }
+
+  async verifyBackupIntegrity(executionId: string): Promise<any> {
+    const execution = await this.prisma.backupExecution.findUnique({
+      where: { id: executionId },
+    });
+
+    if (!execution) {
+      throw new NotFoundException('Backup execution not found');
+    }
+
+    if (!execution.filePath || !fs.existsSync(execution.filePath)) {
+      throw new NotFoundException('Backup file not found');
+    }
+
+    const isValid = await this.verifyBackupChecksum(execution.filePath, execution.checksum || '');
+
+    await this.prisma.backupExecution.update({
+      where: { id: executionId },
+      data: { verificationPassed: isValid },
+    });
+
+    return {
+      executionId,
+      valid: isValid,
+      checksum: execution.checksum,
+      filePath: execution.filePath,
+    };
+  }
+
+  async createBackupTemplate(templateData: {
+    name: string;
+    description?: string;
+    backupType: string;
+    dataSource: string;
+    backupOptions?: any;
+    createdBy: string;
+  }): Promise<any> {
+    // This would create a backup template record
+    // For now, just return the template data
+    this.logger.log(`Creating backup template: ${templateData.name}`);
+    return {
+      id: 'template-' + Date.now(),
+      ...templateData,
+      createdAt: new Date(),
+    };
+  }
+
+  async testStorageConnection(jobId: string): Promise<any> {
+    const backupJob = await this.prisma.backupJob.findUnique({
+      where: { id: jobId },
+    });
+
+    if (!backupJob) {
+      throw new NotFoundException('Backup job not found');
+    }
+
+    try {
+      await this.validateStorageLocation(backupJob.storageLocation);
+      return {
+        success: true,
+        message: 'Storage connection successful',
+        location: backupJob.storageLocation,
+      };
+    } catch (error) {
+      return {
+        success: false,
+        message: `Storage connection failed: ${error.message}`,
+        location: backupJob.storageLocation,
+      };
+    }
+  }
+
+  async getBackupAlerts(options: {
+    severity?: string;
+    limit?: number;
+  }): Promise<any[]> {
+    const healthStatus = await this.getBackupHealthStatus();
+    let alerts = healthStatus.alerts;
+
+    if (options.severity) {
+      alerts = alerts.filter(alert => alert.severity === options.severity);
+    }
+
+    if (options.limit) {
+      alerts = alerts.slice(0, options.limit);
+    }
+
+    return alerts;
+  }
+
+  async rescheduleBackupJob(jobId: string, rescheduleData: {
+    schedule: string;
+    timezone?: string;
+  }): Promise<any> {
+    const backupJob = await this.prisma.backupJob.findUnique({
+      where: { id: jobId },
+    });
+
+    if (!backupJob) {
+      throw new NotFoundException('Backup job not found');
+    }
+
+    // Unschedule old job if exists
+    if (this.scheduledJobs.has(jobId)) {
+      this.scheduledJobs.get(jobId)?.stop();
+      this.scheduledJobs.delete(jobId);
+    }
+
+    // Update schedule in database
+    const updatedJob = await this.prisma.backupJob.update({
+      where: { id: jobId },
+      data: { schedule: rescheduleData.schedule },
+    });
+
+    // Schedule new job
+    this.scheduleBackupJob(updatedJob);
+
+    return updatedJob;
   }
 }

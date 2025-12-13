@@ -1,4 +1,4 @@
-import { IsString, IsOptional, IsEnum, IsDateString, MinLength, MaxLength, Matches } from 'class-validator';
+import { IsString, IsOptional, IsEnum, IsDateString, IsNumber, MinLength, MaxLength, Matches } from 'class-validator';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 export class QuickPatientEntryDto {

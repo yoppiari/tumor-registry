@@ -35,7 +35,7 @@ export class PatientsService {
         this.prisma.patient.findMany({
           where,
           include: {
-            center: {
+            Center: {
               select: {
                 id: true,
                 name: true,
@@ -72,9 +72,9 @@ export class PatientsService {
       return {
         patients: patients.map(patient => ({
           ...patient,
-          activeDiagnoses: patient._count.diagnoses,
-          activeMedications: patient._count.medications,
-          totalVisits: patient._count.visits,
+          activeDiagnoses: (patient as any)._count?.diagnoses || 0,
+          activeMedications: (patient as any)._count?.medications || 0,
+          totalVisits: (patient as any)._count?.visits || 0,
           _count: undefined,
         })),
         total,
@@ -92,7 +92,7 @@ export class PatientsService {
       const patient = await this.prisma.patient.findUnique({
         where: { id },
         include: {
-          center: true,
+          Center: true,
           ...(includeMedicalHistory && {
             diagnoses: {
               where: {
@@ -418,7 +418,7 @@ export class PatientsService {
         this.prisma.patient.findMany({
           where,
           include: {
-            center: {
+            Center: {
               select: {
                 id: true,
                 name: true,

@@ -26,21 +26,26 @@ export class RedisService implements OnModuleInit {
 
   private async initializeRedis() {
     try {
-      this.redis = new Redis({
-        host: this.configService.get<string>('REDIS_HOST', 'localhost'),
-        port: this.configService.get<number>('REDIS_PORT', 6379),
-        password: this.configService.get<string>('REDIS_PASSWORD'),
-        db: this.configService.get<number>('REDIS_DB', 0),
+      const redisPassword = this.configService.get<string>('REDIS_PASSWORD');
+      const config: any = {
+        host: this.configService.get<string>('REDIS_HOST') || 'localhost',
+        port: this.configService.get<number>('REDIS_PORT') || 6379,
+        db: this.configService.get<number>('REDIS_DB') || 0,
         keyPrefix: this.keyPrefix,
         retryDelayOnFailover: 100,
         enableReadyCheck: true,
         maxRetriesPerRequest: 3,
         lazyConnect: true,
-        keepAlive: 30000,
         family: 4,
         connectTimeout: 10000,
         commandTimeout: 5000,
-      });
+      };
+
+      if (redisPassword) {
+        config.password = redisPassword;
+      }
+
+      this.redis = new Redis(config);
 
       // Connection event handlers
       this.redis.on('connect', () => {

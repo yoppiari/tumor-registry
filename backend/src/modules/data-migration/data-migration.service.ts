@@ -127,6 +127,9 @@ export class DataMigrationService {
       const report = {
         migrationId,
         startTime: new Date(),
+        endTime: null as Date | null,
+        duration: 0,
+        success: false,
         entities: {},
         summary: {
           totalRecords: 0,
@@ -443,7 +446,7 @@ export class DataMigrationService {
     const mapped: any = {};
     for (const [sourceField, targetField] of Object.entries(mapping)) {
       if (record[sourceField] !== undefined) {
-        mapped[targetField] = record[sourceField];
+        mapped[targetField as string] = record[sourceField];
       }
     }
     return mapped;
@@ -645,7 +648,7 @@ export class DataMigrationService {
   }
 
   private async sendBackupNotification(backup: any): Promise<void> {
-    this.logger.info(`Backup completed: ${backup.backupId}`);
+    this.logger.log(`Backup completed: ${backup.backupId}`);
   }
 
   // Placeholder methods for restore functionality

@@ -18,7 +18,6 @@ import { JwtAuthGuard } from '@/auth/guards/jwt.guard';
 import { PermissionsGuard } from '@/auth/guards/permissions.guard';
 import { RequirePermissions } from '@/auth/decorators/permissions.decorator';
 import { AuditLog } from '@/common/decorators/audit-log.decorator';
-import { VitalSignType, AlertSeverity } from '@prisma/client';
 
 @ApiTags('Vital Signs')
 @Controller('vital-signs')
@@ -32,7 +31,7 @@ export class VitalSignsController {
   @ApiResponse({ status: 400, description: 'Invalid vital signs data' })
   @RequirePermissions('MEDICAL_RECORDS_CREATE')
   @HttpCode(HttpStatus.CREATED)
-  @AuditLog('RECORD_VITAL_SIGNS')
+  @AuditLog('RECORD', 'vital_signs')
   async recordVitalSigns(@Body() createVitalSignsDto: {
     patientId: string;
     temperature?: number;
@@ -44,20 +43,24 @@ export class VitalSignsController {
     weight?: number;
     height?: number;
     painScale?: number;
+    bloodGlucose?: number;
     notes?: string;
+    recordedBy: string;
   }) {
-    return await this.vitalSignsService.createVitalSigns({
+    return await this.vitalSignsService.recordVitalSign({
       patientId: createVitalSignsDto.patientId,
       temperature: createVitalSignsDto.temperature,
-      systolicBP: createVitalSignsDto.systolicBP,
-      diastolicBP: createVitalSignsDto.diastolicBP,
+      bloodPressureSystolic: createVitalSignsDto.systolicBP,
+      bloodPressureDiastolic: createVitalSignsDto.diastolicBP,
       heartRate: createVitalSignsDto.heartRate,
       respiratoryRate: createVitalSignsDto.respiratoryRate,
       oxygenSaturation: createVitalSignsDto.oxygenSaturation,
       weight: createVitalSignsDto.weight,
       height: createVitalSignsDto.height,
       painScale: createVitalSignsDto.painScale,
+      bloodGlucose: createVitalSignsDto.bloodGlucose,
       notes: createVitalSignsDto.notes,
+      recordedBy: createVitalSignsDto.recordedBy,
     });
   }
 
@@ -66,26 +69,23 @@ export class VitalSignsController {
   @ApiParam({ name: 'patientId', description: 'Patient ID' })
   @ApiResponse({ status: 200, description: 'Vital signs retrieved successfully' })
   @RequirePermissions('PATIENTS_READ')
-  @ApiQuery({ name: 'type', required: false, enum: VitalSignType })
   @ApiQuery({ name: 'dateFrom', required: false })
   @ApiQuery({ name: 'dateTo', required: false })
-  @ApiQuery({ name: 'page', required: false, type: Number })
   @ApiQuery({ name: 'limit', required: false, type: Number })
+  @ApiQuery({ name: 'offset', required: false, type: Number })
   async getVitalSignsByPatient(
     @Param('patientId', ParseUUIDPipe) patientId: string,
-    @Query('type') type?: VitalSignType,
     @Query('dateFrom') dateFrom?: string,
     @Query('dateTo') dateTo?: string,
-    @Query('page') page?: string,
     @Query('limit') limit?: string,
+    @Query('offset') offset?: string,
   ) {
     return await this.vitalSignsService.getVitalSignsByPatient(
       patientId,
-      type,
+      limit ? parseInt(limit) : 10,
+      offset ? parseInt(offset) : 0,
       dateFrom ? new Date(dateFrom) : undefined,
-      dateTo ? new Date(dateTo) : undefined,
-      page ? parseInt(page) : 1,
-      limit ? parseInt(limit) : 50
+      dateTo ? new Date(dateTo) : undefined
     );
   }
 
@@ -95,7 +95,7 @@ export class VitalSignsController {
   @ApiResponse({ status: 200, description: 'Latest vital signs retrieved successfully' })
   @RequirePermissions('PATIENTS_READ')
   async getLatestVitalSigns(@Param('patientId', ParseUUIDPipe) patientId: string) {
-    return await this.vitalSignsService.getLatestVitalSigns(patientId);
+    return await this.vitalSignsService.getLatestVitalSign(patientId);
   }
 
   @Get('patient/:patientId/trends')
@@ -103,14 +103,17 @@ export class VitalSignsController {
   @ApiParam({ name: 'patientId', description: 'Patient ID' })
   @ApiResponse({ status: 200, description: 'Vital signs trends retrieved successfully' })
   @RequirePermissions('PATIENTS_READ')
+  @ApiQuery({ name: 'parameter', required: true, description: 'Vital sign parameter to trend (e.g., temperature, heartRate)' })
   @ApiQuery({ name: 'days', required: false, type: Number, description: 'Number of days to analyze' })
   async getVitalSignsTrends(
     @Param('patientId', ParseUUIDPipe) patientId: string,
+    @Query('parameter') parameter: string,
     @Query('days') days?: string,
   ) {
-    return await this.vitalSignsService.getVitalSignsTrends(
+    return await this.vitalSignsService.getVitalSignTrends(
       patientId,
-      days ? parseInt(days) : 7
+      parameter,
+      days ? parseInt(days) : 30
     );
   }
 
@@ -119,68 +122,26 @@ export class VitalSignsController {
   @ApiParam({ name: 'patientId', description: 'Patient ID' })
   @ApiResponse({ status: 200, description: 'Abnormal vital signs retrieved successfully' })
   @RequirePermissions('PATIENTS_READ')
-  @ApiQuery({ name: 'days', required: false, type: Number, description: 'Number of days to look back' })
+  @ApiQuery({ name: 'hours', required: false, type: Number, description: 'Number of hours to look back' })
   async getAbnormalVitalSigns(
     @Param('patientId', ParseUUIDPipe) patientId: string,
-    @Query('days') days?: string,
+    @Query('hours') hours?: string,
   ) {
-    return await this.vitalSignsService.getAbnormalVitalSigns(
+    return await this.vitalSignsService.getVitalSignAlertsForPatient(
       patientId,
-      days ? parseInt(days) : 30
+      hours ? parseInt(hours) : 24
     );
   }
 
   @Get('alerts')
-  @ApiOperation({ summary: 'Get vital signs alerts' })
-  @ApiResponse({ status: 200, description: 'Vital signs alerts retrieved successfully' })
+  @ApiOperation({ summary: 'Get patients needing attention' })
+  @ApiResponse({ status: 200, description: 'Patients needing attention retrieved successfully' })
   @RequirePermissions('PATIENTS_READ')
   @ApiQuery({ name: 'centerId', required: false })
-  @ApiQuery({ name: 'severity', required: false, enum: AlertSeverity })
-  @ApiQuery({ name: 'unreadOnly', required: false, type: Boolean })
-  @ApiQuery({ name: 'page', required: false, type: Number })
-  @ApiQuery({ name: 'limit', required: false, type: Number })
   async getAlerts(
     @Query('centerId') centerId?: string,
-    @Query('severity') severity?: AlertSeverity,
-    @Query('unreadOnly') unreadOnly?: string,
-    @Query('page') page?: string,
-    @Query('limit') limit?: string,
   ) {
-    return await this.vitalSignsService.getAlerts(
-      centerId,
-      severity,
-      unreadOnly === 'true',
-      page ? parseInt(page) : 1,
-      limit ? parseInt(limit) : 20
-    );
-  }
-
-  @Get('alerts/statistics')
-  @ApiOperation({ summary: 'Get vital signs alert statistics' })
-  @ApiResponse({ status: 200, description: 'Alert statistics retrieved successfully' })
-  @RequirePermissions('ANALYTICS_VIEW')
-  @ApiQuery({ name: 'centerId', required: false })
-  @ApiQuery({ name: 'days', required: false, type: Number })
-  async getAlertStatistics(
-    @Query('centerId') centerId?: string,
-    @Query('days') days?: string,
-  ) {
-    return await this.vitalSignsService.getAlertStatistics(
-      centerId,
-      days ? parseInt(days) : 7
-    );
-  }
-
-  @Put('alerts/:alertId/acknowledge')
-  @ApiOperation({ summary: 'Acknowledge vital signs alert' })
-  @ApiParam({ name: 'alertId', description: 'Alert ID' })
-  @ApiResponse({ status: 200, description: 'Alert acknowledged successfully' })
-  @RequirePermissions('MEDICAL_RECORDS_UPDATE')
-  @AuditLog('ACKNOWLEDGE_VITAL_SIGNS_ALERT')
-  async acknowledgeAlert(
-    @Param('alertId', ParseUUIDPipe) alertId: string,
-  ) {
-    return await this.vitalSignsService.acknowledgeAlert(alertId);
+    return await this.vitalSignsService.getPatientsNeedingAttention(centerId);
   }
 
   @Get('statistics/summary')
@@ -188,43 +149,15 @@ export class VitalSignsController {
   @ApiResponse({ status: 200, description: 'Vital signs statistics retrieved successfully' })
   @RequirePermissions('ANALYTICS_VIEW')
   @ApiQuery({ name: 'centerId', required: false })
-  @ApiQuery({ name: 'dateFrom', required: false })
-  @ApiQuery({ name: 'dateTo', required: false })
-  async getVitalSignsStatistics(
-    @Query('centerId') centerId?: string,
-    @Query('dateFrom') dateFrom?: string,
-    @Query('dateTo') dateTo?: string,
-  ) {
-    return await this.vitalSignsService.getVitalSignsStatistics(
-      centerId,
-      dateFrom ? new Date(dateFrom) : undefined,
-      dateTo ? new Date(dateTo) : undefined
-    );
-  }
-
-  @Get('statistics/population-health')
-  @ApiOperation({ summary: 'Get population health statistics' })
-  @ApiResponse({ status: 200, description: 'Population health statistics retrieved successfully' })
-  @RequirePermissions('ANALYTICS_VIEW')
-  @ApiQuery({ name: 'centerId', required: false })
   @ApiQuery({ name: 'days', required: false, type: Number })
-  async getPopulationHealthStatistics(
+  async getVitalSignsStatistics(
     @Query('centerId') centerId?: string,
     @Query('days') days?: string,
   ) {
-    return await this.vitalSignsService.getPopulationHealthStatistics(
+    return await this.vitalSignsService.getVitalSignStatistics(
       centerId,
       days ? parseInt(days) : 30
     );
-  }
-
-  @Get('monitoring/ward/:wardId')
-  @ApiOperation({ summary: 'Get ward monitoring overview' })
-  @ApiParam({ name: 'wardId', description: 'Ward ID' })
-  @ApiResponse({ status: 200, description: 'Ward monitoring data retrieved successfully' })
-  @RequirePermissions('PATIENTS_READ')
-  async getWardMonitoring(@Param('wardId', ParseUUIDPipe) wardId: string) {
-    return await this.vitalSignsService.getWardMonitoringOverview(wardId);
   }
 
   @Get('monitoring/critical-patients')
@@ -233,7 +166,7 @@ export class VitalSignsController {
   @RequirePermissions('PATIENTS_READ')
   @ApiQuery({ name: 'centerId', required: false })
   async getCriticalPatients(@Query('centerId') centerId?: string) {
-    return await this.vitalSignsService.getCriticalPatients(centerId);
+    return await this.vitalSignsService.getPatientsNeedingAttention(centerId);
   }
 
   // Quick vital signs templates for common scenarios
@@ -242,7 +175,7 @@ export class VitalSignsController {
   @ApiOperation({ summary: 'Record initial assessment vital signs' })
   @RequirePermissions('MEDICAL_RECORDS_CREATE')
   @HttpCode(HttpStatus.CREATED)
-  @AuditLog('RECORD_INITIAL_ASSESSMENT_VITAL_SIGNS')
+  @AuditLog('RECORD', 'vital_signs_initial_assessment')
   async recordInitialAssessment(@Body() assessmentDto: {
     patientId: string;
     temperature: number;
@@ -255,12 +188,13 @@ export class VitalSignsController {
     height?: number;
     painScale?: number;
     assessmentNotes?: string;
+    recordedBy: string;
   }) {
-    return await this.vitalSignsService.createVitalSigns({
+    return await this.vitalSignsService.recordVitalSign({
       patientId: assessmentDto.patientId,
       temperature: assessmentDto.temperature,
-      systolicBP: assessmentDto.systolicBP,
-      diastolicBP: assessmentDto.diastolicBP,
+      bloodPressureSystolic: assessmentDto.systolicBP,
+      bloodPressureDiastolic: assessmentDto.diastolicBP,
       heartRate: assessmentDto.heartRate,
       respiratoryRate: assessmentDto.respiratoryRate,
       oxygenSaturation: assessmentDto.oxygenSaturation,
@@ -268,6 +202,7 @@ export class VitalSignsController {
       height: assessmentDto.height,
       painScale: assessmentDto.painScale,
       notes: `Initial Assessment: ${assessmentDto.assessmentNotes || 'Standard initial assessment'}`,
+      recordedBy: assessmentDto.recordedBy,
     });
   }
 
@@ -275,7 +210,7 @@ export class VitalSignsController {
   @ApiOperation({ summary: 'Record chemotherapy monitoring vital signs' })
   @RequirePermissions('MEDICAL_RECORDS_CREATE')
   @HttpCode(HttpStatus.CREATED)
-  @AuditLog('RECORD_CHEMOTHERAPY_VITAL_SIGNS')
+  @AuditLog('RECORD', 'vital_signs_chemotherapy')
   async recordChemotherapyMonitoring(@Body() chemoDto: {
     patientId: string;
     temperature: number;
@@ -288,17 +223,19 @@ export class VitalSignsController {
     toxicity?: string;
     cycleNumber?: string;
     notes?: string;
+    recordedBy: string;
   }) {
-    return await this.vitalSignsService.createVitalSigns({
+    return await this.vitalSignsService.recordVitalSign({
       patientId: chemoDto.patientId,
       temperature: chemoDto.temperature,
-      systolicBP: chemoDto.systolicBP,
-      diastolicBP: chemoDto.diastolicBP,
+      bloodPressureSystolic: chemoDto.systolicBP,
+      bloodPressureDiastolic: chemoDto.diastolicBP,
       heartRate: chemoDto.heartRate,
       respiratoryRate: chemoDto.respiratoryRate,
       oxygenSaturation: chemoDto.oxygenSaturation,
       weight: chemoDto.weight,
       notes: `Chemotherapy Monitoring${chemoDto.cycleNumber ? ` - Cycle ${chemoDto.cycleNumber}` : ''}${chemoDto.toxicity ? ` | Toxicity: ${chemoDto.toxicity}` : ''}: ${chemoDto.notes || 'Routine chemo monitoring'}`,
+      recordedBy: chemoDto.recordedBy,
     });
   }
 
@@ -306,7 +243,7 @@ export class VitalSignsController {
   @ApiOperation({ summary: 'Record pre-operative vital signs' })
   @RequirePermissions('MEDICAL_RECORDS_CREATE')
   @HttpCode(HttpStatus.CREATED)
-  @AuditLog('RECORD_PREOPERATIVE_VITAL_SIGNS')
+  @AuditLog('RECORD', 'vital_signs_preoperative')
   async recordPreOperativeVitalSigns(@Body() preOpDto: {
     patientId: string;
     temperature: number;
@@ -319,16 +256,18 @@ export class VitalSignsController {
     asaClass?: string;
     fastingStatus?: string;
     notes?: string;
+    recordedBy: string;
   }) {
-    return await this.vitalSignsService.createVitalSigns({
+    return await this.vitalSignsService.recordVitalSign({
       patientId: preOpDto.patientId,
       temperature: preOpDto.temperature,
-      systolicBP: preOpDto.systolicBP,
-      diastolicBP: preOpDto.diastolicBP,
+      bloodPressureSystolic: preOpDto.systolicBP,
+      bloodPressureDiastolic: preOpDto.diastolicBP,
       heartRate: preOpDto.heartRate,
       respiratoryRate: preOpDto.respiratoryRate,
       oxygenSaturation: preOpDto.oxygenSaturation,
       notes: `Pre-Op Assessment${preOpDto.procedureType ? ` | Procedure: ${preOpDto.procedureType}` : ''}${preOpDto.asaClass ? ` | ASA: ${preOpDto.asaClass}` : ''}${preOpDto.fastingStatus ? ` | Fasting: ${preOpDto.fastingStatus}` : ''}: ${preOpDto.notes || 'Routine pre-op assessment'}`,
+      recordedBy: preOpDto.recordedBy,
     });
   }
 
@@ -336,7 +275,7 @@ export class VitalSignsController {
   @ApiOperation({ summary: 'Record post-operative vital signs' })
   @RequirePermissions('MEDICAL_RECORDS_CREATE')
   @HttpCode(HttpStatus.CREATED)
-  @AuditLog('RECORD_POSTOPERATIVE_VITAL_SIGNS')
+  @AuditLog('RECORD', 'vital_signs_postoperative')
   async recordPostOperativeVitalSigns(@Body() postOpDto: {
     patientId: string;
     temperature: number;
@@ -351,17 +290,19 @@ export class VitalSignsController {
     procedureType?: string;
     postOpHour?: number;
     notes?: string;
+    recordedBy: string;
   }) {
-    return await this.vitalSignsService.createVitalSigns({
+    return await this.vitalSignsService.recordVitalSign({
       patientId: postOpDto.patientId,
       temperature: postOpDto.temperature,
-      systolicBP: postOpDto.systolicBP,
-      diastolicBP: postOpDto.diastolicBP,
+      bloodPressureSystolic: postOpDto.systolicBP,
+      bloodPressureDiastolic: postOpDto.diastolicBP,
       heartRate: postOpDto.heartRate,
       respiratoryRate: postOpDto.respiratoryRate,
       oxygenSaturation: postOpDto.oxygenSaturation,
       painScale: postOpDto.painScale,
       notes: `Post-Op Assessment${postOpDto.procedureType ? ` | Procedure: ${postOpDto.procedureType}` : ''}${postOpDto.postOpHour ? ` | Hour ${postOpDto.postOpHour}` : ''}${postOpDto.consciousnessLevel ? ` | Consciousness: ${postOpDto.consciousnessLevel}` : ''}${postOpDto.bleeding ? ` | Bleeding: ${postOpDto.bleeding}` : ''}: ${postOpDto.notes || 'Routine post-op assessment'}`,
+      recordedBy: postOpDto.recordedBy,
     });
   }
 }

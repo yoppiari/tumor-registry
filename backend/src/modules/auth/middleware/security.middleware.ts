@@ -93,7 +93,7 @@ export class SecurityMiddleware implements NestMiddleware {
   private checkRateLimit(req: FastifyRequest) {
     // This is a simple in-memory rate limit
     // In production, use Redis or other distributed cache
-    const clientIp = req.ip || req.connection.remoteAddress;
+    const clientIp = req.ip || req.socket?.remoteAddress;
     const currentTime = Date.now();
     const windowMs = 60 * 1000; // 1 minute
     const maxRequests = 100;

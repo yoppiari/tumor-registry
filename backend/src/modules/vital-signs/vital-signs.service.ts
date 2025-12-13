@@ -1,5 +1,5 @@
 import { Injectable, Logger, NotFoundException } from '@nestjs/common';
-import { PrismaService } from '@/database/prisma/service';
+import { PrismaService } from '@/database/prisma.service';
 import { VitalSign } from '@prisma/client';
 
 interface VitalSignAlert {
@@ -9,6 +9,7 @@ interface VitalSignAlert {
   normalRange: {
     min: number;
     max: number;
+    unit: string;
   };
   timestamp: Date;
   patientId: string;
@@ -34,13 +35,13 @@ export class VitalSignsService {
   };
 
   private readonly criticalThresholds = {
-    temperature: { min: 35.0, max: 39.0 },
-    systolic: { min: 70, max: 180 },
-    diastolic: { min: 40, max: 110 },
-    heartRate: { min: 40, max: 150 },
-    respiratoryRate: { min: 8, max: 30 },
-    oxygenSaturation: { min: 88, max: 100 },
-    bloodGlucose: { min: 40, max: 400 },
+    temperature: { min: 35.0, max: 39.0, unit: '°C' },
+    systolic: { min: 70, max: 180, unit: 'mmHg' },
+    diastolic: { min: 40, max: 110, unit: 'mmHg' },
+    heartRate: { min: 40, max: 150, unit: 'bpm' },
+    respiratoryRate: { min: 8, max: 30, unit: 'breaths/min' },
+    oxygenSaturation: { min: 88, max: 100, unit: '%' },
+    bloodGlucose: { min: 40, max: 400, unit: 'mg/dL' },
   };
 
   constructor(private prisma: PrismaService) {}
@@ -137,6 +138,7 @@ export class VitalSignsService {
               id: true,
               name: true,
               medicalRecordNumber: true,
+              dateOfBirth: true,
             },
           },
         },
@@ -150,7 +152,7 @@ export class VitalSignsService {
       return vitalSigns.map(vitalSign => ({
         ...vitalSign,
         alerts: this.checkVitalSignAlerts(vitalSign),
-        patientAge: vitalSign.patient.dateOfBirth ? this.calculateAge(vitalSign.patient.dateOfBirth) : null,
+        patientAge: vitalSign.patient.dateOfBirth ? this.calculatePatientAge(vitalSign.patient.dateOfBirth) : null,
         isWithinNormalRange: this.isWithinNormalRange(vitalSign),
       }));
     } catch (error) {
@@ -386,7 +388,7 @@ export class VitalSignsService {
     }
   }
 
-  private checkVitalSignAlerts(vitalSign: VitalSign): VitalSignAlert[] {
+  private checkVitalSignAlerts(vitalSign: Pick<VitalSign, 'recordedAt' | 'patientId' | 'temperature' | 'bloodPressureSystolic' | 'bloodPressureDiastolic' | 'heartRate' | 'respiratoryRate' | 'oxygenSaturation' | 'painScale' | 'bloodGlucose'>): VitalSignAlert[] {
     const alerts: VitalSignAlert[] = [];
     const timestamp = vitalSign.recordedAt;
 
@@ -496,7 +498,7 @@ export class VitalSignsService {
   private checkParameterAlert(
     parameter: string,
     value: number,
-    criticalRange: { min: number; max: number },
+    criticalRange: { min: number; max: number; unit: string },
     normalRange: { min: number; max: number; unit: string },
     timestamp: Date,
     patientId: string
@@ -552,7 +554,7 @@ export class VitalSignsService {
     }
   }
 
-  private isWithinNormalRange(vitalSign: VitalSign): boolean {
+  private isWithinNormalRange(vitalSign: Pick<VitalSign, 'temperature' | 'bloodPressureSystolic' | 'bloodPressureDiastolic' | 'heartRate' | 'respiratoryRate' | 'oxygenSaturation'>): boolean {
     const checks = [];
 
     if (vitalSign.temperature !== null) {
@@ -615,12 +617,16 @@ export class VitalSignsService {
       take: 1000, // Limit for performance
       orderBy: { recordedAt: 'desc' },
       select: {
+        patientId: true,
+        recordedAt: true,
         temperature: true,
         bloodPressureSystolic: true,
         bloodPressureDiastolic: true,
         heartRate: true,
         respiratoryRate: true,
         oxygenSaturation: true,
+        painScale: true,
+        bloodGlucose: true,
       },
     });
 
@@ -636,6 +642,8 @@ export class VitalSignsService {
       take: 1000,
       orderBy: { recordedAt: 'desc' },
       select: {
+        patientId: true,
+        recordedAt: true,
         temperature: true,
         bloodPressureSystolic: true,
         bloodPressureDiastolic: true,

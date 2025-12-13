@@ -61,7 +61,7 @@ export class MonitoringController {
   @ApiResponse({ status: 201, description: 'Alert created successfully' })
   @RequirePermissions('ALERT_CREATE')
   @HttpCode(HttpStatus.CREATED)
-  @AuditLog('CREATE_ALERT')
+  @AuditLog('CREATE', 'alert')
   async createAlert(@Body() alertData: {
     type: 'system' | 'performance' | 'security' | 'business';
     severity: 'low' | 'medium' | 'high' | 'critical';
@@ -80,7 +80,7 @@ export class MonitoringController {
   @ApiParam({ name: 'alertId', description: 'Alert ID' })
   @ApiResponse({ status: 200, description: 'Alert acknowledged successfully' })
   @RequirePermissions('ALERT_UPDATE')
-  @AuditLog('ACKNOWLEDGE_ALERT')
+  @AuditLog('ACKNOWLEDGE', 'alert')
   async acknowledgeAlert(
     @Param('alertId') alertId: string,
     @Body() acknowledgement: {
@@ -100,7 +100,7 @@ export class MonitoringController {
   @ApiParam({ name: 'alertId', description: 'Alert ID' })
   @ApiResponse({ status: 200, description: 'Alert resolved successfully' })
   @RequirePermissions('ALERT_UPDATE')
-  @AuditLog('RESOLVE_ALERT')
+  @AuditLog('RESOLVE', 'alert')
   async resolveAlert(
     @Param('alertId') alertId: string,
     @Body() resolution: {
@@ -145,7 +145,7 @@ export class MonitoringController {
   @ApiResponse({ status: 201, description: 'Audit log created successfully' })
   @RequirePermissions('AUDIT_LOG_CREATE')
   @HttpCode(HttpStatus.CREATED)
-  @AuditLog('CREATE_AUDIT_LOG')
+  @AuditLog('CREATE', 'audit_log')
   async createAuditLog(@Body() logData: {
     userId: string;
     action: string;

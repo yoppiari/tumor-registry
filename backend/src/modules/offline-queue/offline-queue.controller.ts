@@ -37,7 +37,7 @@ export class OfflineQueueController {
   @Get('pending')
   @ApiOperation({ summary: 'Get pending queue items for current user' })
   @ApiResponse({ status: 200, description: 'Pending queue items retrieved successfully' })
-  @ApiQuery({ name: 'limit', required: false, type: Number, default: 100 })
+  @ApiQuery({ name: 'limit', required: false, type: Number })
   async getPendingQueue(@Query('limit') limit?: string, @Req() req?: any) {
     const userId = req.user.userId;
     return await this.offlineQueueService.getPendingQueue(userId, limit ? parseInt(limit) : 100);

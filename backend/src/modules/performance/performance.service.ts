@@ -696,16 +696,16 @@ export class PerformanceService {
   }
 
   private calculateOverallPerformanceGain(results: any): string {
-    const totalOptimized = Object.values(results).reduce((sum, result) => sum + result.optimizedCount, 0);
-    if (totalOptimized > 15) return '70-85% improvement in overall performance';
-    if (totalOptimized > 10) return '50-70% improvement in overall performance';
+    const totalOptimized = Object.values(results).reduce((sum: number, result: any) => sum + (result.optimizedCount || 0), 0) as number;
+    if ((totalOptimized as number) > 15) return '70-85% improvement in overall performance';
+    if ((totalOptimized as number) > 10) return '50-70% improvement in overall performance';
     return '30-50% improvement in overall performance';
   }
 
   private generateQueryRecommendations(results: any): any[] {
     const recommendations = [];
 
-    const totalOptimized = Object.values(results).reduce((sum, result) => sum + result.optimizedCount, 0);
+    const totalOptimized = Object.values(results).reduce((sum: number, result: any) => sum + (result.optimizedCount || 0), 0) as number;
     recommendations.push({
       category: 'monitoring',
       title: 'Continuous Performance Monitoring',

@@ -81,7 +81,7 @@ export class DashboardService {
       this.prisma.backupJob.count({
         where: {
           isActive: true,
-          centerId: centerId || null,
+          // Note: BackupJob model doesn't have centerId field - backup jobs are system-wide
         },
       }),
       this.prisma.healthCheck.count({
@@ -242,7 +242,7 @@ export class DashboardService {
       this.prisma.backupJob.count({
         where: {
           isActive: true,
-          centerId: centerId || null,
+          // Note: BackupJob model doesn't have centerId field - backup jobs are system-wide
         },
       }),
       this.prisma.backupExecution.findMany({
@@ -250,9 +250,7 @@ export class DashboardService {
           executionTime: {
             gte: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000), // Last 7 days
           },
-          backupJob: {
-            centerId: centerId || null,
-          },
+          // Note: BackupJob model doesn't have centerId field - backup jobs are system-wide
         },
         include: {
           backupJob: true,
@@ -352,7 +350,7 @@ export class DashboardService {
         nextBackup: {
           not: null,
         },
-        centerId: centerId || null,
+        // Note: BackupJob model doesn't have centerId field - backup jobs are system-wide
       },
       orderBy: { nextBackup: 'asc' },
     });

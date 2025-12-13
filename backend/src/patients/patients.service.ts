@@ -2,8 +2,6 @@ import { Injectable, NotFoundException, BadRequestException, ConflictException }
 import { v4 as uuidv4 } from 'uuid';
 import {
   Patient,
-  CreatePatientDto,
-  UpdatePatientDto,
   PatientSearchDto,
   PatientListResponse,
   PatientStatistics,
@@ -13,7 +11,8 @@ import {
 } from './interfaces/patient.interface';
 
 // Import DTOs for type annotations
-import { UpdatePatientDto as UpdatePatientDtoClass } from './dto/update-patient.dto';
+import { CreatePatientDto } from './dto/create-patient.dto';
+import { UpdatePatientDto } from './dto/update-patient.dto';
 import { QuickPatientEntryDto } from './dto/quick-patient-entry.dto';
 
 @Injectable()
@@ -244,6 +243,10 @@ export class PatientsService {
       dateOfBirth: new Date(createPatientDto.dateOfBirth),
       dateOfDiagnosis: createPatientDto.dateOfDiagnosis ? new Date(createPatientDto.dateOfDiagnosis) : undefined,
       dateOfFirstVisit: createPatientDto.dateOfFirstVisit ? new Date(createPatientDto.dateOfFirstVisit) : undefined,
+      molecularMarkers: createPatientDto.molecularMarkers?.map(marker => ({
+        ...marker,
+        testDate: marker.testDate ? new Date(marker.testDate) : undefined
+      })),
       dateOfDeath: undefined,
       isActive: true,
       isDeceased: false,
@@ -382,7 +385,7 @@ export class PatientsService {
     };
   }
 
-  async update(id: string, updatePatientDto: UpdatePatientDtoClass, updatedBy: string): Promise<Patient> {
+  async update(id: string, updatePatientDto: UpdatePatientDto, updatedBy: string): Promise<Patient> {
     const patientIndex = this.patients.findIndex(p => p.id === id);
     if (patientIndex === -1) {
       throw new NotFoundException('Patient not found');
@@ -390,11 +393,18 @@ export class PatientsService {
 
     const patient = this.patients[patientIndex];
 
-    // Update patient data
+    // Update patient data - convert string dates to Date objects
     const updatedPatient: Patient = {
       ...patient,
       ...updatePatientDto,
+      dateOfBirth: updatePatientDto.dateOfBirth ? new Date(updatePatientDto.dateOfBirth) : patient.dateOfBirth,
+      dateOfDiagnosis: updatePatientDto.dateOfDiagnosis ? new Date(updatePatientDto.dateOfDiagnosis) : patient.dateOfDiagnosis,
+      dateOfFirstVisit: updatePatientDto.dateOfFirstVisit ? new Date(updatePatientDto.dateOfFirstVisit) : patient.dateOfFirstVisit,
       dateOfDeath: updatePatientDto.dateOfDeath ? new Date(updatePatientDto.dateOfDeath) : patient.dateOfDeath,
+      molecularMarkers: updatePatientDto.molecularMarkers?.map(marker => ({
+        ...marker,
+        testDate: marker.testDate ? new Date(marker.testDate) : undefined
+      })) ?? patient.molecularMarkers,
       updatedBy,
       updatedAt: new Date(),
       lastActivityAt: new Date(),
@@ -424,7 +434,7 @@ export class PatientsService {
 
     return this.update(id, {
       isDeceased: true,
-      dateOfDeath: dateOfDeath.toISOString(),
+      dateOfDeath: dateOfDeath.toISOString().split('T')[0],
       causeOfDeath,
       treatmentStatus: 'deceased'
     }, updatedBy || 'system');
@@ -532,7 +542,7 @@ export class PatientsService {
     const createPatientDto: CreatePatientDto = {
       medicalRecordNumber,
       name: quickEntryDto.name,
-      dateOfBirth: quickEntryDto.dateOfBirth || new Date(),
+      dateOfBirth: quickEntryDto.dateOfBirth ? quickEntryDto.dateOfBirth : new Date().toISOString().split('T')[0],
       gender: quickEntryDto.gender || 'female',
       phone: quickEntryDto.phone,
       address: {

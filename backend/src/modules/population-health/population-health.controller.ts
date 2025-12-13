@@ -91,7 +91,7 @@ export class PopulationHealthController {
   @ApiResponse({ status: 201, description: 'Report generated successfully' })
   @RequirePermissions('RESEARCH_EXPORT')
   @HttpCode(HttpStatus.CREATED)
-  @AuditLog('GENERATE_POPULATION_HEALTH_REPORT')
+  @AuditLog('GENERATE', 'population_health_report')
   async generateReport(@Body() reportData: {
     reportType: 'comprehensive' | 'summary' | 'detailed';
     filters?: {

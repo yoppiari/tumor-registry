@@ -18,7 +18,7 @@ export function RegisterForm({ onSuccess, onError }: RegisterFormProps) {
     role: 'data_entry',
     centerId: '',
   });
-  const [fieldErrors, setFieldErrors] = useState<Partial<RegisterRequest>>({});
+  const [fieldErrors, setFieldErrors] = useState<Partial<RegisterRequest & { confirmPassword?: string }>>({});
   const [centers, setCenters] = useState<Center[]>([]);
   const [isLoadingCenters, setIsLoadingCenters] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -48,7 +48,7 @@ export function RegisterForm({ onSuccess, onError }: RegisterFormProps) {
   };
 
   const validateForm = (): boolean => {
-    const errors: Partial<RegisterFormProps> = {};
+    const errors: Partial<RegisterRequest & { confirmPassword?: string }> = {};
 
     if (!formData.email) {
       errors.email = 'Email wajib diisi';

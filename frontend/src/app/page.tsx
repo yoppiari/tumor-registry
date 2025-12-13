@@ -10,7 +10,7 @@ export default function SimpleHomePage() {
             <div className="flex items-center">
               <h1 className="text-2xl font-bold text-primary-600">INAMSOS</h1>
               <span className="ml-2 text-sm text-gray-500">
-                Indonesia National Cancer Database System
+                Indonesia National Musculoskeletal Tumor Registry
               </span>
             </div>
             <nav className="flex space-x-8">
@@ -30,11 +30,11 @@ export default function SimpleHomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
           <div className="text-center">
             <h1 className="text-4xl font-extrabold text-gray-900 sm:text-5xl md:text-6xl">
-              <span className="block text-primary-600">Transform</span>
-              <span className="block">Cancer Research in Indonesia</span>
+              <span className="block text-primary-600">Advancing</span>
+              <span className="block">Musculoskeletal Oncology Care</span>
             </h1>
             <p className="mt-6 max-w-2xl mx-auto text-xl text-gray-500">
-              INAMSOS mengubah scattered data menjadi centralized real-time intelligence system yang enables groundbreaking research dan evidence-based policy decisions.
+              Sistem registri tumor muskuloskeletal nasional pertama di Indonesia yang mengintegrasikan data klinis, staging (Enneking & AJCC), outcome bedah (LIMB_SALVAGE), dan follow-up jangka panjang untuk research dan clinical excellence.
             </p>
             <div className="mt-10 flex justify-center gap-4">
               <Link
@@ -58,10 +58,10 @@ export default function SimpleHomePage() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
         <div className="text-center mb-16">
           <h2 className="text-3xl font-bold text-gray-900">
-            Comprehensive Cancer Intelligence Platform
+            Comprehensive Musculoskeletal Tumor Registry
           </h2>
           <p className="mt-4 text-lg text-gray-500">
-            Built for Indonesian healthcare context dengan focus pada research advancement
+            Platform terintegrasi untuk bone & soft tissue tumors dengan standardisasi WHO classification, dual staging systems, dan outcome tracking
           </p>
         </div>
 
@@ -73,10 +73,10 @@ export default function SimpleHomePage() {
               </svg>
             </div>
             <h3 className="text-lg font-semibold text-gray-900 text-center mb-2">
-              Data Entry Management
+              10-Section Wizard
             </h3>
             <p className="text-gray-500 text-center text-sm leading-relaxed">
-              Efficient interface untuk input data tumor yang accurate dan standardized.
+              Guided multi-step form untuk comprehensive patient data: identitas, klinis, diagnosis, staging, CPC, treatment, dan follow-up dengan auto-save.
             </p>
           </div>
 
@@ -87,10 +87,10 @@ export default function SimpleHomePage() {
               </svg>
             </div>
             <h3 className="text-lg font-semibold text-gray-900 text-center mb-2">
-              Research Discovery
+              Dual Staging Systems
             </h3>
             <p className="text-gray-500 text-center text-sm leading-relaxed">
-              Advanced search dan geographic visualization untuk cancer research collaboration.
+              Enneking staging (IA-III) untuk surgical planning dan AJCC TNM (8th edition) untuk research standardization dengan auto-calculation.
             </p>
           </div>
 
@@ -101,10 +101,10 @@ export default function SimpleHomePage() {
               </svg>
             </div>
             <h3 className="text-lg font-semibold text-gray-900 text-center mb-2">
-              HIPAA Compliance
+              LIMB_SALVAGE Tracking
             </h3>
             <p className="text-gray-500 text-center text-sm leading-relaxed">
-              Enterprise-grade security dengan audit trails dan data encryption.
+              Prominent tracking untuk limb salvage vs amputation rates - key surgical outcome metric untuk musculoskeletal oncology quality benchmarking.
             </p>
           </div>
 
@@ -115,10 +115,10 @@ export default function SimpleHomePage() {
               </svg>
             </div>
             <h3 className="text-lg font-semibold text-gray-900 text-center mb-2">
-              Real-time Analytics
+              MSTS Functional Assessment
             </h3>
             <p className="text-gray-500 text-center text-sm leading-relaxed">
-              Intelligent dashboards untuk cancer pattern detection dan policy insights.
+              Musculoskeletal Tumor Society scoring (0-30 scale) untuk 14-visit follow-up protocol dengan auto-calculation dan longitudinal trend analysis.
             </p>
           </div>
         </div>
@@ -129,16 +129,19 @@ export default function SimpleHomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 gap-8 sm:grid-cols-3">
             <div className="text-center">
-              <div className="text-4xl font-bold text-white">95%</div>
-              <div className="mt-2 text-green-100">Center Adoption Target</div>
+              <div className="text-4xl font-bold text-white">10</div>
+              <div className="mt-2 text-green-100">Comprehensive Data Sections</div>
+              <div className="mt-1 text-xs text-green-200">Identity → Treatment → 14-visit Follow-up</div>
             </div>
             <div className="text-center">
-              <div className="text-4xl font-bold text-white">50+</div>
-              <div className="mt-2 text-green-100">Annual Research Papers</div>
+              <div className="text-4xl font-bold text-white">85%+</div>
+              <div className="mt-2 text-green-100">Target Limb Salvage Rate</div>
+              <div className="mt-1 text-xs text-green-200">WHO benchmark untuk advanced centers</div>
             </div>
             <div className="text-center">
-              <div className="text-4xl font-bold text-white">200%</div>
-              <div className="mt-2 text-green-100">Research Collaboration Growth</div>
+              <div className="text-4xl font-bold text-white">10 Years</div>
+              <div className="mt-2 text-green-100">Long-term Follow-up Protocol</div>
+              <div className="mt-1 text-xs text-green-200">14 scheduled visits dengan MSTS tracking</div>
             </div>
           </div>
         </div>
@@ -149,11 +152,16 @@ export default function SimpleHomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           <div className="text-center">
             <p className="text-gray-500">
-              © 2025 INAMSOS. Database Tumor Nasional untuk kolegium Indonesia.
+              © 2025 INAMSOS. Indonesia National Musculoskeletal Tumor Registry.
             </p>
             <div className="mt-4">
               <span className="text-sm text-gray-400">
-                Pilot Deployment: RS Kanker Dharmais, RSUPN Cipto Mangunkusumo, RS Kanker Soeharto
+                Supported by: Indonesian Orthopedic Association (PABOI) | Indonesian Society of Surgical Oncology (PERABOI)
+              </span>
+            </div>
+            <div className="mt-2">
+              <span className="text-xs text-gray-400">
+                Participating Centers: RSUD Dr. Zainoel Abidin (Aceh) | RSUPN Cipto Mangunkusumo | RS Kanker Dharmais | RSUP Dr. Sardjito | RSUD Dr. Soetomo
               </span>
             </div>
           </div>

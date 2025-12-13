@@ -20,9 +20,10 @@ import { CreatePatientDto } from './dto/create-patient.dto';
 import { UpdatePatientDto } from './dto/update-patient.dto';
 import { PatientSearchDto } from './dto/patient-search.dto';
 import { QuickPatientEntryDto, ChatMessageDto } from './dto/quick-patient-entry.dto';
+import { PatientDto } from './dto/patient.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { Roles } from '../auth/decorators/roles.decorator';
-import { Patient, UpdatePatientDto as UpdatePatientInterface } from './interfaces/patient.interface';
+import { Patient } from './interfaces/patient.interface';
 
 @ApiTags('patients')
 @Controller('patients')
@@ -34,7 +35,7 @@ export class PatientsController {
   @Post()
   @Throttle({ default: { limit: 10, ttl: 60000 } }) // 10 requests per minute
   @ApiOperation({ summary: 'Create new patient' })
-  @ApiResponse({ status: 201, description: 'Patient created successfully', type: Patient })
+  @ApiResponse({ status: 201, description: 'Patient created successfully', type: PatientDto })
   @ApiResponse({ status: 400, description: 'Invalid input data' })
   @ApiResponse({ status: 409, description: 'Patient already exists' })
   @ApiResponse({ status: 401, description: 'Unauthorized' })
@@ -46,7 +47,7 @@ export class PatientsController {
   @Post('quick-entry')
   @Throttle({ default: { limit: 20, ttl: 60000 } }) // 20 requests per minute
   @ApiOperation({ summary: 'Quick patient entry (WhatsApp-inspired)' })
-  @ApiResponse({ status: 201, description: 'Patient created successfully', type: Patient })
+  @ApiResponse({ status: 201, description: 'Patient created successfully', type: PatientDto })
   @ApiResponse({ status: 400, description: 'Invalid input data' })
   @ApiResponse({ status: 401, description: 'Unauthorized' })
   async quickEntry(@Req() req: any, @Body() quickEntryDto: QuickPatientEntryDto): Promise<Patient> {
@@ -99,7 +100,7 @@ export class PatientsController {
   @Throttle({ default: { limit: 50, ttl: 60000 } }) // 50 requests per minute
   @ApiOperation({ summary: 'Get patient by medical record number' })
   @ApiParam({ name: 'medicalRecordNumber', description: 'Medical record number' })
-  @ApiResponse({ status: 200, description: 'Patient found', type: Patient })
+  @ApiResponse({ status: 200, description: 'Patient found', type: PatientDto })
   @ApiResponse({ status: 404, description: 'Patient not found' })
   @ApiResponse({ status: 401, description: 'Unauthorized' })
   async findByMedicalRecordNumber(@Param('medicalRecordNumber') medicalRecordNumber: string): Promise<Patient> {
@@ -110,7 +111,7 @@ export class PatientsController {
   @Throttle({ default: { limit: 50, ttl: 60000 } }) // 50 requests per minute
   @ApiOperation({ summary: 'Get patient by ID' })
   @ApiParam({ name: 'id', description: 'Patient ID' })
-  @ApiResponse({ status: 200, description: 'Patient found', type: Patient })
+  @ApiResponse({ status: 200, description: 'Patient found', type: PatientDto })
   @ApiResponse({ status: 404, description: 'Patient not found' })
   @ApiResponse({ status: 401, description: 'Unauthorized' })
   async findOne(@Param('id') id: string): Promise<Patient> {
@@ -121,7 +122,7 @@ export class PatientsController {
   @Throttle({ default: { limit: 20, ttl: 60000 } }) // 20 requests per minute
   @ApiOperation({ summary: 'Update patient information' })
   @ApiParam({ name: 'id', description: 'Patient ID' })
-  @ApiResponse({ status: 200, description: 'Patient updated successfully', type: Patient })
+  @ApiResponse({ status: 200, description: 'Patient updated successfully', type: PatientDto })
   @ApiResponse({ status: 404, description: 'Patient not found' })
   @ApiResponse({ status: 400, description: 'Invalid input data' })
   @ApiResponse({ status: 401, description: 'Unauthorized' })

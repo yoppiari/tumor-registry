@@ -206,26 +206,26 @@ export default function PatientChatEntry({ onShowListView }: PatientChatEntryPro
         medicalRecordNumber: `RM${Date.now()}`, // Generate auto MRN
         name: chatSession.formData.name || '',
         dateOfBirth: chatSession.formData.dateOfBirth || '',
-        gender: chatSession.formData.gender === 'Laki-laki' ? 'male' : 'female',
+        gender: chatSession.formData.gender || 'male',
         phone: chatSession.formData.phone,
         address: {
-          street: chatSession.formData.address || ''
+          street: typeof chatSession.formData.address === 'string'
+            ? chatSession.formData.address
+            : chatSession.formData.address?.street || ''
         },
         emergencyContact: {
           name: '',
-          relationship: 'other',
+          relationship: 'other' as const,
           phone: ''
         },
         primaryCancerDiagnosis: {
           primarySite: chatSession.formData.primaryCancerDiagnosis?.primarySite || '',
-          laterality: 'unknown',
+          laterality: 'unknown' as const,
           morphology: '',
-          behavior: 'invasive'
+          behavior: 'invasive' as const
         },
         cancerStage: chatSession.formData.cancerStage,
-        treatmentStatus: chatSession.formData.treatmentStatus === 'Baru' ? 'new' :
-                        chatSession.formData.treatmentStatus === 'Sedang Berjalan' ? 'ongoing' :
-                        chatSession.formData.treatmentStatus === 'Selesai' ? 'completed' : 'palliative',
+        treatmentStatus: chatSession.formData.treatmentStatus || 'new',
         treatmentCenter: 'Default' // This should come from user context
       };
 

@@ -1,4 +1,10 @@
 import { PrismaClient } from '@prisma/client';
+import { seedMusculoskeletalCenters } from './seeds/centers.seed';
+import { seedWhoBoneTumors } from './seeds/who-bone-tumors.seed';
+import { seedWhoSoftTissueTumors } from './seeds/who-soft-tissue-tumors.seed';
+import { seedBoneLocations } from './seeds/bone-locations.seed';
+import { seedSoftTissueLocations } from './seeds/soft-tissue-locations.seed';
+import { seedTumorSyndromes } from './seeds/tumor-syndromes.seed';
 
 const prisma = new PrismaClient();
 
@@ -319,33 +325,43 @@ async function seedRolesAndPermissions() {
   }
 }
 
-async function seedDefaultCenter() {
-  console.log('🏥 Creating default center...');
+async function seedPathologyTypes() {
+  console.log('🦴 Seeding pathology types...');
 
   try {
-    // Check if center already exists
-    const existingCenter = await prisma.center.findFirst();
-    if (existingCenter) {
-      console.log('✅ Default center already exists');
-      return;
+    const pathologyTypes = [
+      {
+        code: 'bone_tumor',
+        name: 'Tumor Tulang (Bone Tumor)',
+        description: 'Tumor primer yang berasal dari jaringan tulang',
+        sortOrder: 1,
+      },
+      {
+        code: 'soft_tissue_tumor',
+        name: 'Tumor Jaringan Lunak (Soft Tissue Tumor)',
+        description: 'Tumor yang berasal dari jaringan lunak (otot, lemak, saraf, pembuluh darah, dll)',
+        sortOrder: 2,
+      },
+      {
+        code: 'metastatic_bone_disease',
+        name: 'Penyakit Tulang Metastatik (Metastatic Bone Disease)',
+        description: 'Metastasis tumor ke tulang dari organ lain',
+        sortOrder: 3,
+      },
+    ];
+
+    for (const pt of pathologyTypes) {
+      await prisma.pathologyType.upsert({
+        where: { code: pt.code },
+        update: {},
+        create: pt,
+      });
+      console.log(`✅ Pathology type: ${pt.name}`);
     }
 
-    const center = await prisma.center.create({
-      data: {
-        name: 'Default Center',
-        code: 'DEFAULT',
-        province: 'DKI Jakarta',
-        regency: 'Jakarta Pusat',
-        address: 'Jl. Default Center No. 1, Jakarta Pusat',
-        isActive: true,
-      },
-    });
-
-    console.log(`✅ Default center created: ${center.name} (${center.code})`);
-    return center;
-
+    console.log('✅ Pathology types seeded successfully!');
   } catch (error) {
-    console.error('❌ Error creating default center:', error);
+    console.error('❌ Error seeding pathology types:', error);
     throw error;
   }
 }
@@ -354,12 +370,13 @@ async function seedDemoUsers() {
   console.log('👥 Creating demo users...');
 
   try {
+    // Use RSUPN Dr. Cipto Mangunkusumo (Jakarta) as default for demo users
     const defaultCenter = await prisma.center.findFirst({
-      where: { code: 'DEFAULT' }
+      where: { code: 'DKI001' }
     });
 
     if (!defaultCenter) {
-      throw new Error('Default center not found');
+      throw new Error('RSUPN Dr. Cipto Mangunkusumo center not found. Please seed centers first.');
     }
 
     const demoUsers = [
@@ -467,13 +484,42 @@ async function seedDemoUsers() {
 
 async function main() {
   try {
-    console.log('🚀 Starting database seeding...');
+    console.log('🚀 Starting INAMSOS Musculoskeletal Tumor Registry database seeding...\n');
 
-    await seedDefaultCenter();
+    // 1. Seed reference data first
+    console.log('📊 PHASE 1: REFERENCE DATA');
+    console.log('━'.repeat(50));
+    await seedMusculoskeletalCenters(prisma);
+    await seedPathologyTypes();
+    await seedWhoBoneTumors(prisma);
+    await seedWhoSoftTissueTumors(prisma);
+    await seedBoneLocations(prisma);
+    await seedSoftTissueLocations(prisma);
+    await seedTumorSyndromes(prisma);
+
+    // 2. Seed roles and permissions
+    console.log('\n📊 PHASE 2: SECURITY & ACCESS CONTROL');
+    console.log('━'.repeat(50));
     await seedRolesAndPermissions();
+
+    // 3. Seed demo users
+    console.log('\n📊 PHASE 3: DEMO USERS');
+    console.log('━'.repeat(50));
     await seedDemoUsers();
 
-    console.log('\n✅ Database seeding completed successfully!');
+    console.log('\n' + '━'.repeat(50));
+    console.log('✅ INAMSOS DATABASE SEEDING COMPLETED SUCCESSFULLY!');
+    console.log('━'.repeat(50));
+    console.log('\n📋 Summary:');
+    console.log('  ✓ 21 Musculoskeletal Tumor Centers');
+    console.log('  ✓ 3 Pathology Types');
+    console.log('  ✓ 57 WHO Bone Tumor Classifications');
+    console.log('  ✓ 68 WHO Soft Tissue Tumor Classifications');
+    console.log('  ✓ 95 Bone Locations (3-level hierarchy)');
+    console.log('  ✓ 36 Soft Tissue Locations');
+    console.log('  ✓ 15 Tumor Syndromes');
+    console.log('  ✓ 6 User Roles with Permissions');
+    console.log('  ✓ 6 Demo Users\n');
 
   } catch (error) {
     console.error('❌ Database seeding failed:', error);

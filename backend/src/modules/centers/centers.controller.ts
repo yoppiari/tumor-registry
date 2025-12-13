@@ -74,7 +74,7 @@ export class CentersController {
   @ApiResponse({ status: 409, description: 'Center already exists' })
   @RequirePermissions('CENTERS_CREATE')
   @HttpCode(HttpStatus.CREATED)
-  @AuditLog('CREATE_CENTER')
+  @AuditLog('CREATE', 'center')
   async create(@Body() createCenterDto: {
     name: string;
     code: string;
@@ -92,7 +92,7 @@ export class CentersController {
   @ApiResponse({ status: 404, description: 'Center not found' })
   @ApiResponse({ status: 409, description: 'Cannot modify default center' })
   @RequirePermissions('CENTERS_UPDATE')
-  @AuditLog('UPDATE_CENTER')
+  @AuditLog('UPDATE', 'center')
   async update(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() updateCenterDto: {
@@ -112,7 +112,7 @@ export class CentersController {
   @ApiResponse({ status: 200, description: 'Center activated successfully' })
   @ApiResponse({ status: 404, description: 'Center not found' })
   @RequirePermissions('CENTERS_UPDATE')
-  @AuditLog('ACTIVATE_CENTER')
+  @AuditLog('ACTIVATE', 'center')
   async activate(@Param('id', ParseUUIDPipe) id: string) {
     return await this.centersService.activate(id);
   }
@@ -124,7 +124,7 @@ export class CentersController {
   @ApiResponse({ status: 404, description: 'Center not found' })
   @ApiResponse({ status: 409, description: 'Cannot deactivate default center' })
   @RequirePermissions('CENTERS_UPDATE')
-  @AuditLog('DEACTIVATE_CENTER')
+  @AuditLog('DEACTIVATE', 'center')
   async deactivate(@Param('id', ParseUUIDPipe) id: string) {
     return await this.centersService.deactivate(id);
   }
@@ -137,7 +137,7 @@ export class CentersController {
   @ApiResponse({ status: 409, description: 'Cannot delete default center or centers with active users' })
   @RequirePermissions('CENTERS_DELETE')
   @HttpCode(HttpStatus.NO_CONTENT)
-  @AuditLog('DELETE_CENTER')
+  @AuditLog('DELETE', 'center')
   async delete(@Param('id', ParseUUIDPipe) id: string) {
     await this.centersService.delete(id);
   }

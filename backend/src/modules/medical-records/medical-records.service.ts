@@ -88,11 +88,11 @@ export class MedicalRecordsService {
         this.prisma.medicalRecord.findMany({
           where,
           include: {
-            provider: {
+            patient: {
               select: {
                 id: true,
                 name: true,
-                email: true,
+                medicalRecordNumber: true,
               },
             },
           },
@@ -133,13 +133,6 @@ export class MedicalRecordsService {
               gender: true,
             },
           },
-          provider: {
-            select: {
-              id: true,
-              name: true,
-              email: true,
-            },
-          },
         },
       });
 
@@ -156,15 +149,14 @@ export class MedicalRecordsService {
 
   async findByRecordNumber(recordNumber: string): Promise<MedicalRecord> {
     try {
-      const record = await this.prisma.medicalRecord.findUnique({
+      const record = await this.prisma.medicalRecord.findFirst({
         where: { recordNumber },
         include: {
-          patient: true,
-          provider: {
+          patient: {
             select: {
               id: true,
               name: true,
-              email: true,
+              medicalRecordNumber: true,
             },
           },
         },
@@ -319,13 +311,6 @@ export class MedicalRecordsService {
                 id: true,
                 name: true,
                 medicalRecordNumber: true,
-              },
-            },
-            provider: {
-              select: {
-                id: true,
-                name: true,
-                email: true,
               },
             },
           },

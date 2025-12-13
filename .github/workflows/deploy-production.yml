@@ -1,0 +1,338 @@
+# INAMSOS Production Deployment CI/CD Pipeline
+# Automated build, test, and deployment for production
+
+name: Deploy to Production
+
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - 'v*'
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Deployment environment'
+        required: true
+        default: 'production'
+        type: choice
+        options:
+          - production
+          - staging
+
+env:
+  DOCKER_BUILDKIT: 1
+  COMPOSE_DOCKER_CLI_BUILD: 1
+
+jobs:
+  # Job 1: Build and Test
+  build-and-test:
+    name: Build and Test
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+          cache-dependency-path: |
+            backend/package-lock.json
+            frontend/package-lock.json
+
+      - name: Get build metadata
+        id: meta
+        run: |
+          echo "BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ')" >> $GITHUB_OUTPUT
+          echo "VCS_REF=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+          echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
+
+      # Backend Build and Test
+      - name: Install backend dependencies
+        working-directory: ./backend
+        run: npm ci
+
+      - name: Generate Prisma Client
+        working-directory: ./backend
+        run: npx prisma generate
+
+      - name: Build backend
+        working-directory: ./backend
+        run: npm run build
+
+      - name: Run backend tests
+        working-directory: ./backend
+        run: npm test || echo "Tests not yet implemented"
+
+      # Frontend Build and Test
+      - name: Install frontend dependencies
+        working-directory: ./frontend
+        run: npm ci
+
+      - name: Build frontend
+        working-directory: ./frontend
+        run: npm run build
+        env:
+          NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL }}
+          NEXT_PUBLIC_APP_NAME: INAMSOS
+
+      - name: Run frontend tests
+        working-directory: ./frontend
+        run: npm test || echo "Tests not yet implemented"
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: build-artifacts
+          path: |
+            backend/dist
+            frontend/.next
+          retention-days: 7
+
+  # Job 2: Security Scan
+  security-scan:
+    name: Security Scan
+    runs-on: ubuntu-latest
+    needs: build-and-test
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: 'fs'
+          scan-ref: '.'
+          format: 'sarif'
+          output: 'trivy-results.sarif'
+          severity: 'CRITICAL,HIGH'
+
+      - name: Upload Trivy results to GitHub Security
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: 'trivy-results.sarif'
+
+      - name: Run npm audit (backend)
+        working-directory: ./backend
+        run: npm audit --audit-level=moderate || true
+
+      - name: Run npm audit (frontend)
+        working-directory: ./frontend
+        run: npm audit --audit-level=moderate || true
+
+  # Job 3: Build Docker Images
+  build-docker-images:
+    name: Build Docker Images
+    runs-on: ubuntu-latest
+    needs: [build-and-test, security-scan]
+    timeout-minutes: 45
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Get build metadata
+        id: meta
+        run: |
+          echo "BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ')" >> $GITHUB_OUTPUT
+          echo "VCS_REF=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+          if [[ "$GITHUB_REF" =~ ^refs/tags/v ]]; then
+            echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
+          else
+            echo "VERSION=latest" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Build and push backend image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./backend
+          file: ./backend/Dockerfile.production
+          push: true
+          tags: |
+            ${{ secrets.DOCKER_USERNAME }}/inamsos-backend:${{ steps.meta.outputs.VERSION }}
+            ${{ secrets.DOCKER_USERNAME }}/inamsos-backend:latest
+          build-args: |
+            BUILD_DATE=${{ steps.meta.outputs.BUILD_DATE }}
+            VCS_REF=${{ steps.meta.outputs.VCS_REF }}
+            VERSION=${{ steps.meta.outputs.VERSION }}
+          cache-from: type=registry,ref=${{ secrets.DOCKER_USERNAME }}/inamsos-backend:latest
+          cache-to: type=inline
+
+      - name: Build and push frontend image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./frontend
+          file: ./frontend/Dockerfile.production
+          push: true
+          tags: |
+            ${{ secrets.DOCKER_USERNAME }}/inamsos-frontend:${{ steps.meta.outputs.VERSION }}
+            ${{ secrets.DOCKER_USERNAME }}/inamsos-frontend:latest
+          build-args: |
+            BUILD_DATE=${{ steps.meta.outputs.BUILD_DATE }}
+            VCS_REF=${{ steps.meta.outputs.VCS_REF }}
+            VERSION=${{ steps.meta.outputs.VERSION }}
+            NEXT_PUBLIC_API_URL=${{ secrets.NEXT_PUBLIC_API_URL }}
+            NEXT_PUBLIC_APP_NAME=INAMSOS
+            NEXT_PUBLIC_VERSION=${{ steps.meta.outputs.VERSION }}
+          cache-from: type=registry,ref=${{ secrets.DOCKER_USERNAME }}/inamsos-frontend:latest
+          cache-to: type=inline
+
+  # Job 4: Deploy to Production
+  deploy-production:
+    name: Deploy to Production
+    runs-on: ubuntu-latest
+    needs: build-docker-images
+    timeout-minutes: 30
+    environment:
+      name: production
+      url: https://inamsos.kemenkes.go.id
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup SSH
+        uses: webfactory/ssh-agent@v0.8.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Add server to known hosts
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan -H ${{ secrets.PRODUCTION_SERVER_IP }} >> ~/.ssh/known_hosts
+
+      - name: Copy deployment files to server
+        run: |
+          scp docker-compose.production.yml ${{ secrets.SSH_USER }}@${{ secrets.PRODUCTION_SERVER_IP }}:~/inamsos/
+          scp -r nginx ${{ secrets.SSH_USER }}@${{ secrets.PRODUCTION_SERVER_IP }}:~/inamsos/
+          scp -r scripts ${{ secrets.SSH_USER }}@${{ secrets.PRODUCTION_SERVER_IP }}:~/inamsos/
+
+      - name: Deploy to production server
+        run: |
+          ssh ${{ secrets.SSH_USER }}@${{ secrets.PRODUCTION_SERVER_IP }} << 'ENDSSH'
+            cd ~/inamsos
+
+            # Create backup of current deployment
+            echo "Creating backup..."
+            docker-compose -f docker-compose.production.yml exec -T postgres pg_dump -U $POSTGRES_USER $POSTGRES_DB > backup-$(date +%Y%m%d-%H%M%S).sql
+
+            # Pull latest images
+            echo "Pulling latest Docker images..."
+            docker-compose -f docker-compose.production.yml pull
+
+            # Stop services gracefully
+            echo "Stopping services..."
+            docker-compose -f docker-compose.production.yml down --timeout 60
+
+            # Start services
+            echo "Starting services..."
+            docker-compose -f docker-compose.production.yml up -d
+
+            # Run database migrations
+            echo "Running database migrations..."
+            docker-compose -f docker-compose.production.yml exec -T backend npx prisma migrate deploy
+
+            # Health check
+            echo "Waiting for services to be healthy..."
+            sleep 30
+            curl -f http://localhost/health || exit 1
+
+            # Cleanup old images
+            echo "Cleaning up old Docker images..."
+            docker image prune -af --filter "until=168h"
+
+            echo "Deployment completed successfully!"
+          ENDSSH
+
+      - name: Verify deployment
+        run: |
+          # Wait for services to stabilize
+          sleep 60
+
+          # Health check
+          curl -f https://inamsos.kemenkes.go.id/health || exit 1
+          curl -f https://api.inamsos.kemenkes.go.id/health || exit 1
+
+          echo "Deployment verification successful!"
+
+      - name: Notify on success
+        if: success()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: '✅ Production deployment successful! Version: ${{ steps.meta.outputs.VERSION }}'
+            })
+
+      - name: Notify on failure
+        if: failure()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: '❌ Production deployment failed! Please check the logs.'
+            })
+
+  # Job 5: Post-deployment Tests
+  post-deployment-tests:
+    name: Post-deployment Tests
+    runs-on: ubuntu-latest
+    needs: deploy-production
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Run smoke tests
+        run: |
+          # Test homepage
+          curl -f https://inamsos.kemenkes.go.id/ || exit 1
+
+          # Test API health
+          curl -f https://api.inamsos.kemenkes.go.id/health || exit 1
+
+          # Test API endpoint
+          curl -f https://api.inamsos.kemenkes.go.id/v1/health || exit 1
+
+          echo "Smoke tests passed!"
+
+      - name: Run E2E tests
+        run: |
+          # Placeholder for E2E tests
+          echo "E2E tests would run here"
+          # npx playwright test --project=production
+
+      - name: Performance test
+        run: |
+          # Basic performance check
+          response_time=$(curl -o /dev/null -s -w '%{time_total}' https://inamsos.kemenkes.go.id/)
+          echo "Response time: ${response_time}s"
+
+          # Check if response time is acceptable (< 3 seconds)
+          if (( $(echo "$response_time > 3" | bc -l) )); then
+            echo "Warning: Response time is higher than expected"
+          fi

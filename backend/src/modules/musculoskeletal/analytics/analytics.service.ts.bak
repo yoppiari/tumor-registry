@@ -1,0 +1,478 @@
+import { Injectable } from '@nestjs/common';
+import { PrismaService } from '../../../common/database/prisma.service';
+
+export interface LimbSalvageRate {
+  centerId: string;
+  centerName: string;
+  totalCases: number;
+  limbSalvage: number;
+  amputation: number;
+  salvageRate: number; // percentage
+}
+
+export interface MstsTrend {
+  month: string;
+  averageScore: number;
+  totalAssessments: number;
+  excellentCount: number;
+  goodCount: number;
+  fairCount: number;
+  poorCount: number;
+}
+
+export interface TreatmentEffectiveness {
+  treatmentModality: string;
+  totalPatients: number;
+  averageMstsScore: number;
+  salvageRate: number;
+  recurrenceRate: number;
+  survivalRate: number;
+}
+
+export interface WhoClassificationDistribution {
+  classification: string;
+  count: number;
+  percentage: number;
+}
+
+export interface SurvivalAnalysis {
+  tumorType: string;
+  totalPatients: number;
+  oneYearSurvival: number;
+  threeYearSurvival: number;
+  fiveYearSurvival: number;
+  averageSurvivalMonths: number;
+}
+
+export interface CenterPerformance {
+  centerId: string;
+  centerName: string;
+  totalPatients: number;
+  averageMstsScore: number;
+  salvageRate: number;
+  completedFollowUpRate: number;
+  dataCompletenessScore: number;
+}
+
+export interface FollowUpCompliance {
+  centerId?: string;
+  centerName?: string;
+  totalScheduled: number;
+  completed: number;
+  missed: number;
+  cancelled: number;
+  complianceRate: number; // percentage
+  averageDelayDays: number;
+}
+
+@Injectable()
+export class AnalyticsService {
+  constructor(private readonly prisma: PrismaService) {}
+
+  /**
+   * Get limb salvage rate by center
+   */
+  async getLimbSalvageRateByCenter(): Promise<LimbSalvageRate[]> {
+    const centers = await this.prisma.center.findMany({
+      where: { isActive: true },
+      include: {
+        patients: {
+          select: {
+            surgicalApproach: true,
+          },
+        },
+      },
+    });
+
+    return centers.map((center) => {
+      const totalCases = center.patients.length;
+      const limbSalvage = center.patients.filter(
+        (p) => p.surgicalApproach === 'Limb Salvage' || p.surgicalApproach === 'limb_salvage'
+      ).length;
+      const amputation = center.patients.filter(
+        (p) => p.surgicalApproach === 'Amputation' || p.surgicalApproach === 'amputation'
+      ).length;
+
+      return {
+        centerId: center.id,
+        centerName: center.name,
+        totalCases,
+        limbSalvage,
+        amputation,
+        salvageRate: totalCases > 0 ? (limbSalvage / totalCases) * 100 : 0,
+      };
+    });
+  }
+
+  /**
+   * Get MSTS score trends over time
+   */
+  async getMstsTrends(months: number = 12): Promise<MstsTrend[]> {
+    const startDate = new Date();
+    startDate.setMonth(startDate.getMonth() - months);
+
+    const scores = await this.prisma.mstsScore.findMany({
+      where: {
+        assessmentDate: {
+          gte: startDate,
+        },
+      },
+      orderBy: {
+        assessmentDate: 'asc',
+      },
+    });
+
+    // Group by month
+    const monthlyData = scores.reduce((acc, score) => {
+      const month = score.assessmentDate.toISOString().substring(0, 7); // YYYY-MM
+      if (!acc[month]) {
+        acc[month] = {
+          month,
+          scores: [],
+          excellent: 0,
+          good: 0,
+          fair: 0,
+          poor: 0,
+        };
+      }
+      acc[month].scores.push(score.totalScore);
+
+      // Categorize
+      if (score.totalScore >= 24) acc[month].excellent++;
+      else if (score.totalScore >= 18) acc[month].good++;
+      else if (score.totalScore >= 12) acc[month].fair++;
+      else acc[month].poor++;
+
+      return acc;
+    }, {} as Record<string, any>);
+
+    return Object.values(monthlyData).map((data: any) => ({
+      month: data.month,
+      averageScore: data.scores.reduce((a: number, b: number) => a + b, 0) / data.scores.length,
+      totalAssessments: data.scores.length,
+      excellentCount: data.excellent,
+      goodCount: data.good,
+      fairCount: data.fair,
+      poorCount: data.poor,
+    }));
+  }
+
+  /**
+   * Get treatment modality effectiveness comparison
+   */
+  async getTreatmentEffectiveness(): Promise<TreatmentEffectiveness[]> {
+    const patients = await this.prisma.patient.findMany({
+      where: {
+        treatmentModality: { not: null },
+      },
+      include: {
+        mstsScores: {
+          orderBy: { assessmentDate: 'desc' },
+          take: 1,
+        },
+        followUpVisits: true,
+      },
+    });
+
+    // Group by treatment modality
+    const modalityData = patients.reduce((acc, patient) => {
+      const modality = patient.treatmentModality || 'Unknown';
+      if (!acc[modality]) {
+        acc[modality] = {
+          patients: [],
+          salvageCount: 0,
+          recurrenceCount: 0,
+          aliveCount: 0,
+        };
+      }
+
+      acc[modality].patients.push(patient);
+      if (patient.surgicalApproach?.includes('Salvage') || patient.surgicalApproach?.includes('salvage')) {
+        acc[modality].salvageCount++;
+      }
+      if (patient.followUpVisits.some((v) => v.localRecurrence || v.distantMetastasis)) {
+        acc[modality].recurrenceCount++;
+      }
+      if (!patient.isDeceased) {
+        acc[modality].aliveCount++;
+      }
+
+      return acc;
+    }, {} as Record<string, any>);
+
+    return Object.entries(modalityData).map(([modality, data]: [string, any]) => {
+      const totalPatients = data.patients.length;
+      const avgMsts = data.patients
+        .filter((p: any) => p.mstsScores.length > 0)
+        .reduce((sum: number, p: any) => sum + p.mstsScores[0].totalScore, 0) /
+        data.patients.filter((p: any) => p.mstsScores.length > 0).length || 0;
+
+      return {
+        treatmentModality: modality,
+        totalPatients,
+        averageMstsScore: avgMsts,
+        salvageRate: (data.salvageCount / totalPatients) * 100,
+        recurrenceRate: (data.recurrenceCount / totalPatients) * 100,
+        survivalRate: (data.aliveCount / totalPatients) * 100,
+      };
+    });
+  }
+
+  /**
+   * Get WHO classification distribution
+   */
+  async getWhoClassificationDistribution(): Promise<WhoClassificationDistribution[]> {
+    const patients = await this.prisma.patient.findMany({
+      where: {
+        whoClassificationId: { not: null },
+      },
+      include: {
+        whoClassification: true,
+      },
+    });
+
+    const total = patients.length;
+    const distribution = patients.reduce((acc, patient) => {
+      const classification = patient.whoClassification?.classificationName || 'Unclassified';
+      acc[classification] = (acc[classification] || 0) + 1;
+      return acc;
+    }, {} as Record<string, number>);
+
+    return Object.entries(distribution)
+      .map(([classification, count]) => ({
+        classification,
+        count,
+        percentage: (count / total) * 100,
+      }))
+      .sort((a, b) => b.count - a.count);
+  }
+
+  /**
+   * Get 5-year survival analysis by tumor type
+   */
+  async getSurvivalAnalysisByTumorType(): Promise<SurvivalAnalysis[]> {
+    const patients = await this.prisma.patient.findMany({
+      include: {
+        whoClassification: true,
+      },
+    });
+
+    // Group by tumor type (WHO classification)
+    const tumorTypeData = patients.reduce((acc, patient) => {
+      const tumorType = patient.whoClassification?.classificationName || 'Unclassified';
+      if (!acc[tumorType]) {
+        acc[tumorType] = {
+          patients: [],
+        };
+      }
+      acc[tumorType].patients.push(patient);
+      return acc;
+    }, {} as Record<string, any>);
+
+    return Object.entries(tumorTypeData).map(([tumorType, data]: [string, any]) => {
+      const totalPatients = data.patients.length;
+      const now = new Date();
+
+      // Calculate survival by checking if patient is alive after 1, 3, 5 years from diagnosis
+      let oneYear = 0;
+      let threeYear = 0;
+      let fiveYear = 0;
+      let totalSurvivalMonths = 0;
+
+      data.patients.forEach((p: any) => {
+        const diagnosisDate = new Date(p.createdAt);
+        const monthsSinceDiagnosis =
+          (now.getTime() - diagnosisDate.getTime()) / (1000 * 60 * 60 * 24 * 30);
+
+        if (!p.isDeceased || (p.dateOfDeath && new Date(p.dateOfDeath) > new Date(diagnosisDate.getTime() + 365 * 24 * 60 * 60 * 1000))) {
+          oneYear++;
+        }
+        if (!p.isDeceased || (p.dateOfDeath && new Date(p.dateOfDeath) > new Date(diagnosisDate.getTime() + 3 * 365 * 24 * 60 * 60 * 1000))) {
+          threeYear++;
+        }
+        if (!p.isDeceased || (p.dateOfDeath && new Date(p.dateOfDeath) > new Date(diagnosisDate.getTime() + 5 * 365 * 24 * 60 * 60 * 1000))) {
+          fiveYear++;
+        }
+
+        if (p.isDeceased && p.dateOfDeath) {
+          const survivalMonths =
+            (new Date(p.dateOfDeath).getTime() - diagnosisDate.getTime()) / (1000 * 60 * 60 * 24 * 30);
+          totalSurvivalMonths += survivalMonths;
+        } else {
+          totalSurvivalMonths += monthsSinceDiagnosis;
+        }
+      });
+
+      return {
+        tumorType,
+        totalPatients,
+        oneYearSurvival: (oneYear / totalPatients) * 100,
+        threeYearSurvival: (threeYear / totalPatients) * 100,
+        fiveYearSurvival: (fiveYear / totalPatients) * 100,
+        averageSurvivalMonths: totalSurvivalMonths / totalPatients,
+      };
+    });
+  }
+
+  /**
+   * Get center performance comparison
+   */
+  async getCenterPerformanceComparison(): Promise<CenterPerformance[]> {
+    const centers = await this.prisma.center.findMany({
+      where: { isActive: true },
+      include: {
+        patients: {
+          include: {
+            mstsScores: {
+              orderBy: { assessmentDate: 'desc' },
+              take: 1,
+            },
+            followUpVisits: true,
+          },
+        },
+      },
+    });
+
+    return centers.map((center) => {
+      const totalPatients = center.patients.length;
+
+      // Average MSTS Score
+      const patientsWithScores = center.patients.filter((p) => p.mstsScores.length > 0);
+      const averageMstsScore = patientsWithScores.length > 0
+        ? patientsWithScores.reduce((sum, p) => sum + p.mstsScores[0].totalScore, 0) / patientsWithScores.length
+        : 0;
+
+      // Salvage Rate
+      const salvageCount = center.patients.filter(
+        (p) => p.surgicalApproach?.includes('Salvage') || p.surgicalApproach?.includes('salvage')
+      ).length;
+      const salvageRate = totalPatients > 0 ? (salvageCount / totalPatients) * 100 : 0;
+
+      // Follow-up Completion Rate
+      const totalScheduledVisits = center.patients.reduce(
+        (sum, p) => sum + p.followUpVisits.filter((v) => v.status === 'scheduled' || v.status === 'completed').length,
+        0
+      );
+      const completedVisits = center.patients.reduce(
+        (sum, p) => sum + p.followUpVisits.filter((v) => v.status === 'completed').length,
+        0
+      );
+      const completedFollowUpRate = totalScheduledVisits > 0
+        ? (completedVisits / totalScheduledVisits) * 100
+        : 0;
+
+      // Data Completeness Score (simplified - checks if critical fields are filled)
+      const dataCompletenessScore = center.patients.reduce((sum, p) => {
+        let score = 0;
+        if (p.whoClassificationId) score += 25;
+        if (p.treatmentModality) score += 25;
+        if (p.surgicalApproach) score += 25;
+        if (p.mstsScores.length > 0) score += 25;
+        return sum + score;
+      }, 0) / (totalPatients || 1);
+
+      return {
+        centerId: center.id,
+        centerName: center.name,
+        totalPatients,
+        averageMstsScore,
+        salvageRate,
+        completedFollowUpRate,
+        dataCompletenessScore,
+      };
+    });
+  }
+
+  /**
+   * Get follow-up compliance tracking
+   */
+  async getFollowUpCompliance(centerId?: string): Promise<FollowUpCompliance[]> {
+    const where = centerId ? { centerId } : {};
+
+    const centers = await this.prisma.center.findMany({
+      where: { ...where, isActive: true },
+      include: {
+        patients: {
+          include: {
+            followUpVisits: true,
+          },
+        },
+      },
+    });
+
+    return centers.map((center) => {
+      const allVisits = center.patients.flatMap((p) => p.followUpVisits);
+
+      const totalScheduled = allVisits.filter(
+        (v) => ['scheduled', 'completed', 'missed'].includes(v.status)
+      ).length;
+      const completed = allVisits.filter((v) => v.status === 'completed').length;
+      const missed = allVisits.filter((v) => v.status === 'missed').length;
+      const cancelled = allVisits.filter((v) => v.status === 'cancelled').length;
+
+      // Calculate average delay
+      const completedWithDelay = allVisits.filter(
+        (v) => v.status === 'completed' && v.actualDate && v.scheduledDate
+      );
+      const totalDelayDays = completedWithDelay.reduce((sum, v) => {
+        const delay = Math.max(
+          0,
+          (new Date(v.actualDate!).getTime() - new Date(v.scheduledDate).getTime()) / (1000 * 60 * 60 * 24)
+        );
+        return sum + delay;
+      }, 0);
+      const averageDelayDays = completedWithDelay.length > 0
+        ? totalDelayDays / completedWithDelay.length
+        : 0;
+
+      return {
+        centerId: center.id,
+        centerName: center.name,
+        totalScheduled,
+        completed,
+        missed,
+        cancelled,
+        complianceRate: totalScheduled > 0 ? (completed / totalScheduled) * 100 : 0,
+        averageDelayDays,
+      };
+    });
+  }
+
+  /**
+   * Get overall dashboard summary
+   */
+  async getDashboardSummary() {
+    const [
+      totalPatients,
+      totalCenters,
+      totalMstsScores,
+      totalFollowUpVisits,
+      limbSalvageRates,
+      recentTrends,
+    ] = await Promise.all([
+      this.prisma.patient.count(),
+      this.prisma.center.count({ where: { isActive: true } }),
+      this.prisma.mstsScore.count(),
+      this.prisma.followUpVisit.count(),
+      this.getLimbSalvageRateByCenter(),
+      this.getMstsTrends(6),
+    ]);
+
+    const overallSalvageRate =
+      limbSalvageRates.reduce((sum, r) => sum + r.salvageRate, 0) / (limbSalvageRates.length || 1);
+
+    const averageMstsScore = recentTrends.length > 0
+      ? recentTrends[recentTrends.length - 1].averageScore
+      : 0;
+
+    return {
+      totalPatients,
+      totalCenters,
+      totalMstsScores,
+      totalFollowUpVisits,
+      overallSalvageRate,
+      averageMstsScore,
+      monthlyTrend: recentTrends,
+    };
+  }
+}

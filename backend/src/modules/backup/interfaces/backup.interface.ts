@@ -44,6 +44,7 @@ export interface BackupOptions {
   excludeTables?: string[];
   includeTables?: string[];
   whereConditions?: string[];
+  compression?: boolean;
   compressionLevel?: number;
   encryptionKey?: string;
   splitFiles?: boolean;

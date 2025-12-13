@@ -11,6 +11,15 @@ import {
   ExclamationTriangleIcon
 } from '@heroicons/react/24/outline';
 
+// Simple debounce utility function
+function debounce<T extends (...args: any[]) => any>(func: T, wait: number): (...args: Parameters<T>) => void {
+  let timeout: NodeJS.Timeout | null = null;
+  return function(...args: Parameters<T>) {
+    if (timeout) clearTimeout(timeout);
+    timeout = setTimeout(() => func(...args), wait);
+  };
+}
+
 interface PatientData {
   id?: string;
   patientName?: string;
@@ -24,6 +33,7 @@ interface PatientData {
   lastSyncStatus?: 'synced' | 'pending' | 'error';
   lastModified?: string;
   isDraft?: boolean;
+  pendingSync?: boolean;
 }
 
 interface DraftStorage {
@@ -273,13 +283,15 @@ interface QuickActionProps {
   label: string;
   onClick: () => void;
   color?: 'blue' | 'green' | 'red' | 'yellow';
+  disabled?: boolean;
 }
 
 const QuickAction: React.FC<QuickActionProps> = ({
   icon,
   label,
   onClick,
-  color = 'blue'
+  color = 'blue',
+  disabled = false
 }) => {
   const colorClasses = {
     blue: 'bg-blue-500 text-white hover:bg-blue-600',
@@ -291,10 +303,11 @@ const QuickAction: React.FC<QuickActionProps> = ({
   return (
     <button
       onClick={onClick}
+      disabled={disabled}
       className={`
         flex flex-col items-center justify-center p-4 rounded-2xl transition-all duration-200
         ${colorClasses[color]}
-        active:scale-95
+        ${disabled ? 'opacity-50 cursor-not-allowed' : 'active:scale-95'}
       `}
     >
       <div className="mb-2">{icon}</div>

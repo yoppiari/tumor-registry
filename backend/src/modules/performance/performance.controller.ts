@@ -55,7 +55,7 @@ export class PerformanceController {
   @ApiResponse({ status: 201, description: 'Caching strategy created successfully' })
   @RequirePermissions('PERFORMANCE_OPTIMIZE')
   @HttpCode(HttpStatus.CREATED)
-  @AuditLog('IMPLEMENT_CACHING_STRATEGY')
+  @AuditLog('IMPLEMENT', 'caching_strategy')
   async implementCachingStrategy() {
     return await this.performanceService.implementCachingStrategy();
   }
@@ -65,7 +65,7 @@ export class PerformanceController {
   @ApiResponse({ status: 201, description: 'Query optimization completed successfully' })
   @RequirePermissions('PERFORMANCE_OPTIMIZE')
   @HttpCode(HttpStatus.CREATED)
-  @AuditLog('OPTIMIZE_PERFORMANCE')
+  @AuditLog('OPTIMIZE', 'performance')
   async optimizeQueryPerformance() {
     return await this.performanceService.optimizeQueryPerformance();
   }
@@ -150,7 +150,7 @@ export class PerformanceController {
   @ApiResponse({ status: 201, description: 'Performance benchmark completed' })
   @RequirePermissions('PERFORMANCE_TEST')
   @HttpCode(HttpStatus.CREATED)
-  @AuditLog('RUN_PERFORMANCE_BENCHMARK')
+  @AuditLog('RUN', 'performance_benchmark')
   async runBenchmark(@Body() benchmarkConfig: {
     testTypes: string[];
     duration: number;
@@ -239,7 +239,7 @@ export class PerformanceController {
   @ApiResponse({ status: 200, description: 'Cache cleared successfully' })
   @RequirePermissions('PERFORMANCE_OPTIMIZE')
   @HttpCode(HttpStatus.OK)
-  @AuditLog('CLEAR_CACHE')
+  @AuditLog('CLEAR', 'cache')
   async clearCache(@Query('pattern') pattern?: string) {
     const keys = pattern || '*';
     const deletedCount = await this.redisService.flushPattern(keys);
@@ -307,40 +307,40 @@ export class PerformanceController {
   @ApiResponse({ status: 200, description: 'Patient data stream started' })
   @RequirePermissions('PATIENT_DATA_READ')
   async streamPatients(
-    @Res() reply: FastifyReply,
+    @Res() reply: any,
     @Query('centerId') centerId?: string,
     @Query('format') format: string = 'json',
   ) {
     try {
       const stream = this.streamingService.createPatientStream(centerId);
 
-      res.setHeader('Content-Type', 'application/json');
-      res.setHeader('Transfer-Encoding', 'chunked');
+      reply.header('Content-Type', 'application/json');
+      reply.header('Transfer-Encoding', 'chunked');
 
       if (format === 'csv') {
         const csvStream = this.streamingService.createCsvStream(
           stream,
           ['id', 'medicalRecordNumber', 'name', 'dateOfBirth', 'gender', 'province', 'createdAt'],
-          (patient) => [
+          (patient: any) => [
             patient.id,
             patient.medicalRecordNumber,
             patient.name,
-            patient.dateOfBirth.toISOString().split('T')[0],
+            patient.dateOfBirth?.toISOString().split('T')[0] || '',
             patient.gender,
             patient.province || '',
-            patient.createdAt.toISOString(),
+            patient.createdAt?.toISOString() || '',
           ]
         );
 
-        res.setHeader('Content-Type', 'text/csv');
-        res.setHeader('Content-Disposition', 'attachment; filename="patients.csv"');
+        reply.header('Content-Type', 'text/csv');
+        reply.header('Content-Disposition', 'attachment; filename="patients.csv"');
 
-        csvStream.pipe(res);
+        csvStream.pipe(reply.raw);
       } else {
-        stream.pipe(res);
+        stream.pipe(reply.raw);
       }
-    } catch (error) {
-      res.status(500).json({ error: 'Failed to start data stream', details: error.message });
+    } catch (error: any) {
+      reply.status(500).send({ error: 'Failed to start data stream', details: error.message });
     }
   }
 
@@ -373,7 +373,7 @@ export class PerformanceController {
   @ApiResponse({ status: 200, description: 'Database maintenance triggered successfully' })
   @RequirePermissions('SYSTEM_ADMIN')
   @HttpCode(HttpStatus.OK)
-  @AuditLog('DATABASE_MAINTENANCE')
+  @AuditLog('MAINTAIN', 'database')
   async triggerDatabaseMaintenance(@Body() maintenanceConfig: {
     tasks: string[];
     schedule?: string;
@@ -430,7 +430,7 @@ export class PerformanceController {
   @ApiResponse({ status: 201, description: 'Cache warming initiated successfully' })
   @RequirePermissions('PERFORMANCE_OPTIMIZE')
   @HttpCode(HttpStatus.CREATED)
-  @AuditLog('CACHE_WARMING')
+  @AuditLog('WARM', 'cache')
   async warmCache(@Body() warmConfig: {
     dataTypes: string[];
     centerId?: string;
@@ -492,11 +492,12 @@ export class PerformanceController {
 
     // Get memory alerts
     const summary = this.performanceMonitor.getPerformanceSummary();
-    if (summary.memoryUsage.percentageUsed > 80) {
+    const memoryPercentage = (summary.memoryUsage.heapUsed / summary.memoryUsage.heapTotal) * 100;
+    if (memoryPercentage > 80) {
       alerts.push({
         type: 'memory',
         severity: 'critical',
-        message: `High memory usage: ${summary.memoryUsage.percentageUsed.toFixed(1)}%`,
+        message: `High memory usage: ${memoryPercentage.toFixed(1)}%`,
         timestamp: new Date(),
       });
     }
@@ -518,7 +519,7 @@ export class PerformanceController {
   async exportMetrics(
     @Query('format') format: string = 'json',
     @Query('hours') hours: number = 24,
-    @Res() reply: FastifyReply,
+    @Res() reply: any,
   ) {
     try {
       const [
@@ -543,17 +544,17 @@ export class PerformanceController {
       };
 
       if (format === 'csv') {
-        res.setHeader('Content-Type', 'text/csv');
-        res.setHeader('Content-Disposition', `attachment; filename="performance_metrics_${Date.now()}.csv"`);
+        reply.header('Content-Type', 'text/csv');
+        reply.header('Content-Disposition', `attachment; filename="performance_metrics_${Date.now()}.csv"`);
         // Convert to CSV format
-        res.send('timestamp,metric_type,value,unit\n'); // CSV header
+        reply.send('timestamp,metric_type,value,unit\n'); // CSV header
       } else {
-        res.setHeader('Content-Type', 'application/json');
-        res.setHeader('Content-Disposition', `attachment; filename="performance_metrics_${Date.now()}.json"`);
-        res.json(exportData);
+        reply.header('Content-Type', 'application/json');
+        reply.header('Content-Disposition', `attachment; filename="performance_metrics_${Date.now()}.json"`);
+        reply.send(exportData);
       }
-    } catch (error) {
-      res.status(500).json({ error: 'Failed to export metrics', details: error.message });
+    } catch (error: any) {
+      reply.status(500).send({ error: 'Failed to export metrics', details: error.message });
     }
   }
 }

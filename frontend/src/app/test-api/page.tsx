@@ -124,10 +124,10 @@ export default function TestAPIPage() {
         <div className="mt-12 p-4 bg-blue-50 rounded-lg">
           <h3 className="text-lg font-medium text-blue-900 mb-2">Environment Information</h3>
           <div className="text-sm text-blue-800 space-y-1">
-            <p><strong>Frontend URL:</strong> {window.location.origin}</p>
+            <p><strong>Frontend URL:</strong> {typeof window !== 'undefined' ? window.location.origin : 'N/A'}</p>
             <p><strong>Backend URL:</strong> {process.env.NODE_ENV === 'production' ? 'https://api.inamsos.id' : 'http://localhost:3001'}</p>
             <p><strong>Environment:</strong> {process.env.NODE_ENV}</p>
-            <p><strong>Browser:</strong> {navigator.userAgent.split(' ').slice(-2).join(' ')}</p>
+            <p><strong>Browser:</strong> {typeof navigator !== 'undefined' ? navigator.userAgent.split(' ').slice(-2).join(' ') : 'N/A'}</p>
           </div>
         </div>
       </div>

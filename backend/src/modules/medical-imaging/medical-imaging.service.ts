@@ -32,7 +32,7 @@ export class MedicalImagingService {
 
   async uploadImage(
     uploadDto: UploadImageDto,
-    file: Express.Multer.File,
+    file: any,
     userId: string,
   ): Promise<any> {
     try {
@@ -252,7 +252,7 @@ export class MedicalImagingService {
           resource: 'MedicalImage',
           details: {
             imageId: id,
-            changes: updateDto,
+            changes: JSON.parse(JSON.stringify(updateDto)),
           },
         },
       });

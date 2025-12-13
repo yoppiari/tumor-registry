@@ -28,8 +28,11 @@ type PatientAction =
   | { type: 'UPDATE_PATIENT'; payload: Patient }
   | { type: 'REMOVE_PATIENT'; payload: string };
 
+// State-only type (without methods)
+type PatientState = Pick<PatientContextType, 'patients' | 'currentPatient' | 'isLoading' | 'error' | 'searchQuery' | 'statistics'>;
+
 // Initial state
-const initialState: Omit<PatientContextType, 'actions'> = {
+const initialState: PatientState = {
   patients: [],
   currentPatient: null,
   isLoading: false,

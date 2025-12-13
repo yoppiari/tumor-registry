@@ -8,14 +8,14 @@ import { DatabasePerformanceService } from './database-performance.service';
 import { DatabaseModule } from '../../database/database.module';
 import { AuthModule } from '../auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
-import { ScheduleModule } from '@nestjs/schedule';
+// import { ScheduleModule } from '@nestjs/schedule'; // Package removed
 
 @Module({
   imports: [
     DatabaseModule,
     AuthModule,
     ConfigModule,
-    ScheduleModule.forRoot(),
+    // ScheduleModule.forRoot(), // Package removed
   ],
   controllers: [PerformanceController],
   providers: [

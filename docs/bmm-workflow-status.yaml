@@ -1292,3 +1292,235 @@ notes:
   - "Form complexity increased from 2-layer system to 10-section specialized form"
   - "User roles expanded to include orthopedic oncologists and residents (PPDS)"
   - "Analytics need to focus on limb salvage rates, functional outcomes, and subspecialty metrics"
+
+# ============================================================================
+# CURRENT WORK SESSION - Sprint 1: Research Request System (Checklist-Based)
+# Date: 2025-12-14
+# Session Focus: Backend Implementation
+# ============================================================================
+
+current_work_session:
+  date: "2025-12-14"
+  session_number: "Research Request Sprint 1"
+  focus: "Research Data Request System - Backend Implementation"
+  approach: "Checklist-Based Data Selection"
+  
+  context:
+    previous_issue: "Research request flow was simple form without approval workflow"
+    problem_identified: |
+      - /research/requests was just basic list page
+      - No approval integration with /approvals system
+      - Data requests are CRITICAL (patient data) but no approval process
+      - Patient form has 9 sections of detailed data that can be requested
+    
+    solution_designed:
+      approach: "Checklist-Based Request (not lengthy forms)"
+      key_concept: "Researcher checks data categories needed, not fill long forms"
+      features:
+        - 4-step wizard (vs 9 sections)
+        - 9 data categories with justification required
+        - Auto-calculate sensitivity score (0-100)
+        - Auto-estimate patient count
+        - Smart presets (Basic Research, Outcome Study, etc.)
+        - Seamless approval integration
+  
+  implementation_completed:
+    sprint: "Sprint 1 - Backend"
+    duration: "~3 hours"
+    status: "COMPLETED ✓"
+    
+    database_schema:
+      migration: "20251214232653_enhance_research_requests_checklist"
+      changes:
+        - "Enhanced ResearchRequest model with 23 new fields"
+        - "Added requestedDataFields (JSON) - 9 data categories"
+        - "Added dataFilters (JSON) - patient selection criteria"
+        - "Added dataSensitivityScore (0-100 auto-calculated)"
+        - "Added estimatedPatientCount (auto-calculated)"
+        - "Added document upload URLs (IRB, protocol, proposal, CV)"
+        - "Added data export tracking (URL, size, download count)"
+        - "Created ResearchRequestActivity model (audit trail)"
+        - "Enhanced ResearchRequestStatus enum (added 6 new states)"
+        - "Added indexes for performance (status, priority, sensitivity)"
+    
+    backend_module:
+      path: "backend/src/modules/research-requests/"
+      files_created: 8
+      total_lines: "~1200 lines of TypeScript"
+      
+      components:
+        dtos:
+          - name: "data-fields-selection.dto.ts"
+            purpose: "9 data categories with justifications"
+            features: ["DataFieldCategory class", "Smart presets", "getPresetDataFields()"]
+            lines: 180
+          
+          - name: "create-research-request.dto.ts"
+            purpose: "Complete research request DTO"
+            features: ["4-step wizard data", "DataFiltersDto", "ApproveResearchRequestDto"]
+            lines: 200
+        
+        helpers:
+          - name: "sensitivity-scorer.ts"
+            purpose: "Auto-calculate data sensitivity score"
+            algorithm: "Weighted scoring based on field sensitivity"
+            weights:
+              - "demographics: 10 (LOW)"
+              - "demographicsIdentifiable: 40 (VERY HIGH - NIK/Name)"
+              - "clinicalPhotosImaging: 35 (VERY HIGH)"
+              - "clinical data: 5-10 (LOW-MEDIUM)"
+            functions: ["calculateSensitivityScore()", "isAutoApprovalEligible()", "getSensitivityWarnings()"]
+            lines: 140
+          
+          - name: "patient-estimator.ts"
+            purpose: "Auto-estimate patient count from filters"
+            method: "Prisma query builder with complex WHERE clauses"
+            filters_supported: ["Date range", "Tumor types", "WHO classifications", "Staging", "Age", "Gender", "Centers", "Treatment"]
+            lines: 150
+        
+        service:
+          - name: "research-requests.service.ts"
+            purpose: "Core business logic"
+            methods:
+              - "create() - Create draft with auto-calculations"
+              - "update() - Update draft or NEED_MORE_INFO requests"
+              - "submit() - Submit for approval"
+              - "findAll() - Get researcher's requests"
+              - "findPending() - Get admin approval queue"
+              - "findOne() - Get request details"
+              - "approveOrReject() - Admin decision (4 options)"
+              - "remove() - Delete draft"
+              - "logActivity() - Audit trail logging"
+            features:
+              - "Auto-generate request number (RR-YYYY-NNN)"
+              - "Auto-calculate sensitivity score on create/update"
+              - "Auto-estimate patient count"
+              - "Permission checking"
+              - "Complete audit trail"
+            lines: 280
+        
+        controller:
+          - name: "research-requests.controller.ts"
+            purpose: "REST API endpoints"
+            endpoints: 8
+            routes:
+              - "POST /research-requests - Create draft"
+              - "GET /research-requests - List my requests"
+              - "GET /research-requests/pending - Admin queue"
+              - "POST /research-requests/estimate - Real-time patient count"
+              - "GET /research-requests/:id - Get details"
+              - "PATCH /research-requests/:id - Update draft"
+              - "POST /research-requests/:id/submit - Submit for approval"
+              - "POST /research-requests/:id/approve - Admin decision"
+              - "DELETE /research-requests/:id - Delete draft"
+            permissions: ["RESEARCH_REQUESTS_REVIEW", "RESEARCH_REQUESTS_APPROVE"]
+            lines: 120
+        
+        module:
+          - name: "research-requests.module.ts"
+            purpose: "NestJS module registration"
+            imports: ["PrismaModule"]
+            providers: ["ResearchRequestsService"]
+            controllers: ["ResearchRequestsController"]
+            exports: ["ResearchRequestsService"]
+    
+    integration:
+      - "Registered ResearchRequestsModule in app.module.ts"
+      - "Migration applied successfully"
+      - "Prisma client generated with new types"
+      - "All TypeScript compilation successful"
+  
+  technical_achievements:
+    data_model:
+      - "9 data categories mapped from patient 9-section form"
+      - "Sensitivity weights per category (0-40 points)"
+      - "Automatic scoring algorithm (0-100)"
+      - "Auto-approval eligibility (score ≤ 25 + IRB approved)"
+    
+    user_experience:
+      - "Checklist-based (not lengthy forms)"
+      - "Smart presets reduce selection time"
+      - "Real-time patient count feedback"
+      - "Clear sensitivity warnings"
+      - "Justification required per category (accountability)"
+    
+    admin_workflow:
+      - "Priority-sorted approval queue"
+      - "Sensitivity score visible (decision support)"
+      - "4 decision types (Approve, Approve w/ Conditions, Reject, Request More Info)"
+      - "Complete audit trail"
+    
+    data_security:
+      - "Sensitivity scoring highlights high-risk requests"
+      - "Identifiable data (NIK/Name) flagged as 40-point penalty"
+      - "Clinical photos flagged as 35-point penalty"
+      - "Auto-approval only for LOW sensitivity (≤25) + IRB approved"
+  
+  files_modified:
+    - path: "backend/prisma/schema.prisma"
+      changes: "Enhanced ResearchRequest model + ResearchRequestActivity model"
+    - path: "backend/src/app.module.ts"
+      changes: "Added ResearchRequestsModule import and registration"
+  
+  files_created:
+    - "backend/prisma/migrations/20251214232653_enhance_research_requests_checklist/migration.sql"
+    - "backend/src/modules/research-requests/dto/data-fields-selection.dto.ts"
+    - "backend/src/modules/research-requests/dto/create-research-request.dto.ts"
+    - "backend/src/modules/research-requests/helpers/sensitivity-scorer.ts"
+    - "backend/src/modules/research-requests/helpers/patient-estimator.ts"
+    - "backend/src/modules/research-requests/research-requests.service.ts"
+    - "backend/src/modules/research-requests/research-requests.controller.ts"
+    - "backend/src/modules/research-requests/research-requests.module.ts"
+    - "docs/RESEARCH_REQUEST_MATANG_PLAN.md" (detailed plan)
+    - "docs/RESEARCH_REQUEST_SIMPLIFIED_PLAN.md" (alternative approach)"
+  
+  documentation_created:
+    - name: "RESEARCH_REQUEST_MATANG_PLAN.md"
+      purpose: "Comprehensive implementation plan"
+      sections: ["Problem Analysis", "Data Categories Mapping", "4-Step Wizard Design", "Database Schema", "API Endpoints", "UI Mockups", "Implementation Roadmap"]
+      pages: 12
+    
+    - name: "RESEARCH_REQUEST_SIMPLIFIED_PLAN.md"
+      purpose: "Alternative simplified approach"
+      sections: ["Simplified Approach", "3-Step Wizard", "Minimal Status Flow", "Quick Implementation"]
+      pages: 8
+  
+  next_steps:
+    sprint: "Sprint 2 - Frontend 4-Step Wizard"
+    tasks:
+      - "Create /research/requests/new page (4-step wizard)"
+      - "Step 1: Research Info component (auto-fill from user)"
+      - "Step 2: Data Criteria component (filters + real-time estimate)"
+      - "Step 3: Data Fields Checklist component (9 categories + justifications)"
+      - "Step 4: Ethics & Timeline component (IRB upload + agreement)"
+      - "Progress indicator, auto-save, validation"
+    
+    estimated_duration: "3-4 days"
+    priority: "P0"
+  
+  commit_info:
+    hash: "205f0f8"
+    message: "feat: Implement Sprint 1 - Research Request System (Checklist-Based)"
+    files_changed: 12
+    insertions: 2918
+    date: "2025-12-14"
+    pushed: true
+  
+  lessons_learned:
+    - "Checklist-based approach drastically reduces form complexity"
+    - "Auto-calculation (sensitivity, patient count) improves UX and decision-making"
+    - "Smart presets accelerate common use cases"
+    - "Audit trail is critical for research data access tracking"
+    - "Sensitivity scoring provides objective risk assessment"
+  
+  time_breakdown:
+    planning: "30 minutes (analyzing patient form, designing approach)"
+    database: "30 minutes (schema design + migration)"
+    dtos: "45 minutes (data structures + validation)"
+    helpers: "45 minutes (scoring algorithm + estimator)"
+    service: "60 minutes (business logic + CRUD)"
+    controller: "20 minutes (API endpoints)"
+    integration: "20 minutes (module registration + testing)"
+    documentation: "40 minutes (commit message + BMad update)"
+    total: "~4.5 hours"
+

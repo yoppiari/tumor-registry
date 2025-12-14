@@ -10,9 +10,7 @@ import {
 import { JwtAuthGuard } from '../../../auth/guards/jwt-auth.guard';
 
 @ApiTags('WHO Tumor Classifications')
-@ApiBearerAuth()
 @Controller('who-classifications')
-@UseGuards(JwtAuthGuard)
 export class WhoClassificationsController {
   constructor(private readonly service: WhoClassificationsService) {}
 

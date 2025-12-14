@@ -11,6 +11,9 @@ import { Section2PatientIdentity } from '@/components/patients/wizard/sections/S
 import { Section3ClinicalData } from '@/components/patients/wizard/sections/Section3ClinicalData';
 import { Section4DiagnosticInvestigations } from '@/components/patients/wizard/sections/Section4DiagnosticInvestigations';
 import { Section5DiagnosisLocation } from '@/components/patients/wizard/sections/Section5DiagnosisLocation';
+import { Section6Staging } from '@/components/patients/wizard/sections/Section6Staging';
+import { Section7CPCConference } from '@/components/patients/wizard/sections/Section7CPCConference';
+import { Section8TreatmentManagement } from '@/components/patients/wizard/sections/Section8TreatmentManagement';
 import { Section10Review } from '@/components/patients/wizard/sections/Section10Review';
 import {
   validateSection1,
@@ -18,6 +21,9 @@ import {
   validateSection3,
   validateSection4,
   validateSection5,
+  validateSection6,
+  validateSection7,
+  validateSection8,
 } from '@/components/patients/wizard/ValidationUtils';
 
 function NewPatientContent() {
@@ -115,6 +121,27 @@ function NewPatientContent() {
       validate: validateSection5,
     },
     {
+      id: 'section6',
+      title: 'Staging',
+      description: 'Enneking, AJCC, dan grading tumor',
+      component: Section6Staging,
+      validate: validateSection6,
+    },
+    {
+      id: 'section7',
+      title: 'CPC Conference',
+      description: 'Keputusan multidisipliner tim onkologi',
+      component: Section7CPCConference,
+      validate: validateSection7,
+    },
+    {
+      id: 'section8',
+      title: 'Management',
+      description: 'Terapi pembedahan, kemoterapi, radioterapi',
+      component: Section8TreatmentManagement,
+      validate: validateSection8,
+    },
+    {
       id: 'section10',
       title: 'Review & Submit',
       description: 'Tinjau dan kirim data pasien',
@@ -134,7 +161,7 @@ function NewPatientContent() {
         </p>
         <div className="mt-4 flex flex-wrap items-center gap-4">
           <div className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800">
-            6 Bagian Form (50% Lengkap)
+            9 Bagian Form (90% Lengkap)
           </div>
           <div className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800">
             57 Klasifikasi Tumor Tulang WHO

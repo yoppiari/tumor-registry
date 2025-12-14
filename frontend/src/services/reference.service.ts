@@ -112,21 +112,21 @@ class ReferenceService {
     category?: string;
     isMalignant?: boolean;
   }): Promise<WhoBoneTumor[]> {
-    const response = await apiClient.get<ApiResponse<WhoBoneTumor[]>>(
-      '/who-bone-tumors',
+    const response = await apiClient.get<WhoBoneTumor[]>(
+      '/who-classifications/bone',
       { params }
     );
-    return response.data.data;
+    return response.data;
   }
 
   /**
    * Get WHO bone tumor by ID
    */
   async getWhoBoneTumorById(id: string): Promise<WhoBoneTumor> {
-    const response = await apiClient.get<ApiResponse<WhoBoneTumor>>(
-      `/who-bone-tumors/${id}`
+    const response = await apiClient.get<WhoBoneTumor>(
+      `/who-classifications/bone/${id}`
     );
-    return response.data.data;
+    return response.data;
   }
 
   /**
@@ -136,21 +136,21 @@ class ReferenceService {
     category?: string;
     isMalignant?: boolean;
   }): Promise<WhoSoftTissueTumor[]> {
-    const response = await apiClient.get<ApiResponse<WhoSoftTissueTumor[]>>(
-      '/who-soft-tissue-tumors',
+    const response = await apiClient.get<WhoSoftTissueTumor[]>(
+      '/who-classifications/soft-tissue',
       { params }
     );
-    return response.data.data;
+    return response.data;
   }
 
   /**
    * Get WHO soft tissue tumor by ID
    */
   async getWhoSoftTissueTumorById(id: string): Promise<WhoSoftTissueTumor> {
-    const response = await apiClient.get<ApiResponse<WhoSoftTissueTumor>>(
-      `/who-soft-tissue-tumors/${id}`
+    const response = await apiClient.get<WhoSoftTissueTumor>(
+      `/who-classifications/soft-tissue/${id}`
     );
-    return response.data.data;
+    return response.data;
   }
 
   /**
@@ -160,21 +160,21 @@ class ReferenceService {
     level?: number;
     parentId?: string;
   }): Promise<BoneLocation[]> {
-    const response = await apiClient.get<ApiResponse<BoneLocation[]>>(
-      '/bone-locations',
+    const response = await apiClient.get<BoneLocation[]>(
+      '/locations/bone',
       { params }
     );
-    return response.data.data;
+    return response.data;
   }
 
   /**
    * Get bone location by ID
    */
   async getBoneLocationById(id: string): Promise<BoneLocation> {
-    const response = await apiClient.get<ApiResponse<BoneLocation>>(
-      `/bone-locations/${id}`
+    const response = await apiClient.get<BoneLocation>(
+      `/locations/bone/${id}`
     );
-    return response.data.data;
+    return response.data;
   }
 
   /**
@@ -184,41 +184,41 @@ class ReferenceService {
     region?: string;
     category?: string;
   }): Promise<SoftTissueLocation[]> {
-    const response = await apiClient.get<ApiResponse<SoftTissueLocation[]>>(
-      '/soft-tissue-locations',
+    const response = await apiClient.get<SoftTissueLocation[]>(
+      '/locations/soft-tissue',
       { params }
     );
-    return response.data.data;
+    return response.data;
   }
 
   /**
    * Get soft tissue location by ID
    */
   async getSoftTissueLocationById(id: string): Promise<SoftTissueLocation> {
-    const response = await apiClient.get<ApiResponse<SoftTissueLocation>>(
-      `/soft-tissue-locations/${id}`
+    const response = await apiClient.get<SoftTissueLocation>(
+      `/locations/soft-tissue/${id}`
     );
-    return response.data.data;
+    return response.data;
   }
 
   /**
    * Get tumor syndromes
    */
   async getTumorSyndromes(): Promise<TumorSyndrome[]> {
-    const response = await apiClient.get<ApiResponse<TumorSyndrome[]>>(
+    const response = await apiClient.get<TumorSyndrome[]>(
       '/tumor-syndromes'
     );
-    return response.data.data;
+    return response.data;
   }
 
   /**
    * Get tumor syndrome by ID
    */
   async getTumorSyndromeById(id: string): Promise<TumorSyndrome> {
-    const response = await apiClient.get<ApiResponse<TumorSyndrome>>(
+    const response = await apiClient.get<TumorSyndrome>(
       `/tumor-syndromes/${id}`
     );
-    return response.data.data;
+    return response.data;
   }
 }
 

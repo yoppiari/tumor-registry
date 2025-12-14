@@ -212,10 +212,13 @@ export interface ApiResponse<T> {
 }
 
 export interface PaginatedResponse<T> {
-  data: T[];
+  patients: T[];
   total: number;
   page: number;
   limit: number;
+  totalPages: number;
+  hasNext?: boolean;
+  hasPrevious?: boolean;
 }
 
 /**
@@ -223,7 +226,7 @@ export interface PaginatedResponse<T> {
  */
 function getAuthToken(): string | null {
   if (typeof window === 'undefined') return null;
-  return localStorage.getItem('auth_token');
+  return localStorage.getItem('token');
 }
 
 /**

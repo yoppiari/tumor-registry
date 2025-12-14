@@ -60,7 +60,7 @@ export class AdvancedSearchService {
           userId,
           name: saveSearchDto.name,
           description: saveSearchDto.description,
-          searchCriteria: saveSearchDto.searchCriteria,
+          searchCriteria: saveSearchDto.searchCriteria as any,
           isPublic: saveSearchDto.isPublic || false,
           alertsEnabled: saveSearchDto.alertsEnabled || false,
           alertFrequency: saveSearchDto.alertFrequency,
@@ -130,7 +130,12 @@ export class AdvancedSearchService {
       const updated = await this.prisma.savedSearch.update({
         where: { id },
         data: {
-          ...updateDto,
+          ...(updateDto.name && { name: updateDto.name }),
+          ...(updateDto.description && { description: updateDto.description }),
+          ...(updateDto.searchCriteria && { searchCriteria: updateDto.searchCriteria as any }),
+          ...(updateDto.isPublic !== undefined && { isPublic: updateDto.isPublic }),
+          ...(updateDto.alertsEnabled !== undefined && { alertsEnabled: updateDto.alertsEnabled }),
+          ...(updateDto.alertFrequency && { alertFrequency: updateDto.alertFrequency }),
           updatedAt: new Date(),
         },
       });

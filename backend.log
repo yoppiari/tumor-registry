@@ -1,427 +1,465 @@
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:27 AM [32m    LOG[39m [38;5;3m[NestFactory] [39m[32mStarting Nest application...[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:27 AM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mBullModule dependencies initialized[39m[38;5;3m +55ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:27 AM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mDatabaseModule dependencies initialized[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:27 AM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mPassportModule dependencies initialized[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:27 AM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mThrottlerModule dependencies initialized[39m[38;5;3m +7ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:27 AM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mConfigHostModule dependencies initialized[39m[38;5;3m +2ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:27 AM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mCommonModule dependencies initialized[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:27 AM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mUsersModule dependencies initialized[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:27 AM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mHealthModule dependencies initialized[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:27 AM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mDiscoveryModule dependencies initialized[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:27 AM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mConfigModule dependencies initialized[39m[38;5;3m +4ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:27 AM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mConfigModule dependencies initialized[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:27 AM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mScheduleModule dependencies initialized[39m[38;5;3m +2ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mAppModule dependencies initialized[39m[38;5;3m +115ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mJwtModule dependencies initialized[39m[38;5;3m +3ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mReportsModule dependencies initialized[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mNotificationsModule dependencies initialized[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mMedicalImagingModule dependencies initialized[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mCaseReviewModule dependencies initialized[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mPeerReviewModule dependencies initialized[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mOfflineQueueModule dependencies initialized[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mSsoModule dependencies initialized[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mPasswordPolicyModule dependencies initialized[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mSessionManagementModule dependencies initialized[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mDataProvenanceModule dependencies initialized[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mScheduledReportsModule dependencies initialized[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mCentersModule dependencies initialized[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mPatientsModule dependencies initialized[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mSecurityMonitoringModule dependencies initialized[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mResearchModule dependencies initialized[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mPerformanceModule dependencies initialized[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mResearchImpactModule dependencies initialized[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mAnalyticsModule dependencies initialized[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mAuthModule dependencies initialized[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mHealthController {/api/v1/health}:[39m[38;5;3m +157ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/health, GET} route[39m[38;5;3m +4ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/health/detailed, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/health/readiness, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/health/liveness, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mAuthController {/api/v1/auth}:[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/auth/register, POST} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/auth/login, POST} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/auth/verify-mfa, POST} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/auth/verify-email, POST} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/auth/refresh-token, POST} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/auth/profile, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/auth/logout, POST} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/auth/mfa/setup, POST} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/auth/mfa/enable, POST} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/auth/mfa/disable, POST} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/auth/mfa/verify, POST} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/auth/mfa/backup-codes/regenerate, POST} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/auth/mfa/backup-codes/verify, POST} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/auth/mfa/status, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mCentersController {/api/v1/centers}:[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/centers, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/centers/statistics, GET} route[39m[38;5;3m +3ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/centers/:id, GET} route[39m[38;5;3m +4ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/centers/:id/users, GET} route[39m[38;5;3m +11ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/centers, POST} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/centers/:id, PUT} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/centers/:id/activate, PUT} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/centers/:id/deactivate, PUT} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/centers/:id, DELETE} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mPatientsController {/api/v1/patients}:[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/patients, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/patients/search, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/patients/statistics, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/patients/:id, GET} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/patients/nik/:nik, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/patients/mrn/:mrn, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/patients, POST} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/patients/:id, PUT} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/patients/:id/vital-signs, GET} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/patients/:id/diagnoses, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/patients/:id/medications, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/patients/:id/allergies, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/patients/:id/visits, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/patients/:id/insurance, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/patients/chat/session, POST} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/patients/chat/:sessionId/message, POST} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/patients/chat/:sessionId, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mAnalyticsController {/api/v1/analytics}:[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/analytics/dashboard, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/analytics/cancer-stats, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/analytics/trends, GET} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/analytics/center-performance, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mEnhancedAnalyticsController {/api/v1/analytics/v2}:[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/analytics/v2/dashboard/executive, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/analytics/v2/dashboard/national-intelligence, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/analytics/v2/performance/benchmark, GET} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/analytics/v2/performance/metrics/:centerId, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/analytics/v2/predictive/trends, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/analytics/v2/predictive/trends/:cancerType, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/analytics/v2/research/impact, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/analytics/v2/research/impact/summary, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/analytics/v2/real-time/metrics, GET} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/analytics/v2/cache/stats, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/analytics/v2/cache/metrics, GET} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/analytics/v2/cache/invalidate/all, POST} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/analytics/v2/cache/invalidate/center/:centerId, POST} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/analytics/v2/cache/invalidate/patient/:patientId, POST} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/analytics/v2/materialized-views/refresh, POST} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/analytics/v2/data-quality/summary, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/analytics/v2/health/analytics, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/analytics/v2/events/recent, GET} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/analytics/v2/optimize/cache, POST} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mPerformanceController {/api/v1/performance}:[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/performance/database/analysis, GET} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/performance/application/metrics, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/performance/caching/strategy, POST} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/performance/queries/optimize, POST} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/performance/dashboard, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/performance/benchmark/run, POST} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/performance/cache/info, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/performance/cache/clear, GET} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/performance/monitor/metrics, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/performance/monitor/prometheus, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/performance/monitor/health, GET} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/performance/stream/patients, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/performance/database/metrics, GET} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/performance/database/slow-queries, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/performance/database/recommendations, GET} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/performance/database/maintenance, POST} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/performance/analytics/realtime, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/performance/cache/warm, POST} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/performance/alerts, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/performance/export/metrics, GET} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mResearchController {/api/v1/research}:[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/requests, POST} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/requests, GET} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/requests/:requestId, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/requests/:requestId, PUT} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/requests/:requestId/approve, PUT} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/requests/:requestId/reject, PUT} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/requests/:requestId/ethics/review, PUT} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/requests/:requestId/ethics/approve, PUT} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/requests/:requestId/export, POST} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/statistics, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/requests/pending, GET} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/requests/my-requests, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/ethics/pending, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/templates/observational-study, POST} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/templates/clinical-outcome-study, POST} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/templates/registry-based-study, POST} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/templates/quality-improvement-study, POST} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mResearchSprint3Controller {/api/v1/research-sprint3}:[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-sprint3/aggregate-statistics, GET} route[39m[38;5;3m +2ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-sprint3/cancer-trends, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-sprint3/demographic-analysis, GET} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-sprint3/geographic-data, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-sprint3/cancer-hotspots, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-sprint3/provincial-statistics, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-sprint3/research-requests, POST} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-sprint3/research-requests, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-sprint3/research-requests/:id, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-sprint3/research-requests/:id, PUT} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-sprint3/approvals, POST} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-sprint3/research-requests/:id/approvals, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-sprint3/approvals/:id, PUT} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-sprint3/my-approvals, GET} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-sprint3/collaborations, POST} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-sprint3/collaborations/:id/status, PUT} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-sprint3/research-requests/:id/collaborations, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-sprint3/my-collaborations, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-sprint3/data-access-sessions, POST} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-sprint3/data-access-sessions/:id/end, PUT} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-sprint3/data-access-sessions, GET} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-sprint3/my-data-access-sessions, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-sprint3/impact-metrics, POST} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-sprint3/research-requests/:id/impact-metrics, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-sprint3/publications, POST} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-sprint3/research-requests/:id/publications, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-sprint3/dashboard/overview, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-sprint3/analytics/workflow, GET} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-sprint3/analytics/compliance, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-sprint3/stats/summary, GET} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-sprint3/export/clean-data, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-sprint3/validate-request, POST} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mResearchDiscoveryController {/api/v1/research/discovery}:[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/discovery/search/advanced, POST} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/discovery/search/save, POST} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/discovery/search/saved, GET} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/discovery/search/saved/:id, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/discovery/search/saved/:id, PUT} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/discovery/search/saved/:id, DELETE} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/discovery/search/saved/:id/execute, POST} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/discovery/search/suggestions, GET} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/discovery/profiles, POST} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/discovery/profiles/:userId, GET} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/discovery/profiles/:userId, PUT} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/discovery/profiles, GET} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/discovery/experts/find, POST} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/discovery/projects, POST} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/discovery/projects/:id, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/discovery/projects/:id, PUT} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/discovery/projects, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/discovery/projects/:projectId/members, POST} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/discovery/projects/:projectId/members/:memberId, PUT} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/discovery/projects/:projectId/members/:memberId, DELETE} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/discovery/projects/:projectId/annotations, POST} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/discovery/projects/:projectId/annotations, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/discovery/annotations/:id, PUT} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/discovery/annotations/:id, DELETE} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/discovery/planning/data-availability, POST} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/discovery/planning/sample-size, POST} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/discovery/planning/feasibility, POST} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/discovery/planning/similar-studies, POST} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/discovery/planning/similar-studies, GET} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mResearchImpactController {/api/v1/research-impact}:[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-impact/publications, POST} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-impact/publications/:id, GET} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-impact/publications/:id, PUT} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-impact/publications/:id, DELETE} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-impact/publications/research/:researchRequestId, GET} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-impact/citations, POST} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-impact/citations/publication/:publicationId, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-impact/citations/analyze, POST} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-impact/bibliometric-indicators, POST} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-impact/researcher-contributions, POST} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-impact/researcher-leaderboard, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-impact/collaboration-network, POST} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-impact/innovations, POST} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-impact/innovations/research/:researchRequestId, GET} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-impact/roi-analysis, POST} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-impact/impact-report, POST} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research-impact/impact-metrics, POST} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mReportsController {/api/v1/reports}:[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/reports/templates, GET} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/reports/templates, POST} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/reports/templates/:id, GET} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/reports/generated, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/reports/generated/:id, GET} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/reports/generated/:id/download, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/reports/generate, POST} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/reports/schedule, POST} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/reports/scheduled, GET} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/reports/scheduled/:id, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/reports/scheduled/:id/toggle, PUT} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/reports/scheduled/:id, DELETE} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/reports/statistics, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/reports/templates/:id/validate, POST} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/reports/preview/:templateId, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/reports/data-sources, GET} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/reports/data-sources/:source/schema, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/reports/data-sources/:source/query, POST} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/reports/formats, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/reports/exports, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/reports/generated/:id, DELETE} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/reports/templates/:id/usage, GET} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/reports/templates/:id/clone, POST} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/reports/history/:reportId, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/reports/history/template/:templateId, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/reports/distributions/:reportHistoryId, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/reports/access-logs/:reportHistoryId, GET} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/reports/access-logs/:reportHistoryId, POST} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/reports/integrity/:reportHistoryId, GET} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/reports/versions/:reportId, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/reports/audit/export, GET} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/reports/history/statistics, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mScheduledReportsController {/api/v1/scheduled-reports}:[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/scheduled-reports, POST} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/scheduled-reports, GET} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/scheduled-reports/:id, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/scheduled-reports/:id, PUT} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/scheduled-reports/:id/toggle, PUT} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/scheduled-reports/:id, DELETE} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/scheduled-reports/:id/execute, POST} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mNotificationsController {/api/v1/notifications}:[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/notifications, POST} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/notifications/preferences, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/notifications/preferences, POST} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/notifications/preferences/:id, PUT} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/notifications/history, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/notifications/unread-count, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/notifications/:id/read, PUT} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/notifications/smart-rules, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/notifications/calendar/sync, POST} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mMedicalImagingController {/api/v1/medical-imaging}:[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/medical-imaging/upload, POST} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/medical-imaging, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/medical-imaging/:id, GET} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/medical-imaging/:id/file, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/medical-imaging/:id/thumbnail, GET} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/medical-imaging/:id, PUT} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/medical-imaging/:id, DELETE} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/medical-imaging/:id/categorize, PUT} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/medical-imaging/:id/annotations, POST} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mCaseReviewController {/api/v1/case-review}:[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/case-review, POST} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/case-review, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/case-review/statistics, GET} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/case-review/:id, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/case-review/:id/assign, POST} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/case-review/:id/comments, POST} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/case-review/:id/status, PUT} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/case-review/:id/complete, POST} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mPeerReviewController {/api/v1/peer-review}:[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/peer-review, POST} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/peer-review, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/peer-review/statistics, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/peer-review/:id, GET} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/peer-review/:id/assign, PUT} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/peer-review/:id/comments, POST} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/peer-review/comments/:commentId/resolve, PUT} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/peer-review/:id/approve, POST} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/peer-review/:id/reject, POST} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/peer-review/:id/recognition, POST} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mOfflineQueueController {/api/v1/offline-queue}:[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/offline-queue/sync, POST} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/offline-queue/pending, GET} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/offline-queue/statistics, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/offline-queue/sync-all, POST} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/offline-queue/:id/retry, PUT} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/offline-queue/:id/resolve-conflict, PUT} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mSsoController {/api/v1/sso}:[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/sso/config/:centerId, POST} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/sso/config/center/:centerId, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/sso/config/:id, GET} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/sso/config/:id, PUT} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/sso/config/:id, DELETE} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/sso/login, POST} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/sso/test/:id, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/sso/login-history, GET} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mPasswordPolicyController {/api/v1/password-policy}:[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/password-policy/:centerId, POST} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/password-policy/center/:centerId, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/password-policy/:id, PUT} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/password-policy/validate, POST} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/password-policy/user/policy, GET} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/password-policy/user/expiry, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mSessionManagementController {/api/v1/sessions}:[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/sessions/my-sessions, GET} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/sessions/:id, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/sessions/:id, DELETE} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/sessions/terminate/all, DELETE} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/sessions/cleanup, POST} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mSecurityMonitoringController {/api/v1/security}:[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/security/alerts, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/security/alerts/:id, GET} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/security/alerts/:id/resolve, PUT} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/security/incidents, GET} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/security/incidents, POST} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/security/incidents/:id/status, PUT} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/security/threat-intelligence, GET} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/security/scan/threats, POST} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/security/behavior/analyze/:userId, GET} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/security/metrics, GET} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mDataProvenanceController {/api/v1/data-provenance}:[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/data-provenance/track, POST} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/data-provenance/history/:entityType/:entityId, GET} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/data-provenance/timeline/:entityType/:entityId, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/data-provenance/rollback/:provenanceId, POST} route[39m[38;5;3m +0ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/data-provenance/verify/:entityType/:entityId, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/data-provenance/lineage/:entityType/:entityId, GET} route[39m[38;5;3m +1ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/data-provenance/statistics, GET} route[39m[38;5;3m +0ms[39m
-prisma:query SELECT "system"."scheduled_reports"."id", "system"."scheduled_reports"."templateId", "system"."scheduled_reports"."name", "system"."scheduled_reports"."description", "system"."scheduled_reports"."schedule", "system"."scheduled_reports"."recipients", "system"."scheduled_reports"."parameters", "system"."scheduled_reports"."format"::text, "system"."scheduled_reports"."deliveryMethod"::text, "system"."scheduled_reports"."isActive", "system"."scheduled_reports"."lastRun", "system"."scheduled_reports"."nextRun", "system"."scheduled_reports"."successCount", "system"."scheduled_reports"."failureCount", "system"."scheduled_reports"."createdBy", "system"."scheduled_reports"."createdAt", "system"."scheduled_reports"."updatedAt" FROM "system"."scheduled_reports" WHERE "system"."scheduled_reports"."isActive" = $1 OFFSET $2
-prisma:query SELECT "system"."scheduled_reports"."id", "system"."scheduled_reports"."templateId", "system"."scheduled_reports"."name", "system"."scheduled_reports"."description", "system"."scheduled_reports"."schedule", "system"."scheduled_reports"."recipients", "system"."scheduled_reports"."parameters", "system"."scheduled_reports"."format"::text, "system"."scheduled_reports"."deliveryMethod"::text, "system"."scheduled_reports"."isActive", "system"."scheduled_reports"."lastRun", "system"."scheduled_reports"."nextRun", "system"."scheduled_reports"."successCount", "system"."scheduled_reports"."failureCount", "system"."scheduled_reports"."createdBy", "system"."scheduled_reports"."createdAt", "system"."scheduled_reports"."updatedAt" FROM "system"."scheduled_reports" WHERE "system"."scheduled_reports"."isActive" = $1 OFFSET $2
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[ScheduledReportsService] [39m[32mInitialized 0 scheduled reports[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[PrismaService] [39m[32mDatabase connected successfully[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:28 AM [32m    LOG[39m [38;5;3m[RedisService] [39m[32mRedis is disabled - running without cache[39m
-prisma:query CREATE INDEX CONCURRENTLY IF NOT EXISTS idx_patients_center_created ON medical.patients(centerId, createdAt);
-prisma:error 
-Invalid `prisma.$executeRawUnsafe()` invocation:
-
-
-Raw query failed. Code: `42703`. Message: `column "centerid" does not exist`
-[33m[Nest] 470740  - [39m11/23/2025, 11:32:29 AM [33m   WARN[39m [38;5;3m[AnalyticsService] [39m[33mSome indexes could not be created:[39m
-[33m[Nest] 470740  - [39m11/23/2025, 11:32:29 AM [33m   WARN[39m [38;5;3m[AnalyticsService] [39m[33m
-Invalid `prisma.$executeRawUnsafe()` invocation:
-
-
-Raw query failed. Code: `42703`. Message: `column "centerid" does not exist`[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:29 AM [32m    LOG[39m [38;5;3m[AnalyticsService] [39m[32mDatabase connection pool initialized[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:29 AM [32m    LOG[39m [38;5;3m[AnalyticsService] [39m[32mPerformance optimizations initialized[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:29 AM [32m    LOG[39m [38;5;3m[RedisService] [39m[32mRedis is disabled - running without cache[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:29 AM [32m    LOG[39m [38;5;3m[StreamingService] [39m[32mStreaming service initialized[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:29 AM [32m    LOG[39m [38;5;3m[PerformanceMonitorService] [39m[32mPerformance monitoring initialized[39m
-prisma:query CREATE EXTENSION IF NOT EXISTS pg_stat_statements;
-prisma:query 
-        CREATE OR REPLACE VIEW slow_queries AS
-        SELECT
-          query,
-          calls,
-          total_exec_time as totalTime,
-          mean_exec_time as meanTime,
-          rows,
-          first_exec_time as firstSeen
-        FROM pg_stat_statements
-        WHERE mean_exec_time > $1
-        ORDER BY mean_exec_time DESC
-        LIMIT 50;
-      
-prisma:error 
-Invalid `prisma.$executeRaw()` invocation:
-
-
-Raw query failed. Code: `42703`. Message: `column "first_exec_time" does not exist`
-[33m[Nest] 470740  - [39m11/23/2025, 11:32:29 AM [33m   WARN[39m [38;5;3m[DatabasePerformanceService] [39m[33mCould not create performance views:[39m
-[33m[Nest] 470740  - [39m11/23/2025, 11:32:29 AM [33m   WARN[39m [38;5;3m[DatabasePerformanceService] [39m[33m
-Invalid `prisma.$executeRaw()` invocation:
-
-
-Raw query failed. Code: `42703`. Message: `column "first_exec_time" does not exist`[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:29 AM [32m    LOG[39m [38;5;3m[DatabasePerformanceService] [39m[32mDatabase monitoring extensions initialized[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:29 AM [32m    LOG[39m [38;5;3m[DatabasePerformanceService] [39m[32mDatabase performance monitoring initialized[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:29 AM [32m    LOG[39m [38;5;3m[PrismaService] [39m[32mDatabase connected successfully[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:29 AM [32m    LOG[39m [38;5;3m[PrismaService] [39m[32mDatabase connected successfully[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:29 AM [32m    LOG[39m [38;5;3m[PrismaService] [39m[32mDatabase connected successfully[39m
-prisma:query SELECT "system"."scheduled_reports"."id", "system"."scheduled_reports"."templateId", "system"."scheduled_reports"."name", "system"."scheduled_reports"."description", "system"."scheduled_reports"."schedule", "system"."scheduled_reports"."recipients", "system"."scheduled_reports"."parameters", "system"."scheduled_reports"."format"::text, "system"."scheduled_reports"."deliveryMethod"::text, "system"."scheduled_reports"."isActive", "system"."scheduled_reports"."lastRun", "system"."scheduled_reports"."nextRun", "system"."scheduled_reports"."successCount", "system"."scheduled_reports"."failureCount", "system"."scheduled_reports"."createdBy", "system"."scheduled_reports"."createdAt", "system"."scheduled_reports"."updatedAt" FROM "system"."scheduled_reports" WHERE "system"."scheduled_reports"."isActive" = $1 OFFSET $2
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:29 AM [32m    LOG[39m [38;5;3m[ScheduledReportsService] [39m[32mInitialized 0 scheduled reports[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:29 AM [32m    LOG[39m [38;5;3m[PrismaService] [39m[32mDatabase connected successfully[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:29 AM [32m    LOG[39m [38;5;3m[PrismaService] [39m[32mDatabase connected successfully[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:29 AM [32m    LOG[39m [38;5;3m[PrismaService] [39m[32mDatabase connected successfully[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:29 AM [32m    LOG[39m [38;5;3m[PrismaService] [39m[32mDatabase connected successfully[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:30 AM [32m    LOG[39m [38;5;3m[PrismaService] [39m[32mDatabase connected successfully[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:30 AM [32m    LOG[39m [38;5;3m[NestApplication] [39m[32mNest application successfully started[39m[38;5;3m +44ms[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:30 AM [32m    LOG[39m [38;5;3m[Bootstrap] [39m[32m🚀 Application running on http://localhost:3002[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:30 AM [32m    LOG[39m [38;5;3m[Bootstrap] [39m[32m📚 API documentation available at http://localhost:3002/api/docs[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:32:30 AM [32m    LOG[39m [38;5;3m[Bootstrap] [39m[32m⚡ Powered by Fastify + Bun[39m
-[33m[Nest] 470740  - [39m11/23/2025, 11:32:59 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 115.70%[39m
-[33m[Nest] 470740  - [39m11/23/2025, 11:33:29 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 115.70%[39m
-[33m[Nest] 470740  - [39m11/23/2025, 11:33:59 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 115.71%[39m
-[33m[Nest] 470740  - [39m11/23/2025, 11:34:29 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 115.72%[39m
-[33m[Nest] 470740  - [39m11/23/2025, 11:34:59 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 115.72%[39m
-[32m[Nest] 470740  - [39m11/23/2025, 11:35:00 AM [32m    LOG[39m [38;5;3m[ScheduledTasksService] [39m[32mReal-time metrics collected in 2ms[39m
-[33m[Nest] 470740  - [39m11/23/2025, 11:35:29 AM [33m   WARN[39m [38;5;3m[PerformanceMonitorService] [39m[33mHigh memory usage: 115.82%[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[NestFactory] [39m[32mStarting Nest application...[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mBullModule dependencies initialized[39m[38;5;3m +56ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mDatabaseModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mPassportModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mMusculoskeletalModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mThrottlerModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mConfigHostModule dependencies initialized[39m[38;5;3m +3ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mCommonModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mHealthModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mRegionsModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mLocationsModule dependencies initialized[39m[38;5;3m +5ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mWhoClassificationsModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mConfigModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mConfigModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mAppModule dependencies initialized[39m[38;5;3m +119ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mJwtModule dependencies initialized[39m[38;5;3m +2ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mUsersModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mMedicalImagingModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mPeerReviewModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mOfflineQueueModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mPathologyTypesModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTumorSyndromesModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mMstsScoresModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mFollowUpsModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTreatmentsModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mAnalyticsModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mClinicalPhotosModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mQualityModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mCentersModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mPatientsModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mResearchModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mSystemAdministrationModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mAuthModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mHealthController {/api/v1/health}:[39m[38;5;3m +145ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/health, GET} route[39m[38;5;3m +5ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/health/detailed, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/health/readiness, GET} route[39m[38;5;3m +2ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/health/liveness, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mAuthController {/api/v1/auth}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/auth/register, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/auth/login, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/auth/verify-mfa, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/auth/verify-email, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/auth/refresh-token, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/auth/profile, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/auth/logout, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/auth/mfa/setup, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/auth/mfa/enable, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/auth/mfa/disable, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/auth/mfa/verify, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/auth/mfa/backup-codes/regenerate, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/auth/mfa/backup-codes/verify, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/auth/mfa/status, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mUsersController {/api/v1/users}:[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/users, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/users/profile/:id, GET} route[39m[38;5;3m +2ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/users/center/:centerId, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/users/statistics, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/users/:id, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/users, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/users/:id, PATCH} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/users/:id/status, PATCH} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/users/:id/role, PATCH} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/users/:id, DELETE} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mCentersController {/api/v1/centers}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/centers, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/centers/statistics, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/centers/:id, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/centers/:id/users, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/centers, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/centers/:id, PUT} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/centers/:id/activate, PUT} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/centers/:id/deactivate, PUT} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/centers/:id, DELETE} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mRegionsController {/api/v1/regions}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/regions/provinces, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/regions/provinces/:provinceId, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/regions/provinces/:provinceId/regencies, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/regions/regencies/:regencyId/districts, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/regions/districts/:districtId/villages, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mPatientsController {/api/v1/patients}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/patients, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/patients/search, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/patients/statistics, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/patients/:id, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/patients/nik/:nik, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/patients/mrn/:mrn, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/patients, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/patients/:id, PUT} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/patients/:id/vital-signs, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/patients/:id/diagnoses, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/patients/:id/medications, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/patients/:id/allergies, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/patients/:id/visits, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/patients/:id/insurance, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/patients/chat/session, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/patients/chat/:sessionId/message, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/patients/chat/:sessionId, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mResearchController {/api/v1/research/requests}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/requests, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/requests/:id, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/requests, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/requests/:id, PUT} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/research/requests/:id, DELETE} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mMedicalImagingController {/api/v1/medical-imaging}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/medical-imaging/upload, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/medical-imaging, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/medical-imaging/:id, GET} route[39m[38;5;3m +2ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/medical-imaging/:id/file, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/medical-imaging/:id/thumbnail, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/medical-imaging/:id, PUT} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/medical-imaging/:id, DELETE} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/medical-imaging/:id/categorize, PUT} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/medical-imaging/:id/annotations, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mPeerReviewController {/api/v1/peer-review}:[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/peer-review, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/peer-review, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/peer-review/statistics, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/peer-review/:id, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/peer-review/:id/assign, PUT} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/peer-review/:id/comments, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/peer-review/comments/:commentId/resolve, PUT} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/peer-review/:id/approve, POST} route[39m[38;5;3m +2ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/peer-review/:id/reject, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/peer-review/:id/recognition, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mOfflineQueueController {/api/v1/offline-queue}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/offline-queue/sync, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/offline-queue/pending, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/offline-queue/statistics, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/offline-queue/sync-all, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/offline-queue/:id/retry, PUT} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/offline-queue/:id/resolve-conflict, PUT} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mPathologyTypesController {/api/v1/pathology-types}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/pathology-types, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/pathology-types/:id, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/pathology-types/code/:code, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/pathology-types, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/pathology-types/:id, PUT} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/pathology-types/:id, DELETE} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mTumorSyndromesController {/api/v1/tumor-syndromes}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/tumor-syndromes, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/tumor-syndromes/:id, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/tumor-syndromes, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mLocationsController {/api/v1/locations}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/locations/bone, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/locations/bone/regions, GET} route[39m[38;5;3m +2ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/locations/bone/:id, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/locations/bone/:id/children, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/locations/soft-tissue, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/locations/soft-tissue/regions, GET} route[39m[38;5;3m +2ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/locations/soft-tissue/:id, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mWhoClassificationsController {/api/v1/who-classifications}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/who-classifications/bone, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/who-classifications/bone/categories, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/who-classifications/bone/subcategories, GET} route[39m[38;5;3m +2ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/who-classifications/bone/:id, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/who-classifications/soft-tissue, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/who-classifications/soft-tissue/categories, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/who-classifications/soft-tissue/subcategories, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/who-classifications/soft-tissue/:id, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mMstsScoresController {/api/v1/msts-scores}:[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/msts-scores, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/msts-scores, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/msts-scores/patient/:patientId, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/msts-scores/patient/:patientId/history, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/msts-scores/:id, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/msts-scores/:id, PUT} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/msts-scores/:id, DELETE} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mFollowUpsController {/api/v1/follow-ups}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/follow-ups/generate-schedule, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:53 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/follow-ups, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:54 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/follow-ups, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:54 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/follow-ups/patient/:patientId, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:54 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/follow-ups/patient/:patientId/summary, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:54 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/follow-ups/:id, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:54 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/follow-ups/:id, PUT} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:54 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/follow-ups/:id, DELETE} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:54 PM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mTreatmentsController {/api/v1/treatments}:[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:54 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/treatments, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:54 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/treatments, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:54 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/treatments/patient/:patientId, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:54 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/treatments/patient/:patientId/summary, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:54 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/treatments/:id, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:54 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/treatments/:id, PUT} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:54 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/treatments/:id, DELETE} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:54 PM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mAnalyticsController {/api/v1/analytics}:[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:54 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/analytics/dashboard-summary, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:54 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/analytics/limb-salvage-rate, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:54 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/analytics/msts-trends, GET} route[39m[38;5;3m +2ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:54 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/analytics/treatment-effectiveness, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:54 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/analytics/who-classification-distribution, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:54 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/analytics/survival-analysis, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:54 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/analytics/center-performance, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:54 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/analytics/follow-up-compliance, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:54 PM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mClinicalPhotosController {/api/v1/clinical-photos}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:54 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/clinical-photos/upload, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:54 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/clinical-photos/patient/:patientId, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:54 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/clinical-photos/:id, DELETE} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:54 PM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mQualityController {/api/v1/quality}:[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:54 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/quality/patient/:patientId/score, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:54 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/quality/patient/:patientId/trends, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:54 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/quality/patient/:patientId/validate, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:54 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/quality/center/:centerId/summary, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:54 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/quality/national/overview, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:54 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/quality/staff-performance, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:54 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/quality/missing-data-heatmap, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:54 PM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mSystemAdministrationController {/api/v1/system-administration}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:54 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/system-administration/dashboard, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:54 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/system-administration/overview, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:54 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/system-administration/health, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:54 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/system-administration/configurations, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:54 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/system-administration/configurations, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:54 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/system-administration/configurations/:id, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:54 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/system-administration/configurations/:id, PUT} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:54 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/system-administration/configurations/:id, DELETE} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:54 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/system-administration/configurations/export, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:54 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/system-administration/configurations/import, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:54 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/system-administration/activities, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:54 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/system-administration/security-events, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:54 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/system-administration/metrics, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:54 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/system-administration/alerts/:alertId/acknowledge, PUT} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:54 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/system-administration/alerts/:alertId/resolve, PUT} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:54 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/system-administration/maintenance-mode, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:54 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/system-administration/system-restart, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:54 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/system-administration/system-info, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:54 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/system-administration/cleanup, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:54 PM [32m    LOG[39m [38;5;3m[PrismaService] [39m[32mDatabase connected successfully[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:54 PM [32m    LOG[39m [38;5;3m[PrismaService] [39m[32mDatabase connected successfully[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:54 PM [32m    LOG[39m [38;5;3m[PrismaService] [39m[32mDatabase connected successfully[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:55 PM [32m    LOG[39m [38;5;3m[PrismaService] [39m[32mDatabase connected successfully[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:55 PM [32m    LOG[39m [38;5;3m[PrismaService] [39m[32mDatabase connected successfully[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:55 PM [32m    LOG[39m [38;5;3m[PrismaService] [39m[32mDatabase connected successfully[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:55 PM [32m    LOG[39m [38;5;3m[PrismaService] [39m[32mDatabase connected successfully[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:55 PM [32m    LOG[39m [38;5;3m[PrismaService] [39m[32mDatabase connected successfully[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:56 PM [32m    LOG[39m [38;5;3m[PrismaService] [39m[32mDatabase connected successfully[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:56 PM [32m    LOG[39m [38;5;3m[NestApplication] [39m[32mNest application successfully started[39m[38;5;3m +7ms[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:56 PM [32m    LOG[39m [38;5;3m[Bootstrap] [39m[32m🚀 Application running on http://localhost:3002[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:56 PM [32m    LOG[39m [38;5;3m[Bootstrap] [39m[32m📚 API documentation available at http://localhost:3002/api/docs[39m
+[32m[Nest] 98441  - [39m12/14/2025, 10:38:56 PM [32m    LOG[39m [38;5;3m[Bootstrap] [39m[32m⚡ Powered by Fastify + Bun[39m
+prisma:query SELECT 1
+prisma:query SELECT "system"."users"."id", "system"."users"."email", "system"."users"."name", "system"."users"."kolegiumId", "system"."users"."passwordHash", "system"."users"."phone", "system"."users"."nik", "system"."users"."isActive", "system"."users"."isEmailVerified", "system"."users"."mfaEnabled", "system"."users"."mfaSecret", "system"."users"."lastLoginAt", "system"."users"."isLocked", "system"."users"."lockedUntil", "system"."users"."isSsoUser", "system"."users"."createdAt", "system"."users"."updatedAt", "system"."users"."centerId" FROM "system"."users" WHERE ("system"."users"."email" = $1 AND 1=1) LIMIT $2 OFFSET $3
+prisma:query SELECT "system"."user_roles"."id", "system"."user_roles"."userId", "system"."user_roles"."roleId", "system"."user_roles"."isActive", "system"."user_roles"."createdAt" FROM "system"."user_roles" WHERE ("system"."user_roles"."isActive" = $1 AND "system"."user_roles"."userId" IN ($2)) OFFSET $3
+prisma:query SELECT "system"."roles"."id", "system"."roles"."name", "system"."roles"."code", "system"."roles"."description", "system"."roles"."level" FROM "system"."roles" WHERE "system"."roles"."id" IN ($1) OFFSET $2
+prisma:query BEGIN
+prisma:query UPDATE "system"."users" SET "lastLoginAt" = $1, "updatedAt" = $2 WHERE ("system"."users"."id" = $3 AND 1=1) RETURNING "system"."users"."id", "system"."users"."email", "system"."users"."name", "system"."users"."kolegiumId", "system"."users"."passwordHash", "system"."users"."phone", "system"."users"."nik", "system"."users"."isActive", "system"."users"."isEmailVerified", "system"."users"."mfaEnabled", "system"."users"."mfaSecret", "system"."users"."lastLoginAt", "system"."users"."isLocked", "system"."users"."lockedUntil", "system"."users"."isSsoUser", "system"."users"."createdAt", "system"."users"."updatedAt", "system"."users"."centerId"
+prisma:query SELECT "system"."users"."id", "system"."users"."email", "system"."users"."name", "system"."users"."kolegiumId", "system"."users"."passwordHash", "system"."users"."phone", "system"."users"."nik", "system"."users"."isActive", "system"."users"."isEmailVerified", "system"."users"."mfaEnabled", "system"."users"."mfaSecret", "system"."users"."lastLoginAt", "system"."users"."isLocked", "system"."users"."lockedUntil", "system"."users"."isSsoUser", "system"."users"."createdAt", "system"."users"."updatedAt", "system"."users"."centerId" FROM "system"."users" WHERE "system"."users"."id" = $1 LIMIT $2 OFFSET $3
+prisma:query SELECT "system"."user_roles"."id", "system"."user_roles"."userId", "system"."user_roles"."roleId", "system"."user_roles"."isActive", "system"."user_roles"."createdAt" FROM "system"."user_roles" WHERE ("system"."user_roles"."isActive" = $1 AND "system"."user_roles"."userId" IN ($2)) OFFSET $3
+prisma:query SELECT "system"."roles"."id", "system"."roles"."name", "system"."roles"."code", "system"."roles"."description", "system"."roles"."level" FROM "system"."roles" WHERE "system"."roles"."id" IN ($1) OFFSET $2
+prisma:query COMMIT
+prisma:query SELECT "system"."user_roles"."id", "system"."user_roles"."userId", "system"."user_roles"."roleId", "system"."user_roles"."isActive", "system"."user_roles"."createdAt" FROM "system"."user_roles" WHERE ("system"."user_roles"."userId" = $1 AND "system"."user_roles"."isActive" = $2) LIMIT $3 OFFSET $4
+prisma:query SELECT "system"."roles"."id", "system"."roles"."name", "system"."roles"."code", "system"."roles"."description", "system"."roles"."level" FROM "system"."roles" WHERE "system"."roles"."id" IN ($1) OFFSET $2
+prisma:query SELECT "system"."user_roles"."id", "system"."user_roles"."userId", "system"."user_roles"."roleId", "system"."user_roles"."isActive", "system"."user_roles"."createdAt" FROM "system"."user_roles" WHERE ("system"."user_roles"."userId" = $1 AND "system"."user_roles"."isActive" = $2) OFFSET $3
+prisma:query SELECT "system"."roles"."id", "system"."roles"."name", "system"."roles"."code", "system"."roles"."description", "system"."roles"."level" FROM "system"."roles" WHERE "system"."roles"."id" IN ($1) OFFSET $2
+prisma:query SELECT "system"."role_permissions"."id", "system"."role_permissions"."roleId", "system"."role_permissions"."permissionId", "system"."role_permissions"."createdAt" FROM "system"."role_permissions" WHERE "system"."role_permissions"."roleId" IN ($1) OFFSET $2
+prisma:query SELECT "system"."permissions"."id", "system"."permissions"."name", "system"."permissions"."code", "system"."permissions"."resource", "system"."permissions"."action", "system"."permissions"."description" FROM "system"."permissions" WHERE "system"."permissions"."id" IN ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24,$25,$26,$27,$28,$29,$30,$31,$32,$33,$34,$35,$36,$37,$38,$39,$40,$41,$42,$43,$44,$45,$46,$47,$48,$49,$50,$51,$52,$53,$54,$55,$56,$57,$58,$59,$60,$61,$62) OFFSET $63
+prisma:query DELETE FROM "system"."refresh_tokens" WHERE "system"."refresh_tokens"."expiresAt" < $1
+prisma:query INSERT INTO "system"."refresh_tokens" ("id","userId","token","expiresAt","createdAt","updatedAt","isRevoked") VALUES ($1,$2,$3,$4,$5,$6,$7) RETURNING "system"."refresh_tokens"."id", "system"."refresh_tokens"."userId", "system"."refresh_tokens"."token", "system"."refresh_tokens"."expiresAt", "system"."refresh_tokens"."createdAt", "system"."refresh_tokens"."updatedAt", "system"."refresh_tokens"."isRevoked"
+prisma:query SELECT "system"."user_roles"."id", "system"."user_roles"."userId", "system"."user_roles"."roleId", "system"."user_roles"."isActive", "system"."user_roles"."createdAt" FROM "system"."user_roles" WHERE ("system"."user_roles"."userId" = $1 AND "system"."user_roles"."isActive" = $2) LIMIT $3 OFFSET $4
+prisma:query SELECT "system"."roles"."id", "system"."roles"."name", "system"."roles"."code", "system"."roles"."description", "system"."roles"."level" FROM "system"."roles" WHERE "system"."roles"."id" IN ($1) OFFSET $2
+prisma:query SELECT 1
+prisma:query SELECT COUNT(*) FROM (SELECT "system"."centers"."id" FROM "system"."centers" WHERE "system"."centers"."isActive" = $1 OFFSET $2) AS "sub"
+prisma:query SELECT COUNT(*) FROM (SELECT "medical"."patients"."id" FROM "medical"."patients" WHERE ("medical"."patients"."isActive" = $1 AND "medical"."patients"."createdAt" >= $2) OFFSET $3) AS "sub"
+prisma:query SELECT COUNT(*) FROM (SELECT "medical"."surgical_records"."id" FROM "medical"."surgical_records" WHERE "medical"."surgical_records"."surgeryType" = CAST($1::text AS "medical"."SurgeryType") OFFSET $2) AS "sub"
+prisma:query SELECT COUNT(*) FROM (SELECT "medical"."treatment_management"."id" FROM "medical"."treatment_management" WHERE "medical"."treatment_management"."status" = $1 OFFSET $2) AS "sub"
+prisma:query SELECT COUNT(*) FROM (SELECT "medical"."patients"."id" FROM "medical"."patients" WHERE "medical"."patients"."isActive" = $1 OFFSET $2) AS "sub"
+prisma:query SELECT COUNT(*) FROM (SELECT "medical"."follow_up_visits"."id" FROM "medical"."follow_up_visits" WHERE 1=1 OFFSET $1) AS "sub"
+prisma:query SELECT COUNT(*) FROM (SELECT "medical"."follow_up_visits"."id" FROM "medical"."follow_up_visits" WHERE "medical"."follow_up_visits"."status" = $1 OFFSET $2) AS "sub"
+prisma:query SELECT COUNT(*) FROM (SELECT "medical"."surgical_records"."id" FROM "medical"."surgical_records" WHERE 1=1 OFFSET $1) AS "sub"
+prisma:query SELECT COUNT(*) FROM (SELECT "medical"."surgical_records"."id" FROM "medical"."surgical_records" WHERE 1=1 OFFSET $1) AS "sub"
+prisma:query SELECT COUNT(*) FROM (SELECT "medical"."treatment_management"."id" FROM "medical"."treatment_management" WHERE "medical"."treatment_management"."status" = $1 OFFSET $2) AS "sub"
+prisma:query SELECT COUNT(*) FROM (SELECT "medical"."follow_up_visits"."id" FROM "medical"."follow_up_visits" WHERE 1=1 OFFSET $1) AS "sub"
+prisma:query SELECT COUNT(*) FROM (SELECT "medical"."patients"."id" FROM "medical"."patients" WHERE "medical"."patients"."isActive" = $1 OFFSET $2) AS "sub"
+prisma:query SELECT COUNT(*) FROM (SELECT "system"."centers"."id" FROM "system"."centers" WHERE "system"."centers"."isActive" = $1 OFFSET $2) AS "sub"
+prisma:query SELECT COUNT(*) FROM (SELECT "medical"."patients"."id" FROM "medical"."patients" WHERE ("medical"."patients"."isActive" = $1 AND "medical"."patients"."createdAt" >= $2) OFFSET $3) AS "sub"
+prisma:query SELECT COUNT(*) FROM (SELECT "medical"."follow_up_visits"."id" FROM "medical"."follow_up_visits" WHERE "medical"."follow_up_visits"."status" = $1 OFFSET $2) AS "sub"
+prisma:query SELECT COUNT(*) FROM (SELECT "medical"."surgical_records"."id" FROM "medical"."surgical_records" WHERE "medical"."surgical_records"."surgeryType" = CAST($1::text AS "medical"."SurgeryType") OFFSET $2) AS "sub"
+prisma:query SELECT "system"."users"."id", "system"."users"."email", "system"."users"."name", "system"."users"."kolegiumId", "system"."users"."passwordHash", "system"."users"."phone", "system"."users"."nik", "system"."users"."isActive", "system"."users"."isEmailVerified", "system"."users"."mfaEnabled", "system"."users"."mfaSecret", "system"."users"."lastLoginAt", "system"."users"."isLocked", "system"."users"."lockedUntil", "system"."users"."isSsoUser", "system"."users"."createdAt", "system"."users"."updatedAt", "system"."users"."centerId" FROM "system"."users" WHERE ("system"."users"."id" = $1 AND 1=1) LIMIT $2 OFFSET $3
+prisma:query SELECT "system"."user_roles"."id", "system"."user_roles"."userId", "system"."user_roles"."roleId", "system"."user_roles"."isActive", "system"."user_roles"."createdAt" FROM "system"."user_roles" WHERE ("system"."user_roles"."isActive" = $1 AND "system"."user_roles"."userId" IN ($2)) OFFSET $3
+prisma:query SELECT "system"."roles"."id", "system"."roles"."name", "system"."roles"."code", "system"."roles"."description", "system"."roles"."level" FROM "system"."roles" WHERE "system"."roles"."id" IN ($1) OFFSET $2
+prisma:query SELECT "system"."user_roles"."id", "system"."user_roles"."userId", "system"."user_roles"."roleId", "system"."user_roles"."isActive", "system"."user_roles"."createdAt" FROM "system"."user_roles" WHERE ("system"."user_roles"."userId" = $1 AND "system"."user_roles"."isActive" = $2) LIMIT $3 OFFSET $4
+prisma:query SELECT "system"."roles"."id", "system"."roles"."name", "system"."roles"."code", "system"."roles"."description", "system"."roles"."level" FROM "system"."roles" WHERE "system"."roles"."id" IN ($1) OFFSET $2
+prisma:query SELECT "system"."users"."id", "system"."users"."email", "system"."users"."name", "system"."users"."kolegiumId", "system"."users"."passwordHash", "system"."users"."phone", "system"."users"."nik", "system"."users"."isActive", "system"."users"."isEmailVerified", "system"."users"."mfaEnabled", "system"."users"."mfaSecret", "system"."users"."lastLoginAt", "system"."users"."isLocked", "system"."users"."lockedUntil", "system"."users"."isSsoUser", "system"."users"."createdAt", "system"."users"."updatedAt", "system"."users"."centerId" FROM "system"."users" WHERE ("system"."users"."id" = $1 AND 1=1) LIMIT $2 OFFSET $3
+prisma:query SELECT "system"."user_roles"."id", "system"."user_roles"."userId", "system"."user_roles"."roleId", "system"."user_roles"."isActive", "system"."user_roles"."createdAt" FROM "system"."user_roles" WHERE ("system"."user_roles"."isActive" = $1 AND "system"."user_roles"."userId" IN ($2)) OFFSET $3
+prisma:query SELECT "system"."roles"."id", "system"."roles"."name", "system"."roles"."code", "system"."roles"."description", "system"."roles"."level" FROM "system"."roles" WHERE "system"."roles"."id" IN ($1) OFFSET $2
+prisma:query SELECT "system"."user_roles"."id", "system"."user_roles"."userId", "system"."user_roles"."roleId", "system"."user_roles"."isActive", "system"."user_roles"."createdAt" FROM "system"."user_roles" WHERE ("system"."user_roles"."userId" = $1 AND "system"."user_roles"."isActive" = $2) LIMIT $3 OFFSET $4
+prisma:query SELECT "system"."roles"."id", "system"."roles"."name", "system"."roles"."code", "system"."roles"."description", "system"."roles"."level" FROM "system"."roles" WHERE "system"."roles"."id" IN ($1) OFFSET $2
+prisma:query SELECT "system"."centers"."id", "system"."centers"."name", "system"."centers"."code", "system"."centers"."province", "system"."centers"."regency", "system"."centers"."address", "system"."centers"."isActive", "system"."centers"."createdAt", "system"."centers"."updatedAt", COALESCE("aggr_selection_0_User"."_aggr_count_users", 0) AS "_aggr_count_users" FROM "system"."centers" LEFT JOIN (SELECT "system"."users"."centerId", COUNT(*) AS "_aggr_count_users" FROM "system"."users" WHERE "system"."users"."isActive" = $1 GROUP BY "system"."users"."centerId") AS "aggr_selection_0_User" ON ("system"."centers"."id" = "aggr_selection_0_User"."centerId") WHERE 1=1 ORDER BY "system"."centers"."name" ASC OFFSET $2
+prisma:query SELECT "system"."users"."id", "system"."users"."email", "system"."users"."name", "system"."users"."isActive", "system"."users"."isEmailVerified", "system"."users"."createdAt", "system"."users"."centerId" FROM "system"."users" WHERE 1=1 ORDER BY "system"."users"."createdAt" DESC OFFSET $1
+prisma:query SELECT "system"."user_roles"."id", "system"."user_roles"."roleId", "system"."user_roles"."userId" FROM "system"."user_roles" WHERE ("system"."user_roles"."isActive" = $1 AND "system"."user_roles"."userId" IN ($2)) OFFSET $3
+prisma:query SELECT "system"."roles"."id", "system"."roles"."name" FROM "system"."roles" WHERE "system"."roles"."id" IN ($1) OFFSET $2
+prisma:error Error in PostgreSQL connection: Error { kind: Closed, cause: None }
+prisma:error Error in PostgreSQL connection: Error { kind: Closed, cause: None }
+prisma:error Error in PostgreSQL connection: Error { kind: Closed, cause: None }
+prisma:error Error in PostgreSQL connection: Error { kind: Closed, cause: None }
+prisma:error Error in PostgreSQL connection: Error { kind: Closed, cause: None }
+prisma:error Error in PostgreSQL connection: Error { kind: Closed, cause: None }
+prisma:error Error in PostgreSQL connection: Error { kind: Closed, cause: None }
+prisma:error Error in PostgreSQL connection: Error { kind: Closed, cause: None }
+prisma:error Error in PostgreSQL connection: Error { kind: Closed, cause: None }
+prisma:error Error in PostgreSQL connection: Error { kind: Closed, cause: None }
+prisma:error Error in PostgreSQL connection: Error { kind: Closed, cause: None }
+prisma:error Error in PostgreSQL connection: Error { kind: Closed, cause: None }
+prisma:error Error in PostgreSQL connection: Error { kind: Closed, cause: None }
+prisma:error Error in PostgreSQL connection: Error { kind: Closed, cause: None }
+prisma:error Error in PostgreSQL connection: Error { kind: Closed, cause: None }
+prisma:error Error in PostgreSQL connection: Error { kind: Closed, cause: None }
+prisma:error Error in PostgreSQL connection: Error { kind: Closed, cause: None }
+prisma:error Error in PostgreSQL connection: Error { kind: Closed, cause: None }
+prisma:query SELECT "system"."users"."id", "system"."users"."email", "system"."users"."name", "system"."users"."kolegiumId", "system"."users"."passwordHash", "system"."users"."phone", "system"."users"."nik", "system"."users"."isActive", "system"."users"."isEmailVerified", "system"."users"."mfaEnabled", "system"."users"."mfaSecret", "system"."users"."lastLoginAt", "system"."users"."isLocked", "system"."users"."lockedUntil", "system"."users"."isSsoUser", "system"."users"."createdAt", "system"."users"."updatedAt", "system"."users"."centerId" FROM "system"."users" WHERE ("system"."users"."id" = $1 AND 1=1) LIMIT $2 OFFSET $3
+prisma:query SELECT "system"."user_roles"."id", "system"."user_roles"."userId", "system"."user_roles"."roleId", "system"."user_roles"."isActive", "system"."user_roles"."createdAt" FROM "system"."user_roles" WHERE ("system"."user_roles"."isActive" = $1 AND "system"."user_roles"."userId" IN ($2)) OFFSET $3
+prisma:query SELECT "system"."roles"."id", "system"."roles"."name", "system"."roles"."code", "system"."roles"."description", "system"."roles"."level" FROM "system"."roles" WHERE "system"."roles"."id" IN ($1) OFFSET $2
+prisma:query SELECT "system"."user_roles"."id", "system"."user_roles"."userId", "system"."user_roles"."roleId", "system"."user_roles"."isActive", "system"."user_roles"."createdAt" FROM "system"."user_roles" WHERE ("system"."user_roles"."userId" = $1 AND "system"."user_roles"."isActive" = $2) LIMIT $3 OFFSET $4
+prisma:query SELECT "system"."roles"."id", "system"."roles"."name", "system"."roles"."code", "system"."roles"."description", "system"."roles"."level" FROM "system"."roles" WHERE "system"."roles"."id" IN ($1) OFFSET $2
+prisma:query SELECT "system"."users"."id", "system"."users"."email", "system"."users"."name", "system"."users"."kolegiumId", "system"."users"."passwordHash", "system"."users"."phone", "system"."users"."nik", "system"."users"."isActive", "system"."users"."isEmailVerified", "system"."users"."mfaEnabled", "system"."users"."mfaSecret", "system"."users"."lastLoginAt", "system"."users"."isLocked", "system"."users"."lockedUntil", "system"."users"."isSsoUser", "system"."users"."createdAt", "system"."users"."updatedAt", "system"."users"."centerId" FROM "system"."users" WHERE ("system"."users"."id" = $1 AND 1=1) LIMIT $2 OFFSET $3
+prisma:query SELECT "system"."user_roles"."id", "system"."user_roles"."userId", "system"."user_roles"."roleId", "system"."user_roles"."isActive", "system"."user_roles"."createdAt" FROM "system"."user_roles" WHERE ("system"."user_roles"."isActive" = $1 AND "system"."user_roles"."userId" IN ($2)) OFFSET $3
+prisma:query SELECT "system"."roles"."id", "system"."roles"."name", "system"."roles"."code", "system"."roles"."description", "system"."roles"."level" FROM "system"."roles" WHERE "system"."roles"."id" IN ($1) OFFSET $2
+prisma:query SELECT "system"."user_roles"."id", "system"."user_roles"."userId", "system"."user_roles"."roleId", "system"."user_roles"."isActive", "system"."user_roles"."createdAt" FROM "system"."user_roles" WHERE ("system"."user_roles"."userId" = $1 AND "system"."user_roles"."isActive" = $2) LIMIT $3 OFFSET $4
+prisma:query SELECT "system"."roles"."id", "system"."roles"."name", "system"."roles"."code", "system"."roles"."description", "system"."roles"."level" FROM "system"."roles" WHERE "system"."roles"."id" IN ($1) OFFSET $2
+prisma:query SELECT "medical"."research_requests"."id", "medical"."research_requests"."title", "medical"."research_requests"."description", "medical"."research_requests"."principalInvestigatorId", "medical"."research_requests"."studyType"::text, "medical"."research_requests"."objectives", "medical"."research_requests"."methodology", "medical"."research_requests"."inclusionCriteria", "medical"."research_requests"."exclusionCriteria", "medical"."research_requests"."sampleSize", "medical"."research_requests"."duration", "medical"."research_requests"."requiresEthicsApproval", "medical"."research_requests"."dataRequested", "medical"."research_requests"."confidentialityRequirements", "medical"."research_requests"."fundingSource", "medical"."research_requests"."collaborators", "medical"."research_requests"."status"::text, "medical"."research_requests"."ethicsStatus"::text, "medical"."research_requests"."ethicsApprovalNumber", "medical"."research_requests"."ethicsApprovalDate", "medical"."research_requests"."priority"::text, "medical"."research_requests"."expectedOutcomes", "medical"."research_requests"."riskAssessment", "medical"."research_requests"."dataRetentionPeriod", "medical"."research_requests"."submittedAt", "medical"."research_requests"."reviewedAt", "medical"."research_requests"."approvedAt", "medical"."research_requests"."rejectedAt", "medical"."research_requests"."completedAt", "medical"."research_requests"."expiresAt", "medical"."research_requests"."notes", "medical"."research_requests"."createdBy", "medical"."research_requests"."createdAt", "medical"."research_requests"."updatedAt" FROM "medical"."research_requests" WHERE "medical"."research_requests"."createdBy" = $1 ORDER BY "medical"."research_requests"."createdAt" DESC OFFSET $2
+prisma:query SELECT "system"."users"."id", "system"."users"."name", "system"."users"."email" FROM "system"."users" WHERE "system"."users"."id" IN ($1) OFFSET $2
+prisma:query SELECT "system"."users"."id", "system"."users"."name", "system"."users"."email" FROM "system"."users" WHERE "system"."users"."id" IN ($1) OFFSET $2
+prisma:query SELECT 1
+prisma:query SELECT "system"."users"."id", "system"."users"."email", "system"."users"."name", "system"."users"."kolegiumId", "system"."users"."passwordHash", "system"."users"."phone", "system"."users"."nik", "system"."users"."isActive", "system"."users"."isEmailVerified", "system"."users"."mfaEnabled", "system"."users"."mfaSecret", "system"."users"."lastLoginAt", "system"."users"."isLocked", "system"."users"."lockedUntil", "system"."users"."isSsoUser", "system"."users"."createdAt", "system"."users"."updatedAt", "system"."users"."centerId" FROM "system"."users" WHERE ("system"."users"."id" = $1 AND 1=1) LIMIT $2 OFFSET $3
+prisma:query SELECT "system"."user_roles"."id", "system"."user_roles"."userId", "system"."user_roles"."roleId", "system"."user_roles"."isActive", "system"."user_roles"."createdAt" FROM "system"."user_roles" WHERE ("system"."user_roles"."isActive" = $1 AND "system"."user_roles"."userId" IN ($2)) OFFSET $3
+prisma:query SELECT "system"."roles"."id", "system"."roles"."name", "system"."roles"."code", "system"."roles"."description", "system"."roles"."level" FROM "system"."roles" WHERE "system"."roles"."id" IN ($1) OFFSET $2
+prisma:query SELECT "system"."user_roles"."id", "system"."user_roles"."userId", "system"."user_roles"."roleId", "system"."user_roles"."isActive", "system"."user_roles"."createdAt" FROM "system"."user_roles" WHERE ("system"."user_roles"."userId" = $1 AND "system"."user_roles"."isActive" = $2) LIMIT $3 OFFSET $4
+prisma:query SELECT "system"."roles"."id", "system"."roles"."name", "system"."roles"."code", "system"."roles"."description", "system"."roles"."level" FROM "system"."roles" WHERE "system"."roles"."id" IN ($1) OFFSET $2
+prisma:query SELECT "system"."users"."id", "system"."users"."email", "system"."users"."name", "system"."users"."kolegiumId", "system"."users"."passwordHash", "system"."users"."phone", "system"."users"."nik", "system"."users"."isActive", "system"."users"."isEmailVerified", "system"."users"."mfaEnabled", "system"."users"."mfaSecret", "system"."users"."lastLoginAt", "system"."users"."isLocked", "system"."users"."lockedUntil", "system"."users"."isSsoUser", "system"."users"."createdAt", "system"."users"."updatedAt", "system"."users"."centerId" FROM "system"."users" WHERE ("system"."users"."id" = $1 AND 1=1) LIMIT $2 OFFSET $3
+prisma:query SELECT "system"."user_roles"."id", "system"."user_roles"."userId", "system"."user_roles"."roleId", "system"."user_roles"."isActive", "system"."user_roles"."createdAt" FROM "system"."user_roles" WHERE ("system"."user_roles"."isActive" = $1 AND "system"."user_roles"."userId" IN ($2)) OFFSET $3
+prisma:query SELECT "system"."roles"."id", "system"."roles"."name", "system"."roles"."code", "system"."roles"."description", "system"."roles"."level" FROM "system"."roles" WHERE "system"."roles"."id" IN ($1) OFFSET $2
+prisma:query SELECT "system"."user_roles"."id", "system"."user_roles"."userId", "system"."user_roles"."roleId", "system"."user_roles"."isActive", "system"."user_roles"."createdAt" FROM "system"."user_roles" WHERE ("system"."user_roles"."userId" = $1 AND "system"."user_roles"."isActive" = $2) LIMIT $3 OFFSET $4
+prisma:query SELECT "system"."roles"."id", "system"."roles"."name", "system"."roles"."code", "system"."roles"."description", "system"."roles"."level" FROM "system"."roles" WHERE "system"."roles"."id" IN ($1) OFFSET $2
+prisma:query SELECT 1
+prisma:query SELECT "medical"."patients"."id", "medical"."patients"."medicalRecordNumber", "medical"."patients"."nik", "medical"."patients"."name", "medical"."patients"."dateOfBirth", "medical"."patients"."placeOfBirth", "medical"."patients"."gender"::text, "medical"."patients"."bloodType"::text, "medical"."patients"."religion", "medical"."patients"."maritalStatus"::text, "medical"."patients"."occupation", "medical"."patients"."education", "medical"."patients"."phoneNumber", "medical"."patients"."email", "medical"."patients"."address", "medical"."patients"."province", "medical"."patients"."regency", "medical"."patients"."district", "medical"."patients"."village", "medical"."patients"."postalCode", "medical"."patients"."emergencyContact", "medical"."patients"."isActive", "medical"."patients"."isDeceased", "medical"."patients"."dateOfDeath", "medical"."patients"."causeOfDeath", "medical"."patients"."centerId", "medical"."patients"."pathologyType", "medical"."patients"."chiefComplaint", "medical"."patients"."onsetDate", "medical"."patients"."symptomDuration", "medical"."patients"."presentingSymptoms", "medical"."patients"."tumorSizeAtPresentation", "medical"."patients"."familyHistoryCancer", "medical"."patients"."tumorSyndromeId", "medical"."patients"."karnofskysScore", "medical"."patients"."biopsyDate", "medical"."patients"."biopsyType", "medical"."patients"."biopsyResult", "medical"."patients"."imagingStudies", "medical"."patients"."whoBoneTumorId", "medical"."patients"."whoSoftTissueTumorId", "medical"."patients"."boneLocationId", "medical"."patients"."softTissueLocationId", "medical"."patients"."laterality", "medical"."patients"."histopathologyGrade", "medical"."patients"."mitosisCount", "medical"."patients"."necrosisPercentage", "medical"."patients"."ennekingStage", "medical"."patients"."ajccStage", "medical"."patients"."tumorSizeT1", "medical"."patients"."tumorSizeT2", "medical"."patients"."tumorSizeT3", "medical"."patients"."mirrelScore", "medical"."patients"."metastasisPresent", "medical"."patients"."metastasisSites", "medical"."patients"."cpcDate", "medical"."patients"."cpcRecommendation", "medical"."patients"."intendedTreatment", "medical"."patients"."createdAt", "medical"."patients"."updatedAt", COALESCE("aggr_selection_0_PatientDiagnosis"."_aggr_count_diagnoses", 0) AS "_aggr_count_diagnoses", COALESCE("aggr_selection_1_PatientMedication"."_aggr_count_medications", 0) AS "_aggr_count_medications", COALESCE("aggr_selection_2_PatientVisit"."_aggr_count_visits", 0) AS "_aggr_count_visits" FROM "medical"."patients" LEFT JOIN (SELECT "medical"."patient_diagnoses"."patientId", COUNT(*) AS "_aggr_count_diagnoses" FROM "medical"."patient_diagnoses" WHERE "medical"."patient_diagnoses"."status" = CAST($1::text AS "medical"."diagnosis_statuses") GROUP BY "medical"."patient_diagnoses"."patientId") AS "aggr_selection_0_PatientDiagnosis" ON ("medical"."patients"."id" = "aggr_selection_0_PatientDiagnosis"."patientId") LEFT JOIN (SELECT "medical"."patient_medications"."patientId", COUNT(*) AS "_aggr_count_medications" FROM "medical"."patient_medications" WHERE "medical"."patient_medications"."isActive" = $2 GROUP BY "medical"."patient_medications"."patientId") AS "aggr_selection_1_PatientMedication" ON ("medical"."patients"."id" = "aggr_selection_1_PatientMedication"."patientId") LEFT JOIN (SELECT "medical"."patient_visits"."patientId", COUNT(*) AS "_aggr_count_visits" FROM "medical"."patient_visits" WHERE 1=1 GROUP BY "medical"."patient_visits"."patientId") AS "aggr_selection_2_PatientVisit" ON ("medical"."patients"."id" = "aggr_selection_2_PatientVisit"."patientId") WHERE "medical"."patients"."isActive" = $3 ORDER BY "medical"."patients"."name" ASC LIMIT $4 OFFSET $5
+prisma:query SELECT COUNT(*) FROM (SELECT "medical"."patients"."id" FROM "medical"."patients" WHERE "medical"."patients"."isActive" = $1 OFFSET $2) AS "sub"
+prisma:query SELECT "system"."users"."id", "system"."users"."email", "system"."users"."name", "system"."users"."kolegiumId", "system"."users"."passwordHash", "system"."users"."phone", "system"."users"."nik", "system"."users"."isActive", "system"."users"."isEmailVerified", "system"."users"."mfaEnabled", "system"."users"."mfaSecret", "system"."users"."lastLoginAt", "system"."users"."isLocked", "system"."users"."lockedUntil", "system"."users"."isSsoUser", "system"."users"."createdAt", "system"."users"."updatedAt", "system"."users"."centerId" FROM "system"."users" WHERE ("system"."users"."id" = $1 AND 1=1) LIMIT $2 OFFSET $3
+prisma:query SELECT COUNT(*) FROM (SELECT "medical"."patients"."id" FROM "medical"."patients" WHERE "medical"."patients"."isActive" = $1 OFFSET $2) AS "sub"
+prisma:query SELECT "medical"."patients"."id", "medical"."patients"."medicalRecordNumber", "medical"."patients"."nik", "medical"."patients"."name", "medical"."patients"."dateOfBirth", "medical"."patients"."placeOfBirth", "medical"."patients"."gender"::text, "medical"."patients"."bloodType"::text, "medical"."patients"."religion", "medical"."patients"."maritalStatus"::text, "medical"."patients"."occupation", "medical"."patients"."education", "medical"."patients"."phoneNumber", "medical"."patients"."email", "medical"."patients"."address", "medical"."patients"."province", "medical"."patients"."regency", "medical"."patients"."district", "medical"."patients"."village", "medical"."patients"."postalCode", "medical"."patients"."emergencyContact", "medical"."patients"."isActive", "medical"."patients"."isDeceased", "medical"."patients"."dateOfDeath", "medical"."patients"."causeOfDeath", "medical"."patients"."centerId", "medical"."patients"."pathologyType", "medical"."patients"."chiefComplaint", "medical"."patients"."onsetDate", "medical"."patients"."symptomDuration", "medical"."patients"."presentingSymptoms", "medical"."patients"."tumorSizeAtPresentation", "medical"."patients"."familyHistoryCancer", "medical"."patients"."tumorSyndromeId", "medical"."patients"."karnofskysScore", "medical"."patients"."biopsyDate", "medical"."patients"."biopsyType", "medical"."patients"."biopsyResult", "medical"."patients"."imagingStudies", "medical"."patients"."whoBoneTumorId", "medical"."patients"."whoSoftTissueTumorId", "medical"."patients"."boneLocationId", "medical"."patients"."softTissueLocationId", "medical"."patients"."laterality", "medical"."patients"."histopathologyGrade", "medical"."patients"."mitosisCount", "medical"."patients"."necrosisPercentage", "medical"."patients"."ennekingStage", "medical"."patients"."ajccStage", "medical"."patients"."tumorSizeT1", "medical"."patients"."tumorSizeT2", "medical"."patients"."tumorSizeT3", "medical"."patients"."mirrelScore", "medical"."patients"."metastasisPresent", "medical"."patients"."metastasisSites", "medical"."patients"."cpcDate", "medical"."patients"."cpcRecommendation", "medical"."patients"."intendedTreatment", "medical"."patients"."createdAt", "medical"."patients"."updatedAt", COALESCE("aggr_selection_0_PatientDiagnosis"."_aggr_count_diagnoses", 0) AS "_aggr_count_diagnoses", COALESCE("aggr_selection_1_PatientMedication"."_aggr_count_medications", 0) AS "_aggr_count_medications", COALESCE("aggr_selection_2_PatientVisit"."_aggr_count_visits", 0) AS "_aggr_count_visits" FROM "medical"."patients" LEFT JOIN (SELECT "medical"."patient_diagnoses"."patientId", COUNT(*) AS "_aggr_count_diagnoses" FROM "medical"."patient_diagnoses" WHERE "medical"."patient_diagnoses"."status" = CAST($1::text AS "medical"."diagnosis_statuses") GROUP BY "medical"."patient_diagnoses"."patientId") AS "aggr_selection_0_PatientDiagnosis" ON ("medical"."patients"."id" = "aggr_selection_0_PatientDiagnosis"."patientId") LEFT JOIN (SELECT "medical"."patient_medications"."patientId", COUNT(*) AS "_aggr_count_medications" FROM "medical"."patient_medications" WHERE "medical"."patient_medications"."isActive" = $2 GROUP BY "medical"."patient_medications"."patientId") AS "aggr_selection_1_PatientMedication" ON ("medical"."patients"."id" = "aggr_selection_1_PatientMedication"."patientId") LEFT JOIN (SELECT "medical"."patient_visits"."patientId", COUNT(*) AS "_aggr_count_visits" FROM "medical"."patient_visits" WHERE 1=1 GROUP BY "medical"."patient_visits"."patientId") AS "aggr_selection_2_PatientVisit" ON ("medical"."patients"."id" = "aggr_selection_2_PatientVisit"."patientId") WHERE "medical"."patients"."isActive" = $3 ORDER BY "medical"."patients"."name" ASC LIMIT $4 OFFSET $5
+prisma:query SELECT "system"."user_roles"."id", "system"."user_roles"."userId", "system"."user_roles"."roleId", "system"."user_roles"."isActive", "system"."user_roles"."createdAt" FROM "system"."user_roles" WHERE ("system"."user_roles"."isActive" = $1 AND "system"."user_roles"."userId" IN ($2)) OFFSET $3
+prisma:query SELECT "system"."roles"."id", "system"."roles"."name", "system"."roles"."code", "system"."roles"."description", "system"."roles"."level" FROM "system"."roles" WHERE "system"."roles"."id" IN ($1) OFFSET $2
+prisma:query SELECT "system"."user_roles"."id", "system"."user_roles"."userId", "system"."user_roles"."roleId", "system"."user_roles"."isActive", "system"."user_roles"."createdAt" FROM "system"."user_roles" WHERE ("system"."user_roles"."userId" = $1 AND "system"."user_roles"."isActive" = $2) LIMIT $3 OFFSET $4
+prisma:query SELECT "system"."roles"."id", "system"."roles"."name", "system"."roles"."code", "system"."roles"."description", "system"."roles"."level" FROM "system"."roles" WHERE "system"."roles"."id" IN ($1) OFFSET $2
+prisma:query SELECT "system"."users"."id", "system"."users"."email", "system"."users"."name", "system"."users"."kolegiumId", "system"."users"."passwordHash", "system"."users"."phone", "system"."users"."nik", "system"."users"."isActive", "system"."users"."isEmailVerified", "system"."users"."mfaEnabled", "system"."users"."mfaSecret", "system"."users"."lastLoginAt", "system"."users"."isLocked", "system"."users"."lockedUntil", "system"."users"."isSsoUser", "system"."users"."createdAt", "system"."users"."updatedAt", "system"."users"."centerId" FROM "system"."users" WHERE ("system"."users"."id" = $1 AND 1=1) LIMIT $2 OFFSET $3
+prisma:query SELECT "system"."user_roles"."id", "system"."user_roles"."userId", "system"."user_roles"."roleId", "system"."user_roles"."isActive", "system"."user_roles"."createdAt" FROM "system"."user_roles" WHERE ("system"."user_roles"."isActive" = $1 AND "system"."user_roles"."userId" IN ($2)) OFFSET $3
+prisma:query SELECT "system"."roles"."id", "system"."roles"."name", "system"."roles"."code", "system"."roles"."description", "system"."roles"."level" FROM "system"."roles" WHERE "system"."roles"."id" IN ($1) OFFSET $2
+prisma:query SELECT "system"."user_roles"."id", "system"."user_roles"."userId", "system"."user_roles"."roleId", "system"."user_roles"."isActive", "system"."user_roles"."createdAt" FROM "system"."user_roles" WHERE ("system"."user_roles"."userId" = $1 AND "system"."user_roles"."isActive" = $2) LIMIT $3 OFFSET $4
+prisma:query SELECT "system"."roles"."id", "system"."roles"."name", "system"."roles"."code", "system"."roles"."description", "system"."roles"."level" FROM "system"."roles" WHERE "system"."roles"."id" IN ($1) OFFSET $2
+prisma:query SELECT "system"."centers"."id", "system"."centers"."name", "system"."centers"."code", "system"."centers"."province", "system"."centers"."regency", "system"."centers"."address", "system"."centers"."isActive", "system"."centers"."createdAt", "system"."centers"."updatedAt", COALESCE("aggr_selection_0_User"."_aggr_count_users", 0) AS "_aggr_count_users" FROM "system"."centers" LEFT JOIN (SELECT "system"."users"."centerId", COUNT(*) AS "_aggr_count_users" FROM "system"."users" WHERE "system"."users"."isActive" = $1 GROUP BY "system"."users"."centerId") AS "aggr_selection_0_User" ON ("system"."centers"."id" = "aggr_selection_0_User"."centerId") WHERE "system"."centers"."isActive" = $2 ORDER BY "system"."centers"."name" ASC OFFSET $3
+prisma:query SELECT "medical"."pathology_types"."id", "medical"."pathology_types"."code", "medical"."pathology_types"."name", "medical"."pathology_types"."description", "medical"."pathology_types"."isActive", "medical"."pathology_types"."sortOrder", "medical"."pathology_types"."createdAt", "medical"."pathology_types"."updatedAt" FROM "medical"."pathology_types" WHERE "medical"."pathology_types"."isActive" = $1 ORDER BY "medical"."pathology_types"."sortOrder" ASC OFFSET $2
+prisma:query SELECT "system"."centers"."id", "system"."centers"."name", "system"."centers"."code", "system"."centers"."province", "system"."centers"."regency", "system"."centers"."address", "system"."centers"."isActive", "system"."centers"."createdAt", "system"."centers"."updatedAt", COALESCE("aggr_selection_0_User"."_aggr_count_users", 0) AS "_aggr_count_users" FROM "system"."centers" LEFT JOIN (SELECT "system"."users"."centerId", COUNT(*) AS "_aggr_count_users" FROM "system"."users" WHERE "system"."users"."isActive" = $1 GROUP BY "system"."users"."centerId") AS "aggr_selection_0_User" ON ("system"."centers"."id" = "aggr_selection_0_User"."centerId") WHERE "system"."centers"."isActive" = $2 ORDER BY "system"."centers"."name" ASC OFFSET $3
+prisma:query SELECT "medical"."pathology_types"."id", "medical"."pathology_types"."code", "medical"."pathology_types"."name", "medical"."pathology_types"."description", "medical"."pathology_types"."isActive", "medical"."pathology_types"."sortOrder", "medical"."pathology_types"."createdAt", "medical"."pathology_types"."updatedAt" FROM "medical"."pathology_types" WHERE "medical"."pathology_types"."isActive" = $1 ORDER BY "medical"."pathology_types"."sortOrder" ASC OFFSET $2
+[33m[Nest] 98441  - [39m12/14/2025, 10:47:58 PM [33m   WARN[39m [38;5;3m[ValidationExceptionFilter] [39m[33mValidation Error: [{"field":"unknown","message":"Unauthorized"}][39m
+[33m[Nest] 98441  - [39m12/14/2025, 10:47:58 PM [33m   WARN[39m [38;5;3m[ValidationExceptionFilter] [39mObject(4) {
+  method: [32m'GET'[39m,
+  url: [32m'/api/v1/auth/profile'[39m,
+  body: [90mundefined[39m,
+  query: {}
+}
+[33m[Nest] 98441  - [39m12/14/2025, 10:47:58 PM [33m   WARN[39m [38;5;3m[ValidationExceptionFilter] [39m[33mValidation Error: [{"field":"unknown","message":"Unauthorized"}][39m
+[33m[Nest] 98441  - [39m12/14/2025, 10:47:58 PM [33m   WARN[39m [38;5;3m[ValidationExceptionFilter] [39mObject(4) {
+  method: [32m'GET'[39m,
+  url: [32m'/api/v1/auth/profile'[39m,
+  body: [90mundefined[39m,
+  query: {}
+}
+[33m[Nest] 98441  - [39m12/14/2025, 10:47:58 PM [33m   WARN[39m [38;5;3m[ValidationExceptionFilter] [39m[33mValidation Error: [{"field":"unknown","message":"Unauthorized"}][39m
+[33m[Nest] 98441  - [39m12/14/2025, 10:47:58 PM [33m   WARN[39m [38;5;3m[ValidationExceptionFilter] [39mObject(4) {
+  method: [32m'GET'[39m,
+  url: [32m'/api/v1/research/requests'[39m,
+  body: [90mundefined[39m,
+  query: {}
+}
+[33m[Nest] 98441  - [39m12/14/2025, 10:48:24 PM [33m   WARN[39m [38;5;3m[ValidationExceptionFilter] [39m[33mValidation Error: [{"field":"unknown","message":"Unauthorized"}][39m
+[33m[Nest] 98441  - [39m12/14/2025, 10:48:24 PM [33m   WARN[39m [38;5;3m[ValidationExceptionFilter] [39mObject(4) {
+  method: [32m'GET'[39m,
+  url: [32m'/api/v1/auth/profile'[39m,
+  body: [90mundefined[39m,
+  query: {}
+}
+[33m[Nest] 98441  - [39m12/14/2025, 10:48:24 PM [33m   WARN[39m [38;5;3m[ValidationExceptionFilter] [39m[33mValidation Error: [{"field":"unknown","message":"Unauthorized"}][39m
+[33m[Nest] 98441  - [39m12/14/2025, 10:48:24 PM [33m   WARN[39m [38;5;3m[ValidationExceptionFilter] [39mObject(4) {
+  method: [32m'GET'[39m,
+  url: [32m'/api/v1/auth/profile'[39m,
+  body: [90mundefined[39m,
+  query: {}
+}
+[33m[Nest] 98441  - [39m12/14/2025, 10:48:45 PM [33m   WARN[39m [38;5;3m[ValidationExceptionFilter] [39m[33mValidation Error: [{"field":"unknown","message":"Unauthorized"}][39m
+[33m[Nest] 98441  - [39m12/14/2025, 10:48:45 PM [33m   WARN[39m [38;5;3m[ValidationExceptionFilter] [39mObject(4) {
+  method: [32m'GET'[39m,
+  url: [32m'/api/v1/auth/profile'[39m,
+  body: [90mundefined[39m,
+  query: {}
+}
+[33m[Nest] 98441  - [39m12/14/2025, 10:48:45 PM [33m   WARN[39m [38;5;3m[ValidationExceptionFilter] [39m[33mValidation Error: [{"field":"unknown","message":"Unauthorized"}][39m
+[33m[Nest] 98441  - [39m12/14/2025, 10:48:45 PM [33m   WARN[39m [38;5;3m[ValidationExceptionFilter] [39mObject(4) {
+  method: [32m'GET'[39m,
+  url: [32m'/api/v1/auth/profile'[39m,
+  body: [90mundefined[39m,
+  query: {}
+}
+prisma:query SELECT 1
+prisma:query SELECT 1
+prisma:query SELECT "system"."centers"."id", "system"."centers"."name", "system"."centers"."code", "system"."centers"."province", "system"."centers"."regency", "system"."centers"."address", "system"."centers"."isActive", "system"."centers"."createdAt", "system"."centers"."updatedAt", COALESCE("aggr_selection_0_User"."_aggr_count_users", 0) AS "_aggr_count_users" FROM "system"."centers" LEFT JOIN (SELECT "system"."users"."centerId", COUNT(*) AS "_aggr_count_users" FROM "system"."users" WHERE "system"."users"."isActive" = $1 GROUP BY "system"."users"."centerId") AS "aggr_selection_0_User" ON ("system"."centers"."id" = "aggr_selection_0_User"."centerId") WHERE "system"."centers"."isActive" = $2 ORDER BY "system"."centers"."name" ASC OFFSET $3
+prisma:query SELECT "medical"."pathology_types"."id", "medical"."pathology_types"."code", "medical"."pathology_types"."name", "medical"."pathology_types"."description", "medical"."pathology_types"."isActive", "medical"."pathology_types"."sortOrder", "medical"."pathology_types"."createdAt", "medical"."pathology_types"."updatedAt" FROM "medical"."pathology_types" WHERE "medical"."pathology_types"."isActive" = $1 ORDER BY "medical"."pathology_types"."sortOrder" ASC OFFSET $2
+prisma:query SELECT "system"."centers"."id", "system"."centers"."name", "system"."centers"."code", "system"."centers"."province", "system"."centers"."regency", "system"."centers"."address", "system"."centers"."isActive", "system"."centers"."createdAt", "system"."centers"."updatedAt", COALESCE("aggr_selection_0_User"."_aggr_count_users", 0) AS "_aggr_count_users" FROM "system"."centers" LEFT JOIN (SELECT "system"."users"."centerId", COUNT(*) AS "_aggr_count_users" FROM "system"."users" WHERE "system"."users"."isActive" = $1 GROUP BY "system"."users"."centerId") AS "aggr_selection_0_User" ON ("system"."centers"."id" = "aggr_selection_0_User"."centerId") WHERE "system"."centers"."isActive" = $2 ORDER BY "system"."centers"."name" ASC OFFSET $3
+prisma:query SELECT "medical"."pathology_types"."id", "medical"."pathology_types"."code", "medical"."pathology_types"."name", "medical"."pathology_types"."description", "medical"."pathology_types"."isActive", "medical"."pathology_types"."sortOrder", "medical"."pathology_types"."createdAt", "medical"."pathology_types"."updatedAt" FROM "medical"."pathology_types" WHERE "medical"."pathology_types"."isActive" = $1 ORDER BY "medical"."pathology_types"."sortOrder" ASC OFFSET $2
+prisma:error Error in PostgreSQL connection: Error { kind: Closed, cause: None }
+prisma:error Error in PostgreSQL connection: Error { kind: Closed, cause: None }
+prisma:error Error in PostgreSQL connection: Error { kind: Closed, cause: None }
+prisma:error Error in PostgreSQL connection: Error { kind: Closed, cause: None }
+[33m[Nest] 98441  - [39m12/14/2025, 11:13:40 PM [33m   WARN[39m [38;5;3m[ValidationExceptionFilter] [39m[33mValidation Error: [{"field":"unknown","message":"Unauthorized"}][39m
+[33m[Nest] 98441  - [39m12/14/2025, 11:13:40 PM [33m   WARN[39m [38;5;3m[ValidationExceptionFilter] [39mObject(4) {
+  method: [32m'GET'[39m,
+  url: [32m'/api/v1/auth/profile'[39m,
+  body: [90mundefined[39m,
+  query: {}
+}
+[33m[Nest] 98441  - [39m12/14/2025, 11:13:40 PM [33m   WARN[39m [38;5;3m[ValidationExceptionFilter] [39m[33mValidation Error: [{"field":"unknown","message":"Unauthorized"}][39m
+[33m[Nest] 98441  - [39m12/14/2025, 11:13:40 PM [33m   WARN[39m [38;5;3m[ValidationExceptionFilter] [39mObject(4) {
+  method: [32m'GET'[39m,
+  url: [32m'/api/v1/auth/profile'[39m,
+  body: [90mundefined[39m,
+  query: {}
+}
+[33m[Nest] 98441  - [39m12/14/2025, 11:13:40 PM [33m   WARN[39m [38;5;3m[ValidationExceptionFilter] [39m[33mValidation Error: [{"field":"unknown","message":"Unauthorized"}][39m
+[33m[Nest] 98441  - [39m12/14/2025, 11:13:40 PM [33m   WARN[39m [38;5;3m[ValidationExceptionFilter] [39mObject(4) {
+  method: [32m'GET'[39m,
+  url: [32m'/api/v1/research/requests'[39m,
+  body: [90mundefined[39m,
+  query: {}
+}
+[33m[Nest] 98441  - [39m12/14/2025, 11:14:31 PM [33m   WARN[39m [38;5;3m[ValidationExceptionFilter] [39m[33mValidation Error: [{"field":"unknown","message":"Unauthorized"}][39m
+[33m[Nest] 98441  - [39m12/14/2025, 11:14:31 PM [33m   WARN[39m [38;5;3m[ValidationExceptionFilter] [39mObject(4) {
+  method: [32m'GET'[39m,
+  url: [32m'/api/v1/auth/profile'[39m,
+  body: [90mundefined[39m,
+  query: {}
+}
+[33m[Nest] 98441  - [39m12/14/2025, 11:14:31 PM [33m   WARN[39m [38;5;3m[ValidationExceptionFilter] [39m[33mValidation Error: [{"field":"unknown","message":"Unauthorized"}][39m
+[33m[Nest] 98441  - [39m12/14/2025, 11:14:31 PM [33m   WARN[39m [38;5;3m[ValidationExceptionFilter] [39mObject(4) {
+  method: [32m'GET'[39m,
+  url: [32m'/api/v1/auth/profile'[39m,
+  body: [90mundefined[39m,
+  query: {}
+}
+[33m[Nest] 98441  - [39m12/14/2025, 11:15:13 PM [33m   WARN[39m [38;5;3m[ValidationExceptionFilter] [39m[33mValidation Error: [{"field":"unknown","message":"Unauthorized"}][39m
+[33m[Nest] 98441  - [39m12/14/2025, 11:15:13 PM [33m   WARN[39m [38;5;3m[ValidationExceptionFilter] [39mObject(4) {
+  method: [32m'GET'[39m,
+  url: [32m'/api/v1/auth/profile'[39m,
+  body: [90mundefined[39m,
+  query: {}
+}
+[33m[Nest] 98441  - [39m12/14/2025, 11:15:13 PM [33m   WARN[39m [38;5;3m[ValidationExceptionFilter] [39m[33mValidation Error: [{"field":"unknown","message":"Unauthorized"}][39m
+[33m[Nest] 98441  - [39m12/14/2025, 11:15:13 PM [33m   WARN[39m [38;5;3m[ValidationExceptionFilter] [39mObject(4) {
+  method: [32m'GET'[39m,
+  url: [32m'/api/v1/auth/profile'[39m,
+  body: [90mundefined[39m,
+  query: {}
+}
+prisma:query SELECT "medical"."pathology_types"."id", "medical"."pathology_types"."code", "medical"."pathology_types"."name", "medical"."pathology_types"."description", "medical"."pathology_types"."isActive", "medical"."pathology_types"."sortOrder", "medical"."pathology_types"."createdAt", "medical"."pathology_types"."updatedAt" FROM "medical"."pathology_types" WHERE "medical"."pathology_types"."isActive" = $1 ORDER BY "medical"."pathology_types"."sortOrder" ASC OFFSET $2
+prisma:query SELECT "system"."centers"."id", "system"."centers"."name", "system"."centers"."code", "system"."centers"."province", "system"."centers"."regency", "system"."centers"."address", "system"."centers"."isActive", "system"."centers"."createdAt", "system"."centers"."updatedAt", COALESCE("aggr_selection_0_User"."_aggr_count_users", 0) AS "_aggr_count_users" FROM "system"."centers" LEFT JOIN (SELECT "system"."users"."centerId", COUNT(*) AS "_aggr_count_users" FROM "system"."users" WHERE "system"."users"."isActive" = $1 GROUP BY "system"."users"."centerId") AS "aggr_selection_0_User" ON ("system"."centers"."id" = "aggr_selection_0_User"."centerId") WHERE "system"."centers"."isActive" = $2 ORDER BY "system"."centers"."name" ASC OFFSET $3
+prisma:query SELECT "medical"."pathology_types"."id", "medical"."pathology_types"."code", "medical"."pathology_types"."name", "medical"."pathology_types"."description", "medical"."pathology_types"."isActive", "medical"."pathology_types"."sortOrder", "medical"."pathology_types"."createdAt", "medical"."pathology_types"."updatedAt" FROM "medical"."pathology_types" WHERE "medical"."pathology_types"."isActive" = $1 ORDER BY "medical"."pathology_types"."sortOrder" ASC OFFSET $2
+prisma:query SELECT "system"."centers"."id", "system"."centers"."name", "system"."centers"."code", "system"."centers"."province", "system"."centers"."regency", "system"."centers"."address", "system"."centers"."isActive", "system"."centers"."createdAt", "system"."centers"."updatedAt", COALESCE("aggr_selection_0_User"."_aggr_count_users", 0) AS "_aggr_count_users" FROM "system"."centers" LEFT JOIN (SELECT "system"."users"."centerId", COUNT(*) AS "_aggr_count_users" FROM "system"."users" WHERE "system"."users"."isActive" = $1 GROUP BY "system"."users"."centerId") AS "aggr_selection_0_User" ON ("system"."centers"."id" = "aggr_selection_0_User"."centerId") WHERE "system"."centers"."isActive" = $2 ORDER BY "system"."centers"."name" ASC OFFSET $3
+prisma:error Error in PostgreSQL connection: Error { kind: Closed, cause: None }
+prisma:error Error in PostgreSQL connection: Error { kind: Closed, cause: None }

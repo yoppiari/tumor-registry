@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { useFormContext } from '../FormContext';
 import { createPatient, transformWizardDataToPayload } from '@/services/patientApi';
+import clinicalPhotosService from '@/services/clinical-photos.service';
 
 export function Section10ReviewSubmit() {
   const { formData, clearDraft } = useFormContext();
@@ -112,6 +113,24 @@ export function Section10ReviewSubmit() {
       const response = await createPatient(payload);
 
       console.log('Patient created successfully:', response);
+
+      // Upload clinical photos if any
+      const clinicalPhotos = formData.section3?.clinicalPhotos;
+      if (clinicalPhotos && clinicalPhotos.length > 0 && response.data?.id) {
+        console.log(`Uploading ${clinicalPhotos.length} clinical photos...`);
+
+        try {
+          await clinicalPhotosService.uploadMultiplePhotos(
+            response.data.id,
+            clinicalPhotos
+          );
+          console.log('Clinical photos uploaded successfully');
+        } catch (photoError) {
+          console.error('Error uploading clinical photos:', photoError);
+          // Don't fail the whole submission if photo upload fails
+          setSubmitError('Patient created but some photos failed to upload. You can add them later from the patient detail page.');
+        }
+      }
 
       // Clear draft from localStorage
       if (clearDraft) {

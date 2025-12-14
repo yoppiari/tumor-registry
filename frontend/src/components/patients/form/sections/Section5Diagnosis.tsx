@@ -95,6 +95,35 @@ export const Section5Diagnosis: React.FC<Section5Props> = ({
   const isSoftTissueTumor = formData.pathologyType === 'soft_tissue_tumor';
   const isMetastatic = formData.pathologyType === 'metastatic_bone_disease';
 
+  const handleDepthToggle = (depth: string) => {
+    const currentDepth = formData.tumorDepth || [];
+    const depthIndex = currentDepth.indexOf(depth);
+
+    if (depthIndex > -1) {
+      const newDepth = [...currentDepth];
+      newDepth.splice(depthIndex, 1);
+      updateFormData('tumorDepth', newDepth);
+    } else {
+      updateFormData('tumorDepth', [...currentDepth, depth]);
+    }
+  };
+
+  const handleMetastasisChange = (field: string, value: boolean) => {
+    if (field === 'noMetastasis' && value) {
+      updateMultipleFields({
+        noMetastasis: true,
+        metastasisLung: false,
+        metastasisOther: false,
+        metastasisOtherSites: '',
+      });
+    } else {
+      updateFormData(field, value);
+      if (value) {
+        updateFormData('noMetastasis', false);
+      }
+    }
+  };
+
   return (
     <div className="p-8">
       <h2 className="text-2xl font-bold mb-2">Section 5: Diagnosis & Location</h2>
@@ -256,6 +285,162 @@ export const Section5Diagnosis: React.FC<Section5Props> = ({
               </label>
             ))}
           </div>
+        </div>
+
+        {/* Tumor Size */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Tumor Size
+          </label>
+          <select
+            value={formData.tumorSize || ''}
+            onChange={(e) => updateFormData('tumorSize', e.target.value)}
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+          >
+            <option value="">Select tumor size...</option>
+            <option value="<=5CM">≤ 5 cm</option>
+            <option value=">5_10CM">&gt; 5 - 10 cm</option>
+            <option value=">10_15CM">&gt; 10 - 15 cm</option>
+            <option value=">15CM">&gt; 15 cm</option>
+            <option value="NA">N/A</option>
+          </select>
+        </div>
+
+        {/* Tumor Depth - Only for Soft Tissue */}
+        {isSoftTissueTumor && (
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-3">
+              Tumor Depth (for Soft Tissue Tumors)
+            </label>
+            <div className="flex space-x-4">
+              <label
+                className={`flex items-center px-6 py-3 border-2 rounded-lg cursor-pointer transition-all ${
+                  formData.tumorDepth?.includes('SUPERFICIAL')
+                    ? 'border-blue-500 bg-blue-50'
+                    : 'border-gray-200 hover:border-gray-300'
+                }`}
+              >
+                <input
+                  type="checkbox"
+                  checked={formData.tumorDepth?.includes('SUPERFICIAL') || false}
+                  onChange={() => handleDepthToggle('SUPERFICIAL')}
+                  className="w-5 h-5 text-blue-600 rounded"
+                />
+                <span className="ml-3 font-medium">Superficial</span>
+              </label>
+              <label
+                className={`flex items-center px-6 py-3 border-2 rounded-lg cursor-pointer transition-all ${
+                  formData.tumorDepth?.includes('DEEP')
+                    ? 'border-blue-500 bg-blue-50'
+                    : 'border-gray-200 hover:border-gray-300'
+                }`}
+              >
+                <input
+                  type="checkbox"
+                  checked={formData.tumorDepth?.includes('DEEP') || false}
+                  onChange={() => handleDepthToggle('DEEP')}
+                  className="w-5 h-5 text-blue-600 rounded"
+                />
+                <span className="ml-3 font-medium">Deep</span>
+              </label>
+            </div>
+          </div>
+        )}
+
+        {/* Metastasis at Diagnosis */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-3">
+            Metastasis at Diagnosis
+          </label>
+          <div className="space-y-3">
+            <label
+              className={`flex items-center p-3 border-2 rounded-lg cursor-pointer transition-all ${
+                formData.metastasisLung
+                  ? 'border-blue-500 bg-blue-50'
+                  : 'border-gray-200 hover:border-gray-300'
+              }`}
+            >
+              <input
+                type="checkbox"
+                checked={formData.metastasisLung || false}
+                onChange={(e) => handleMetastasisChange('metastasisLung', e.target.checked)}
+                className="w-5 h-5 text-blue-600 rounded"
+              />
+              <span className="ml-3 font-medium">Lung Metastasis</span>
+            </label>
+
+            <label
+              className={`flex items-center p-3 border-2 rounded-lg cursor-pointer transition-all ${
+                formData.metastasisOther
+                  ? 'border-blue-500 bg-blue-50'
+                  : 'border-gray-200 hover:border-gray-300'
+              }`}
+            >
+              <input
+                type="checkbox"
+                checked={formData.metastasisOther || false}
+                onChange={(e) => handleMetastasisChange('metastasisOther', e.target.checked)}
+                className="w-5 h-5 text-blue-600 rounded"
+              />
+              <span className="ml-3 font-medium">Other Metastasis</span>
+            </label>
+
+            {formData.metastasisOther && (
+              <div className="ml-8">
+                <input
+                  type="text"
+                  value={formData.metastasisOtherSites || ''}
+                  onChange={(e) => updateFormData('metastasisOtherSites', e.target.value)}
+                  placeholder="Specify other metastasis sites..."
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
+            )}
+
+            <label
+              className={`flex items-center p-3 border-2 rounded-lg cursor-pointer transition-all ${
+                formData.noMetastasis
+                  ? 'border-green-500 bg-green-50'
+                  : 'border-gray-200 hover:border-gray-300'
+              }`}
+            >
+              <input
+                type="radio"
+                checked={formData.noMetastasis || false}
+                onChange={(e) => handleMetastasisChange('noMetastasis', e.target.checked)}
+                className="w-5 h-5 text-green-600"
+              />
+              <span className="ml-3 font-medium">No Metastasis</span>
+            </label>
+          </div>
+        </div>
+
+        {/* Diagnosis Komplikasi */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Complications at Diagnosis (Komplikasi)
+          </label>
+          <textarea
+            value={formData.diagnosisKomplikasi || ''}
+            onChange={(e) => updateFormData('diagnosisKomplikasi', e.target.value)}
+            placeholder="Document any complications present at diagnosis (e.g., pathological fracture, infection, neurovascular compromise)..."
+            rows={3}
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
+
+        {/* Diagnosis Komorbid */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Comorbidities (Komorbid)
+          </label>
+          <textarea
+            value={formData.diagnosisKomorbid || ''}
+            onChange={(e) => updateFormData('diagnosisKomorbid', e.target.value)}
+            placeholder="Document relevant comorbid conditions (e.g., diabetes, hypertension, heart disease, renal disease)..."
+            rows={3}
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+          />
         </div>
 
         {/* Histopathology Details */}

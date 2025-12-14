@@ -120,6 +120,44 @@ export class ResearchRequestsController {
   }
 
   /**
+   * POST /research-requests/:id/generate-export
+   * Admin-only: Generate data export for approved request
+   */
+  @Post(':id/generate-export')
+  @UseGuards(PermissionsGuard)
+  @Permissions('RESEARCH_REQUESTS_APPROVE')
+  generateExport(@Request() req, @Param('id') id: string) {
+    return this.researchRequestsService.generateDataExport(id, req.user.userId);
+  }
+
+  /**
+   * GET /research-requests/:id/download
+   * Researcher: Get download URL for approved data
+   */
+  @Get(':id/download')
+  getDownload(@Request() req, @Param('id') id: string) {
+    return this.researchRequestsService.getDownloadUrl(id, req.user.userId);
+  }
+
+  /**
+   * POST /research-requests/:id/request-extension
+   * Researcher: Request access extension
+   */
+  @Post(':id/request-extension')
+  requestExtension(
+    @Request() req,
+    @Param('id') id: string,
+    @Body() dto: { extensionMonths: number; justification: string },
+  ) {
+    return this.researchRequestsService.requestExtension(
+      id,
+      req.user.userId,
+      dto.extensionMonths,
+      dto.justification,
+    );
+  }
+
+  /**
    * DELETE /research-requests/:id
    * Delete draft research request
    */

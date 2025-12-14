@@ -22,6 +22,9 @@ interface SurgicalTreatment {
 
   // Surgery Details
   surgeryDate?: string;
+  surgeryDuration?: number; // in minutes
+  bloodLoss?: number; // in ml
+  intraoperativeContamination?: boolean;
   surgeryType?: 'WIDE_EXCISION' | 'MARGINAL_EXCISION' | 'INTRALESIONAL' | 'AMPUTATION' | 'ROTATIONPLASTY' | 'OTHER';
   surgeryTypeOther?: string;
 
@@ -97,6 +100,12 @@ interface OtherTreatment {
 }
 
 interface Section8Data {
+  // Treatment Intention - CRITICAL FIRST FIELD
+  treatmentIntention?: 'CURATIVE' | 'PALLIATIVE';
+
+  // Analgesia
+  analgesiaStartDate?: string;
+
   // Primary Treatment Modality
   primaryTreatment?: 'SURGERY' | 'CHEMOTHERAPY' | 'RADIATION' | 'MULTIMODAL';
 
@@ -188,6 +197,62 @@ export function Section8TreatmentManagement() {
         <p className="text-gray-600">
           Dokumentasi lengkap pengobatan termasuk bedah (LIMB SALVAGE), kemoterapi, radiasi, dan modalitas lainnya
         </p>
+      </div>
+
+      {/* TREATMENT INTENTION - CRITICAL FIRST FIELD */}
+      <div className="bg-gradient-to-r from-purple-50 to-white rounded-lg border-2 border-purple-200 p-6">
+        <label className="block text-sm font-medium text-gray-700 mb-4">
+          Tujuan Pengobatan (Treatment Intention) <span className="text-red-500">*</span>
+        </label>
+
+        <div className="grid grid-cols-2 gap-4">
+          <button
+            type="button"
+            onClick={() => updateField('treatmentIntention', 'CURATIVE')}
+            className={`
+              p-4 rounded-lg border-2 text-center transition-all
+              ${
+                sectionData.treatmentIntention === 'CURATIVE'
+                  ? 'border-green-600 bg-green-50 text-green-900'
+                  : 'border-gray-200 bg-white hover:border-green-400'
+              }
+            `}
+          >
+            <div className="text-3xl mb-2">🎯</div>
+            <div className="font-bold">CURATIVE</div>
+            <div className="text-xs mt-1 opacity-80">Tujuan menyembuhkan</div>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => updateField('treatmentIntention', 'PALLIATIVE')}
+            className={`
+              p-4 rounded-lg border-2 text-center transition-all
+              ${
+                sectionData.treatmentIntention === 'PALLIATIVE'
+                  ? 'border-blue-600 bg-blue-50 text-blue-900'
+                  : 'border-gray-200 bg-white hover:border-blue-400'
+              }
+            `}
+          >
+            <div className="text-3xl mb-2">💊</div>
+            <div className="font-bold">PALLIATIVE</div>
+            <div className="text-xs mt-1 opacity-80">Mengurangi gejala</div>
+          </button>
+        </div>
+      </div>
+
+      {/* ANALGESIA */}
+      <div className="bg-white rounded-lg border border-gray-200 p-6">
+        <label className="block text-sm font-medium text-gray-700 mb-2">
+          Analgesia (Tanggal Mulai)
+        </label>
+        <input
+          type="date"
+          value={sectionData.analgesiaStartDate || ''}
+          onChange={(e) => updateField('analgesiaStartDate', e.target.value)}
+          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500"
+        />
       </div>
 
       {/* Primary Treatment Modality */}
@@ -302,7 +367,7 @@ export function Section8TreatmentManagement() {
               </div>
             </div>
 
-            {/* Surgery Date */}
+            {/* Surgery Date & Details */}
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -333,6 +398,52 @@ export function Section8TreatmentManagement() {
                   <option value="ROTATIONPLASTY">Rotationplasty</option>
                   <option value="OTHER">Lainnya</option>
                 </select>
+              </div>
+            </div>
+
+            {/* Surgery Duration, Blood Loss, Contamination */}
+            <div className="grid grid-cols-3 gap-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Durasi Operasi (menit)
+                </label>
+                <input
+                  type="number"
+                  value={sectionData.surgery?.surgeryDuration || ''}
+                  onChange={(e) => updateSurgery('surgeryDuration', parseInt(e.target.value))}
+                  placeholder="Contoh: 180"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Perdarahan (ml)
+                </label>
+                <input
+                  type="number"
+                  value={sectionData.surgery?.bloodLoss || ''}
+                  onChange={(e) => updateSurgery('bloodLoss', parseInt(e.target.value))}
+                  placeholder="Contoh: 500"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Kontaminasi Intraoperatif
+                </label>
+                <div className="flex items-center h-12">
+                  <label className="flex items-center">
+                    <input
+                      type="checkbox"
+                      checked={sectionData.surgery?.intraoperativeContamination || false}
+                      onChange={(e) => updateSurgery('intraoperativeContamination', e.target.checked)}
+                      className="rounded border-gray-300 text-red-600 focus:ring-red-500 h-5 w-5"
+                    />
+                    <span className="ml-3 text-sm text-gray-700">Ya, terjadi kontaminasi</span>
+                  </label>
+                </div>
               </div>
             </div>
 
@@ -581,7 +692,7 @@ export function Section8TreatmentManagement() {
             {(sectionData.chemotherapy?.timing === 'NEOADJUVANT' || sectionData.chemotherapy?.timing === 'BOTH') && (
               <div className="bg-blue-50 rounded-lg p-4 border border-blue-200">
                 <h4 className="font-semibold text-blue-900 mb-3">Neoadjuvant Chemotherapy</h4>
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-2 gap-4 mb-3">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">Protokol</label>
                     <input
@@ -602,13 +713,33 @@ export function Section8TreatmentManagement() {
                     />
                   </div>
                 </div>
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Tanggal Mulai</label>
+                    <input
+                      type="date"
+                      value={sectionData.chemotherapy?.neoadjuvantStartDate || ''}
+                      onChange={(e) => updateChemotherapy('neoadjuvantStartDate', e.target.value)}
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Tanggal Selesai</label>
+                    <input
+                      type="date"
+                      value={sectionData.chemotherapy?.neoadjuvantEndDate || ''}
+                      onChange={(e) => updateChemotherapy('neoadjuvantEndDate', e.target.value)}
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                    />
+                  </div>
+                </div>
               </div>
             )}
 
             {(sectionData.chemotherapy?.timing === 'ADJUVANT' || sectionData.chemotherapy?.timing === 'BOTH') && (
               <div className="bg-green-50 rounded-lg p-4 border border-green-200">
                 <h4 className="font-semibold text-green-900 mb-3">Adjuvant Chemotherapy</h4>
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-2 gap-4 mb-3">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">Protokol</label>
                     <input
@@ -625,6 +756,26 @@ export function Section8TreatmentManagement() {
                       type="number"
                       value={sectionData.chemotherapy?.adjuvantCycles || ''}
                       onChange={(e) => updateChemotherapy('adjuvantCycles', parseInt(e.target.value))}
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500"
+                    />
+                  </div>
+                </div>
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Tanggal Mulai</label>
+                    <input
+                      type="date"
+                      value={sectionData.chemotherapy?.adjuvantStartDate || ''}
+                      onChange={(e) => updateChemotherapy('adjuvantStartDate', e.target.value)}
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Tanggal Selesai</label>
+                    <input
+                      type="date"
+                      value={sectionData.chemotherapy?.adjuvantEndDate || ''}
+                      onChange={(e) => updateChemotherapy('adjuvantEndDate', e.target.value)}
                       className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500"
                     />
                   </div>
@@ -652,6 +803,23 @@ export function Section8TreatmentManagement() {
 
         {showRadiation && (
           <div className="space-y-4 mt-6">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Timing
+              </label>
+              <select
+                value={sectionData.radiation?.timing || ''}
+                onChange={(e) => updateRadiation('timing', e.target.value as RadiationTreatment['timing'])}
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500"
+              >
+                <option value="">Pilih timing</option>
+                <option value="NEOADJUVANT">Neoadjuvant (sebelum bedah)</option>
+                <option value="ADJUVANT">Adjuvant (setelah bedah)</option>
+                <option value="DEFINITIVE">Definitive</option>
+                <option value="PALLIATIVE">Palliative</option>
+              </select>
+            </div>
+
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">Total Dosis (Gy)</label>
@@ -668,6 +836,27 @@ export function Section8TreatmentManagement() {
                   type="number"
                   value={sectionData.radiation?.fractions || ''}
                   onChange={(e) => updateRadiation('fractions', parseInt(e.target.value))}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500"
+                />
+              </div>
+            </div>
+
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Tanggal Mulai</label>
+                <input
+                  type="date"
+                  value={sectionData.radiation?.startDate || ''}
+                  onChange={(e) => updateRadiation('startDate', e.target.value)}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Tanggal Selesai</label>
+                <input
+                  type="date"
+                  value={sectionData.radiation?.endDate || ''}
+                  onChange={(e) => updateRadiation('endDate', e.target.value)}
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500"
                 />
               </div>

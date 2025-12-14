@@ -26,6 +26,16 @@ const CONFERENCE_DECISIONS = [
   { value: 'other', label: 'Other (specify in notes)' },
 ];
 
+const CONSULTANT_SPECIALTIES = [
+  { value: 'orthopedic_oncology', label: 'Orthopedic Oncology' },
+  { value: 'medical_oncology', label: 'Medical Oncology' },
+  { value: 'radiation_oncology', label: 'Radiation Oncology' },
+  { value: 'radiology', label: 'Radiology' },
+  { value: 'pathology', label: 'Pathology' },
+  { value: 'rehabilitation', label: 'Rehabilitation' },
+  { value: 'palliative_care', label: 'Palliative Care' },
+];
+
 export const Section7CPCConference: React.FC<Section7Props> = ({
   formData,
   errors,
@@ -49,6 +59,23 @@ export const Section7CPCConference: React.FC<Section7Props> = ({
 
   const isModalitySelected = (modality: string) => {
     return formData.cpcRecommendedTreatment?.split(',').includes(modality) || false;
+  };
+
+  const handleConsultantToggle = (specialty: string) => {
+    const currentConsultants = formData.attendingConsultants || [];
+    const consultantIndex = currentConsultants.indexOf(specialty);
+
+    if (consultantIndex > -1) {
+      const newConsultants = [...currentConsultants];
+      newConsultants.splice(consultantIndex, 1);
+      updateFormData('attendingConsultants', newConsultants);
+    } else {
+      updateFormData('attendingConsultants', [...currentConsultants, specialty]);
+    }
+  };
+
+  const isConsultantSelected = (specialty: string) => {
+    return formData.attendingConsultants?.includes(specialty) || false;
   };
 
   return (
@@ -98,15 +125,42 @@ export const Section7CPCConference: React.FC<Section7Props> = ({
           />
         </div>
 
-        {/* Attending Team Members */}
+        {/* Attending Consultants Checklist */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-3">
+            Attending Consultants
+          </label>
+          <div className="grid grid-cols-2 gap-3">
+            {CONSULTANT_SPECIALTIES.map((specialty) => (
+              <label
+                key={specialty.value}
+                className={`flex items-center p-3 border-2 rounded-lg cursor-pointer transition-all ${
+                  isConsultantSelected(specialty.value)
+                    ? 'border-blue-500 bg-blue-50'
+                    : 'border-gray-200 hover:border-gray-300'
+                }`}
+              >
+                <input
+                  type="checkbox"
+                  checked={isConsultantSelected(specialty.value)}
+                  onChange={() => handleConsultantToggle(specialty.value)}
+                  className="w-5 h-5 text-blue-600 rounded"
+                />
+                <span className="ml-3 font-medium">{specialty.label}</span>
+              </label>
+            ))}
+          </div>
+        </div>
+
+        {/* Attending Team Members - Additional Details */}
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">
-            Attending Team Members
+            Additional Attendees & Details
           </label>
           <textarea
             value={formData.cpcAttendees || ''}
             onChange={(e) => updateFormData('cpcAttendees', e.target.value)}
-            placeholder="List the specialists and team members who attended the conference..."
+            placeholder="List specific names and any additional team members who attended the conference..."
             rows={3}
             className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
           />

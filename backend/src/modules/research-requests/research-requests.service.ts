@@ -295,6 +295,172 @@ export class ResearchRequestsService {
   }
 
   /**
+   * Generate data export for approved research request
+   */
+  async generateDataExport(id: string, adminId: string) {
+    const request = await this.prisma.researchRequest.findUnique({
+      where: { id },
+    });
+
+    if (!request) {
+      throw new NotFoundException('Research request not found');
+    }
+
+    if (!['APPROVED', 'APPROVED_WITH_CONDITIONS'].includes(request.status)) {
+      throw new BadRequestException('Can only generate export for approved requests');
+    }
+
+    // Import export helper
+    const { exportPatientData, convertToCSV } = await import('./helpers/data-exporter');
+
+    // Export data with anonymization
+    const includeIdentifiable = request.requestedDataFields?.['demographicsIdentifiable']?.selected || false;
+
+    const exportedData = await exportPatientData(this.prisma, {
+      requestedDataFields: request.requestedDataFields,
+      dataFilters: request.dataFilters,
+      includeIdentifiableData: includeIdentifiable,
+      format: 'csv',
+    });
+
+    // Convert to CSV
+    const csvContent = convertToCSV(exportedData);
+    const csvSizeBytes = Buffer.from(csvContent).length;
+
+    // In a real implementation, upload to MinIO/S3
+    // For now, we'll store the CSV content directly (not recommended for production)
+    const exportFilename = `export_${request.requestNumber}_${Date.now()}.csv`;
+    const exportUrl = `/exports/${exportFilename}`;
+
+    // Update research request with export info
+    const updated = await this.prisma.researchRequest.update({
+      where: { id },
+      data: {
+        status: 'DATA_READY',
+        dataExportGeneratedAt: new Date(),
+        dataExportUrl: exportUrl,
+        dataExportFileSize: csvSizeBytes,
+      },
+    });
+
+    await this.logActivity(id, adminId, 'DATA_EXPORT_GENERATED', request.status, 'DATA_READY', `Data export generated: ${exportedData.totalCount} patients`);
+
+    // TODO: In production, upload CSV to MinIO
+    // const minioClient = await this.getMinIOClient();
+    // await minioClient.putObject('research-exports', exportFilename, csvContent);
+
+    return {
+      ...updated,
+      exportedCount: exportedData.totalCount,
+      exportedFields: exportedData.exportedFields,
+      csvContent, // Return CSV content for now (remove in production)
+    };
+  }
+
+  /**
+   * Get download URL for approved request
+   */
+  async getDownloadUrl(id: string, userId: string) {
+    const request = await this.prisma.researchRequest.findUnique({
+      where: { id, createdBy: userId },
+    });
+
+    if (!request) {
+      throw new NotFoundException('Research request not found');
+    }
+
+    if (request.status !== 'DATA_READY' && request.status !== 'ACTIVE') {
+      throw new BadRequestException('Data export is not ready for download');
+    }
+
+    if (!request.dataExportUrl) {
+      throw new BadRequestException('No export file available');
+    }
+
+    // Check if access has expired
+    if (request.expiresAt && new Date() > new Date(request.expiresAt)) {
+      await this.prisma.researchRequest.update({
+        where: { id },
+        data: { status: 'EXPIRED' },
+      });
+      throw new ForbiddenException('Access has expired');
+    }
+
+    // Track download
+    await this.trackDownload(id, userId);
+
+    return {
+      downloadUrl: request.dataExportUrl,
+      fileSize: request.dataExportFileSize,
+      expiresAt: request.expiresAt,
+      downloadCount: request.dataDownloadCount + 1,
+    };
+  }
+
+  /**
+   * Track data download
+   */
+  async trackDownload(id: string, userId: string) {
+    const request = await this.prisma.researchRequest.findUnique({
+      where: { id },
+    });
+
+    if (!request) {
+      throw new NotFoundException('Research request not found');
+    }
+
+    const updated = await this.prisma.researchRequest.update({
+      where: { id },
+      data: {
+        status: 'ACTIVE',
+        dataDownloadedAt: new Date(),
+        dataDownloadCount: { increment: 1 },
+      },
+    });
+
+    await this.logActivity(id, userId, 'DATA_DOWNLOADED', request.status, 'ACTIVE', `Data downloaded (count: ${updated.dataDownloadCount})`);
+
+    return updated;
+  }
+
+  /**
+   * Request access extension
+   */
+  async requestExtension(id: string, userId: string, extensionMonths: number, justification: string) {
+    const request = await this.prisma.researchRequest.findUnique({
+      where: { id, createdBy: userId },
+    });
+
+    if (!request) {
+      throw new NotFoundException('Research request not found');
+    }
+
+    if (!['ACTIVE', 'EXPIRED'].includes(request.status)) {
+      throw new BadRequestException('Can only request extension for active or expired access');
+    }
+
+    // Create extension request (stored in notes for now)
+    const extensionNote = {
+      type: 'EXTENSION_REQUEST',
+      requestedMonths: extensionMonths,
+      justification,
+      requestedAt: new Date(),
+    };
+
+    await this.prisma.researchRequest.update({
+      where: { id },
+      data: {
+        status: 'UNDER_REVIEW',
+        notes: JSON.stringify(extensionNote),
+      },
+    });
+
+    await this.logActivity(id, userId, 'EXTENSION_REQUESTED', request.status, 'UNDER_REVIEW', `Extension requested: ${extensionMonths} months - ${justification}`);
+
+    return { message: 'Extension request submitted successfully' };
+  }
+
+  /**
    * Log activity for audit trail
    */
   private async logActivity(

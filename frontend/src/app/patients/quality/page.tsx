@@ -3,6 +3,12 @@
 import { useEffect, useState } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { Layout } from '@/components/layout/Layout';
+import {
+  qualityService,
+  NationalQualityOverview,
+  StaffPerformance,
+  MissingDataHeatmap
+} from '@/services/quality.service';
 
 interface QualityMetrics {
   overallScore: number;
@@ -10,22 +16,6 @@ interface QualityMetrics {
   accuracy: number;
   timeliness: number;
   consistency: number;
-}
-
-interface StaffPerformance {
-  staffId: string;
-  staffName: string;
-  entriesCount: number;
-  avgQualityScore: number;
-  completionRate: number;
-  rank: number;
-}
-
-interface MissingDataHeatmap {
-  field: string;
-  missingCount: number;
-  missingPercentage: number;
-  priority: 'high' | 'medium' | 'low';
 }
 
 interface QualityTrend {
@@ -64,38 +54,54 @@ export default function QualityCheckPage() {
   const fetchQualityDashboardData = async () => {
     try {
       setLoading(true);
-      const token = localStorage.getItem('accessToken');
 
-      // Fetch data quality summary from backend
-      const response = await fetch(`/api/v1/analytics/v2/data-quality/summary?timeRange=${timeRange}`, {
-        headers: {
-          'Authorization': `Bearer ${token}`,
-        },
+      // Fetch all data in parallel
+      const [overviewData, staffData, heatmapData] = await Promise.all([
+        qualityService.getNationalQualityOverview(),
+        qualityService.getStaffPerformanceLeaderboard(),
+        qualityService.getMissingDataHeatmap()
+      ]);
+
+      // Update quality metrics from real API data
+      setQualityMetrics({
+        overallScore: overviewData.averageScore,
+        completeness: overviewData.qualityDistribution.percentages.high + overviewData.qualityDistribution.percentages.medium,
+        accuracy: 88, // Not available from backend - using placeholder
+        timeliness: 78, // Not available from backend - using placeholder
+        consistency: 90, // Not available from backend - using placeholder
       });
 
-      if (response.ok) {
-        const data = await response.json();
-
-        // Update metrics from API
-        if (data.overallQuality) {
-          setQualityMetrics({
-            overallScore: data.overallQuality.score || 85,
-            completeness: data.overallQuality.completeness || 92,
-            accuracy: data.overallQuality.accuracy || 88,
-            timeliness: data.overallQuality.timeliness || 78,
-            consistency: data.overallQuality.consistency || 90,
-          });
-        }
-
-        if (data.recommendations) {
-          setRecommendations(data.recommendations);
-        }
-      } else {
-        // Use mock data for demo if API fails
-        setMockData();
+      // Map weekly trends to quality trends
+      if (overviewData.trends && overviewData.trends.length > 0) {
+        const mappedTrends = overviewData.trends.map(trend => ({
+          date: `Week ${trend.week}`,
+          score: trend.averageScore,
+          entries: trend.patientCount,
+        }));
+        setQualityTrends(mappedTrends);
       }
+
+      // Generate recommendations based on quality distribution
+      const newRecommendations: string[] = [];
+      if (overviewData.qualityDistribution.percentages.low > 20) {
+        newRecommendations.push(`${overviewData.qualityDistribution.low} patients have low quality scores (< 70%) - Focus on improving data completeness`);
+      }
+      if (overviewData.qualityDistribution.percentages.high < 50) {
+        newRecommendations.push('Less than 50% of patients have high quality scores - Consider staff training on data entry standards');
+      }
+      newRecommendations.push(`Total of ${overviewData.totalPatients} patients in quality monitoring system`);
+      newRecommendations.push('Implement automated data validation rules to improve consistency');
+      newRecommendations.push('Schedule regular data quality audits for continuous improvement');
+
+      setRecommendations(newRecommendations);
+
+      // Set real data from APIs
+      setStaffPerformance(staffData);
+      setMissingDataHeatmap(heatmapData);
+
     } catch (error) {
       console.error('Error fetching quality dashboard data:', error);
+      // Use mock data for demo if API fails
       setMockData();
     } finally {
       setLoading(false);
@@ -103,22 +109,16 @@ export default function QualityCheckPage() {
   };
 
   const setMockData = () => {
-    // Quality Metrics
-    setQualityMetrics({
-      overallScore: 85,
-      completeness: 92,
-      accuracy: 88,
-      timeliness: 78,
-      consistency: 90,
-    });
+    // Only set staff performance and missing data heatmap
+    // Quality metrics are now loaded from real API
 
     // Staff Performance
     setStaffPerformance([
-      { staffId: '1', staffName: 'Dr. Ahmad Sutanto', entriesCount: 145, avgQualityScore: 94, completionRate: 98, rank: 1 },
-      { staffId: '2', staffName: 'Siti Nurhaliza', entriesCount: 132, avgQualityScore: 91, completionRate: 95, rank: 2 },
-      { staffId: '3', staffName: 'Budi Santoso', entriesCount: 128, avgQualityScore: 88, completionRate: 92, rank: 3 },
-      { staffId: '4', staffName: 'Ratna Dewi', entriesCount: 115, avgQualityScore: 85, completionRate: 89, rank: 4 },
-      { staffId: '5', staffName: 'Eko Prasetyo', entriesCount: 98, avgQualityScore: 82, completionRate: 85, rank: 5 },
+      { staffId: '1', staffName: 'Dr. Ahmad Sutanto', staffEmail: 'ahmad.sutanto@inamsos.go.id', entriesCount: 145, avgQualityScore: 94, completionRate: 98, rank: 1 },
+      { staffId: '2', staffName: 'Siti Nurhaliza', staffEmail: 'siti.nurhaliza@inamsos.go.id', entriesCount: 132, avgQualityScore: 91, completionRate: 95, rank: 2 },
+      { staffId: '3', staffName: 'Budi Santoso', staffEmail: 'budi.santoso@inamsos.go.id', entriesCount: 128, avgQualityScore: 88, completionRate: 92, rank: 3 },
+      { staffId: '4', staffName: 'Ratna Dewi', staffEmail: 'ratna.dewi@inamsos.go.id', entriesCount: 115, avgQualityScore: 85, completionRate: 89, rank: 4 },
+      { staffId: '5', staffName: 'Eko Prasetyo', staffEmail: 'eko.prasetyo@inamsos.go.id', entriesCount: 98, avgQualityScore: 82, completionRate: 85, rank: 5 },
     ]);
 
     // Missing Data Heatmap
@@ -131,27 +131,7 @@ export default function QualityCheckPage() {
       { field: 'BMI', missingCount: 89, missingPercentage: 36, priority: 'low' },
     ]);
 
-    // Quality Trends (last 30 days)
-    const trends: QualityTrend[] = [];
-    for (let i = 29; i >= 0; i--) {
-      const date = new Date();
-      date.setDate(date.getDate() - i);
-      trends.push({
-        date: date.toISOString().split('T')[0],
-        score: 75 + Math.random() * 15 + (i < 15 ? i : 0), // Trending upward
-        entries: Math.floor(Math.random() * 20) + 5,
-      });
-    }
-    setQualityTrends(trends);
-
-    // Recommendations
-    setRecommendations([
-      'Fokus pada kelengkapan data histologi - tingkat kelengkapan 82%',
-      'Tingkatkan ketepatan waktu entry data - rata-rata delay 3.2 hari',
-      'Lakukan validasi cross-field untuk meningkatkan konsistensi',
-      'Latihan refresher untuk staff dengan skor < 85%',
-      'Implementasi peer review untuk data stadium TNM',
-    ]);
+    // Quality trends and recommendations are now loaded from real API
   };
 
   const getScoreColor = (score: number) => {

@@ -37,7 +37,6 @@ export function Layout({ children }: LayoutProps) {
       submenu: [
         { name: 'Daftar Pasien', href: '/patients', roles: ['DATA_ENTRY', 'MEDICAL_OFFICER', 'RESEARCHER', 'CENTER_ADMIN', 'NATIONAL_ADMIN', 'SYSTEM_ADMIN'] },
         { name: 'Entry Data Baru', href: '/patients/new', roles: ['DATA_ENTRY', 'MEDICAL_OFFICER', 'CENTER_ADMIN', 'NATIONAL_ADMIN', 'SYSTEM_ADMIN'] },
-        { name: 'Upload Dokumen', href: '/patients/documents', roles: ['DATA_ENTRY', 'MEDICAL_OFFICER', 'CENTER_ADMIN', 'NATIONAL_ADMIN', 'SYSTEM_ADMIN'] },
         { name: 'Quality Check', href: '/patients/quality', roles: ['CENTER_ADMIN', 'NATIONAL_ADMIN', 'SYSTEM_ADMIN'] },
       ]
     },
@@ -48,33 +47,9 @@ export function Layout({ children }: LayoutProps) {
       roles: ['DATA_ENTRY', 'MEDICAL_OFFICER', 'CENTER_ADMIN', 'NATIONAL_ADMIN', 'SYSTEM_ADMIN'],
       submenu: [
         { name: '14-Visit Protocol', href: '/follow-up', roles: ['DATA_ENTRY', 'MEDICAL_OFFICER', 'CENTER_ADMIN', 'NATIONAL_ADMIN', 'SYSTEM_ADMIN'] },
-        { name: 'MSTS Calculator', href: '/demo/msts-calculator', roles: ['DATA_ENTRY', 'MEDICAL_OFFICER', 'CENTER_ADMIN', 'NATIONAL_ADMIN', 'SYSTEM_ADMIN'] },
+        { name: 'MSTS Calculator', href: '/msts', roles: ['DATA_ENTRY', 'MEDICAL_OFFICER', 'CENTER_ADMIN', 'NATIONAL_ADMIN', 'SYSTEM_ADMIN'] },
         { name: 'Compliance Tracking', href: '/follow-up/compliance', roles: ['CENTER_ADMIN', 'NATIONAL_ADMIN', 'SYSTEM_ADMIN'] },
         { name: 'Reminder Management', href: '/follow-up/reminders', roles: ['DATA_ENTRY', 'MEDICAL_OFFICER', 'CENTER_ADMIN'] },
-      ]
-    },
-    {
-      name: 'Clinical Media',
-      href: '/media',
-      icon: '🖼️',
-      roles: ['DATA_ENTRY', 'MEDICAL_OFFICER', 'RESEARCHER', 'CENTER_ADMIN', 'NATIONAL_ADMIN', 'SYSTEM_ADMIN'],
-      submenu: [
-        { name: 'Clinical Photos', href: '/media/photos', roles: ['DATA_ENTRY', 'MEDICAL_OFFICER', 'CENTER_ADMIN', 'NATIONAL_ADMIN', 'SYSTEM_ADMIN'] },
-        { name: 'Radiology Images', href: '/media/radiology', roles: ['DATA_ENTRY', 'MEDICAL_OFFICER', 'CENTER_ADMIN', 'NATIONAL_ADMIN', 'SYSTEM_ADMIN'] },
-        { name: 'Pathology Reports', href: '/media/pathology', roles: ['MEDICAL_OFFICER', 'RESEARCHER', 'CENTER_ADMIN', 'NATIONAL_ADMIN', 'SYSTEM_ADMIN'] },
-        { name: 'Media Gallery', href: '/media', roles: ['MEDICAL_OFFICER', 'RESEARCHER', 'CENTER_ADMIN', 'NATIONAL_ADMIN', 'SYSTEM_ADMIN'] },
-      ]
-    },
-    {
-      name: 'CPC Conference',
-      href: '/cpc',
-      icon: '🏥',
-      roles: ['MEDICAL_OFFICER', 'CENTER_ADMIN', 'NATIONAL_ADMIN', 'SYSTEM_ADMIN'],
-      submenu: [
-        { name: 'Scheduled CPC', href: '/cpc', roles: ['MEDICAL_OFFICER', 'CENTER_ADMIN', 'NATIONAL_ADMIN', 'SYSTEM_ADMIN'] },
-        { name: 'CPC Minutes', href: '/cpc/minutes', roles: ['MEDICAL_OFFICER', 'CENTER_ADMIN', 'NATIONAL_ADMIN', 'SYSTEM_ADMIN'] },
-        { name: 'Case Presentations', href: '/cpc/presentations', roles: ['MEDICAL_OFFICER', 'CENTER_ADMIN', 'NATIONAL_ADMIN', 'SYSTEM_ADMIN'] },
-        { name: 'Treatment Consensus', href: '/cpc/consensus', roles: ['MEDICAL_OFFICER', 'CENTER_ADMIN', 'NATIONAL_ADMIN', 'SYSTEM_ADMIN'] },
       ]
     },
     {

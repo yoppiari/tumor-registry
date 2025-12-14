@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { Layout } from '@/components/layout/Layout';
+import researchService from '@/services/research.service';
 
 interface DataRequest {
   id: string;
@@ -59,97 +60,41 @@ export default function ResearchRequestsPage() {
   const fetchRequests = async () => {
     try {
       setLoading(true);
-      // Mock data - replace with actual API call
-      const mockRequests: DataRequest[] = [
-        {
-          id: 'REQ-2025-001',
-          title: 'Analisis Survival Rate Kanker Payudara Stadium II-III',
-          requestedDate: '2025-11-01',
-          status: 'Approved',
-          dataType: 'Anonymized',
-          purpose: 'Penelitian untuk tesis magister tentang faktor prognostik kanker payudara',
-          justification: 'Data diperlukan untuk menganalisis faktor-faktor yang mempengaruhi survival rate pada pasien kanker payudara stadium II-III di Indonesia',
-          datasetDescription: 'Data pasien kanker payudara stadium II-III, termasuk karakteristik demografi, riwayat pengobatan, dan outcome klinis',
-          timeline: '6 bulan (November 2025 - April 2026)',
-          reviewerNotes: 'Disetujui dengan syarat data dianonimkan dan hasil penelitian dibagikan ke INAMSOS',
-        },
-        {
-          id: 'REQ-2025-002',
-          title: 'Studi Epidemiologi Kanker Paru di Indonesia',
-          requestedDate: '2025-11-10',
-          status: 'Under Review',
-          dataType: 'Aggregate',
-          purpose: 'Publikasi jurnal internasional tentang tren kanker paru',
-          justification: 'Membutuhkan data agregat untuk mengidentifikasi pola epidemiologis dan faktor risiko kanker paru di populasi Indonesia',
-          datasetDescription: 'Data agregat kasus kanker paru 2020-2025, termasuk distribusi geografis, tipe histologi, dan stadium saat diagnosis',
-          timeline: '3 bulan (November 2025 - Januari 2026)',
-        },
-        {
-          id: 'REQ-2025-003',
-          title: 'Efektivitas Kemoterapi pada Kanker Kolorektal',
-          requestedDate: '2025-11-15',
-          status: 'In Progress',
-          dataType: 'Anonymized',
-          purpose: 'Penelitian kolaborasi multi-center tentang protokol kemoterapi',
-          justification: 'Evaluasi efektivitas berbagai protokol kemoterapi untuk meningkatkan standar terapi kanker kolorektal',
-          datasetDescription: 'Data pasien kanker kolorektal dengan riwayat kemoterapi lengkap, termasuk regimen, dosis, efek samping, dan respons terapi',
-          timeline: '12 bulan (November 2025 - Oktober 2026)',
-        },
-        {
-          id: 'REQ-2025-004',
-          title: 'Faktor Risiko Kanker Serviks pada Wanita Usia Muda',
-          requestedDate: '2025-11-18',
-          status: 'Submitted',
-          dataType: 'Anonymized',
-          purpose: 'Disertasi doktoral tentang faktor risiko kanker serviks',
-          justification: 'Mengidentifikasi faktor risiko spesifik pada wanita usia <35 tahun untuk program pencegahan yang lebih targeted',
-          datasetDescription: 'Data pasien kanker serviks usia <35 tahun, termasuk faktor risiko, riwayat screening, dan karakteristik tumor',
-          timeline: '8 bulan (Desember 2025 - Juli 2026)',
-        },
-        {
-          id: 'REQ-2025-005',
-          title: 'Analisis Biaya Pengobatan Kanker di Indonesia',
-          requestedDate: '2025-11-20',
-          status: 'Draft',
-          dataType: 'Aggregate',
-          purpose: 'Policy brief untuk Kementerian Kesehatan',
-          justification: 'Menyediakan evidence base untuk policy making terkait pembiayaan pengobatan kanker',
-          datasetDescription: 'Data agregat biaya pengobatan berbagai jenis kanker, termasuk biaya diagnostik, terapi, dan follow-up',
-          timeline: '4 bulan (Desember 2025 - Maret 2026)',
-        },
-        {
-          id: 'REQ-2025-006',
-          title: 'Genetic Markers pada Kanker Hati',
-          requestedDate: '2025-10-05',
-          status: 'Completed',
-          dataType: 'Identified',
-          purpose: 'Penelitian genomik kanker hati',
-          justification: 'Identifikasi genetic markers untuk personalized medicine',
-          datasetDescription: 'Data klinis dan hasil pemeriksaan genomik pasien kanker hati',
-          timeline: '18 bulan (Mei 2024 - Oktober 2025)',
-          reviewerNotes: 'Penelitian selesai, hasil telah dipublikasikan di jurnal internasional',
-        },
-        {
-          id: 'REQ-2025-007',
-          title: 'Pengaruh Status Gizi terhadap Outcome Terapi Kanker',
-          requestedDate: '2025-10-28',
-          status: 'Rejected',
-          dataType: 'Identified',
-          purpose: 'Penelitian individu',
-          justification: 'Evaluasi pengaruh status gizi pre-treatment terhadap outcome terapi',
-          datasetDescription: 'Data identitas dan status gizi pasien',
-          timeline: '6 bulan',
-          reviewerNotes: 'Ditolak karena justifikasi penggunaan data identified kurang kuat. Disarankan menggunakan data anonymized',
-        },
-      ];
+      const apiRequests = await researchService.getResearchRequests();
 
-      setRequests(mockRequests);
-      setFilteredRequests(mockRequests);
+      // Map API response to DataRequest format
+      const mappedRequests: DataRequest[] = apiRequests.map((req) => ({
+        id: req.id,
+        title: req.title,
+        requestedDate: new Date(req.submittedAt).toISOString().split('T')[0],
+        status: mapStatus(req.status),
+        dataType: 'Anonymized' as 'Aggregate' | 'Anonymized' | 'Identified',
+        purpose: req.objectives,
+        justification: req.description,
+        datasetDescription: req.dataRequested,
+        timeline: `${req.duration} months`,
+        reviewerNotes: undefined,
+      }));
+
+      setRequests(mappedRequests);
+      setFilteredRequests(mappedRequests);
     } catch (error) {
       console.error('Error fetching requests:', error);
     } finally {
       setLoading(false);
     }
+  };
+
+  const mapStatus = (apiStatus: string): 'Draft' | 'Submitted' | 'Under Review' | 'Approved' | 'Rejected' | 'In Progress' | 'Completed' => {
+    const statusMap: Record<string, 'Draft' | 'Submitted' | 'Under Review' | 'Approved' | 'Rejected' | 'In Progress' | 'Completed'> = {
+      'PENDING_REVIEW': 'Under Review',
+      'DRAFT': 'Draft',
+      'APPROVED': 'Approved',
+      'REJECTED': 'Rejected',
+      'IN_PROGRESS': 'In Progress',
+      'COMPLETED': 'Completed',
+    };
+    return statusMap[apiStatus] || 'Submitted';
   };
 
   const getStatusColor = (status: string) => {

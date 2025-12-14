@@ -15,13 +15,30 @@ const GENDERS = [
 const BLOOD_TYPES = ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'];
 const RELIGIONS = ['Islam', 'Kristen', 'Katolik', 'Hindu', 'Buddha', 'Konghucu'];
 const MARITAL_STATUSES = ['Single', 'Married', 'Divorced', 'Widowed'];
-const EDUCATION_LEVELS = ['SD', 'SMP', 'SMA', 'D3', 'S1', 'S2', 'S3'];
+const EDUCATION_LEVELS = [
+  { value: 'NONE', label: 'No Formal Education' },
+  { value: 'SD', label: 'SD (Elementary School)' },
+  { value: 'SMP', label: 'SMP (Junior High School)' },
+  { value: 'SMA', label: 'SMA (Senior High School)' },
+  { value: 'D3', label: 'D3 (Diploma)' },
+  { value: 'S1', label: 'S1 (Bachelor)' },
+  { value: 'S2_S3', label: 'S2/S3 (Master/Doctorate)' },
+];
 
 export const Section2Identity: React.FC<Section2Props> = ({
   formData,
   errors,
   updateFormData,
 }) => {
+  // Auto-generate tumor registry number on mount
+  React.useEffect(() => {
+    if (!formData.tumorRegistryNumber) {
+      const year = new Date().getFullYear();
+      const random = Math.floor(Math.random() * 10000).toString().padStart(4, '0');
+      updateFormData('tumorRegistryNumber', `TR-${year}-${random}`);
+    }
+  }, [formData.tumorRegistryNumber, updateFormData]);
+
   return (
     <div className="p-8">
       <h2 className="text-2xl font-bold mb-2">Section 2: Patient Identity</h2>
@@ -30,8 +47,23 @@ export const Section2Identity: React.FC<Section2Props> = ({
       </p>
 
       <div className="space-y-6">
-        {/* Medical Record Number */}
+        {/* Tumor Registry Number & Medical Record Number */}
         <div className="grid grid-cols-2 gap-6">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Tumor Registry Number
+            </label>
+            <input
+              type="text"
+              value={formData.tumorRegistryNumber || ''}
+              readOnly
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-gray-100 cursor-not-allowed"
+            />
+            <p className="mt-1 text-sm text-gray-500">
+              Auto-generated unique tumor registry identifier
+            </p>
+          </div>
+
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
               Medical Record Number <span className="text-red-500">*</span>
@@ -49,23 +81,24 @@ export const Section2Identity: React.FC<Section2Props> = ({
               <p className="mt-1 text-sm text-red-500">{errors.medicalRecordNumber}</p>
             )}
           </div>
+        </div>
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              NIK (Indonesian National ID) <span className="text-red-500">*</span>
-            </label>
-            <input
-              type="text"
-              value={formData.nik}
-              onChange={(e) => updateFormData('nik', e.target.value)}
-              placeholder="3173051234567890"
-              maxLength={16}
-              className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 ${
-                errors.nik ? 'border-red-500' : 'border-gray-300'
-              }`}
-            />
-            {errors.nik && <p className="mt-1 text-sm text-red-500">{errors.nik}</p>}
-          </div>
+        {/* NIK */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            NIK (Indonesian National ID) <span className="text-red-500">*</span>
+          </label>
+          <input
+            type="text"
+            value={formData.nik}
+            onChange={(e) => updateFormData('nik', e.target.value)}
+            placeholder="3173051234567890"
+            maxLength={16}
+            className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 ${
+              errors.nik ? 'border-red-500' : 'border-gray-300'
+            }`}
+          />
+          {errors.nik && <p className="mt-1 text-sm text-red-500">{errors.nik}</p>}
         </div>
 
         {/* Name */}
@@ -231,8 +264,8 @@ export const Section2Identity: React.FC<Section2Props> = ({
             >
               <option value="">Select...</option>
               {EDUCATION_LEVELS.map((level) => (
-                <option key={level} value={level}>
-                  {level}
+                <option key={level.value} value={level.value}>
+                  {level.label}
                 </option>
               ))}
             </select>

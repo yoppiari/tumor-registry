@@ -63,26 +63,26 @@ class PatientService {
       totalPages: number;
     };
   }> {
-    const response = await apiClient.get<
-      ApiResponse<{
-        data: Patient[];
-        meta: {
-          page: number;
-          limit: number;
-          total: number;
-          totalPages: number;
-        };
-      }>
-    >('/patients', { params });
-    return response.data.data;
+    const response = await apiClient.get<{patients: Patient[]; pagination?: any}>('/patients', { params });
+
+    // Handle actual API response structure: {patients: [...]}
+    return {
+      data: response.data.patients || [],
+      meta: response.data.pagination || {
+        page: 1,
+        limit: 50,
+        total: response.data.patients?.length || 0,
+        totalPages: 1,
+      },
+    };
   }
 
   /**
    * Get patient by ID
    */
   async getPatientById(id: string): Promise<Patient> {
-    const response = await apiClient.get<ApiResponse<Patient>>(`/patients/${id}`);
-    return response.data.data;
+    const response = await apiClient.get<Patient>(`/patients/${id}`);
+    return response.data;
   }
 
   /**

@@ -3,21 +3,22 @@
 import { useEffect, useState } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { Layout } from '@/components/layout/Layout';
+import { getPatients, Patient } from '@/services/patientApi';
 
 interface ResearchData {
   id: string;
-  patientId: string;
-  cancerType: string;
+  medicalRecordNumber: string;
+  tumorType: string;
   stage: string;
   age: number;
   gender: string;
   diagnosisDate: string;
-  treatment: string;
-  outcome: string;
+  pathologyType: string;
+  grade: string;
 }
 
 interface FilterCriteria {
-  cancerType: string;
+  tumorType: string;
   stage: string;
   ageMin: string;
   ageMax: string;
@@ -37,7 +38,7 @@ export default function ResearchPage() {
   const [data, setData] = useState<ResearchData[]>([]);
   const [filteredData, setFilteredData] = useState<ResearchData[]>([]);
   const [filters, setFilters] = useState<FilterCriteria>({
-    cancerType: '',
+    tumorType: '',
     stage: '',
     ageMin: '',
     ageMax: '',
@@ -66,112 +67,50 @@ export default function ResearchPage() {
   const fetchResearchData = async () => {
     try {
       setLoading(true);
-      // Mock data - replace with actual API call
-      const mockData: ResearchData[] = [
-        {
-          id: '1',
-          patientId: 'P-2025-001',
-          cancerType: 'Kanker Payudara',
-          stage: 'II',
-          age: 45,
-          gender: 'Perempuan',
-          diagnosisDate: '2025-01-15',
-          treatment: 'Kemoterapi + Radiasi',
-          outcome: 'Remisi Parsial',
-        },
-        {
-          id: '2',
-          patientId: 'P-2025-002',
-          cancerType: 'Kanker Paru',
-          stage: 'III',
-          age: 58,
-          gender: 'Laki-laki',
-          diagnosisDate: '2025-02-20',
-          treatment: 'Targeted Therapy',
-          outcome: 'Stabil',
-        },
-        {
-          id: '3',
-          patientId: 'P-2025-003',
-          cancerType: 'Kanker Serviks',
-          stage: 'I',
-          age: 38,
-          gender: 'Perempuan',
-          diagnosisDate: '2025-03-10',
-          treatment: 'Operasi',
-          outcome: 'Remisi Lengkap',
-        },
-        {
-          id: '4',
-          patientId: 'P-2025-004',
-          cancerType: 'Kanker Kolorektal',
-          stage: 'IV',
-          age: 62,
-          gender: 'Laki-laki',
-          diagnosisDate: '2025-04-05',
-          treatment: 'Kemoterapi',
-          outcome: 'Progresif',
-        },
-        {
-          id: '5',
-          patientId: 'P-2025-005',
-          cancerType: 'Kanker Payudara',
-          stage: 'III',
-          age: 52,
-          gender: 'Perempuan',
-          diagnosisDate: '2025-05-12',
-          treatment: 'Kemoterapi + Imunoterapi',
-          outcome: 'Remisi Parsial',
-        },
-        {
-          id: '6',
-          patientId: 'P-2025-006',
-          cancerType: 'Kanker Hati',
-          stage: 'II',
-          age: 55,
-          gender: 'Laki-laki',
-          diagnosisDate: '2025-06-18',
-          treatment: 'Operasi + Kemoterapi',
-          outcome: 'Stabil',
-        },
-        {
-          id: '7',
-          patientId: 'P-2025-007',
-          cancerType: 'Kanker Paru',
-          stage: 'I',
-          age: 48,
-          gender: 'Laki-laki',
-          diagnosisDate: '2025-07-22',
-          treatment: 'Operasi',
-          outcome: 'Remisi Lengkap',
-        },
-        {
-          id: '8',
-          patientId: 'P-2025-008',
-          cancerType: 'Kanker Ovarium',
-          stage: 'III',
-          age: 60,
-          gender: 'Perempuan',
-          diagnosisDate: '2025-08-30',
-          treatment: 'Operasi + Kemoterapi',
-          outcome: 'Remisi Parsial',
-        },
-      ];
 
-      setData(mockData);
-      setFilteredData(mockData);
+      // Fetch real patient data from API
+      const response = await getPatients({ limit: 1000 });
+      const patients = response.patients;
 
-      const uniqueCancerTypes = new Set(mockData.map(d => d.cancerType)).size;
-      const avgAge = mockData.reduce((sum, d) => sum + d.age, 0) / mockData.length;
+      // Transform patient data to research format
+      const researchData: ResearchData[] = patients.map((patient: any) => {
+        const age = patient.dateOfBirth
+          ? Math.floor((new Date().getTime() - new Date(patient.dateOfBirth).getTime()) / (365.25 * 24 * 60 * 60 * 1000))
+          : 0;
+
+        return {
+          id: patient.id,
+          medicalRecordNumber: patient.medicalRecordNumber || '-',
+          tumorType: patient.pathologyType === 'bone_tumor' ? 'Tumor Tulang' :
+                     patient.pathologyType === 'soft_tissue_tumor' ? 'Tumor Jaringan Lunak' :
+                     patient.pathologyType || 'Tidak Diketahui',
+          stage: patient.ennekingStage || patient.ajccStage || '-',
+          age,
+          gender: patient.gender === 'MALE' ? 'Laki-laki' :
+                  patient.gender === 'FEMALE' ? 'Perempuan' : 'Lainnya',
+          diagnosisDate: patient.onsetDate ? new Date(patient.onsetDate).toLocaleDateString('id-ID') : '-',
+          pathologyType: patient.pathologyType || '-',
+          grade: patient.histopathologyGrade || '-',
+        };
+      });
+
+      setData(researchData);
+      setFilteredData(researchData);
+
+      const uniqueTumorTypes = new Set(researchData.map(d => d.tumorType)).size;
+      const avgAge = researchData.length > 0
+        ? researchData.reduce((sum, d) => sum + d.age, 0) / researchData.length
+        : 0;
 
       setStats({
-        totalRecords: mockData.length,
-        filteredRecords: mockData.length,
-        cancerTypes: uniqueCancerTypes,
+        totalRecords: researchData.length,
+        filteredRecords: researchData.length,
+        cancerTypes: uniqueTumorTypes,
         avgAge: Math.round(avgAge),
       });
     } catch (error) {
       console.error('Error fetching research data:', error);
+      alert('Gagal memuat data. Pastikan Anda sudah login.');
     } finally {
       setLoading(false);
     }
@@ -180,11 +119,11 @@ export default function ResearchPage() {
   const applyFilters = () => {
     let filtered = [...data];
 
-    if (filters.cancerType) {
-      filtered = filtered.filter(d => d.cancerType === filters.cancerType);
+    if (filters.tumorType) {
+      filtered = filtered.filter(d => d.tumorType === filters.tumorType);
     }
     if (filters.stage) {
-      filtered = filtered.filter(d => d.stage === filters.stage);
+      filtered = filtered.filter(d => d.stage.includes(filters.stage));
     }
     if (filters.gender) {
       filtered = filtered.filter(d => d.gender === filters.gender);
@@ -194,12 +133,6 @@ export default function ResearchPage() {
     }
     if (filters.ageMax) {
       filtered = filtered.filter(d => d.age <= parseInt(filters.ageMax));
-    }
-    if (filters.yearFrom) {
-      filtered = filtered.filter(d => new Date(d.diagnosisDate).getFullYear() >= parseInt(filters.yearFrom));
-    }
-    if (filters.yearTo) {
-      filtered = filtered.filter(d => new Date(d.diagnosisDate).getFullYear() <= parseInt(filters.yearTo));
     }
 
     setFilteredData(filtered);
@@ -212,7 +145,7 @@ export default function ResearchPage() {
 
   const handleResetFilters = () => {
     setFilters({
-      cancerType: '',
+      tumorType: '',
       stage: '',
       ageMin: '',
       ageMax: '',
@@ -348,34 +281,31 @@ export default function ResearchPage() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Jenis Kanker</label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Tipe Patologi</label>
               <select
-                value={filters.cancerType}
-                onChange={(e) => handleFilterChange('cancerType', e.target.value)}
+                value={filters.tumorType}
+                onChange={(e) => handleFilterChange('tumorType', e.target.value)}
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
               >
                 <option value="">Semua</option>
-                <option value="Kanker Payudara">Kanker Payudara</option>
-                <option value="Kanker Paru">Kanker Paru</option>
-                <option value="Kanker Serviks">Kanker Serviks</option>
-                <option value="Kanker Kolorektal">Kanker Kolorektal</option>
-                <option value="Kanker Hati">Kanker Hati</option>
-                <option value="Kanker Ovarium">Kanker Ovarium</option>
+                <option value="Tumor Tulang">Tumor Tulang</option>
+                <option value="Tumor Jaringan Lunak">Tumor Jaringan Lunak</option>
               </select>
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Stadium</label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Enneking Stage</label>
               <select
                 value={filters.stage}
                 onChange={(e) => handleFilterChange('stage', e.target.value)}
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
               >
                 <option value="">Semua</option>
-                <option value="I">Stadium I</option>
-                <option value="II">Stadium II</option>
-                <option value="III">Stadium III</option>
-                <option value="IV">Stadium IV</option>
+                <option value="IA">Enneking IA</option>
+                <option value="IB">Enneking IB</option>
+                <option value="IIA">Enneking IIA</option>
+                <option value="IIB">Enneking IIB</option>
+                <option value="III">Enneking III</option>
               </select>
             </div>
 
@@ -428,13 +358,16 @@ export default function ResearchPage() {
             <thead className="bg-gray-50">
               <tr>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Patient ID
+                  No. MR
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Jenis Kanker
+                  Tipe Patologi
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Stadium
+                  Stage
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Grade
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Usia
@@ -443,13 +376,7 @@ export default function ResearchPage() {
                   Jenis Kelamin
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Diagnosis
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Treatment
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Outcome
+                  Onset
                 </th>
               </tr>
             </thead>
@@ -457,10 +384,10 @@ export default function ResearchPage() {
               {filteredData.map((record) => (
                 <tr key={record.id} className="hover:bg-gray-50">
                   <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm font-medium text-gray-900">{record.patientId}</div>
+                    <div className="text-sm font-medium text-gray-900">{record.medicalRecordNumber}</div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm text-gray-900">{record.cancerType}</div>
+                    <div className="text-sm text-gray-900">{record.tumorType}</div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <span className="px-2 py-1 text-xs font-medium bg-blue-100 text-blue-800 rounded-full">
@@ -468,26 +395,22 @@ export default function ResearchPage() {
                     </span>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm text-gray-900">{record.age}</div>
+                    <span className={`px-2 py-1 text-xs font-medium rounded-full ${
+                      record.grade.includes('High') || record.grade.includes('high') ? 'bg-red-100 text-red-800' :
+                      record.grade.includes('Low') || record.grade.includes('low') ? 'bg-green-100 text-green-800' :
+                      'bg-yellow-100 text-yellow-800'
+                    }`}>
+                      {record.grade}
+                    </span>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <div className="text-sm text-gray-900">{record.age} tahun</div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="text-sm text-gray-500">{record.gender}</div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="text-sm text-gray-500">{record.diagnosisDate}</div>
-                  </td>
-                  <td className="px-6 py-4">
-                    <div className="text-sm text-gray-900">{record.treatment}</div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <span className={`px-2 py-1 text-xs font-medium rounded-full ${
-                      record.outcome === 'Remisi Lengkap' ? 'bg-green-100 text-green-800' :
-                      record.outcome === 'Remisi Parsial' ? 'bg-yellow-100 text-yellow-800' :
-                      record.outcome === 'Stabil' ? 'bg-blue-100 text-blue-800' :
-                      'bg-red-100 text-red-800'
-                    }`}>
-                      {record.outcome}
-                    </span>
                   </td>
                 </tr>
               ))}

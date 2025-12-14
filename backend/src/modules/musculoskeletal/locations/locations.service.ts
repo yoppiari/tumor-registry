@@ -7,12 +7,28 @@ export class LocationsService {
 
   // ==================== BONE LOCATIONS ====================
 
+  /**
+   * Format bone location display name
+   */
+  private formatBoneLocationName(location: any): string {
+    if (location.level === 1) {
+      return location.region; // e.g., "Upper Extremity"
+    } else if (location.level === 2) {
+      return location.boneName; // e.g., "Humerus"
+    } else if (location.level === 3) {
+      return location.segment
+        ? `${location.boneName} - ${location.segment}`
+        : location.boneName; // e.g., "Humerus - Proximal"
+    }
+    return location.code;
+  }
+
   async findAllBoneLocations(level?: number, region?: string, includeChildren = false) {
     const where: any = { isActive: true };
     if (level) where.level = level;
     if (region) where.region = region;
 
-    return this.prisma.boneLocation.findMany({
+    const locations = await this.prisma.boneLocation.findMany({
       where,
       orderBy: { sortOrder: 'asc' },
       include: includeChildren
@@ -30,6 +46,20 @@ export class LocationsService {
           }
         : undefined,
     });
+
+    // Add formatted name to each location
+    return locations.map(loc => ({
+      ...loc,
+      name: this.formatBoneLocationName(loc),
+      children: loc.children?.map(child => ({
+        ...child,
+        name: this.formatBoneLocationName(child),
+        children: child.children?.map(grandchild => ({
+          ...grandchild,
+          name: this.formatBoneLocationName(grandchild),
+        })),
+      })),
+    }));
   }
 
   async findBoneLocationById(id: string) {
@@ -48,26 +78,58 @@ export class LocationsService {
       throw new NotFoundException(`Bone location not found`);
     }
 
-    return location;
+    return {
+      ...location,
+      name: this.formatBoneLocationName(location),
+      children: location.children?.map(child => ({
+        ...child,
+        name: this.formatBoneLocationName(child),
+      })),
+      parent: location.parent ? {
+        ...location.parent,
+        name: this.formatBoneLocationName(location.parent),
+      } : null,
+    };
   }
 
   async findBoneLocationsByParentId(parentId: string) {
-    return this.prisma.boneLocation.findMany({
+    const locations = await this.prisma.boneLocation.findMany({
       where: { parentId, isActive: true },
       orderBy: { sortOrder: 'asc' },
     });
+
+    return locations.map(loc => ({
+      ...loc,
+      name: this.formatBoneLocationName(loc),
+    }));
   }
 
   // ==================== SOFT TISSUE LOCATIONS ====================
+
+  /**
+   * Format soft tissue location display name
+   */
+  private formatSoftTissueLocationName(location: any): string {
+    if (location.specificLocation) {
+      return location.specificLocation; // e.g., "Face", "Scalp", "Thigh"
+    }
+    return location.code;
+  }
 
   async findAllSoftTissueLocations(anatomicalRegion?: string) {
     const where: any = { isActive: true };
     if (anatomicalRegion) where.anatomicalRegion = anatomicalRegion;
 
-    return this.prisma.softTissueLocation.findMany({
+    const locations = await this.prisma.softTissueLocation.findMany({
       where,
       orderBy: { sortOrder: 'asc' },
     });
+
+    // Add formatted name to each location
+    return locations.map(loc => ({
+      ...loc,
+      name: this.formatSoftTissueLocationName(loc),
+    }));
   }
 
   async findSoftTissueLocationById(id: string) {
@@ -79,7 +141,10 @@ export class LocationsService {
       throw new NotFoundException(`Soft tissue location not found`);
     }
 
-    return location;
+    return {
+      ...location,
+      name: this.formatSoftTissueLocationName(location),
+    };
   }
 
   // ==================== UTILITY ====================
@@ -89,7 +154,11 @@ export class LocationsService {
       where: { level: 1, isActive: true },
       orderBy: { sortOrder: 'asc' },
     });
-    return regions;
+
+    return regions.map(loc => ({
+      ...loc,
+      name: this.formatBoneLocationName(loc),
+    }));
   }
 
   async getSoftTissueRegions() {

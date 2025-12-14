@@ -14,9 +14,12 @@ import {
 import { CreatePatientDto } from './dto/create-patient.dto';
 import { UpdatePatientDto } from './dto/update-patient.dto';
 import { QuickPatientEntryDto } from './dto/quick-patient-entry.dto';
+import { PrismaService } from '../database/prisma.service';
 
 @Injectable()
 export class PatientsService {
+  constructor(private readonly prisma: PrismaService) {}
+
   // Mock database - akan diganti dengan Prisma nanti
   private patients: Patient[] = [
     {
@@ -277,110 +280,55 @@ export class PatientsService {
   }
 
   async findAll(searchDto: PatientSearchDto): Promise<PatientListResponse> {
-    let filteredPatients = [...this.patients];
+    // Build Prisma where clause
+    const where: any = {};
 
-    // Apply filters
     if (searchDto.query) {
-      const query = searchDto.query.toLowerCase();
-      filteredPatients = filteredPatients.filter(p =>
-        p.name.toLowerCase().includes(query) ||
-        p.medicalRecordNumber.toLowerCase().includes(query) ||
-        p.phone?.includes(query) ||
-        p.identityNumber?.includes(query)
-      );
+      where.OR = [
+        { name: { contains: searchDto.query, mode: 'insensitive' } },
+        { medicalRecordNumber: { contains: searchDto.query, mode: 'insensitive' } },
+        { phoneNumber: { contains: searchDto.query } },
+        { nik: { contains: searchDto.query } },
+      ];
     }
 
     if (searchDto.medicalRecordNumber) {
-      filteredPatients = filteredPatients.filter(p =>
-        p.medicalRecordNumber.toLowerCase().includes(searchDto.medicalRecordNumber.toLowerCase())
-      );
+      where.medicalRecordNumber = { contains: searchDto.medicalRecordNumber, mode: 'insensitive' };
     }
 
     if (searchDto.name) {
-      filteredPatients = filteredPatients.filter(p =>
-        p.name.toLowerCase().includes(searchDto.name.toLowerCase())
-      );
-    }
-
-    if (searchDto.cancerStage) {
-      filteredPatients = filteredPatients.filter(p => p.cancerStage === searchDto.cancerStage);
-    }
-
-    if (searchDto.treatmentStatus) {
-      filteredPatients = filteredPatients.filter(p => p.treatmentStatus === searchDto.treatmentStatus);
-    }
-
-    if (searchDto.primarySite) {
-      filteredPatients = filteredPatients.filter(p =>
-        p.primaryCancerDiagnosis?.primarySite.toLowerCase().includes(searchDto.primarySite.toLowerCase())
-      );
-    }
-
-    if (searchDto.treatmentCenter) {
-      filteredPatients = filteredPatients.filter(p => p.treatmentCenter === searchDto.treatmentCenter);
+      where.name = { contains: searchDto.name, mode: 'insensitive' };
     }
 
     if (searchDto.isDeceased !== undefined) {
-      filteredPatients = filteredPatients.filter(p => p.isDeceased === searchDto.isDeceased);
+      where.isDeceased = searchDto.isDeceased;
     }
-
-    // Date range filters
-    if (searchDto.dateOfBirthFrom) {
-      const fromDate = new Date(searchDto.dateOfBirthFrom);
-      filteredPatients = filteredPatients.filter(p => p.dateOfBirth >= fromDate);
-    }
-
-    if (searchDto.dateOfBirthTo) {
-      const toDate = new Date(searchDto.dateOfBirthTo);
-      filteredPatients = filteredPatients.filter(p => p.dateOfBirth <= toDate);
-    }
-
-    if (searchDto.dateOfDiagnosisFrom) {
-      const fromDate = new Date(searchDto.dateOfDiagnosisFrom);
-      filteredPatients = filteredPatients.filter(p =>
-        p.dateOfDiagnosis && p.dateOfDiagnosis >= fromDate
-      );
-    }
-
-    if (searchDto.dateOfDiagnosisTo) {
-      const toDate = new Date(searchDto.dateOfDiagnosisTo);
-      filteredPatients = filteredPatients.filter(p =>
-        p.dateOfDiagnosis && p.dateOfDiagnosis <= toDate
-      );
-    }
-
-    // Sorting
-    const sortBy = searchDto.sortBy || 'createdAt';
-    const sortOrder = searchDto.sortOrder || 'desc';
-
-    filteredPatients.sort((a, b) => {
-      let aValue: any = a[sortBy as keyof Patient];
-      let bValue: any = b[sortBy as keyof Patient];
-
-      if (aValue instanceof Date) aValue = aValue.getTime();
-      if (bValue instanceof Date) bValue = bValue.getTime();
-
-      if (sortOrder === 'asc') {
-        return aValue > bValue ? 1 : -1;
-      } else {
-        return aValue < bValue ? 1 : -1;
-      }
-    });
 
     // Pagination
     const page = searchDto.page || 1;
     const limit = searchDto.limit || 10;
-    const startIndex = (page - 1) * limit;
-    const endIndex = startIndex + limit;
-    const paginatedPatients = filteredPatients.slice(startIndex, endIndex);
+    const skip = (page - 1) * limit;
+
+    // Execute Prisma queries
+    const [patients, total] = await Promise.all([
+      this.prisma.patient.findMany({
+        where,
+        skip,
+        take: limit,
+        orderBy: {
+          createdAt: 'desc',
+        },
+      }),
+      this.prisma.patient.count({ where }),
+    ]);
 
     return {
-      patients: paginatedPatients,
-      total: filteredPatients.length,
+      patients: patients as any,
+      total,
       page,
       limit,
-      totalPages: Math.ceil(filteredPatients.length / limit),
-      hasNext: endIndex < filteredPatients.length,
+      totalPages: Math.ceil(total / limit),
+      hasNext: page * limit < total,
       hasPrevious: page > 1,
     };
   }

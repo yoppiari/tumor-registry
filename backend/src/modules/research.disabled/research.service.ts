@@ -84,10 +84,10 @@ export class ResearchService {
     collaborators?: string;
     status?: ResearchRequestStatus;
     ethicsStatus?: EthicsStatus;
-    reviewComments?: string;
-    approvedBy?: string;
-    approvedDate?: Date;
-    rejectionReason?: string;
+    notes?: string;
+    reviewedAt?: Date;
+    approvedAt?: Date;
+    rejectedAt?: Date;
   }) {
     try {
       const existingRequest = await this.prisma.researchRequest.findUnique({
@@ -115,10 +115,10 @@ export class ResearchService {
           ...(updateData.collaborators !== undefined && { collaborators: updateData.collaborators }),
           ...(updateData.status !== undefined && { status: updateData.status }),
           ...(updateData.ethicsStatus !== undefined && { ethicsStatus: updateData.ethicsStatus }),
-          ...(updateData.reviewComments !== undefined && { reviewComments: updateData.reviewComments }),
-          ...(updateData.approvedBy !== undefined && { approvedBy: updateData.approvedBy }),
-          ...(updateData.approvedDate !== undefined && { approvedDate: updateData.approvedDate }),
-          ...(updateData.rejectionReason !== undefined && { rejectionReason: updateData.rejectionReason }),
+          ...(updateData.notes !== undefined && { notes: updateData.notes }),
+          ...(updateData.reviewedAt !== undefined && { reviewedAt: updateData.reviewedAt }),
+          ...(updateData.approvedAt !== undefined && { approvedAt: updateData.approvedAt }),
+          ...(updateData.rejectedAt !== undefined && { rejectedAt: updateData.rejectedAt }),
         },
         include: {
           principalInvestigator: {
@@ -128,12 +128,6 @@ export class ResearchService {
               email: true,
             },
           },
-          // approvedByUser: { // Field doesn't exist in ResearchRequest model
-          //   select: {
-          //     id: true,
-          //     name: true,
-          //   },
-          // },
         },
       });
 
@@ -199,12 +193,6 @@ export class ResearchService {
                 email: true,
               },
             },
-            // approvedByUser: { // Field doesn't exist in ResearchRequest model
-            //   select: {
-            //     id: true,
-            //     name: true,
-            //   },
-            // },
           },
           orderBy: [
             { submittedAt: 'desc' },
@@ -253,12 +241,6 @@ export class ResearchService {
               },
             },
           },
-          // approvedByUser: { // Field doesn't exist in ResearchRequest model
-          //   select: {
-          //     id: true,
-          //     name: true,
-          //   },
-          // },
           dataExports: {
             select: {
               id: true,
@@ -297,9 +279,9 @@ export class ResearchService {
     try {
       return await this.updateResearchRequest(requestId, {
         status: 'APPROVED',
-        approvedBy: approvedBy,
-        approvedDate: new Date(),
-        reviewComments: comments,
+        approvedAt: new Date(),
+        reviewedAt: new Date(),
+        notes: comments,
       });
     } catch (error) {
       this.logger.error(`Error approving research request: ${requestId}`, error);
@@ -311,8 +293,9 @@ export class ResearchService {
     try {
       return await this.updateResearchRequest(requestId, {
         status: 'REJECTED',
-        rejectionReason,
-        reviewComments: `Rejected by ${reviewedBy}: ${rejectionReason}`,
+        rejectedAt: new Date(),
+        reviewedAt: new Date(),
+        notes: `Rejected by ${reviewedBy}: ${rejectionReason}`,
       });
     } catch (error) {
       this.logger.error(`Error rejecting research request: ${requestId}`, error);
@@ -323,7 +306,7 @@ export class ResearchService {
   async requestEthicsReview(requestId: string) {
     try {
       return await this.updateResearchRequest(requestId, {
-        ethicsStatus: 'UNDER_REVIEW',
+        ethicsStatus: 'PENDING',
       });
     } catch (error) {
       this.logger.error(`Error requesting ethics review: ${requestId}`, error);
@@ -335,7 +318,7 @@ export class ResearchService {
     try {
       return await this.updateResearchRequest(requestId, {
         ethicsStatus: 'APPROVED',
-        reviewComments: `Ethics approved by ${approvedBy}. Ethics Number: ${ethicsNumber || 'N/A'}`,
+        notes: `Ethics approved by ${approvedBy}. Ethics Number: ${ethicsNumber || 'N/A'}`,
       });
     } catch (error) {
       this.logger.error(`Error approving ethics: ${requestId}`, error);

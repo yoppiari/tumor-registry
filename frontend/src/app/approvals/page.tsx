@@ -3,18 +3,8 @@
 import { useEffect, useState } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { Layout } from '@/components/layout/Layout';
-
-interface ApprovalRequest {
-  id: string;
-  title: string;
-  requester: string;
-  institution: string;
-  requestDate: string;
-  dataType: string;
-  purpose: string;
-  status: 'pending' | 'approved' | 'rejected' | 'review';
-  priority: 'high' | 'medium' | 'low';
-}
+import { ResearchRequestReviewModal } from '@/components/approvals/ResearchRequestReviewModal';
+import researchRequestsService, { ResearchRequest } from '@/services/research-requests.service';
 
 export default function ApprovalsPage() {
   const { user, isAuthenticated, isLoading } = useAuth();
@@ -24,11 +14,11 @@ export default function ApprovalsPage() {
     rejected: 0,
     review: 0,
   });
-  const [requests, setRequests] = useState<ApprovalRequest[]>([]);
-  const [filteredRequests, setFilteredRequests] = useState<ApprovalRequest[]>([]);
+  const [requests, setRequests] = useState<ResearchRequest[]>([]);
+  const [filteredRequests, setFilteredRequests] = useState<ResearchRequest[]>([]);
   const [filterStatus, setFilterStatus] = useState<string>('all');
   const [loading, setLoading] = useState(true);
-  const [selectedRequest, setSelectedRequest] = useState<ApprovalRequest | null>(null);
+  const [selectedRequest, setSelectedRequest] = useState<ResearchRequest | null>(null);
   const [showDetailModal, setShowDetailModal] = useState(false);
 
   useEffect(() => {
@@ -46,105 +36,58 @@ export default function ApprovalsPage() {
     if (filterStatus === 'all') {
       setFilteredRequests(requests);
     } else {
-      setFilteredRequests(requests.filter(r => r.status === filterStatus));
+      // Map filter status to ResearchRequest statuses
+      let statusesToMatch: string[] = [];
+      if (filterStatus === 'pending') {
+        statusesToMatch = ['SUBMITTED', 'PENDING_REVIEW'];
+      } else if (filterStatus === 'review') {
+        statusesToMatch = ['UNDER_REVIEW', 'NEED_MORE_INFO'];
+      } else if (filterStatus === 'approved') {
+        statusesToMatch = ['APPROVED', 'APPROVED_WITH_CONDITIONS'];
+      } else if (filterStatus === 'rejected') {
+        statusesToMatch = ['REJECTED'];
+      }
+
+      setFilteredRequests(requests.filter(r => statusesToMatch.includes(r.status)));
     }
   }, [filterStatus, requests]);
 
   const fetchApprovalsData = async () => {
     try {
       setLoading(true);
-      // Mock data - replace with actual API call
-      const mockRequests: ApprovalRequest[] = [
-        {
-          id: '1',
-          title: 'Studi Korelasi Faktor Risiko Kanker Payudara',
-          requester: 'Dr. Siti Rahmawati',
-          institution: 'Universitas Indonesia',
-          requestDate: '2025-11-22',
-          dataType: 'Demografis, Klinis, Histologi',
-          purpose: 'Penelitian Akademik',
-          status: 'pending',
-          priority: 'high',
-        },
-        {
-          id: '2',
-          title: 'Analisis Survival Rate Pasien Kanker Paru',
-          requester: 'Prof. Ahmad Hidayat',
-          institution: 'Universitas Gadjah Mada',
-          requestDate: '2025-11-21',
-          dataType: 'Klinis, Follow-up',
-          purpose: 'Penelitian Akademik',
-          status: 'review',
-          priority: 'high',
-        },
-        {
-          id: '3',
-          title: 'Evaluasi Efektivitas Terapi Targeted',
-          requester: 'Dr. Budi Santoso',
-          institution: 'RS Kanker Dharmais',
-          requestDate: '2025-11-20',
-          dataType: 'Treatment, Outcome',
-          purpose: 'Clinical Trial',
-          status: 'pending',
-          priority: 'medium',
-        },
-        {
-          id: '4',
-          title: 'Pola Distribusi Kanker Kolorektal',
-          requester: 'Dr. Ratna Sari',
-          institution: 'FKUI',
-          requestDate: '2025-11-19',
-          dataType: 'Demografis, Epidemiologi',
-          purpose: 'Disertasi',
-          status: 'approved',
-          priority: 'medium',
-        },
-        {
-          id: '5',
-          title: 'Studi Genetic Markers Kanker Serviks',
-          requester: 'Dr. Eko Prasetyo',
-          institution: 'Institut Teknologi Bandung',
-          requestDate: '2025-11-18',
-          dataType: 'Molekuler, Histologi',
-          purpose: 'Penelitian Dasar',
-          status: 'pending',
-          priority: 'low',
-        },
-        {
-          id: '6',
-          title: 'Quality of Life Post-Treatment',
-          requester: 'Dr. Maya Indah',
-          institution: 'Universitas Airlangga',
-          requestDate: '2025-11-17',
-          dataType: 'Follow-up, Patient-Reported',
-          purpose: 'Tesis S2',
-          status: 'rejected',
-          priority: 'low',
-        },
-      ];
+      // Fetch pending research requests (SUBMITTED, PENDING_REVIEW, UNDER_REVIEW)
+      const pendingRequests = await researchRequestsService.getPending();
 
-      setRequests(mockRequests);
-      setFilteredRequests(mockRequests);
+      setRequests(pendingRequests);
+      setFilteredRequests(pendingRequests);
 
-      setStats({
-        pending: mockRequests.filter(r => r.status === 'pending').length,
-        approved: mockRequests.filter(r => r.status === 'approved').length,
-        rejected: mockRequests.filter(r => r.status === 'rejected').length,
-        review: mockRequests.filter(r => r.status === 'review').length,
+      // Calculate stats based on status
+      const statusCounts = {
+        pending: 0,
+        approved: 0,
+        rejected: 0,
+        review: 0,
+      };
+
+      pendingRequests.forEach((r) => {
+        if (r.status === 'SUBMITTED' || r.status === 'PENDING_REVIEW') {
+          statusCounts.pending++;
+        } else if (r.status === 'UNDER_REVIEW' || r.status === 'NEED_MORE_INFO') {
+          statusCounts.review++;
+        } else if (r.status === 'APPROVED' || r.status === 'APPROVED_WITH_CONDITIONS') {
+          statusCounts.approved++;
+        } else if (r.status === 'REJECTED') {
+          statusCounts.rejected++;
+        }
       });
+
+      setStats(statusCounts);
     } catch (error) {
       console.error('Error fetching approvals data:', error);
+      alert('Gagal memuat data approvals. Silakan coba lagi.');
     } finally {
       setLoading(false);
     }
-  };
-
-  const handleApprove = (requestId: string) => {
-    alert(`Approving request: ${requestId}\nFitur ini akan segera diimplementasikan.`);
-  };
-
-  const handleReject = (requestId: string) => {
-    alert(`Rejecting request: ${requestId}\nFitur ini akan segera diimplementasikan.`);
   };
 
   const handleReview = (requestId: string) => {
@@ -155,42 +98,59 @@ export default function ApprovalsPage() {
     }
   };
 
+  const handleDecisionMade = () => {
+    // Refresh data after decision is made
+    fetchApprovalsData();
+  };
+
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'pending': return 'text-yellow-600 bg-yellow-100';
-      case 'approved': return 'text-green-600 bg-green-100';
-      case 'rejected': return 'text-red-600 bg-red-100';
-      case 'review': return 'text-blue-600 bg-blue-100';
+      case 'DRAFT': return 'text-gray-600 bg-gray-100';
+      case 'SUBMITTED':
+      case 'PENDING_REVIEW': return 'text-yellow-600 bg-yellow-100';
+      case 'UNDER_REVIEW':
+      case 'NEED_MORE_INFO': return 'text-blue-600 bg-blue-100';
+      case 'APPROVED':
+      case 'APPROVED_WITH_CONDITIONS': return 'text-green-600 bg-green-100';
+      case 'REJECTED': return 'text-red-600 bg-red-100';
+      case 'DATA_READY':
+      case 'ACTIVE': return 'text-purple-600 bg-purple-100';
+      case 'COMPLETED':
+      case 'EXPIRED': return 'text-gray-600 bg-gray-100';
       default: return 'text-gray-600 bg-gray-100';
     }
   };
 
   const getStatusText = (status: string) => {
     switch (status) {
-      case 'pending': return 'Menunggu';
-      case 'approved': return 'Disetujui';
-      case 'rejected': return 'Ditolak';
-      case 'review': return 'Review';
+      case 'DRAFT': return 'Draft';
+      case 'SUBMITTED': return 'Submitted';
+      case 'PENDING_REVIEW': return 'Menunggu Review';
+      case 'UNDER_REVIEW': return 'Dalam Review';
+      case 'NEED_MORE_INFO': return 'Perlu Info';
+      case 'APPROVED': return 'Disetujui';
+      case 'APPROVED_WITH_CONDITIONS': return 'Disetujui (Bersyarat)';
+      case 'REJECTED': return 'Ditolak';
+      case 'DATA_READY': return 'Data Siap';
+      case 'ACTIVE': return 'Aktif';
+      case 'COMPLETED': return 'Selesai';
+      case 'EXPIRED': return 'Expired';
       default: return status;
     }
   };
 
-  const getPriorityColor = (priority: string) => {
-    switch (priority) {
-      case 'high': return 'text-red-600 bg-red-100';
-      case 'medium': return 'text-yellow-600 bg-yellow-100';
-      case 'low': return 'text-gray-600 bg-gray-100';
-      default: return 'text-gray-600 bg-gray-100';
-    }
+  const getSensitivityColor = (score: number) => {
+    if (score <= 25) return 'text-green-600 bg-green-100';
+    if (score <= 50) return 'text-yellow-600 bg-yellow-100';
+    if (score <= 75) return 'text-orange-600 bg-orange-100';
+    return 'text-red-600 bg-red-100';
   };
 
-  const getPriorityText = (priority: string) => {
-    switch (priority) {
-      case 'high': return 'Tinggi';
-      case 'medium': return 'Sedang';
-      case 'low': return 'Rendah';
-      default: return priority;
-    }
+  const getSensitivityLabel = (score: number) => {
+    if (score <= 25) return 'LOW';
+    if (score <= 50) return 'MEDIUM';
+    if (score <= 75) return 'HIGH';
+    return 'VERY HIGH';
   };
 
   if (isLoading || loading) {
@@ -349,7 +309,7 @@ export default function ApprovalsPage() {
             <thead className="bg-gray-50">
               <tr>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Judul Penelitian
+                  Request ID / Judul
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Peneliti
@@ -358,10 +318,10 @@ export default function ApprovalsPage() {
                   Institusi
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Tanggal
+                  Tanggal Submit
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Prioritas
+                  Sensitivity
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Status
@@ -375,51 +335,43 @@ export default function ApprovalsPage() {
               {filteredRequests.map((request) => (
                 <tr key={request.id} className="hover:bg-gray-50">
                   <td className="px-6 py-4">
+                    <div className="text-xs font-mono text-gray-500">{request.requestNumber || 'DRAFT'}</div>
                     <div className="text-sm font-medium text-gray-900">{request.title}</div>
-                    <div className="text-xs text-gray-500">{request.purpose}</div>
+                    <div className="text-xs text-gray-500">{request.researchType}</div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm text-gray-900">{request.requester}</div>
+                    <div className="text-sm text-gray-900">{request.user?.name || '-'}</div>
+                    <div className="text-xs text-gray-500">{request.user?.email || '-'}</div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm text-gray-500">{request.institution}</div>
+                    <div className="text-sm text-gray-500">{request.researcherInstitution || '-'}</div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm text-gray-500">{request.requestDate}</div>
+                    <div className="text-sm text-gray-500">
+                      {request.submittedAt ? new Date(request.submittedAt).toLocaleDateString('id-ID') : '-'}
+                    </div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
-                    <span className={`px-2 py-1 text-xs font-medium rounded-full ${getPriorityColor(request.priority)}`}>
-                      {getPriorityText(request.priority)}
+                    <span className={`px-2 py-1 text-xs font-medium rounded-full ${getSensitivityColor(request.dataSensitivityScore || 0)}`}>
+                      {getSensitivityLabel(request.dataSensitivityScore || 0)}
                     </span>
+                    <div className="text-xs text-gray-500 mt-1">{request.dataSensitivityScore || 0}/100</div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <span className={`px-2 py-1 text-xs font-medium rounded-full ${getStatusColor(request.status)}`}>
                       {getStatusText(request.status)}
                     </span>
+                    {request.isAutoApprovalEligible && (
+                      <div className="text-xs text-blue-600 mt-1">✓ Auto-eligible</div>
+                    )}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm space-x-2">
+                  <td className="px-6 py-4 whitespace-nowrap text-sm">
                     <button
                       onClick={() => handleReview(request.id)}
-                      className="text-blue-600 hover:text-blue-900 font-medium"
+                      className="px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700 font-medium"
                     >
-                      Detail
+                      Review
                     </button>
-                    {(request.status === 'pending' || request.status === 'review') && (
-                      <>
-                        <button
-                          onClick={() => handleApprove(request.id)}
-                          className="text-green-600 hover:text-green-900 font-medium"
-                        >
-                          Setuju
-                        </button>
-                        <button
-                          onClick={() => handleReject(request.id)}
-                          className="text-red-600 hover:text-red-900 font-medium"
-                        >
-                          Tolak
-                        </button>
-                      </>
-                    )}
                   </td>
                 </tr>
               ))}
@@ -437,79 +389,13 @@ export default function ApprovalsPage() {
         )}
       </div>
 
-      {/* Detail Modal */}
+      {/* Research Request Review Modal */}
       {showDetailModal && selectedRequest && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-            <div className="p-6">
-              <div className="flex justify-between items-start mb-4">
-                <h3 className="text-xl font-bold text-gray-900">Detail Permintaan</h3>
-                <button
-                  onClick={() => setShowDetailModal(false)}
-                  className="text-gray-400 hover:text-gray-600"
-                >
-                  <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                  </svg>
-                </button>
-              </div>
-
-              <div className="space-y-4">
-                <div>
-                  <label className="text-sm font-medium text-gray-500">Judul Penelitian</label>
-                  <p className="text-gray-900">{selectedRequest.title}</p>
-                </div>
-                <div>
-                  <label className="text-sm font-medium text-gray-500">Peneliti</label>
-                  <p className="text-gray-900">{selectedRequest.requester}</p>
-                </div>
-                <div>
-                  <label className="text-sm font-medium text-gray-500">Institusi</label>
-                  <p className="text-gray-900">{selectedRequest.institution}</p>
-                </div>
-                <div>
-                  <label className="text-sm font-medium text-gray-500">Jenis Data</label>
-                  <p className="text-gray-900">{selectedRequest.dataType}</p>
-                </div>
-                <div>
-                  <label className="text-sm font-medium text-gray-500">Tujuan</label>
-                  <p className="text-gray-900">{selectedRequest.purpose}</p>
-                </div>
-                <div>
-                  <label className="text-sm font-medium text-gray-500">Tanggal Permintaan</label>
-                  <p className="text-gray-900">{selectedRequest.requestDate}</p>
-                </div>
-              </div>
-
-              <div className="flex space-x-3 mt-6 pt-6 border-t">
-                <button
-                  onClick={() => {
-                    handleApprove(selectedRequest.id);
-                    setShowDetailModal(false);
-                  }}
-                  className="flex-1 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 font-medium"
-                >
-                  Setujui
-                </button>
-                <button
-                  onClick={() => {
-                    handleReject(selectedRequest.id);
-                    setShowDetailModal(false);
-                  }}
-                  className="flex-1 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 font-medium"
-                >
-                  Tolak
-                </button>
-                <button
-                  onClick={() => setShowDetailModal(false)}
-                  className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 font-medium"
-                >
-                  Tutup
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
+        <ResearchRequestReviewModal
+          request={selectedRequest}
+          onClose={() => setShowDetailModal(false)}
+          onDecisionMade={handleDecisionMade}
+        />
       )}
     </Layout>
   );

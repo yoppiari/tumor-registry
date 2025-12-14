@@ -67,8 +67,13 @@ const ENNEKING_STAGES = {
 
 export function Section6Staging() {
   const { getSection, updateSection } = useFormContext();
-  const sectionData: Partial<Section6Data> = (getSection('section6') as Section6Data) || {
-    stagingSystem: 'BOTH',
+  const savedData = (getSection('section6') as Section6Data) || {};
+  const sectionData: Section6Data = {
+    stagingSystem: savedData.stagingSystem || 'BOTH',
+    enneking: savedData.enneking || {},
+    ajcc: savedData.ajcc || {},
+    stagingDate: savedData.stagingDate || '',
+    stagingNotes: savedData.stagingNotes || '',
   };
 
   // Auto-calculate Enneking stage

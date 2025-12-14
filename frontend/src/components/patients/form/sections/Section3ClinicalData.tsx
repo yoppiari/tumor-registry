@@ -152,10 +152,24 @@ export const Section3ClinicalData: React.FC<Section3Props> = ({
           </p>
         </div>
 
+        {/* Personal Cancer History */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Personal Cancer History (Riwayat Kanker Pribadi)
+          </label>
+          <textarea
+            value={formData.cancerHistory || ''}
+            onChange={(e) => updateFormData('cancerHistory', e.target.value)}
+            placeholder="Document any previous cancer diagnoses or treatments..."
+            rows={3}
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
+
         {/* Family History of Cancer */}
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">
-            Family History of Cancer
+            Family History of Cancer (Riwayat Kanker Keluarga)
           </label>
           <textarea
             value={formData.familyHistoryCancer || ''}
@@ -164,6 +178,102 @@ export const Section3ClinicalData: React.FC<Section3Props> = ({
             rows={3}
             className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
           />
+        </div>
+
+        {/* Physical Examination */}
+        <div className="border-t pt-6">
+          <h3 className="text-lg font-semibold text-gray-800 mb-4">
+            Physical Examination (Pemeriksaan Fisik)
+          </h3>
+
+          <div className="space-y-4">
+            {/* General Status */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                General Status (Status Generalisata)
+              </label>
+              <textarea
+                value={formData.physicalExamGeneral || ''}
+                onChange={(e) => updateFormData('physicalExamGeneral', e.target.value)}
+                placeholder="General appearance, vital signs, nutritional status..."
+                rows={3}
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+
+            {/* Head & Neck */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Head & Neck (Kepala & Leher)
+              </label>
+              <textarea
+                value={formData.physicalExamHeadNeck || ''}
+                onChange={(e) => updateFormData('physicalExamHeadNeck', e.target.value)}
+                placeholder="Head and neck examination findings..."
+                rows={2}
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+
+            {/* Thorax */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Thorax
+              </label>
+              <textarea
+                value={formData.physicalExamThorax || ''}
+                onChange={(e) => updateFormData('physicalExamThorax', e.target.value)}
+                placeholder="Thorax examination findings..."
+                rows={2}
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+
+            {/* Abdomen */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Abdomen
+              </label>
+              <textarea
+                value={formData.physicalExamAbdomen || ''}
+                onChange={(e) => updateFormData('physicalExamAbdomen', e.target.value)}
+                placeholder="Abdominal examination findings..."
+                rows={2}
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+
+            {/* Extremities & Spine */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Extremities & Spine (Ekstremitas & Tulang Belakang)
+              </label>
+              <textarea
+                value={formData.physicalExamExtremitiesSpine || ''}
+                onChange={(e) => updateFormData('physicalExamExtremitiesSpine', e.target.value)}
+                placeholder="Extremities and spine examination findings..."
+                rows={2}
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Local Tumor Status */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Local Tumor Status (Status Lokalisata)
+          </label>
+          <textarea
+            value={formData.localTumorStatus || ''}
+            onChange={(e) => updateFormData('localTumorStatus', e.target.value)}
+            placeholder="Detailed description of the tumor location, size, consistency, mobility, surface characteristics, tenderness..."
+            rows={4}
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+          />
+          <p className="mt-1 text-sm text-gray-500">
+            Include detailed local findings: location, dimensions, consistency, mobility, skin changes, etc.
+          </p>
         </div>
 
         {/* Tumor Syndrome */}

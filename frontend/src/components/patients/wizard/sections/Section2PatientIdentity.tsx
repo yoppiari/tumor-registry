@@ -16,6 +16,7 @@ import { useFormContext } from '../FormContext';
  */
 
 interface Section2Data {
+  medicalRecordNumber: string;
   nik: string;
   name: string;
   dateOfBirth: string;
@@ -56,20 +57,22 @@ interface Village {
 
 export function Section2PatientIdentity() {
   const { getSection, updateSection } = useFormContext();
-  const sectionData: Partial<Section2Data> = (getSection('section2') as Section2Data) || {
-    nik: '',
-    name: '',
-    dateOfBirth: '',
-    gender: '',
-    provinceId: '',
-    regencyId: '',
-    districtId: '',
-    villageId: '',
-    addressDetail: '',
-    phone: '',
-    emergencyContactName: '',
-    emergencyContactPhone: '',
-    emergencyContactRelationship: '',
+  const savedData = (getSection('section2') as Section2Data) || {};
+  const sectionData: Section2Data = {
+    medicalRecordNumber: savedData.medicalRecordNumber || '',
+    nik: savedData.nik || '',
+    name: savedData.name || '',
+    dateOfBirth: savedData.dateOfBirth || '',
+    gender: savedData.gender || '',
+    provinceId: savedData.provinceId || '',
+    regencyId: savedData.regencyId || '',
+    districtId: savedData.districtId || '',
+    villageId: savedData.villageId || '',
+    addressDetail: savedData.addressDetail || '',
+    phone: savedData.phone || '',
+    emergencyContactName: savedData.emergencyContactName || '',
+    emergencyContactPhone: savedData.emergencyContactPhone || '',
+    emergencyContactRelationship: savedData.emergencyContactRelationship || '',
   };
 
   const [provinces, setProvinces] = useState<Province[]>([]);
@@ -132,15 +135,18 @@ export function Section2PatientIdentity() {
   const loadProvinces = async () => {
     try {
       setIsLoading(true);
-      const response = await fetch('/api/v1/regions/provinces', {
-        headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token')}`,
-        },
-      });
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api/v1';
+      const response = await fetch(`${apiUrl}/regions/provinces`);
+
+      if (!response.ok) {
+        throw new Error('Failed to load provinces');
+      }
+
       const data = await response.json();
-      setProvinces(data.data || data);
+      setProvinces(Array.isArray(data) ? data : (data.data || []));
     } catch (error) {
       console.error('Error loading provinces:', error);
+      setProvinces([]);
     } finally {
       setIsLoading(false);
     }
@@ -148,43 +154,52 @@ export function Section2PatientIdentity() {
 
   const loadRegencies = async (provinceId: string) => {
     try {
-      const response = await fetch(`/api/v1/regions/provinces/${provinceId}/regencies`, {
-        headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token')}`,
-        },
-      });
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api/v1';
+      const response = await fetch(`${apiUrl}/regions/provinces/${provinceId}/regencies`);
+
+      if (!response.ok) {
+        throw new Error('Failed to load regencies');
+      }
+
       const data = await response.json();
-      setRegencies(data.data || data);
+      setRegencies(Array.isArray(data) ? data : (data.data || []));
     } catch (error) {
       console.error('Error loading regencies:', error);
+      setRegencies([]);
     }
   };
 
   const loadDistricts = async (regencyId: string) => {
     try {
-      const response = await fetch(`/api/v1/regions/regencies/${regencyId}/districts`, {
-        headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token')}`,
-        },
-      });
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api/v1';
+      const response = await fetch(`${apiUrl}/regions/regencies/${regencyId}/districts`);
+
+      if (!response.ok) {
+        throw new Error('Failed to load districts');
+      }
+
       const data = await response.json();
-      setDistricts(data.data || data);
+      setDistricts(Array.isArray(data) ? data : (data.data || []));
     } catch (error) {
       console.error('Error loading districts:', error);
+      setDistricts([]);
     }
   };
 
   const loadVillages = async (districtId: string) => {
     try {
-      const response = await fetch(`/api/v1/regions/districts/${districtId}/villages`, {
-        headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token')}`,
-        },
-      });
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api/v1';
+      const response = await fetch(`${apiUrl}/regions/districts/${districtId}/villages`);
+
+      if (!response.ok) {
+        throw new Error('Failed to load villages');
+      }
+
       const data = await response.json();
-      setVillages(data.data || data);
+      setVillages(Array.isArray(data) ? data : (data.data || []));
     } catch (error) {
       console.error('Error loading villages:', error);
+      setVillages([]);
     }
   };
 
@@ -246,6 +261,22 @@ export function Section2PatientIdentity() {
       {/* Basic Identity */}
       <div className="bg-white rounded-lg border border-gray-200 p-6 space-y-4">
         <h3 className="text-lg font-semibold text-gray-900 mb-4">Data Identitas</h3>
+
+        {/* Medical Record Number */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Medical Record Number (MRN) <span className="text-red-500">*</span>
+          </label>
+          <input
+            type="text"
+            value={sectionData.medicalRecordNumber}
+            onChange={(e) => updateField('medicalRecordNumber', e.target.value)}
+            placeholder="Contoh: MRN-2025-001234"
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            required
+          />
+          <p className="mt-1 text-xs text-gray-500">Nomor rekam medis pasien di rumah sakit</p>
+        </div>
 
         {/* NIK */}
         <div>

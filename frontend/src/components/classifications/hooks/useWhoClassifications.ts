@@ -22,16 +22,12 @@ export function useWhoClassifications({
   tumorType,
   category,
   isMalignant,
-}: UseWhoClassificationsOptions): UseQueryResult<ClassificationData> & {
-  classifications: WhoClassification[];
-  categories: CategoryNode[];
-  getById: (id: string) => WhoClassification | undefined;
-} {
-  const queryKey = ['who-classifications', tumorType, category, isMalignant];
+}: UseWhoClassificationsOptions) {
+  const queryKey = ['who-classifications', tumorType, category, isMalignant] as const;
 
   const query = useQuery({
     queryKey,
-    queryFn: async () => {
+    queryFn: async (): Promise<ClassificationData> => {
       let rawData: (WhoBoneTumor | WhoSoftTissueTumor)[];
 
       if (tumorType === 'BONE') {
@@ -91,6 +87,7 @@ export function useWhoClassifications({
     staleTime: 5 * 60 * 1000, // 5 minutes
     gcTime: 10 * 60 * 1000, // 10 minutes (formerly cacheTime)
     retry: 2,
+    enabled: true,
   });
 
   return {

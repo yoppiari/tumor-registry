@@ -5,6 +5,8 @@ import { seedWhoSoftTissueTumors } from './seeds/who-soft-tissue-tumors.seed';
 import { seedBoneLocations } from './seeds/bone-locations.seed';
 import { seedSoftTissueLocations } from './seeds/soft-tissue-locations.seed';
 import { seedTumorSyndromes } from './seeds/tumor-syndromes.seed';
+import { seedRealisticPatients } from './seeds/realistic-patients.seed';
+import { seedUsers } from './seeds/users.seed';
 
 const prisma = new PrismaClient();
 
@@ -507,6 +509,11 @@ async function main() {
     console.log('━'.repeat(50));
     await seedDemoUsers();
 
+    // 4. Seed realistic patients
+    console.log('\n📊 PHASE 4: REALISTIC PATIENT DATA');
+    console.log('━'.repeat(50));
+    await seedRealisticPatients();
+
     console.log('\n' + '━'.repeat(50));
     console.log('✅ INAMSOS DATABASE SEEDING COMPLETED SUCCESSFULLY!');
     console.log('━'.repeat(50));
@@ -519,7 +526,8 @@ async function main() {
     console.log('  ✓ 36 Soft Tissue Locations');
     console.log('  ✓ 15 Tumor Syndromes');
     console.log('  ✓ 6 User Roles with Permissions');
-    console.log('  ✓ 6 Demo Users\n');
+    console.log('  ✓ 6 Demo Users');
+    console.log('  ✓ 50 Realistic Patients\n');
 
   } catch (error) {
     console.error('❌ Database seeding failed:', error);

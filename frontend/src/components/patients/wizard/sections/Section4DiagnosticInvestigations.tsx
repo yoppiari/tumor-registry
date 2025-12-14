@@ -41,12 +41,18 @@ interface MirrelScoreData {
   fractureRisk?: string;        // LOW (≤7), MODERATE (8-10), HIGH (≥11)
 }
 
+interface IHKMarker {
+  marker: string;               // e.g., 'S100', 'HER2', 'ER', 'PR', 'CD34'
+  result: string;               // e.g., 'Positive', 'Negative', 'Borderline', 'Score 3+', 'Score 2+'
+}
+
 interface PathologyData {
   biopsyType?: string;          // "Core needle" | "Incisional" | "Excisional"
   biopsyDate?: string;
   pathologyFindings?: string;
   huvosGrade?: 'GRADE_I' | 'GRADE_II' | 'GRADE_III' | 'GRADE_IV';
   necrosisPercentage?: number;  // For HUVOS grade
+  ihkMarkers?: IHKMarker[];     // Immunohistochemistry markers
 }
 
 interface Section4Data {
@@ -65,11 +71,12 @@ const HUVOS_GRADES = {
 
 export function Section4DiagnosticInvestigations() {
   const { getSection, updateSection } = useFormContext();
-  const sectionData: Partial<Section4Data> = (getSection('section4') as Section4Data) || {
-    laboratory: {},
-    radiology: {},
-    mirrelScore: {},
-    pathology: {},
+  const savedData = (getSection('section4') as Section4Data) || {};
+  const sectionData: Section4Data = {
+    laboratory: savedData.laboratory || {},
+    radiology: savedData.radiology || {},
+    mirrelScore: savedData.mirrelScore || {},
+    pathology: savedData.pathology || {},
   };
 
   // Calculate Mirrel Score when components change
@@ -138,6 +145,24 @@ export function Section4DiagnosticInvestigations() {
         [field]: value,
       },
     });
+  };
+
+  const addIHKMarker = () => {
+    const currentMarkers = sectionData.pathology?.ihkMarkers || [];
+    updatePathologyField('ihkMarkers', [...currentMarkers, { marker: '', result: '' }]);
+  };
+
+  const removeIHKMarker = (index: number) => {
+    const currentMarkers = sectionData.pathology?.ihkMarkers || [];
+    const updatedMarkers = currentMarkers.filter((_, i) => i !== index);
+    updatePathologyField('ihkMarkers', updatedMarkers);
+  };
+
+  const updateIHKMarker = (index: number, field: 'marker' | 'result', value: string) => {
+    const currentMarkers = sectionData.pathology?.ihkMarkers || [];
+    const updatedMarkers = [...currentMarkers];
+    updatedMarkers[index] = { ...updatedMarkers[index], [field]: value };
+    updatePathologyField('ihkMarkers', updatedMarkers);
   };
 
   const getMirrelRiskColor = (risk?: string): string => {
@@ -545,6 +570,84 @@ export function Section4DiagnosticInvestigations() {
             />
           </div>
         )}
+
+        {/* Immunohistochemistry (IHK) Markers */}
+        <div className="border-t border-gray-200 pt-6">
+          <div className="flex items-center justify-between mb-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Immunohistochemistry (IHK) Markers
+              </label>
+              <p className="text-xs text-gray-500">
+                Penanda imunogenetik untuk identifikasi tumor (ER, PR, HER2, S100, CD34, dll)
+              </p>
+            </div>
+            <button
+              onClick={addIHKMarker}
+              className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors text-sm font-medium"
+            >
+              + Tambah Marker
+            </button>
+          </div>
+
+          {sectionData.pathology?.ihkMarkers && sectionData.pathology.ihkMarkers.length > 0 ? (
+            <div className="space-y-3">
+              {sectionData.pathology.ihkMarkers.map((marker, index) => (
+                <div key={index} className="flex gap-3 items-end">
+                  {/* Marker Name */}
+                  <div className="flex-1">
+                    <label className="block text-xs font-medium text-gray-600 mb-1">
+                      Penanda
+                    </label>
+                    <input
+                      type="text"
+                      value={marker.marker}
+                      onChange={(e) => updateIHKMarker(index, 'marker', e.target.value)}
+                      placeholder="Contoh: S100, ER, PR, HER2, CD34"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
+                    />
+                  </div>
+
+                  {/* Result */}
+                  <div className="flex-1">
+                    <label className="block text-xs font-medium text-gray-600 mb-1">
+                      Hasil
+                    </label>
+                    <input
+                      type="text"
+                      value={marker.result}
+                      onChange={(e) => updateIHKMarker(index, 'result', e.target.value)}
+                      placeholder="Contoh: Positive, Negative, Score 3+"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
+                    />
+                  </div>
+
+                  {/* Remove Button */}
+                  <button
+                    onClick={() => removeIHKMarker(index)}
+                    className="px-3 py-2 bg-red-50 text-red-600 rounded-lg hover:bg-red-100 transition-colors"
+                  >
+                    <svg
+                      className="w-4 h-4"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+                  </button>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <p className="text-sm text-gray-500 italic py-3">
+              Tidak ada marker IHK yang ditambahkan. Klik tombol "Tambah Marker" untuk menambah penanda immunohistokimia.
+            </p>
+          )}
+        </div>
       </div>
     </div>
   );

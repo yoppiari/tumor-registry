@@ -6,7 +6,6 @@ import { WhoClassificationsModule } from './who-classifications/who-classificati
 import { MstsScoresModule } from './msts-scores/msts-scores.module';
 import { FollowUpsModule } from './follow-ups/follow-ups.module';
 import { TreatmentsModule } from './treatments/treatments.module';
-import { CpcModule } from './cpc/cpc.module';
 import { AnalyticsModule } from './analytics/analytics.module';
 
 @Module({
@@ -20,7 +19,6 @@ import { AnalyticsModule } from './analytics/analytics.module';
     MstsScoresModule,
     FollowUpsModule,
     TreatmentsModule,
-    CpcModule,
     // Phase 8: Analytics Module
     AnalyticsModule,
   ],
@@ -32,7 +30,6 @@ import { AnalyticsModule } from './analytics/analytics.module';
     MstsScoresModule,
     FollowUpsModule,
     TreatmentsModule,
-    CpcModule,
     AnalyticsModule,
   ],
 })

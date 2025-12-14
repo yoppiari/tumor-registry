@@ -249,6 +249,40 @@ class ResearchRequestsService {
 
     return presets[preset] || {};
   }
+
+  // Sprint 4: Data Export endpoints
+
+  /**
+   * Admin: Generate data export for approved request
+   */
+  async generateExport(id: string): Promise<ResearchRequest> {
+    const response = await apiClient.post(`/research-requests/${id}/generate-export`);
+    return response.data;
+  }
+
+  /**
+   * Researcher: Get download URL for approved data
+   */
+  async getDownloadUrl(id: string): Promise<{
+    downloadUrl: string;
+    fileSize: number;
+    expiresAt: string;
+    downloadCount: number;
+  }> {
+    const response = await apiClient.get(`/research-requests/${id}/download`);
+    return response.data;
+  }
+
+  /**
+   * Researcher: Request access extension
+   */
+  async requestExtension(id: string, extensionMonths: number, justification: string): Promise<{ message: string }> {
+    const response = await apiClient.post(`/research-requests/${id}/request-extension`, {
+      extensionMonths,
+      justification,
+    });
+    return response.data;
+  }
 }
 
 export const researchRequestsService = new ResearchRequestsService();

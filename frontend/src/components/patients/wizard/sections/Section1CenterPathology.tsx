@@ -34,7 +34,7 @@ interface PathologyType {
 
 interface Section1Data {
   centerId: string;
-  pathologyTypeId: string;
+  pathologyType: string; // Changed from pathologyTypeId to match validation
   pathologyTypeName?: string; // For convenience
 }
 
@@ -87,12 +87,14 @@ export function Section1CenterPathology() {
       const centersData = await centersRes.json();
       const pathologyData = await pathologyRes.json();
 
-      setCenters(centersData.data || centersData);
-      setPathologyTypes(pathologyData.data || pathologyData);
+      // API returns array directly, not wrapped in {data: ...}
+      setCenters(Array.isArray(centersData) ? centersData : (centersData.data || []));
+      setPathologyTypes(Array.isArray(pathologyData) ? pathologyData : (pathologyData.data || []));
 
       // Pre-fill user's center if not already set
-      if (!sectionData.centerId && centersData.data?.[0]?.id) {
-        const userCenter = centersData.data[0]; // First center is typically user's center
+      const centers = Array.isArray(centersData) ? centersData : (centersData.data || []);
+      if (!sectionData.centerId && centers.length > 0) {
+        const userCenter = centers[0]; // First center is typically user's center
         updateSection('section1', {
           ...sectionData,
           centerId: userCenter.id,
@@ -117,7 +119,7 @@ export function Section1CenterPathology() {
     const pathologyType = pathologyTypes.find((pt) => pt.id === pathologyTypeId);
     updateSection('section1', {
       ...sectionData,
-      pathologyTypeId,
+      pathologyType: pathologyTypeId, // Changed to match validation field name
       pathologyTypeName: pathologyType?.name,
     });
   };
@@ -206,7 +208,7 @@ export function Section1CenterPathology() {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {pathologyTypes.map((pathologyType) => {
-            const isSelected = sectionData.pathologyTypeId === pathologyType.id;
+            const isSelected = sectionData.pathologyType === pathologyType.id;
 
             return (
               <button
@@ -273,7 +275,7 @@ export function Section1CenterPathology() {
       </div>
 
       {/* Summary */}
-      {sectionData.centerId && sectionData.pathologyTypeId && (
+      {sectionData.centerId && sectionData.pathologyType && (
         <div className="bg-green-50 border border-green-200 rounded-lg p-4">
           <div className="flex items-start">
             <svg

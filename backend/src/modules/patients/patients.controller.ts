@@ -9,7 +9,6 @@ import {
   UseGuards,
   HttpStatus,
   HttpCode,
-  ParseUUIDPipe,
 } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse, ApiParam, ApiQuery } from '@nestjs/swagger';
 import { PatientsService } from './patients.service';
@@ -78,7 +77,7 @@ export class PatientsController {
   @ApiResponse({ status: 404, description: 'Patient not found' })
   @ApiQuery({ name: 'includeMedicalHistory', required: false, type: Boolean })
   async findById(
-    @Param('id', ParseUUIDPipe) id: string,
+    @Param('id') id: string,
     @Query('includeMedicalHistory') includeMedicalHistory?: string,
   ) {
     const include = includeMedicalHistory === 'true';
@@ -147,7 +146,7 @@ export class PatientsController {
   @ApiResponse({ status: 200, description: 'Patient updated successfully' })
   @ApiResponse({ status: 404, description: 'Patient not found' })
   async update(
-    @Param('id', ParseUUIDPipe) id: string,
+    @Param('id') id: string,
     @Body() updatePatientDto: {
       name?: string;
       phoneNumber?: string;
@@ -187,7 +186,7 @@ export class PatientsController {
   @ApiOperation({ summary: 'Get patient vital signs history' })
   @ApiParam({ name: 'id', description: 'Patient ID' })
   async getPatientVitalSigns(
-    @Param('id', ParseUUIDPipe) id: string,
+    @Param('id') id: string,
     @Query('limit') limit?: string,
   ) {
     const patient = await this.patientsService.findById(id, true);
@@ -201,7 +200,7 @@ export class PatientsController {
   @Get(':id/diagnoses')
   @ApiOperation({ summary: 'Get patient diagnoses history' })
   @ApiParam({ name: 'id', description: 'Patient ID' })
-  async getPatientDiagnoses(@Param('id', ParseUUIDPipe) id: string) {
+  async getPatientDiagnoses(@Param('id') id: string) {
     const patient = await this.patientsService.findById(id, true);
     return {
       patientId: id,
@@ -213,7 +212,7 @@ export class PatientsController {
   @Get(':id/medications')
   @ApiOperation({ summary: 'Get patient medications' })
   @ApiParam({ name: 'id', description: 'Patient ID' })
-  async getPatientMedications(@Param('id', ParseUUIDPipe) id: string) {
+  async getPatientMedications(@Param('id') id: string) {
     const patient = await this.patientsService.findById(id, true);
     return {
       patientId: id,
@@ -225,7 +224,7 @@ export class PatientsController {
   @Get(':id/allergies')
   @ApiOperation({ summary: 'Get patient allergies' })
   @ApiParam({ name: 'id', description: 'Patient ID' })
-  async getPatientAllergies(@Param('id', ParseUUIDPipe) id: string) {
+  async getPatientAllergies(@Param('id') id: string) {
     const patient = await this.patientsService.findById(id, true);
     return {
       patientId: id,
@@ -238,7 +237,7 @@ export class PatientsController {
   @ApiOperation({ summary: 'Get patient visits history' })
   @ApiParam({ name: 'id', description: 'Patient ID' })
   async getPatientVisits(
-    @Param('id', ParseUUIDPipe) id: string,
+    @Param('id') id: string,
     @Query('limit') limit?: string,
   ) {
     const patient = await this.patientsService.findById(id, true);
@@ -252,7 +251,7 @@ export class PatientsController {
   @Get(':id/insurance')
   @ApiOperation({ summary: 'Get patient insurance information' })
   @ApiParam({ name: 'id', description: 'Patient ID' })
-  async getPatientInsurance(@Param('id', ParseUUIDPipe) id: string) {
+  async getPatientInsurance(@Param('id') id: string) {
     const patient = await this.patientsService.findById(id, true);
     return {
       patientId: id,

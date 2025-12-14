@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useFormContext } from '../FormContext';
+import { ClinicalPhotoUpload, ClinicalPhoto } from '../../../upload/ClinicalPhotoUpload';
 
 /**
  * Section 3: Clinical Data & Presentation
@@ -26,21 +27,32 @@ interface Section3Data {
   weight?: number;                // kg
   bmi?: number;                   // Auto-calculated
 
-  // Clinical History
+  // Clinical History (Anamnesa)
   chiefComplaint?: string;        // Main presenting symptom
   durationOfSymptoms?: number;    // In months
   comorbidities?: string;         // Comma-separated or free text
+  cancerHistory?: string;         // INAMSOS: Riwayat Kanker Pribadi
+  familyCancerHistory?: string;   // INAMSOS: Riwayat Kanker Keluarga
 
-  // Physical Examination
+  // Physical Examination - Musculoskeletal Specific
   swellingPresent?: boolean;
   swellingSize?: string;          // e.g., "10x8 cm"
   skinChanges?: string;
   neurovascularStatus?: string;   // "Normal" | "Compromised"
   rangeOfMotion?: string;         // e.g., "Full" | "Limited (50%)"
 
-  // Clinical Photos (will implement file upload later)
-  clinicalPhotosUploaded?: boolean;
-  numberOfPhotos?: number;
+  // Physical Examination - INAMSOS Structured (General)
+  physicalExamGeneral?: string;        // Status Generalisata
+  physicalExamHeadNeck?: string;       // Kepala & Leher
+  physicalExamThorax?: string;         // Thoraks
+  physicalExamAbdomen?: string;        // Abdomen
+  physicalExamExtremitiesSpine?: string; // Ekstremitas & Tulang Belakang
+
+  // Local Tumor Examination
+  localTumorStatus?: string;      // INAMSOS: Status Lokalisata (pemeriksaan lokal tumor)
+
+  // Clinical Photos
+  clinicalPhotos?: ClinicalPhoto[];
 }
 
 const KARNOFSKY_DESCRIPTIONS = {
@@ -59,7 +71,31 @@ const KARNOFSKY_DESCRIPTIONS = {
 
 export function Section3ClinicalData() {
   const { getSection, updateSection } = useFormContext();
-  const sectionData: Partial<Section3Data> = (getSection('section3') as Section3Data) || {};
+  const savedData = (getSection('section3') as Partial<Section3Data>) || {};
+  const sectionData: Partial<Section3Data> = {
+    karnofskyScore: savedData.karnofskyScore,
+    painScale: savedData.painScale || 0,
+    height: savedData.height,
+    weight: savedData.weight,
+    bmi: savedData.bmi,
+    chiefComplaint: savedData.chiefComplaint || '',
+    durationOfSymptoms: savedData.durationOfSymptoms,
+    comorbidities: savedData.comorbidities || '',
+    cancerHistory: savedData.cancerHistory || '',
+    familyCancerHistory: savedData.familyCancerHistory || '',
+    swellingPresent: savedData.swellingPresent || false,
+    swellingSize: savedData.swellingSize || '',
+    skinChanges: savedData.skinChanges || '',
+    neurovascularStatus: savedData.neurovascularStatus || '',
+    rangeOfMotion: savedData.rangeOfMotion || '',
+    physicalExamGeneral: savedData.physicalExamGeneral || '',
+    physicalExamHeadNeck: savedData.physicalExamHeadNeck || '',
+    physicalExamThorax: savedData.physicalExamThorax || '',
+    physicalExamAbdomen: savedData.physicalExamAbdomen || '',
+    physicalExamExtremitiesSpine: savedData.physicalExamExtremitiesSpine || '',
+    localTumorStatus: savedData.localTumorStatus || '',
+    clinicalPhotos: savedData.clinicalPhotos || [],
+  };
 
   // Calculate BMI when height or weight changes
   useEffect(() => {
@@ -302,13 +338,50 @@ export function Section3ClinicalData() {
             Penyakit penyerta atau kondisi medis lain yang dimiliki pasien
           </p>
         </div>
+
+        {/* Cancer History - INAMSOS Required */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Riwayat Kanker Pribadi
+          </label>
+          <textarea
+            value={sectionData.cancerHistory || ''}
+            onChange={(e) => updateField('cancerHistory', e.target.value)}
+            rows={3}
+            placeholder="Contoh: Riwayat osteosarcoma femur kanan pada usia 25 tahun (2015), sudah dilakukan amputasi dan kemoterapi"
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+          />
+          <p className="mt-2 text-xs text-gray-500">
+            Riwayat kanker yang pernah diderita pasien sebelumnya (jika ada)
+          </p>
+        </div>
+
+        {/* Family Cancer History - INAMSOS Required */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Riwayat Kanker Keluarga
+          </label>
+          <textarea
+            value={sectionData.familyCancerHistory || ''}
+            onChange={(e) => updateField('familyCancerHistory', e.target.value)}
+            rows={3}
+            placeholder="Contoh: Ayah - Ca Kolon (meninggal usia 60 tahun), Kakak - Leukemia (sembuh)"
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+          />
+          <p className="mt-2 text-xs text-gray-500">
+            Riwayat kanker pada keluarga pasien (orang tua, saudara kandung, anak)
+          </p>
+        </div>
       </div>
 
-      {/* Physical Examination */}
+      {/* Physical Examination - Musculoskeletal Specific */}
       <div className="bg-white rounded-lg border border-gray-200 p-6 space-y-4">
         <h3 className="text-lg font-semibold text-gray-900 mb-4">
-          Pemeriksaan Fisik
+          Pemeriksaan Fisik - Muskuloskeletal Spesifik
         </h3>
+        <p className="text-sm text-gray-600 mb-4">
+          Pemeriksaan fisik yang spesifik untuk tumor muskuloskeletal
+        </p>
 
         {/* Swelling */}
         <div>
@@ -391,55 +464,135 @@ export function Section3ClinicalData() {
         </div>
       </div>
 
+      {/* INAMSOS Structured Physical Examination */}
+      <div className="bg-white rounded-lg border border-gray-200 p-6 space-y-4">
+        <h3 className="text-lg font-semibold text-gray-900 mb-4">
+          Pemeriksaan Fisik Terstruktur (INAMSOS)
+        </h3>
+        <p className="text-sm text-gray-600 mb-4">
+          Pemeriksaan fisik sistemik menurut standar INAMSOS
+        </p>
+
+        {/* Status Generalisata */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Status Generalisata
+          </label>
+          <textarea
+            value={sectionData.physicalExamGeneral || ''}
+            onChange={(e) => updateField('physicalExamGeneral', e.target.value)}
+            rows={3}
+            placeholder="Contoh: Keadaan umum baik, kesadaran compos mentis, gizi baik, tekanan darah 120/80 mmHg, nadi 80x/menit, nafas 20x/menit, suhu 36.5°C"
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+          />
+          <p className="mt-2 text-xs text-gray-500">
+            Kondisi umum pasien, tanda-tanda vital, dan status gizi
+          </p>
+        </div>
+
+        {/* Kepala & Leher */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Kepala & Leher
+          </label>
+          <textarea
+            value={sectionData.physicalExamHeadNeck || ''}
+            onChange={(e) => updateField('physicalExamHeadNeck', e.target.value)}
+            rows={2}
+            placeholder="Contoh: Konjungtiva anemis (-/-), sklera ikterik (-/-), tidak ada pembesaran KGB leher"
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+          />
+        </div>
+
+        {/* Thoraks */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Thoraks (Paru & Jantung)
+          </label>
+          <textarea
+            value={sectionData.physicalExamThorax || ''}
+            onChange={(e) => updateField('physicalExamThorax', e.target.value)}
+            rows={2}
+            placeholder="Contoh: Simetris, retraksi (-), suara napas vesikuler +/+, ronki -/-, wheezing -/-, bunyi jantung I-II reguler, murmur (-)"
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+          />
+        </div>
+
+        {/* Abdomen */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Abdomen
+          </label>
+          <textarea
+            value={sectionData.physicalExamAbdomen || ''}
+            onChange={(e) => updateField('physicalExamAbdomen', e.target.value)}
+            rows={2}
+            placeholder="Contoh: Datar, supel, bising usus (+) normal, nyeri tekan (-), hepatomegali (-), splenomegali (-)"
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+          />
+        </div>
+
+        {/* Ekstremitas & Tulang Belakang */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Ekstremitas & Tulang Belakang
+          </label>
+          <textarea
+            value={sectionData.physicalExamExtremitiesSpine || ''}
+            onChange={(e) => updateField('physicalExamExtremitiesSpine', e.target.value)}
+            rows={3}
+            placeholder="Contoh: Tidak ada deformitas tulang belakang, ekstremitas atas dalam batas normal, ekstremitas bawah kanan terdapat massa (lihat pemeriksaan lokal)"
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+          />
+          <p className="mt-2 text-xs text-gray-500">
+            Pemeriksaan ekstremitas secara umum dan tulang belakang
+          </p>
+        </div>
+      </div>
+
+      {/* Local Tumor Examination - CRITICAL */}
+      <div className="bg-yellow-50 border-2 border-yellow-300 rounded-lg p-6 space-y-4">
+        <div className="flex items-start">
+          <svg className="h-6 w-6 text-yellow-600 mr-3 flex-shrink-0 mt-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+          </svg>
+          <div className="flex-1">
+            <h3 className="text-lg font-semibold text-yellow-900 mb-2">
+              Status Lokalisata (Pemeriksaan Lokal Tumor) - CRITICAL
+            </h3>
+            <p className="text-sm text-yellow-800 mb-4">
+              Pemeriksaan fokus pada lokasi tumor - SANGAT PENTING untuk dokumentasi INAMSOS
+            </p>
+
+            <label className="block text-sm font-medium text-yellow-900 mb-2">
+              Deskripsi Pemeriksaan Lokal
+            </label>
+            <textarea
+              value={sectionData.localTumorStatus || ''}
+              onChange={(e) => updateField('localTumorStatus', e.target.value)}
+              rows={5}
+              placeholder="Contoh:&#10;Look: Massa di 1/3 distal femur kanan, ukuran ±12x10x8 cm, batas tidak tegas, kulit di atasnya tampak eritema&#10;Feel: Massa teraba keras, tidak mobile, nyeri tekan (+), peningkatan suhu lokal (+), tidak ada fluktuasi&#10;Move: ROM lutut kanan terbatas 50%, nyeri saat fleksi, krepitasi (-)&#10;Neurovaskular: CRT <2 detik, pulsasi a. dorsalis pedis (+) kuat, sensibilitas utuh, motorik 5/5"
+              className="w-full px-4 py-3 border border-yellow-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 bg-white"
+            />
+            <p className="mt-2 text-xs text-yellow-700">
+              <strong>Format Look-Feel-Move:</strong> Inspeksi (Look), Palpasi (Feel), Range of Motion (Move), Status Neurovaskular
+            </p>
+          </div>
+        </div>
+      </div>
+
       {/* Clinical Photography */}
       <div className="bg-white rounded-lg border border-gray-200 p-6">
         <h3 className="text-lg font-semibold text-gray-900 mb-4">
           Foto Klinis (Opsional)
         </h3>
 
-        <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-4">
-          <div className="flex items-start">
-            <svg
-              className="h-5 w-5 text-yellow-600 mr-2 flex-shrink-0 mt-0.5"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-            >
-              <path
-                fillRule="evenodd"
-                d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
-                clipRule="evenodd"
-              />
-            </svg>
-            <div className="text-sm text-yellow-800">
-              <p className="font-medium">Fitur Upload Foto Akan Segera Tersedia</p>
-              <p className="mt-1">
-                Upload foto klinis dengan berbagai sudut pandang (anterior, posterior, lateral) untuk dokumentasi komprehensif.
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center bg-gray-50">
-          <svg
-            className="mx-auto h-12 w-12 text-gray-400"
-            stroke="currentColor"
-            fill="none"
-            viewBox="0 0 48 48"
-          >
-            <path
-              d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
-              strokeWidth={2}
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-          <p className="mt-2 text-sm text-gray-600">
-            Upload foto klinis pasien
-          </p>
-          <p className="text-xs text-gray-500 mt-1">
-            Rekomendasi: minimal 3 sudut pandang (anterior, lateral, posterior)
-          </p>
-        </div>
+        <ClinicalPhotoUpload
+          patientId={undefined} // Will be set when patient is created
+          onPhotosChange={(photos) => updateField('clinicalPhotos', photos)}
+          maxPhotos={10}
+          maxFileSizeMB={10}
+        />
       </div>
 
       {/* Summary Indicator */}
@@ -466,6 +619,9 @@ export function Section3ClinicalData() {
                 <p><span className="font-semibold">Pain Scale:</span> {sectionData.painScale ?? 0}/10</p>
                 {sectionData.bmi && (
                   <p><span className="font-semibold">BMI:</span> {sectionData.bmi.toFixed(1)} ({bmiCategory.label})</p>
+                )}
+                {sectionData.clinicalPhotos && sectionData.clinicalPhotos.length > 0 && (
+                  <p><span className="font-semibold">Foto Klinis:</span> {sectionData.clinicalPhotos.length} foto</p>
                 )}
               </div>
             </div>

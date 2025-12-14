@@ -43,7 +43,8 @@ export default function PatientList({
   };
 
   const formatGender = (gender: string) => {
-    return gender === 'male' ? 'Laki-laki' : 'Perempuan';
+    if (!gender) return '-';
+    return gender.toUpperCase() === 'MALE' ? 'Laki-laki' : 'Perempuan';
   };
 
   const formatTreatmentStatus = (status: string) => {

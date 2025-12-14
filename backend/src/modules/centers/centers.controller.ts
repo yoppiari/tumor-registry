@@ -21,14 +21,12 @@ import { AuditLog } from '@/common/decorators/audit-log.decorator';
 
 @ApiTags('Centers')
 @Controller('centers')
-@UseGuards(JwtAuthGuard, PermissionsGuard)
 export class CentersController {
   constructor(private readonly centersService: CentersService) {}
 
   @Get()
-  @ApiOperation({ summary: 'Get all centers' })
+  @ApiOperation({ summary: 'Get all centers (Public - no auth required)' })
   @ApiResponse({ status: 200, description: 'Centers retrieved successfully' })
-  @RequirePermissions('CENTERS_READ')
   @ApiQuery({ name: 'includeInactive', required: false, type: Boolean })
   async findAll(@Query('includeInactive') includeInactive?: string) {
     const include = includeInactive === 'true';
@@ -36,6 +34,7 @@ export class CentersController {
   }
 
   @Get('statistics')
+  @UseGuards(JwtAuthGuard, PermissionsGuard)
   @ApiOperation({ summary: 'Get center statistics' })
   @ApiResponse({ status: 200, description: 'Center statistics retrieved successfully' })
   @RequirePermissions('CENTERS_READ')
@@ -44,11 +43,10 @@ export class CentersController {
   }
 
   @Get(':id')
-  @ApiOperation({ summary: 'Get center by ID' })
+  @ApiOperation({ summary: 'Get center by ID (Public - no auth required)' })
   @ApiParam({ name: 'id', description: 'Center ID' })
   @ApiResponse({ status: 200, description: 'Center retrieved successfully' })
   @ApiResponse({ status: 404, description: 'Center not found' })
-  @RequirePermissions('CENTERS_READ')
   @ApiQuery({ name: 'includeUsers', required: false, type: Boolean })
   async findById(
     @Param('id', ParseUUIDPipe) id: string,
@@ -59,6 +57,7 @@ export class CentersController {
   }
 
   @Get(':id/users')
+  @UseGuards(JwtAuthGuard, PermissionsGuard)
   @ApiOperation({ summary: 'Get center users' })
   @ApiParam({ name: 'id', description: 'Center ID' })
   @ApiResponse({ status: 200, description: 'Center users retrieved successfully' })
@@ -68,6 +67,7 @@ export class CentersController {
   }
 
   @Post()
+  @UseGuards(JwtAuthGuard, PermissionsGuard)
   @ApiOperation({ summary: 'Create new center' })
   @ApiResponse({ status: 201, description: 'Center created successfully' })
   @ApiResponse({ status: 400, description: 'Invalid input' })
@@ -86,6 +86,7 @@ export class CentersController {
   }
 
   @Put(':id')
+  @UseGuards(JwtAuthGuard, PermissionsGuard)
   @ApiOperation({ summary: 'Update center' })
   @ApiParam({ name: 'id', description: 'Center ID' })
   @ApiResponse({ status: 200, description: 'Center updated successfully' })
@@ -107,6 +108,7 @@ export class CentersController {
   }
 
   @Put(':id/activate')
+  @UseGuards(JwtAuthGuard, PermissionsGuard)
   @ApiOperation({ summary: 'Activate center' })
   @ApiParam({ name: 'id', description: 'Center ID' })
   @ApiResponse({ status: 200, description: 'Center activated successfully' })
@@ -118,6 +120,7 @@ export class CentersController {
   }
 
   @Put(':id/deactivate')
+  @UseGuards(JwtAuthGuard, PermissionsGuard)
   @ApiOperation({ summary: 'Deactivate center' })
   @ApiParam({ name: 'id', description: 'Center ID' })
   @ApiResponse({ status: 200, description: 'Center deactivated successfully' })
@@ -130,6 +133,7 @@ export class CentersController {
   }
 
   @Delete(':id')
+  @UseGuards(JwtAuthGuard, PermissionsGuard)
   @ApiOperation({ summary: 'Delete center' })
   @ApiParam({ name: 'id', description: 'Center ID' })
   @ApiResponse({ status: 204, description: 'Center deleted successfully' })

@@ -61,10 +61,18 @@ export function Section5DiagnosisLocation() {
   const { getSection, updateSection } = useFormContext();
 
   // Get section 1 data to determine pathology type
-  const section1Data = getSection('section1') as { pathologyTypeId: string; pathologyTypeName?: string } | undefined;
-  const section5Data: Partial<Section5Data> = (getSection('section5') as Section5Data) || {
-    whoClassificationId: '',
-    tumorSide: '',
+  const section1Data = getSection('section1') as { pathologyType: string; pathologyTypeName?: string; pathologyTypeId?: string } | undefined;
+  const savedData = (getSection('section5') as Section5Data) || {};
+  const section5Data: Section5Data = {
+    whoClassificationId: savedData.whoClassificationId || '',
+    whoClassificationCode: savedData.whoClassificationCode || '',
+    whoClassificationName: savedData.whoClassificationName || '',
+    boneLocationId: savedData.boneLocationId || '',
+    boneLocationName: savedData.boneLocationName || '',
+    softTissueLocationId: savedData.softTissueLocationId || '',
+    softTissueLocationName: savedData.softTissueLocationName || '',
+    tumorSide: savedData.tumorSide || '',
+    specificAnatomicalSite: savedData.specificAnatomicalSite || '',
   };
 
   const [boneLocations, setBoneLocations] = useState<BoneLocation[]>([]);
@@ -72,8 +80,9 @@ export function Section5DiagnosisLocation() {
   const [isLoading, setIsLoading] = useState(false);
 
   const pathologyTypeName = section1Data?.pathologyTypeName || '';
-  const isBoneTumor = pathologyTypeName === 'BONE' || pathologyTypeName.includes('Tulang');
-  const isSoftTissueTumor = pathologyTypeName === 'SOFT_TISSUE' || pathologyTypeName.includes('Jaringan Lunak');
+  const pathologyTypeCode = section1Data?.pathologyType || '';
+  const isBoneTumor = pathologyTypeCode.includes('bone') || pathologyTypeName.includes('Tulang');
+  const isSoftTissueTumor = pathologyTypeCode.includes('soft') || pathologyTypeName.includes('Jaringan Lunak');
 
   // Load location data based on pathology type
   useEffect(() => {
@@ -87,15 +96,18 @@ export function Section5DiagnosisLocation() {
   const loadBoneLocations = async () => {
     try {
       setIsLoading(true);
-      const response = await fetch('/api/v1/bone-locations', {
-        headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token')}`,
-        },
-      });
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api/v1';
+      const response = await fetch(`${apiUrl}/locations/bone`);
+
+      if (!response.ok) {
+        throw new Error('Failed to load bone locations');
+      }
+
       const data = await response.json();
-      setBoneLocations(data.data || data);
+      setBoneLocations(Array.isArray(data) ? data : (data.data || []));
     } catch (error) {
       console.error('Error loading bone locations:', error);
+      setBoneLocations([]);
     } finally {
       setIsLoading(false);
     }
@@ -104,15 +116,18 @@ export function Section5DiagnosisLocation() {
   const loadSoftTissueLocations = async () => {
     try {
       setIsLoading(true);
-      const response = await fetch('/api/v1/soft-tissue-locations', {
-        headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token')}`,
-        },
-      });
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api/v1';
+      const response = await fetch(`${apiUrl}/locations/soft-tissue`);
+
+      if (!response.ok) {
+        throw new Error('Failed to load soft tissue locations');
+      }
+
       const data = await response.json();
-      setSoftTissueLocations(data.data || data);
+      setSoftTissueLocations(Array.isArray(data) ? data : (data.data || []));
     } catch (error) {
       console.error('Error loading soft tissue locations:', error);
+      setSoftTissueLocations([]);
     } finally {
       setIsLoading(false);
     }
@@ -154,7 +169,7 @@ export function Section5DiagnosisLocation() {
     });
   };
 
-  if (!section1Data?.pathologyTypeId) {
+  if (!section1Data?.pathologyType) {
     return (
       <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-6">
         <div className="flex items-start">

@@ -18,21 +18,19 @@ import {
 import { JwtAuthGuard } from '../../../auth/guards/jwt-auth.guard';
 
 @ApiTags('Pathology Types')
-@ApiBearerAuth()
 @Controller('pathology-types')
-@UseGuards(JwtAuthGuard)
 export class PathologyTypesController {
   constructor(private readonly pathologyTypesService: PathologyTypesService) {}
 
   @Get()
-  @ApiOperation({ summary: 'Get all pathology types' })
+  @ApiOperation({ summary: 'Get all pathology types (Public - no auth required)' })
   @ApiResponse({ status: 200, description: 'Returns all active pathology types', type: [PathologyTypeDto] })
   async findAll(): Promise<PathologyTypeDto[]> {
     return this.pathologyTypesService.findAll();
   }
 
   @Get(':id')
-  @ApiOperation({ summary: 'Get pathology type by ID' })
+  @ApiOperation({ summary: 'Get pathology type by ID (Public - no auth required)' })
   @ApiResponse({ status: 200, description: 'Returns pathology type', type: PathologyTypeDto })
   @ApiResponse({ status: 404, description: 'Pathology type not found' })
   async findOne(@Param('id') id: string): Promise<PathologyTypeDto> {
@@ -40,7 +38,7 @@ export class PathologyTypesController {
   }
 
   @Get('code/:code')
-  @ApiOperation({ summary: 'Get pathology type by code' })
+  @ApiOperation({ summary: 'Get pathology type by code (Public - no auth required)' })
   @ApiResponse({ status: 200, description: 'Returns pathology type', type: PathologyTypeDto })
   @ApiResponse({ status: 404, description: 'Pathology type not found' })
   async findByCode(@Param('code') code: string): Promise<PathologyTypeDto> {
@@ -48,6 +46,8 @@ export class PathologyTypesController {
   }
 
   @Post()
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
   @ApiOperation({ summary: 'Create new pathology type' })
   @ApiResponse({ status: 201, description: 'Pathology type created', type: PathologyTypeDto })
   async create(@Body() createDto: CreatePathologyTypeDto): Promise<PathologyTypeDto> {
@@ -55,6 +55,8 @@ export class PathologyTypesController {
   }
 
   @Put(':id')
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
   @ApiOperation({ summary: 'Update pathology type' })
   @ApiResponse({ status: 200, description: 'Pathology type updated', type: PathologyTypeDto })
   @ApiResponse({ status: 404, description: 'Pathology type not found' })
@@ -66,6 +68,8 @@ export class PathologyTypesController {
   }
 
   @Delete(':id')
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
   @ApiOperation({ summary: 'Soft delete pathology type' })
   @ApiResponse({ status: 200, description: 'Pathology type deleted' })
   @ApiResponse({ status: 404, description: 'Pathology type not found' })

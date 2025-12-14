@@ -94,7 +94,7 @@ interface PatientProviderProps {
 
 // Helper function for API calls
 async function apiCall(endpoint: string, options: RequestInit = {}) {
-  const token = localStorage.getItem('accessToken');
+  const token = localStorage.getItem('token');
 
   const response = await fetch(`${API_BASE_URL}${endpoint}`, {
     headers: {
@@ -391,6 +391,11 @@ export function PatientProvider({ children }: PatientProviderProps) {
       throw error;
     }
   };
+
+  // Auto-fetch patients on mount
+  useEffect(() => {
+    fetchPatients();
+  }, []);
 
   // Context value
   const contextValue: PatientContextType = {

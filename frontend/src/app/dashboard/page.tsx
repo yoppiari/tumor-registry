@@ -24,8 +24,9 @@ export default function DashboardPage() {
     // Fetch dashboard data
     const fetchDashboardData = async () => {
       try {
-        const token = localStorage.getItem('accessToken');
-        const response = await fetch('/api/v1/analytics/dashboard', {
+        const token = localStorage.getItem('token');
+        const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api/v1';
+        const response = await fetch(`${API_URL}/analytics/dashboard-summary`, {
           headers: {
             'Authorization': `Bearer ${token}`,
           },
@@ -33,18 +34,16 @@ export default function DashboardPage() {
 
         if (response.ok) {
           const data = await response.json();
-          setStats(data);
+          setStats({
+            totalPatients: data.totalPatients || 0,
+            newPatients: data.newPatients || 0,
+            limbSalvageRate: data.limbSalvageRate || 0,
+            followUpCompliance: data.followUpComplianceRate || 0,
+            activeCenters: data.activeCenters || 0,
+          });
         }
       } catch (error) {
         console.error('Error fetching dashboard data:', error);
-        // Set mock data for demo
-        setStats({
-          totalPatients: 1247,
-          newPatients: 45,
-          limbSalvageRate: 87.5,
-          followUpCompliance: 82.3,
-          activeCenters: 21,
-        });
       }
     };
 

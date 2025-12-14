@@ -4,8 +4,12 @@ export interface PatientFormData {
   // Section 1: Center & Pathology Type
   centerId: string;
   pathologyType: string;
+  consultantName?: string;
+  residentName?: string;
+  inputDate?: string;
 
   // Section 2: Patient Identity
+  tumorRegistryNumber?: string;
   medicalRecordNumber: string;
   nik: string;
   name: string;
@@ -33,9 +37,16 @@ export interface PatientFormData {
   symptomDuration?: number;
   presentingSymptoms?: string;
   tumorSizeAtPresentation?: number;
+  cancerHistory?: string;
   familyHistoryCancer?: string;
   tumorSyndromeId?: string;
   karnofskysScore?: number;
+  physicalExamGeneral?: string;
+  physicalExamHeadNeck?: string;
+  physicalExamThorax?: string;
+  physicalExamAbdomen?: string;
+  physicalExamExtremitiesSpine?: string;
+  localTumorStatus?: string;
 
   // Section 4: Diagnostic Investigations
   biopsyDate?: string;
@@ -50,6 +61,14 @@ export interface PatientFormData {
   softTissueLocationId?: string;
   histopathologyGrade?: string;
   histopathologyDetails?: string;
+  tumorSize?: string;
+  tumorDepth?: string[];
+  metastasisLung?: boolean;
+  metastasisOther?: boolean;
+  metastasisOtherSites?: string;
+  noMetastasis?: boolean;
+  diagnosisKomplikasi?: string;
+  diagnosisKomorbid?: string;
 
   // Section 6: Staging
   ennekingStage?: string;
@@ -66,6 +85,7 @@ export interface PatientFormData {
   cpcDecision?: string;
   cpcNotes?: string;
   cpcNextReviewDate?: string;
+  attendingConsultants?: string[];
 
   // Section 8: Treatment Management
   treatmentStartDate?: string;

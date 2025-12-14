@@ -437,12 +437,19 @@ export const validateSection5 = (data: SectionData, section1Data: SectionData): 
 export const validateSection6 = (data: SectionData): SectionValidation => {
   const errors: ValidationError[] = [];
 
-  // Optional but important fields
-  // Typically require at least one staging system
+  // Enneking Stage or AJCC Stage required
   if (!data.ennekingStage && !data.ajccStage) {
     errors.push({
       field: 'staging',
-      message: 'At least one staging system (Enneking or AJCC) is recommended',
+      message: 'Staging: Minimal satu staging system (Enneking atau AJCC) harus diisi',
+    });
+  }
+
+  // Histopathology Grade required
+  if (!data.histopathologyGrade) {
+    errors.push({
+      field: 'histopathologyGrade',
+      message: 'Histopathology Grade harus diisi',
     });
   }
 
@@ -453,14 +460,32 @@ export const validateSection6 = (data: SectionData): SectionValidation => {
 };
 
 /**
- * Validate Section 7: CPC Conference
+ * Validate Section 7: CPC (Clinico-Pathological Conference)
+ * Simple validation - 3 fields: Tanggal, Konsultan hadir, Keputusan
  */
 export const validateSection7 = (data: SectionData): SectionValidation => {
   const errors: ValidationError[] = [];
 
+  // Validate date if filled
   if (data.cpcDate) {
-    const dateError = validateDate(data.cpcDate, 'CPC Date', { futureAllowed: false });
+    const dateError = validateDate(data.cpcDate, 'Tanggal CPC', { futureAllowed: false });
     if (dateError) errors.push(dateError);
+  }
+
+  // CPC is optional, but if date is filled, consultants and decision should be filled
+  if (data.cpcDate) {
+    if (!data.consultantsPresent) {
+      errors.push({
+        field: 'consultantsPresent',
+        message: 'Jika tanggal CPC diisi, daftar konsultan hadir harus diisi',
+      });
+    }
+    if (!data.decision) {
+      errors.push({
+        field: 'decision',
+        message: 'Jika tanggal CPC diisi, keputusan CPC harus diisi',
+      });
+    }
   }
 
   return {
@@ -471,28 +496,181 @@ export const validateSection7 = (data: SectionData): SectionValidation => {
 
 /**
  * Validate Section 8: Treatment Management
+ * Comprehensive validation for surgical, chemotherapy, and radiotherapy components
  */
-export const validateSection8 = (data: SectionData): SectionValidation => {
+export const validateSection8 = (data: any): SectionValidation => {
   const errors: ValidationError[] = [];
 
+  // Treatment intention required
+  if (!data.treatmentIntention) {
+    errors.push({
+      field: 'treatmentIntention',
+      message: 'Treatment Intention (Curative/Palliative) harus diisi',
+    });
+  }
+
+  // Primary treatment modality required
+  if (!data.primaryTreatment) {
+    errors.push({
+      field: 'primaryTreatment',
+      message: 'Modalitas pengobatan primer harus dipilih',
+    });
+  }
+
+  // If surgery is primary treatment, validate surgical fields
+  if (data.primaryTreatment === 'SURGERY' || data.primaryTreatment === 'MULTIMODAL') {
+    if (!data.surgery?.limbSalvageStatus) {
+      errors.push({
+        field: 'limbSalvageStatus',
+        message: 'Limb Salvage Status HARUS diisi untuk pembedahan',
+      });
+    }
+
+    if (!data.surgery?.surgeryDate) {
+      errors.push({
+        field: 'surgeryDate',
+        message: 'Tanggal operasi harus diisi',
+      });
+    } else {
+      const dateError = validateDate(data.surgery.surgeryDate, 'Surgery Date', { futureAllowed: false });
+      if (dateError) errors.push(dateError);
+    }
+
+    if (!data.surgery?.surgeryType) {
+      errors.push({
+        field: 'surgeryType',
+        message: 'Jenis operasi harus diisi',
+      });
+    }
+
+    // Surgery duration validation
+    if (data.surgery?.surgeryDuration) {
+      const durationError = validateNumber(data.surgery.surgeryDuration, 'Surgery Duration', { min: 1, max: 1440 });
+      if (durationError) errors.push(durationError);
+    }
+
+    // Blood loss validation
+    if (data.surgery?.bloodLoss) {
+      const bloodLossError = validateNumber(data.surgery.bloodLoss, 'Blood Loss', { min: 0, max: 50000 });
+      if (bloodLossError) errors.push(bloodLossError);
+    }
+
+    // If LIMB_SALVAGE, technique required
+    if (data.surgery?.limbSalvageStatus === 'LIMB_SALVAGE' && !data.surgery?.limbSalvageTechnique) {
+      errors.push({
+        field: 'limbSalvageTechnique',
+        message: 'Teknik rekonstruksi harus diisi untuk Limb Salvage',
+      });
+    }
+
+    // If AMPUTATION, level and reason required
+    if (data.surgery?.limbSalvageStatus === 'AMPUTATION') {
+      if (!data.surgery?.amputationLevel) {
+        errors.push({
+          field: 'amputationLevel',
+          message: 'Level amputasi harus diisi',
+        });
+      }
+      if (!data.surgery?.amputationReason) {
+        errors.push({
+          field: 'amputationReason',
+          message: 'Alasan amputasi harus diisi',
+        });
+      }
+    }
+
+    // Surgical margin required
+    if (!data.surgery?.surgicalMargin) {
+      errors.push({
+        field: 'surgicalMargin',
+        message: 'Status margin bedah harus diisi',
+      });
+    }
+
+    // Margin distance validation
+    if (data.surgery?.marginDistance) {
+      const marginError = validateNumber(data.surgery.marginDistance, 'Margin Distance', { min: 0, max: 1000 });
+      if (marginError) errors.push(marginError);
+    }
+  }
+
+  // If chemotherapy received, validate protocols
+  if (data.chemotherapy?.received) {
+    if (!data.chemotherapy?.timing) {
+      errors.push({
+        field: 'chemotherapyTiming',
+        message: 'Timing kemoterapi harus diisi',
+      });
+    }
+
+    // Validate chemotherapy dates
+    if (data.chemotherapy?.neoadjuvantStartDate) {
+      const dateError = validateDate(data.chemotherapy.neoadjuvantStartDate, 'Neoadjuvant Start Date', { futureAllowed: true });
+      if (dateError) errors.push(dateError);
+    }
+
+    if (data.chemotherapy?.neoadjuvantEndDate) {
+      const dateError = validateDate(data.chemotherapy.neoadjuvantEndDate, 'Neoadjuvant End Date', { futureAllowed: true });
+      if (dateError) errors.push(dateError);
+    }
+
+    if (data.chemotherapy?.adjuvantStartDate) {
+      const dateError = validateDate(data.chemotherapy.adjuvantStartDate, 'Adjuvant Start Date', { futureAllowed: true });
+      if (dateError) errors.push(dateError);
+    }
+
+    if (data.chemotherapy?.adjuvantEndDate) {
+      const dateError = validateDate(data.chemotherapy.adjuvantEndDate, 'Adjuvant End Date', { futureAllowed: true });
+      if (dateError) errors.push(dateError);
+    }
+
+    // Validate cycles
+    if (data.chemotherapy?.neoadjuvantCycles) {
+      const cyclesError = validateNumber(data.chemotherapy.neoadjuvantCycles, 'Neoadjuvant Cycles', { min: 1, max: 50, integer: true });
+      if (cyclesError) errors.push(cyclesError);
+    }
+
+    if (data.chemotherapy?.adjuvantCycles) {
+      const cyclesError = validateNumber(data.chemotherapy.adjuvantCycles, 'Adjuvant Cycles', { min: 1, max: 50, integer: true });
+      if (cyclesError) errors.push(cyclesError);
+    }
+  }
+
+  // If radiation received, validate doses
+  if (data.radiation?.received) {
+    // Validate radiation dates
+    if (data.radiation?.startDate) {
+      const dateError = validateDate(data.radiation.startDate, 'Radiation Start Date', { futureAllowed: true });
+      if (dateError) errors.push(dateError);
+    }
+
+    if (data.radiation?.endDate) {
+      const dateError = validateDate(data.radiation.endDate, 'Radiation End Date', { futureAllowed: true });
+      if (dateError) errors.push(dateError);
+    }
+
+    // Validate dose and fractions
+    if (data.radiation?.totalDose) {
+      const doseError = validateNumber(data.radiation.totalDose, 'Radiation Dose', { min: 0, max: 200 });
+      if (doseError) errors.push(doseError);
+    }
+
+    if (data.radiation?.fractions) {
+      const fractionsError = validateNumber(data.radiation.fractions, 'Radiation Fractions', { min: 1, max: 100, integer: true });
+      if (fractionsError) errors.push(fractionsError);
+    }
+  }
+
+  // Analgesia date validation
+  if (data.analgesiaStartDate) {
+    const dateError = validateDate(data.analgesiaStartDate, 'Analgesia Start Date', { futureAllowed: false });
+    if (dateError) errors.push(dateError);
+  }
+
+  // Treatment start date validation
   if (data.treatmentStartDate) {
     const dateError = validateDate(data.treatmentStartDate, 'Treatment Start Date', { futureAllowed: true });
     if (dateError) errors.push(dateError);
-  }
-
-  if (data.surgeryDate) {
-    const dateError = validateDate(data.surgeryDate, 'Surgery Date', { futureAllowed: false });
-    if (dateError) errors.push(dateError);
-  }
-
-  if (data.chemotherapyCycles) {
-    const cyclesError = validateNumber(data.chemotherapyCycles, 'Chemotherapy Cycles', { min: 0, integer: true });
-    if (cyclesError) errors.push(cyclesError);
-  }
-
-  if (data.radiotherapyDose) {
-    const doseError = validateNumber(data.radiotherapyDose, 'Radiotherapy Dose', { min: 0 });
-    if (doseError) errors.push(doseError);
   }
 
   return {

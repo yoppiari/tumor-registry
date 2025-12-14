@@ -3,6 +3,9 @@
 import React, { useState } from 'react';
 import { Patient } from '@/types/patient';
 import { usePatient } from '@/contexts/PatientContext';
+import { ClinicalPhotosTab } from './tabs/ClinicalPhotosTab';
+import { RadiologyImagesTab } from './tabs/RadiologyImagesTab';
+import { PathologyReportsTab } from './tabs/PathologyReportsTab';
 
 interface PatientDetailProps {
   patient: Patient;
@@ -14,6 +17,7 @@ export default function PatientDetail({ patient, onEdit, className = '' }: Patie
   const { updatePatient } = usePatient();
   const [isEditing, setIsEditing] = useState(false);
   const [showDeceasedModal, setShowDeceasedModal] = useState(false);
+  const [activeTab, setActiveTab] = useState<'info' | 'photos' | 'radiology' | 'pathology'>('info');
   const [deceasedData, setDeceasedData] = useState({
     dateOfDeath: '',
     causeOfDeath: ''
@@ -411,6 +415,66 @@ export default function PatientDetail({ patient, onEdit, className = '' }: Patie
               <label className="block text-sm font-medium text-gray-700">Terakhir Diperbarui</label>
               <p className="text-gray-900">{formatDate(patient.updatedAt)}</p>
             </div>
+          </div>
+        </div>
+
+        {/* Tabs Navigation */}
+        <div className="border-t border-gray-200 pt-6">
+          <div className="border-b border-gray-200">
+            <nav className="-mb-px flex space-x-8">
+              <button
+                onClick={() => setActiveTab('info')}
+                className={`py-4 px-1 border-b-2 font-medium text-sm ${
+                  activeTab === 'info'
+                    ? 'border-blue-500 text-blue-600'
+                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                }`}
+              >
+                Patient Info
+              </button>
+              <button
+                onClick={() => setActiveTab('photos')}
+                className={`py-4 px-1 border-b-2 font-medium text-sm ${
+                  activeTab === 'photos'
+                    ? 'border-blue-500 text-blue-600'
+                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                }`}
+              >
+                📸 Clinical Photos
+              </button>
+              <button
+                onClick={() => setActiveTab('radiology')}
+                className={`py-4 px-1 border-b-2 font-medium text-sm ${
+                  activeTab === 'radiology'
+                    ? 'border-blue-500 text-blue-600'
+                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                }`}
+              >
+                🏥 Radiology
+              </button>
+              <button
+                onClick={() => setActiveTab('pathology')}
+                className={`py-4 px-1 border-b-2 font-medium text-sm ${
+                  activeTab === 'pathology'
+                    ? 'border-blue-500 text-blue-600'
+                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                }`}
+              >
+                🔬 Pathology
+              </button>
+            </nav>
+          </div>
+
+          {/* Tab Content */}
+          <div className="mt-6">
+            {activeTab === 'info' && (
+              <div className="text-sm text-gray-600 bg-blue-50 p-4 rounded-lg">
+                <p>ℹ️ All patient information is displayed above. Use the tabs to view clinical photos, radiology images, and pathology reports for this patient.</p>
+              </div>
+            )}
+            {activeTab === 'photos' && <ClinicalPhotosTab patientId={patient.id} patientName={patient.name} />}
+            {activeTab === 'radiology' && <RadiologyImagesTab patientId={patient.id} patientName={patient.name} />}
+            {activeTab === 'pathology' && <PathologyReportsTab patientId={patient.id} patientName={patient.name} />}
           </div>
         </div>
       </div>

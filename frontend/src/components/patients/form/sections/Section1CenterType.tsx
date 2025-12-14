@@ -27,6 +27,14 @@ export const Section1CenterType: React.FC<Section1Props> = ({
   errors,
   updateFormData,
 }) => {
+  // Auto-generate input date on mount
+  React.useEffect(() => {
+    if (!formData.inputDate) {
+      const today = new Date().toISOString().split('T')[0];
+      updateFormData('inputDate', today);
+    }
+  }, [formData.inputDate, updateFormData]);
+
   return (
     <div className="p-8">
       <h2 className="text-2xl font-bold mb-2">Section 1: Center & Pathology Type</h2>
@@ -57,6 +65,51 @@ export const Section1CenterType: React.FC<Section1Props> = ({
           {errors.centerId && (
             <p className="mt-1 text-sm text-red-500">{errors.centerId}</p>
           )}
+        </div>
+
+        {/* Consultant and Resident Names */}
+        <div className="grid grid-cols-2 gap-6">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Consultant Name (Nama Sub.Sp/CF)
+            </label>
+            <input
+              type="text"
+              value={formData.consultantName || ''}
+              onChange={(e) => updateFormData('consultantName', e.target.value)}
+              placeholder="Dr. Specialist Name"
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Resident Name (Nama PPDS)
+            </label>
+            <input
+              type="text"
+              value={formData.residentName || ''}
+              onChange={(e) => updateFormData('residentName', e.target.value)}
+              placeholder="Dr. Resident Name"
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+        </div>
+
+        {/* Input Date (Auto-generated, Read-only) */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Data Entry Date
+          </label>
+          <input
+            type="date"
+            value={formData.inputDate || ''}
+            readOnly
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-gray-100 cursor-not-allowed"
+          />
+          <p className="mt-1 text-sm text-gray-500">
+            Auto-generated date when this form was created
+          </p>
         </div>
 
         {/* Pathology Type Selection */}

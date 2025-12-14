@@ -1,9 +1,10 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
 import { Layout } from '@/components/layout/Layout';
-import researchService from '@/services/research.service';
+import researchRequestsService from '@/services/research-requests.service';
 
 interface DataRequest {
   id: string;
@@ -19,24 +20,14 @@ interface DataRequest {
 }
 
 export default function ResearchRequestsPage() {
+  const router = useRouter();
   const { user, isAuthenticated, isLoading } = useAuth();
   const [requests, setRequests] = useState<DataRequest[]>([]);
   const [filteredRequests, setFilteredRequests] = useState<DataRequest[]>([]);
   const [statusFilter, setStatusFilter] = useState<string>('');
   const [loading, setLoading] = useState(true);
-  const [showNewRequestModal, setShowNewRequestModal] = useState(false);
   const [showDetailsModal, setShowDetailsModal] = useState(false);
   const [selectedRequest, setSelectedRequest] = useState<DataRequest | null>(null);
-  const [isEditing, setIsEditing] = useState(false);
-
-  const [formData, setFormData] = useState({
-    title: '',
-    purpose: '',
-    dataType: 'Aggregate' as 'Aggregate' | 'Anonymized' | 'Identified',
-    justification: '',
-    datasetDescription: '',
-    timeline: '',
-  });
 
   useEffect(() => {
     if (!isLoading && !isAuthenticated) {
@@ -60,20 +51,20 @@ export default function ResearchRequestsPage() {
   const fetchRequests = async () => {
     try {
       setLoading(true);
-      const apiRequests = await researchService.getResearchRequests();
+      const apiRequests = await researchRequestsService.findAll();
 
       // Map API response to DataRequest format
       const mappedRequests: DataRequest[] = apiRequests.map((req) => ({
-        id: req.id,
+        id: req.requestNumber || req.id,
         title: req.title,
-        requestedDate: new Date(req.submittedAt).toISOString().split('T')[0],
+        requestedDate: req.submittedAt ? new Date(req.submittedAt).toISOString().split('T')[0] : new Date(req.createdAt).toISOString().split('T')[0],
         status: mapStatus(req.status),
         dataType: 'Anonymized' as 'Aggregate' | 'Anonymized' | 'Identified',
-        purpose: req.objectives,
-        justification: req.description,
-        datasetDescription: req.dataRequested,
-        timeline: `${req.duration} months`,
-        reviewerNotes: undefined,
+        purpose: req.objectives || '',
+        justification: req.researchAbstract || '',
+        datasetDescription: Object.keys(req.requestedDataFields || {}).filter((k: string) => (req.requestedDataFields as any)[k]?.selected).join(', '),
+        timeline: `${req.accessDurationMonths || 0} months`,
+        reviewerNotes: req.adminNotes,
       }));
 
       setRequests(mappedRequests);
@@ -87,12 +78,18 @@ export default function ResearchRequestsPage() {
 
   const mapStatus = (apiStatus: string): 'Draft' | 'Submitted' | 'Under Review' | 'Approved' | 'Rejected' | 'In Progress' | 'Completed' => {
     const statusMap: Record<string, 'Draft' | 'Submitted' | 'Under Review' | 'Approved' | 'Rejected' | 'In Progress' | 'Completed'> = {
-      'PENDING_REVIEW': 'Under Review',
       'DRAFT': 'Draft',
+      'SUBMITTED': 'Submitted',
+      'PENDING_REVIEW': 'Under Review',
+      'UNDER_REVIEW': 'Under Review',
+      'NEED_MORE_INFO': 'Under Review',
       'APPROVED': 'Approved',
+      'APPROVED_WITH_CONDITIONS': 'Approved',
       'REJECTED': 'Rejected',
-      'IN_PROGRESS': 'In Progress',
+      'DATA_READY': 'Approved',
+      'ACTIVE': 'In Progress',
       'COMPLETED': 'Completed',
+      'EXPIRED': 'Completed',
     };
     return statusMap[apiStatus] || 'Submitted';
   };
@@ -120,66 +117,7 @@ export default function ResearchRequestsPage() {
   };
 
   const handleNewRequest = () => {
-    setFormData({
-      title: '',
-      purpose: '',
-      dataType: 'Aggregate',
-      justification: '',
-      datasetDescription: '',
-      timeline: '',
-    });
-    setIsEditing(false);
-    setShowNewRequestModal(true);
-  };
-
-  const handleEditRequest = (request: DataRequest) => {
-    if (request.status !== 'Draft') {
-      alert('Hanya permintaan dengan status Draft yang dapat diedit');
-      return;
-    }
-    setFormData({
-      title: request.title,
-      purpose: request.purpose,
-      dataType: request.dataType,
-      justification: request.justification,
-      datasetDescription: request.datasetDescription,
-      timeline: request.timeline,
-    });
-    setSelectedRequest(request);
-    setIsEditing(true);
-    setShowNewRequestModal(true);
-  };
-
-  const handleSubmitRequest = () => {
-    // Validation
-    if (!formData.title || !formData.purpose || !formData.justification ||
-        !formData.datasetDescription || !formData.timeline) {
-      alert('Mohon lengkapi semua field yang diperlukan');
-      return;
-    }
-
-    if (isEditing && selectedRequest) {
-      // Update existing request
-      setRequests(prev => prev.map(r =>
-        r.id === selectedRequest.id
-          ? { ...r, ...formData, status: 'Draft' as const }
-          : r
-      ));
-      alert('Permintaan berhasil diperbarui');
-    } else {
-      // Create new request
-      const newRequest: DataRequest = {
-        id: `REQ-2025-${String(requests.length + 1).padStart(3, '0')}`,
-        ...formData,
-        requestedDate: new Date().toISOString().split('T')[0],
-        status: 'Draft',
-      };
-      setRequests(prev => [newRequest, ...prev]);
-      alert('Permintaan baru berhasil dibuat sebagai Draft');
-    }
-
-    setShowNewRequestModal(false);
-    setSelectedRequest(null);
+    router.push('/research/requests/new');
   };
 
   const handleViewDetails = (request: DataRequest) => {
@@ -407,20 +345,12 @@ export default function ResearchRequestsPage() {
                         Detail
                       </button>
                       {request.status === 'Draft' && (
-                        <>
-                          <button
-                            onClick={() => handleEditRequest(request)}
-                            className="text-green-600 hover:text-green-900 font-medium"
-                          >
-                            Edit
-                          </button>
-                          <button
-                            onClick={() => handleSubmitForReview(request.id)}
-                            className="text-purple-600 hover:text-purple-900 font-medium"
-                          >
-                            Submit
-                          </button>
-                        </>
+                        <button
+                          onClick={() => handleSubmitForReview(request.id)}
+                          className="text-purple-600 hover:text-purple-900 font-medium"
+                        >
+                          Submit
+                        </button>
                       )}
                       {(request.status === 'Draft' || request.status === 'Submitted') && (
                         <button
@@ -455,126 +385,6 @@ export default function ResearchRequestsPage() {
           </div>
         )}
       </div>
-
-      {/* New/Edit Request Modal */}
-      {showNewRequestModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-            <div className="p-6">
-              <div className="flex justify-between items-center mb-6">
-                <h2 className="text-xl font-bold text-gray-900">
-                  {isEditing ? 'Edit Permintaan' : 'Permintaan Data Baru'}
-                </h2>
-                <button
-                  onClick={() => setShowNewRequestModal(false)}
-                  className="text-gray-400 hover:text-gray-600"
-                >
-                  <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                  </svg>
-                </button>
-              </div>
-
-              <div className="space-y-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Judul Penelitian *
-                  </label>
-                  <input
-                    type="text"
-                    value={formData.title}
-                    onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
-                    placeholder="Masukkan judul penelitian"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Tujuan Penelitian *
-                  </label>
-                  <textarea
-                    value={formData.purpose}
-                    onChange={(e) => setFormData({ ...formData, purpose: e.target.value })}
-                    rows={3}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
-                    placeholder="Jelaskan tujuan penelitian"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Tipe Data *
-                  </label>
-                  <select
-                    value={formData.dataType}
-                    onChange={(e) => setFormData({ ...formData, dataType: e.target.value as any })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
-                  >
-                    <option value="Aggregate">Aggregate - Data statistik agregat</option>
-                    <option value="Anonymized">Anonymized - Data individual tanpa identitas</option>
-                    <option value="Identified">Identified - Data dengan identitas (perlu justifikasi kuat)</option>
-                  </select>
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Justifikasi *
-                  </label>
-                  <textarea
-                    value={formData.justification}
-                    onChange={(e) => setFormData({ ...formData, justification: e.target.value })}
-                    rows={3}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
-                    placeholder="Jelaskan mengapa data ini diperlukan"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Deskripsi Dataset *
-                  </label>
-                  <textarea
-                    value={formData.datasetDescription}
-                    onChange={(e) => setFormData({ ...formData, datasetDescription: e.target.value })}
-                    rows={3}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
-                    placeholder="Jelaskan data apa saja yang dibutuhkan"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Timeline *
-                  </label>
-                  <input
-                    type="text"
-                    value={formData.timeline}
-                    onChange={(e) => setFormData({ ...formData, timeline: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
-                    placeholder="Contoh: 6 bulan (November 2025 - April 2026)"
-                  />
-                </div>
-              </div>
-
-              <div className="flex justify-end space-x-3 mt-6">
-                <button
-                  onClick={() => setShowNewRequestModal(false)}
-                  className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 font-medium"
-                >
-                  Batal
-                </button>
-                <button
-                  onClick={handleSubmitRequest}
-                  className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 font-medium"
-                >
-                  {isEditing ? 'Simpan Perubahan' : 'Buat Permintaan'}
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
 
       {/* Details Modal */}
       {showDetailsModal && selectedRequest && (

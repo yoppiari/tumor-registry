@@ -1,7 +1,7 @@
 {
+  "/login/page": "app/login/page.js",
   "/dashboard/page": "app/dashboard/page.js",
-  "/admin/users/page": "app/admin/users/page.js",
-  "/research/requests/page": "app/research/requests/page.js",
+  "/research/page": "app/research/page.js",
   "/approvals/page": "app/approvals/page.js",
-  "/patients/new/page": "app/patients/new/page.js"
+  "/research/requests/page": "app/research/requests/page.js"
 }

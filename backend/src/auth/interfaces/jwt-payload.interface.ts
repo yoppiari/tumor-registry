@@ -3,6 +3,7 @@ export interface JwtPayload {
   email: string;
   role: string;
   centerId?: string;
+  permissions?: string[];
   iat?: number;
   exp?: number;
 }

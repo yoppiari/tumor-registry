@@ -3,6 +3,9 @@
 import { useEffect, useState } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { Layout } from '@/components/layout/Layout';
+import { usersService, centersService } from '@/services';
+import type { User as ApiUser } from '@/services/users.service';
+import type { Center as ApiCenter } from '@/services/centers.service';
 
 interface User {
   id: string;
@@ -73,112 +76,40 @@ export default function AdminUsersPage() {
   const fetchUsers = async () => {
     try {
       setLoading(true);
-      // Mock data - replace with actual API call
-      const mockUsers: User[] = [
-        {
-          id: '1',
-          name: 'Dr. Ahmad Sutanto',
-          email: 'ahmad.sutanto@hospital.id',
-          role: 'Registrar',
-          center: 'RS Cipto Mangunkusumo',
-          centerId: '1',
-          status: 'active',
-          lastLogin: '2025-11-22 14:30',
-        },
-        {
-          id: '2',
-          name: 'Siti Nurhaliza',
-          email: 'siti.n@hospital.id',
-          role: 'Data Entry',
-          center: 'RS Kanker Dharmais',
-          centerId: '2',
-          status: 'active',
-          lastLogin: '2025-11-22 13:15',
-        },
-        {
-          id: '3',
-          name: 'Budi Santoso',
-          email: 'budi.s@hospital.id',
-          role: 'Viewer',
-          center: 'RS Sardjito',
-          centerId: '3',
-          status: 'active',
-          lastLogin: '2025-11-21 16:45',
-        },
-        {
-          id: '4',
-          name: 'Ratna Dewi',
-          email: 'ratna.d@hospital.id',
-          role: 'Admin',
-          center: 'RS Hasan Sadikin',
-          centerId: '4',
-          status: 'inactive',
-          lastLogin: '2025-11-15 10:20',
-        },
-        {
-          id: '5',
-          name: 'Eko Prasetyo',
-          email: 'eko.p@hospital.id',
-          role: 'Registrar',
-          center: 'RS Soetomo',
-          centerId: '5',
-          status: 'active',
-          lastLogin: '2025-11-22 09:00',
-        },
-        {
-          id: '6',
-          name: 'Maya Sari',
-          email: 'maya.s@hospital.id',
-          role: 'Data Entry',
-          center: 'RS Cipto Mangunkusumo',
-          centerId: '1',
-          status: 'active',
-          lastLogin: '2025-11-22 11:20',
-        },
-        {
-          id: '7',
-          name: 'Joko Widodo',
-          email: 'joko.w@hospital.id',
-          role: 'Viewer',
-          center: 'RS Kanker Dharmais',
-          centerId: '2',
-          status: 'active',
-          lastLogin: '2025-11-22 08:45',
-        },
-        {
-          id: '8',
-          name: 'Dewi Lestari',
-          email: 'dewi.l@hospital.id',
-          role: 'Registrar',
-          center: 'RS Sardjito',
-          centerId: '3',
-          status: 'inactive',
-          lastLogin: '2025-11-18 14:30',
-        },
-        {
-          id: '9',
-          name: 'Hendra Gunawan',
-          email: 'hendra.g@hospital.id',
-          role: 'Admin',
-          center: 'RS Hasan Sadikin',
-          centerId: '4',
-          status: 'active',
-          lastLogin: '2025-11-22 10:15',
-        },
-        {
-          id: '10',
-          name: 'Rina Kusuma',
-          email: 'rina.k@hospital.id',
-          role: 'Data Entry',
-          center: 'RS Soetomo',
-          centerId: '5',
-          status: 'active',
-          lastLogin: '2025-11-21 15:00',
-        },
-      ];
-      setUsers(mockUsers);
+
+      // Fetch users from API (backend returns all users by default)
+      const apiUsers = await usersService.fetchUsers();
+
+      // Transform API users to UI format
+      const transformedUsers: User[] = apiUsers.map((apiUser) => {
+        // Get primary role (first active role)
+        const primaryRole = apiUser.userRoles.find((ur) => ur.isActive);
+        const roleName = primaryRole?.role.name || 'No Role';
+
+        return {
+          id: apiUser.id,
+          name: apiUser.name,
+          email: apiUser.email,
+          role: roleName,
+          center: apiUser.center?.name || '-',
+          centerId: apiUser.centerId || '',
+          status: apiUser.isActive ? 'active' : 'inactive',
+          lastLogin: apiUser.lastLoginAt
+            ? new Date(apiUser.lastLoginAt).toLocaleString('id-ID', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+              })
+            : '-',
+        };
+      });
+
+      setUsers(transformedUsers);
     } catch (error) {
       console.error('Error fetching users:', error);
+      alert('Gagal memuat data pengguna. Silakan coba lagi.');
     } finally {
       setLoading(false);
     }
@@ -186,16 +117,16 @@ export default function AdminUsersPage() {
 
   const fetchCenters = async () => {
     try {
-      // Mock data - replace with actual API call
-      const mockCenters: Center[] = [
-        { id: '1', name: 'RS Cipto Mangunkusumo' },
-        { id: '2', name: 'RS Kanker Dharmais' },
-        { id: '3', name: 'RS Sardjito' },
-        { id: '4', name: 'RS Hasan Sadikin' },
-        { id: '5', name: 'RS Soetomo' },
-        { id: '6', name: 'RS Kariadi' },
-      ];
-      setCenters(mockCenters);
+      // Fetch centers from API
+      const apiCenters = await centersService.fetchCenters(true);
+
+      // Transform to UI format
+      const transformedCenters: Center[] = apiCenters.map((center) => ({
+        id: center.id,
+        name: center.name,
+      }));
+
+      setCenters(transformedCenters);
     } catch (error) {
       console.error('Error fetching centers:', error);
     }

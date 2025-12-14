@@ -823,7 +823,7 @@ current_status:
         - "Monitor system performance and stability"
         - "Address issues and optimize based on feedback"
 
-  current_work_session:
+  previous_work_session:
     date: "2025-12-12"
     focus: "Complete Wizard Implementation + Backend API Integration"
     status: "✅ 100% COMPLETED"
@@ -841,6 +841,329 @@ current_status:
       - "✅ Data transformation wizard → backend DTO"
       - "✅ Success/error handling + auto-redirect"
       - "✅ Clean production build: 0 TypeScript errors, 38 pages compiled"
+
+  previous_work_session_2:
+    date: "2025-12-14"
+    focus: "100% INAMSOS Form Compliance - Section 3 & 7 Refinement + Database Cleanup"
+    status: "✅ COMPLETED"
+    achievements:
+      section_3_100_percent:
+        - "✅ Section 3 achieved 100% INAMSOS compliance (22/22 fields)"
+        - "✅ Added 8 missing fields: cancer history, family cancer history, structured physical exam (5 sections)"
+        - "✅ Yellow-highlighted critical field: Status Lokalisata (local tumor examination)"
+        - "✅ Updated interface and UI with all INAMSOS-required fields"
+        - "✅ Validation updated to match extended field set"
+      section_7_simplification:
+        - "✅ Section 7 CPC simplified from ~40 fields to 3 EXACT INAMSOS fields"
+        - "✅ Removed over-engineered conference tracking (620 lines → 118 lines, 81% reduction)"
+        - "✅ Implemented ONLY: Tanggal, Konsultan hadir, Keputusan"
+        - "✅ User feedback: 'Jangan improvisasi!' - strict document adherence enforced"
+        - "✅ Validation updated to conditional logic (if date filled, others required)"
+      database_cleanup:
+        - "✅ Created scripts/clear-patients.ts to delete all patient data"
+        - "✅ Created scripts/verify-clean.ts to verify database cleanup"
+        - "✅ Successfully deleted 50 patients and all related records (13 tables)"
+        - "✅ Verified 0 patients remaining - database clean for fresh start"
+        - "✅ Proper foreign key constraint handling in deletion order"
+      typescript_fixes:
+        - "✅ Fixed quality/page.tsx - added staffEmail to mock data"
+        - "✅ Fixed research/page.tsx - changed cancerType to tumorType"
+        - "✅ Fixed ClinicalPhotosTab.tsx - interface mismatches (fileUrl→preview, id→preview-index)"
+      lesson_learned:
+        - "⭐ User emphasized strict INAMSOS document compliance over assumptions"
+        - "⭐ Over-engineering warning received - implement exactly as documented"
+        - "⭐ Verification and accuracy more valuable than feature additions"
+
+  previous_work_session_3:
+    date: "2025-12-14"
+    focus: "Admin UI Implementation - Center & User Management"
+    status: "✅ PARTIALLY COMPLETED - Centers API Integration Complete"
+    trigger: "User question: 'admin@inamsos.go.id ini seharusnya akun yang bisa menambah center baru, dan setting admin di center masing-masing. Benar apa tidak?'"
+    objective: "Build admin interface for SYSTEM_ADMIN to manage centers and users without needing Swagger/Postman"
+    strategy: "Create 2 admin pages: Center Management + User Management with full CRUD operations"
+    achievements:
+      centers_api:
+        - "✅ Created centers.service.ts API service layer"
+        - "✅ Created admin/centers/page.tsx with full CRUD UI"
+        - "✅ Implemented centers table with sorting and filtering"
+        - "✅ Added Create/Edit/Delete center modals"
+        - "✅ Status toggle (activate/deactivate)"
+        - "✅ Real-time API integration working"
+      users_api:
+        - "✅ Created users.service.ts API service layer"
+        - "✅ Started admin/users/page.tsx implementation"
+        - "⚠️ Discovered critical JWT permissions bug"
+
+  current_work_session:
+    date: "2025-12-14"
+    focus: "Critical JWT Permissions Bug Fix - User Management"
+    status: "✅ COMPLETED"
+    trigger: "User reported: 'kenapa ada pop up gagal memuat data di http://localhost:3000/admin/users ,perbaiki'"
+    root_cause: "JWT strategy not passing permissions from token to request.user"
+
+    backend_analysis:
+      system_admin_permissions:
+        - "✅ CENTERS_CREATE - Create new centers"
+        - "✅ CENTERS_UPDATE - Update center details"
+        - "✅ CENTERS_DELETE - Delete centers"
+        - "✅ USERS_CREATE - Create new users"
+        - "✅ USERS_UPDATE - Update users & assign roles"
+        - "✅ USERS_DELETE - Delete users"
+        - "✅ All permissions granted to SYSTEM_ADMIN role"
+      existing_api_endpoints:
+        centers:
+          - "POST /api/v1/centers - Create center"
+          - "PUT /api/v1/centers/:id - Update center"
+          - "DELETE /api/v1/centers/:id - Delete center"
+          - "GET /api/v1/centers - List all centers"
+          - "GET /api/v1/centers/:id/users - Get center users"
+        users:
+          - "POST /api/v1/users - Create user with center & role"
+          - "PATCH /api/v1/users/:id - Update user"
+          - "PATCH /api/v1/users/:id/role - Update user role"
+          - "DELETE /api/v1/users/:id - Soft delete user"
+          - "GET /api/v1/users - List all users"
+          - "GET /api/v1/users/center/:centerId - Get users by center"
+      current_gap:
+        - "❌ NO admin UI in frontend - must use Swagger/Postman"
+        - "❌ No center management page"
+        - "❌ No user management page"
+        - "❌ No admin navigation menu"
+
+    problem_discovery:
+      symptom: "Error popup 'Gagal memuat data pengguna' on /admin/users page"
+      api_error: "400 Bad Request - Insufficient permissions. Required: [USERS_READ], User has: [none]"
+      jwt_token_analysis: "JWT token contained 62 permissions in payload"
+      issue: "Permissions in JWT token not being passed to request.user object"
+
+    debugging_process:
+      step_1:
+        action: "Checked JWT strategy file at /backend/src/auth/strategies/jwt.strategy.ts"
+        finding: "File had permissions fix applied earlier"
+        conclusion: "This wasn't the active JWT strategy file"
+      step_2:
+        action: "Searched for all jwt.strategy.ts files in backend"
+        finding: "Found TWO jwt.strategy.ts files in different locations"
+        files_found:
+          - "/backend/src/auth/strategies/jwt.strategy.ts (with fix)"
+          - "/backend/src/modules/auth/strategies/jwt.strategy.ts (ACTIVE - missing permissions)"
+      step_3:
+        action: "Examined active JWT strategy file"
+        finding: "validate() method only returning sub, userId, email, role - NO permissions"
+        root_cause: "ACTIVE strategy file was missing permissions field in return value"
+
+    fix_applied:
+      file: "/backend/src/modules/auth/strategies/jwt.strategy.ts"
+      change_made: "Updated validate() method to include permissions in return object"
+      code_change:
+        before: |
+          async validate(payload: any) {
+            return {
+              userId: payload.sub,
+              email: payload.email,
+              role: payload.role,
+            };
+          }
+        after: |
+          async validate(payload: any) {
+            return {
+              sub: payload.sub,
+              userId: payload.sub,
+              email: payload.email,
+              role: payload.role,
+              centerId: payload.centerId,
+              permissions: payload.permissions || [],
+            };
+          }
+      impact: "PermissionsGuard now receives permissions array from request.user"
+
+    verification:
+      api_test:
+        - "✅ Tested /api/v1/users endpoint with fresh JWT token"
+        - "✅ API returned 200 OK with user data"
+        - "✅ Only 1 user (admin@inamsos.go.id) in database"
+      ui_test:
+        - "✅ Logged in to get fresh JWT with permissions"
+        - "✅ Navigated to /admin/users page"
+        - "✅ No error popup"
+        - "✅ Table displayed: 1 user (System Administrator)"
+        - "✅ Page shows: 'Menampilkan 1 - 1 dari 1 pengguna'"
+      console_check:
+        - "✅ No console errors"
+        - "✅ Only minor form field warning (cosmetic)"
+
+    achievements:
+      bug_fix:
+        - "✅ Identified root cause: duplicate JWT strategy files"
+        - "✅ Fixed active JWT strategy to pass permissions"
+        - "✅ Backend restarted with corrected code"
+        - "✅ Users API endpoint working with proper authorization"
+        - "✅ Admin users page displaying real data from database"
+        - "✅ Only admin@inamsos.go.id showing (as expected after user cleanup)"
+      database_cleanup:
+        - "✅ All test users deleted successfully"
+        - "✅ Only 1 system admin user remains"
+        - "✅ Database ready for production user creation"
+      frontend_integration:
+        - "✅ users.service.ts integrated with admin page"
+        - "✅ Real-time API data loading"
+        - "✅ Error handling working correctly"
+        - "✅ No mock data - 100% real API integration"
+
+    files_modified:
+      - path: "/backend/src/modules/auth/strategies/jwt.strategy.ts"
+        lines_changed: 7
+        description: "Added permissions to JWT validate() return value"
+      - path: "/frontend/src/app/admin/users/page.tsx"
+        lines_changed: 50
+        description: "Replaced mock data with real API calls (previous session)"
+      - path: "/frontend/src/services/users.service.ts"
+        lines_changed: 140
+        description: "Created users API service layer (previous session)"
+
+    technical_lessons:
+      - "⚠️ Multiple JWT strategy files can exist - verify which one is active"
+      - "⚠️ JWT payload may contain data that strategy doesn't pass to request.user"
+      - "⚠️ PermissionsGuard relies on request.user.permissions being populated"
+      - "⚠️ Bun may cache compiled code - full restart required for strategy changes"
+      - "✅ Always test API directly with curl/Postman before blaming frontend"
+      - "✅ Check which module is being imported in app.module.ts to find active strategy"
+
+    time_spent:
+      debugging: "1.5 hours"
+      fixing: "0.5 hours"
+      testing: "0.5 hours"
+      total: "2.5 hours"
+
+    next_steps:
+      - "✅ Admin users page fully functional"
+      - "✅ Ready to test user creation workflow"
+      - "✅ Ready to test center creation workflow"
+      - "🔜 Continue admin UI implementation (if needed)"
+      - "🔜 User acceptance testing"
+
+    implementation_plan:
+      phase_1_center_management:
+        description: "Build Center Management UI"
+        estimated_time: "3 hours"
+        features:
+          - "List all 21+ centers in table"
+          - "Create new center modal with form (name, code, province, regency, address)"
+          - "Edit center inline or modal"
+          - "Activate/deactivate centers"
+          - "Delete centers (with confirmation)"
+          - "View center users count"
+          - "Search and filter centers"
+        files_to_create:
+          - path: "frontend/src/app/admin/centers/page.tsx"
+            lines: 400
+            description: "Center management page component"
+          - path: "frontend/src/services/centers.service.ts"
+            lines: 150
+            description: "Centers API service layer"
+        ui_components:
+          - "Centers table with sortable columns"
+          - "Create Center modal with validation"
+          - "Edit Center modal"
+          - "Confirmation dialog for delete"
+          - "Status badges (Active/Inactive)"
+          - "Action buttons (Edit/Delete/Activate/Deactivate)"
+
+      phase_2_user_management:
+        description: "Build User Management UI"
+        estimated_time: "4 hours"
+        features:
+          - "List all users in table with role and center"
+          - "Create new user modal (email, name, password, center selector, role selector)"
+          - "Edit user details"
+          - "Change user role"
+          - "Activate/deactivate users"
+          - "Delete users (soft delete with confirmation)"
+          - "Filter users by center"
+          - "Filter users by role"
+          - "Search users by name/email"
+        files_to_create:
+          - path: "frontend/src/app/admin/users/page.tsx"
+            lines: 500
+            description: "User management page component"
+          - path: "frontend/src/services/users.service.ts"
+            lines: 200
+            description: "Users API service layer"
+          - path: "frontend/src/services/roles.service.ts"
+            lines: 100
+            description: "Roles API service layer"
+        ui_components:
+          - "Users table with sortable columns"
+          - "Create User modal with form validation"
+          - "Edit User modal"
+          - "Change Role modal with role dropdown"
+          - "Confirmation dialog for delete"
+          - "Status badges (Active/Inactive)"
+          - "Role badges (color-coded by level)"
+          - "Center filter dropdown"
+          - "Role filter dropdown"
+          - "Action buttons (Edit/Change Role/Delete/Activate/Deactivate)"
+
+      phase_3_navigation:
+        description: "Add Admin Menu to Layout"
+        estimated_time: "1 hour"
+        features:
+          - "Add 'Administration' menu item (only visible to SYSTEM_ADMIN)"
+          - "Submenu: Centers, Users"
+          - "Role-based menu rendering"
+          - "Active route highlighting"
+        files_to_modify:
+          - path: "frontend/src/components/layout/Layout.tsx"
+            action: "Add admin menu with role check"
+            lines: "+30 lines"
+
+    implementation_checklist:
+      day_1_centers:
+        - "[ ] Create centers.service.ts API service"
+        - "[ ] Create admin/centers/page.tsx"
+        - "[ ] Implement centers table with data loading"
+        - "[ ] Add Create Center modal"
+        - "[ ] Add Edit Center functionality"
+        - "[ ] Add Delete Center with confirmation"
+        - "[ ] Add Activate/Deactivate toggle"
+        - "[ ] Test all CRUD operations"
+      day_2_users:
+        - "[ ] Create users.service.ts API service"
+        - "[ ] Create roles.service.ts API service"
+        - "[ ] Create admin/users/page.tsx"
+        - "[ ] Implement users table with data loading"
+        - "[ ] Add Create User modal with center/role selectors"
+        - "[ ] Add Edit User functionality"
+        - "[ ] Add Change Role modal"
+        - "[ ] Add Delete User with confirmation"
+        - "[ ] Test all user management operations"
+      day_3_navigation:
+        - "[ ] Add admin menu to Layout.tsx"
+        - "[ ] Implement role-based rendering (SYSTEM_ADMIN only)"
+        - "[ ] Test navigation from dashboard"
+        - "[ ] Test that non-admin users cannot access admin pages"
+        - "[ ] End-to-end testing of complete admin workflow"
+
+    expected_outcomes:
+      - "✅ SYSTEM_ADMIN can manage all 21+ centers via UI"
+      - "✅ SYSTEM_ADMIN can create users and assign them to centers"
+      - "✅ SYSTEM_ADMIN can assign roles (CENTER_ADMIN, MEDICAL_OFFICER, etc.)"
+      - "✅ No need to use Swagger/Postman for admin tasks"
+      - "✅ Complete admin workflow: Create center → Create admin user for that center"
+      - "✅ Professional admin UI with tables, modals, confirmations"
+
+    total_estimated_effort:
+      phase_1_centers: "3 hours"
+      phase_2_users: "4 hours"
+      phase_3_navigation: "1 hour"
+      total: "8 hours (1 day)"
+
+    progress_tracker:
+      centers_page: "pending"
+      users_page: "pending"
+      admin_navigation: "pending"
+      total_completion: "0%"
+      target_completion: "100%"
 
     wizard_sections_status:
       section_1: "✅ COMPLETE - Center & Pathology Type"
@@ -905,11 +1228,11 @@ current_status:
         lines: 400
         status: "completed"
 
-  last_update: "2025-12-12 - 🎉 COMPLETE END-TO-END SYSTEM! | ✅ All 10 wizard sections (5,700 lines) | ✅ Backend API integration complete (400 lines) | ✅ Data transformation working | ✅ Success/error handling | 🎯 Build: 0 TypeScript errors | 🚀 Status: READY FOR E2E TESTING & DEPLOYMENT"
-  next_priority: "End-to-End Testing + User Acceptance Testing"
-  next_agent: "dev / qa"
-  next_action: "Start backend server, test complete wizard submission flow, verify data persistence in database, test all error scenarios"
-  recommended_approach: "E2E Testing (1 day) → Integration Testing (0.5 day) → UAT (2 days) → Performance Testing → Production Deployment"
+  last_update: "2025-12-14 - 🐛 CRITICAL BUG FIX! | ✅ JWT permissions bug resolved | ✅ Admin users page working with real API | ✅ Only admin@inamsos.go.id in database | ✅ Users API fully integrated | 🔧 Fixed duplicate JWT strategy issue | 🚀 Status: Admin UI functional, ready for user/center management testing"
+  next_priority: "Admin UI Testing + User Creation Workflow"
+  next_agent: "dev"
+  next_action: "Test user creation via admin UI, test center creation workflow, verify role assignment, test permissions enforcement"
+  recommended_approach: "Admin UI Testing (0.5 day) → User Acceptance Testing (2 days) → Production Deployment Preparation"
 
 musculoskeletal_requirements:
   form_structure:

@@ -3,8 +3,9 @@
 import { useEffect, useState } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { Layout } from '@/components/layout/Layout';
+import centersService, { Center } from '@/services/centers.service';
 
-interface Center {
+interface CenterUI {
   id: string;
   name: string;
   address: string;
@@ -15,13 +16,16 @@ interface Center {
   activeUsers: number;
   totalPatients: number;
   status: 'active' | 'inactive';
+  code: string;
+  regency?: string | null;
 }
 
 export default function AdminCentersPage() {
   const { user, isAuthenticated, isLoading } = useAuth();
-  const [centers, setCenters] = useState<Center[]>([]);
-  const [filteredCenters, setFilteredCenters] = useState<Center[]>([]);
+  const [centers, setCenters] = useState<CenterUI[]>([]);
+  const [filteredCenters, setFilteredCenters] = useState<CenterUI[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   // Filters
   const [searchTerm, setSearchTerm] = useState('');
@@ -32,11 +36,12 @@ export default function AdminCentersPage() {
   const [showAddModal, setShowAddModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const [showDetailsModal, setShowDetailsModal] = useState(false);
-  const [selectedCenter, setSelectedCenter] = useState<Center | null>(null);
+  const [selectedCenter, setSelectedCenter] = useState<CenterUI | null>(null);
 
   // Form data
   const [formData, setFormData] = useState({
     name: '',
+    code: '',
     address: '',
     city: '',
     province: '',
@@ -62,6 +67,9 @@ export default function AdminCentersPage() {
     'Sumatera Utara',
     'Sumatera Barat',
     'Sumatera Selatan',
+    'Riau',
+    'Aceh',
+    'Kalimantan Selatan',
     'Kalimantan Timur',
     'Sulawesi Selatan',
     'Bali',
@@ -75,6 +83,7 @@ export default function AdminCentersPage() {
 
     if (isAuthenticated) {
       fetchCenters();
+      fetchStatistics();
     }
   }, [isAuthenticated, isLoading]);
 
@@ -86,110 +95,52 @@ export default function AdminCentersPage() {
   const fetchCenters = async () => {
     try {
       setLoading(true);
-      // Mock data - replace with actual API call
-      const mockCenters: Center[] = [
-        {
-          id: '1',
-          name: 'RS Cipto Mangunkusumo',
-          address: 'Jl. Diponegoro No. 71',
-          city: 'Jakarta Pusat',
-          province: 'DKI Jakarta',
-          phone: '021-3917171',
-          email: 'info@rscm.co.id',
-          activeUsers: 12,
-          totalPatients: 345,
-          status: 'active',
-        },
-        {
-          id: '2',
-          name: 'RS Kanker Dharmais',
-          address: 'Jl. Letjen S. Parman Kav. 84-86',
-          city: 'Jakarta Barat',
-          province: 'DKI Jakarta',
-          phone: '021-5681570',
-          email: 'info@dharmais.co.id',
-          activeUsers: 8,
-          totalPatients: 289,
-          status: 'active',
-        },
-        {
-          id: '3',
-          name: 'RS Sardjito',
-          address: 'Jl. Kesehatan No. 1',
-          city: 'Yogyakarta',
-          province: 'DI Yogyakarta',
-          phone: '0274-587333',
-          email: 'info@sardjito.co.id',
-          activeUsers: 6,
-          totalPatients: 178,
-          status: 'active',
-        },
-        {
-          id: '4',
-          name: 'RS Hasan Sadikin',
-          address: 'Jl. Pasteur No. 38',
-          city: 'Bandung',
-          province: 'Jawa Barat',
-          phone: '022-2034953',
-          email: 'info@rshs.or.id',
-          activeUsers: 7,
-          totalPatients: 201,
-          status: 'active',
-        },
-        {
-          id: '5',
-          name: 'RS Soetomo',
-          address: 'Jl. Mayjend. Prof. Dr. Moestopo 6-8',
-          city: 'Surabaya',
-          province: 'Jawa Timur',
-          phone: '031-5501078',
-          email: 'info@rssoetomo.id',
-          activeUsers: 9,
-          totalPatients: 267,
-          status: 'active',
-        },
-        {
-          id: '6',
-          name: 'RS Kariadi',
-          address: 'Jl. Dr. Sutomo No. 16',
-          city: 'Semarang',
-          province: 'Jawa Tengah',
-          phone: '024-8413476',
-          email: 'info@rskariadi.co.id',
-          activeUsers: 5,
-          totalPatients: 156,
-          status: 'active',
-        },
-        {
-          id: '7',
-          name: 'RS Fatmawati',
-          address: 'Jl. RS Fatmawati Raya',
-          city: 'Jakarta Selatan',
-          province: 'DKI Jakarta',
-          phone: '021-7501524',
-          email: 'info@rsfatmawati.co.id',
-          activeUsers: 4,
-          totalPatients: 98,
-          status: 'inactive',
-        },
-        {
-          id: '8',
-          name: 'RS Sanglah',
-          address: 'Jl. Diponegoro',
-          city: 'Denpasar',
-          province: 'Bali',
-          phone: '0361-227911',
-          email: 'info@sanglah.co.id',
-          activeUsers: 6,
-          totalPatients: 134,
-          status: 'active',
-        },
-      ];
-      setCenters(mockCenters);
-    } catch (error) {
+      setError(null);
+      const data = await centersService.fetchCenters(true); // Include inactive centers
+
+      // Transform backend data to UI format
+      const transformedCenters: CenterUI[] = data.map((center) => ({
+        id: center.id,
+        name: center.name,
+        code: center.code,
+        address: center.address || 'N/A',
+        city: center.regency || 'N/A',
+        province: center.province,
+        phone: 'N/A', // Not in backend schema yet
+        email: 'N/A', // Not in backend schema yet
+        activeUsers: center._count?.users || 0,
+        totalPatients: 0, // Will need to be calculated from patients count in future
+        status: center.isActive ? 'active' : 'inactive',
+        regency: center.regency,
+      }));
+
+      setCenters(transformedCenters);
+    } catch (error: any) {
       console.error('Error fetching centers:', error);
+      setError(error.response?.data?.message || 'Gagal memuat data pusat');
+      alert('Gagal memuat data pusat. Silakan coba lagi.');
     } finally {
       setLoading(false);
+    }
+  };
+
+  const fetchStatistics = async () => {
+    try {
+      const stats = await centersService.fetchStatistics();
+
+      // Note: totalPatients and totalUsers will need to be calculated differently
+      // For now, using centerUserStats for user count
+      const totalUsers = stats.centerUserStats.reduce((sum, center) => sum + center.userCount, 0);
+
+      setStats({
+        totalCenters: stats.totalCenters,
+        activeCenters: stats.activeCenters,
+        totalPatients: 0, // TODO: Calculate from patients
+        totalUsers: totalUsers,
+      });
+    } catch (error) {
+      console.error('Error fetching statistics:', error);
+      // Don't show alert for stats error, just use local calculation
     }
   };
 
@@ -201,7 +152,8 @@ export default function AdminCentersPage() {
       filtered = filtered.filter(
         (c) =>
           c.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          c.city.toLowerCase().includes(searchTerm.toLowerCase())
+          c.city.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          c.code.toLowerCase().includes(searchTerm.toLowerCase())
       );
     }
 
@@ -234,6 +186,7 @@ export default function AdminCentersPage() {
   const handleAddCenter = () => {
     setFormData({
       name: '',
+      code: '',
       address: '',
       city: '',
       province: '',
@@ -243,10 +196,11 @@ export default function AdminCentersPage() {
     setShowAddModal(true);
   };
 
-  const handleEditCenter = (center: Center) => {
+  const handleEditCenter = (center: CenterUI) => {
     setSelectedCenter(center);
     setFormData({
       name: center.name,
+      code: center.code,
       address: center.address,
       city: center.city,
       province: center.province,
@@ -256,46 +210,82 @@ export default function AdminCentersPage() {
     setShowEditModal(true);
   };
 
-  const handleViewDetails = (center: Center) => {
+  const handleViewDetails = (center: CenterUI) => {
     setSelectedCenter(center);
     setShowDetailsModal(true);
   };
 
-  const handleToggleStatus = (centerId: string) => {
-    setCenters(
-      centers.map((c) =>
-        c.id === centerId
-          ? { ...c, status: c.status === 'active' ? 'inactive' : 'active' }
-          : c
-      )
-    );
+  const handleToggleStatus = async (centerId: string) => {
+    const center = centers.find((c) => c.id === centerId);
+    if (!center) return;
+
+    try {
+      if (center.status === 'active') {
+        await centersService.deactivateCenter(centerId);
+        alert('Pusat berhasil dinonaktifkan');
+      } else {
+        await centersService.activateCenter(centerId);
+        alert('Pusat berhasil diaktifkan');
+      }
+
+      // Refresh centers list
+      await fetchCenters();
+      await fetchStatistics();
+    } catch (error: any) {
+      console.error('Error toggling center status:', error);
+      const errorMessage = error.response?.data?.message || 'Gagal mengubah status pusat';
+      alert(errorMessage);
+    }
   };
 
-  const handleSubmitAdd = (e: React.FormEvent) => {
+  const handleSubmitAdd = async (e: React.FormEvent) => {
     e.preventDefault();
-    const newCenter: Center = {
-      id: String(centers.length + 1),
-      ...formData,
-      activeUsers: 0,
-      totalPatients: 0,
-      status: 'active',
-    };
-    setCenters([...centers, newCenter]);
-    setShowAddModal(false);
+
+    try {
+      await centersService.createCenter({
+        name: formData.name,
+        code: formData.code.toUpperCase(),
+        province: formData.province,
+        regency: formData.city || undefined,
+        address: formData.address || undefined,
+      });
+
+      alert('Pusat berhasil ditambahkan');
+      setShowAddModal(false);
+
+      // Refresh centers list
+      await fetchCenters();
+      await fetchStatistics();
+    } catch (error: any) {
+      console.error('Error creating center:', error);
+      const errorMessage = error.response?.data?.message || 'Gagal menambahkan pusat';
+      alert(errorMessage);
+    }
   };
 
-  const handleSubmitEdit = (e: React.FormEvent) => {
+  const handleSubmitEdit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!selectedCenter) return;
 
-    setCenters(
-      centers.map((c) =>
-        c.id === selectedCenter.id
-          ? { ...c, ...formData }
-          : c
-      )
-    );
-    setShowEditModal(false);
+    try {
+      await centersService.updateCenter(selectedCenter.id, {
+        name: formData.name,
+        province: formData.province,
+        regency: formData.city || undefined,
+        address: formData.address || undefined,
+      });
+
+      alert('Pusat berhasil diperbarui');
+      setShowEditModal(false);
+
+      // Refresh centers list
+      await fetchCenters();
+      await fetchStatistics();
+    } catch (error: any) {
+      console.error('Error updating center:', error);
+      const errorMessage = error.response?.data?.message || 'Gagal memperbarui pusat';
+      alert(errorMessage);
+    }
   };
 
   const getStatusColor = (status: string) => {
@@ -328,12 +318,20 @@ export default function AdminCentersPage() {
 
   return (
     <Layout>
+      {/* Error Alert */}
+      {error && (
+        <div className="mb-6 bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded-lg">
+          <p className="font-medium">Error</p>
+          <p className="text-sm">{error}</p>
+        </div>
+      )}
+
       {/* Header */}
       <div className="mb-6">
         <div className="flex justify-between items-center">
           <div>
             <h1 className="text-2xl font-bold text-gray-900">Manajemen Pusat</h1>
-            <p className="text-gray-600">Kelola pusat kanker dan fasilitas kesehatan</p>
+            <p className="text-gray-600">Kelola pusat tumor muskuloskeletal</p>
           </div>
           <button
             onClick={handleAddCenter}
@@ -412,7 +410,7 @@ export default function AdminCentersPage() {
             </label>
             <input
               type="text"
-              placeholder="Nama atau kota..."
+              placeholder="Nama, kota, atau kode..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
@@ -462,6 +460,9 @@ export default function AdminCentersPage() {
                   Nama Pusat
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Kode
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Kota
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -486,6 +487,9 @@ export default function AdminCentersPage() {
                 <tr key={center.id} className="hover:bg-gray-50">
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="text-sm font-medium text-gray-900">{center.name}</div>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <div className="text-sm text-gray-500">{center.code}</div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="text-sm text-gray-500">{center.city}</div>
@@ -527,6 +531,12 @@ export default function AdminCentersPage() {
               ))}
             </tbody>
           </table>
+
+          {filteredCenters.length === 0 && (
+            <div className="text-center py-8 text-gray-500">
+              Tidak ada data pusat yang ditemukan
+            </div>
+          )}
         </div>
       </div>
 
@@ -555,10 +565,24 @@ export default function AdminCentersPage() {
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Alamat <span className="text-red-500">*</span>
+                    Kode Pusat <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    value={formData.code}
+                    onChange={(e) =>
+                      setFormData({ ...formData, code: e.target.value.toUpperCase() })
+                    }
+                    placeholder="Contoh: RSCM"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Alamat
                   </label>
                   <textarea
-                    required
                     value={formData.address}
                     onChange={(e) =>
                       setFormData({ ...formData, address: e.target.value })
@@ -569,11 +593,10 @@ export default function AdminCentersPage() {
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Kota <span className="text-red-500">*</span>
+                    Kota/Kabupaten
                   </label>
                   <input
                     type="text"
-                    required
                     value={formData.city}
                     onChange={(e) =>
                       setFormData({ ...formData, city: e.target.value })
@@ -600,34 +623,6 @@ export default function AdminCentersPage() {
                       </option>
                     ))}
                   </select>
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Telepon <span className="text-red-500">*</span>
-                  </label>
-                  <input
-                    type="tel"
-                    required
-                    value={formData.phone}
-                    onChange={(e) =>
-                      setFormData({ ...formData, phone: e.target.value })
-                    }
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Email <span className="text-red-500">*</span>
-                  </label>
-                  <input
-                    type="email"
-                    required
-                    value={formData.email}
-                    onChange={(e) =>
-                      setFormData({ ...formData, email: e.target.value })
-                    }
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
-                  />
                 </div>
               </div>
               <div className="mt-6 flex space-x-3">
@@ -661,6 +656,18 @@ export default function AdminCentersPage() {
               <div className="space-y-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Kode Pusat
+                  </label>
+                  <input
+                    type="text"
+                    disabled
+                    value={formData.code}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg bg-gray-100 text-gray-500"
+                  />
+                  <p className="text-xs text-gray-500 mt-1">Kode pusat tidak dapat diubah</p>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
                     Nama Pusat <span className="text-red-500">*</span>
                   </label>
                   <input
@@ -675,10 +682,9 @@ export default function AdminCentersPage() {
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Alamat <span className="text-red-500">*</span>
+                    Alamat
                   </label>
                   <textarea
-                    required
                     value={formData.address}
                     onChange={(e) =>
                       setFormData({ ...formData, address: e.target.value })
@@ -689,11 +695,10 @@ export default function AdminCentersPage() {
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Kota <span className="text-red-500">*</span>
+                    Kota/Kabupaten
                   </label>
                   <input
                     type="text"
-                    required
                     value={formData.city}
                     onChange={(e) =>
                       setFormData({ ...formData, city: e.target.value })
@@ -720,34 +725,6 @@ export default function AdminCentersPage() {
                       </option>
                     ))}
                   </select>
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Telepon <span className="text-red-500">*</span>
-                  </label>
-                  <input
-                    type="tel"
-                    required
-                    value={formData.phone}
-                    onChange={(e) =>
-                      setFormData({ ...formData, phone: e.target.value })
-                    }
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Email <span className="text-red-500">*</span>
-                  </label>
-                  <input
-                    type="email"
-                    required
-                    value={formData.email}
-                    onChange={(e) =>
-                      setFormData({ ...formData, email: e.target.value })
-                    }
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
-                  />
                 </div>
               </div>
               <div className="mt-6 flex space-x-3">
@@ -779,6 +756,10 @@ export default function AdminCentersPage() {
             </h2>
             <div className="space-y-4">
               <div>
+                <label className="block text-sm font-medium text-gray-500">Kode Pusat</label>
+                <p className="text-sm text-gray-900 mt-1 font-mono">{selectedCenter.code}</p>
+              </div>
+              <div>
                 <label className="block text-sm font-medium text-gray-500">Nama Pusat</label>
                 <p className="text-sm text-gray-900 mt-1">{selectedCenter.name}</p>
               </div>
@@ -788,22 +769,12 @@ export default function AdminCentersPage() {
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-500">Kota</label>
+                  <label className="block text-sm font-medium text-gray-500">Kota/Kabupaten</label>
                   <p className="text-sm text-gray-900 mt-1">{selectedCenter.city}</p>
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-500">Provinsi</label>
                   <p className="text-sm text-gray-900 mt-1">{selectedCenter.province}</p>
-                </div>
-              </div>
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-500">Telepon</label>
-                  <p className="text-sm text-gray-900 mt-1">{selectedCenter.phone}</p>
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-500">Email</label>
-                  <p className="text-sm text-gray-900 mt-1">{selectedCenter.email}</p>
                 </div>
               </div>
               <div className="grid grid-cols-2 gap-4">

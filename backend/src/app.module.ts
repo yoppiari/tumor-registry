@@ -13,7 +13,8 @@ import { UsersModule } from './modules/users/users.module';
 import { CentersModule } from './modules/centers/centers.module';
 import { PatientsModule } from './modules/patients/patients.module';
 // import { AnalyticsModule } from './modules/analytics/analytics.module'; // Temporarily disabled - uses ScheduleModule
-// import { ResearchModule } from './modules/research/research.module'; // Temporarily disabled - has Prisma field mismatches
+import { ResearchModule } from './modules/research/research.module';
+import { ResearchRequestsModule } from './modules/research-requests/research-requests.module';
 // import { ResearchImpactModule } from './modules/research-impact/research-impact.module'; // Temporarily disabled - depends on ResearchModule
 // import { ReportsModule } from './modules/reports/reports.module'; // Temporarily disabled - has TypeScript errors
 // import { ScheduledReportsModule } from './modules/scheduled-reports/scheduled-reports.module'; // Temporarily disabled - uses ScheduleModule
@@ -31,8 +32,15 @@ import { OfflineQueueModule } from './modules/offline-queue/offline-queue.module
 // import { DataProvenanceModule } from './modules/data-provenance/data-provenance.module'; // Temporarily disabled - has TypeScript errors
 // Musculoskeletal Tumor Registry Module (Dec 11, 2025)
 import { MusculoskeletalModule } from './modules/musculoskeletal/musculoskeletal.module';
+// Regions Module (Indonesian Administrative Divisions)
+import { RegionsModule } from './modules/regions/regions.module';
+// Clinical Photos Module
+import { ClinicalPhotosModule } from './modules/clinical-photos/clinical-photos.module';
+// Quality Module
+import { QualityModule } from './modules/quality/quality.module';
+// System Administration Module
+import { SystemAdministrationModule } from './modules/system-administration/system-administration.module';
 // Temporarily commented out problematic modules
-// import { SystemAdministrationModule } from './modules/system-administration/system-administration.module';
 // import { BackupModule } from './modules/backup/backup.module';
 // import { SecurityMonitoringModule } from './modules/security-monitoring/security-monitoring.module'; // Temporarily disabled - uses ScheduleModule
 import { HttpExceptionFilter, ValidationExceptionFilter } from './common/filters/http-exception.filter';
@@ -63,9 +71,11 @@ import { SecurityMiddleware } from './modules/auth/middleware/security.middlewar
     AuthModule,
     UsersModule,
     CentersModule,
+    RegionsModule,
     PatientsModule,
     // AnalyticsModule, // Temporarily disabled - uses ScheduleModule
-    // ResearchModule, // Temporarily disabled - has Prisma field mismatches
+    ResearchModule,
+    ResearchRequestsModule,
     // ResearchImpactModule, // Temporarily disabled - depends on ResearchModule
     // ReportsModule, // Temporarily disabled - has TypeScript errors
     // ScheduledReportsModule, // Temporarily disabled - uses ScheduleModule
@@ -83,7 +93,12 @@ import { SecurityMiddleware } from './modules/auth/middleware/security.middlewar
     // DataProvenanceModule, // Temporarily disabled - has TypeScript errors
     // Musculoskeletal Tumor Registry Module
     MusculoskeletalModule,
-    // SystemAdministrationModule,
+    // Clinical Photos Module
+    ClinicalPhotosModule,
+    // Quality Module
+    QualityModule,
+    // System Administration Module
+    SystemAdministrationModule,
     // BackupModule,
   ],
   controllers: [],

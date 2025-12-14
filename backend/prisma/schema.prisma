@@ -52,7 +52,7 @@ model User {
   isSsoUser                 Boolean                 @default(false)
   createdAt                 DateTime                @default(now())
   updatedAt                 DateTime                @updatedAt
-  centerId                  String
+  centerId                  String?
   createdDataAccess         DataAccessSession[]     @relation("DataAccessCreator")
   dataAccessSessions        DataAccessSession[]     @relation("DataAccessUser")
   researchApprovals         ResearchApproval[]      @relation("ResearchApprover")
@@ -65,13 +65,14 @@ model User {
   createdPublications       ResearchPublication[]   @relation("PublicationCreator")
   researchRequestsAsCreator ResearchRequest[]       @relation("ResearchCreator")
   researchRequestsAsPI      ResearchRequest[]       @relation("ResearchInvestigator")
+  researchRequestActivities ResearchRequestActivity[] @relation("ResearchActivityActor")
   userRoles                 UserRole[]
   userActivity              UserActivityLog[]       @relation("UserActivity")
   securityEvents            SecurityEvent[]         @relation("SecurityEvents")
   securityAlerts            SecurityAlert[]         @relation("SecurityAlerts")
   notifications             Notification[]          @relation("UserNotifications")
   apiUsage                  ApiUsage[]              @relation("ApiUsage")
-  center                    Center                  @relation(fields: [centerId], references: [id], onDelete: Cascade)
+  center                    Center?                 @relation(fields: [centerId], references: [id], onDelete: Cascade)
   offlineDataQueue          OfflineDataQueue[]
   providerDiagnoses         PatientDiagnosis[]      @relation("ProviderDiagnoses")
 
@@ -597,7 +598,8 @@ model PatientInsurance {
 }
 
 model ResearchRequest {
-  id                          String                   @id @default(cuid())
+  id                          String                      @id @default(cuid())
+  requestNumber               String?                     @unique // RR-2025-001
   title                       String
   description                 String
   principalInvestigatorId     String
@@ -608,20 +610,20 @@ model ResearchRequest {
   exclusionCriteria           String
   sampleSize                  Int
   duration                    Int
-  requiresEthicsApproval      Boolean                  @default(false)
+  requiresEthicsApproval      Boolean                     @default(false)
   dataRequested               String
   confidentialityRequirements String?
   fundingSource               String?
   collaborators               String?
-  status                      ResearchRequestStatus    @default(PENDING_REVIEW)
-  ethicsStatus                EthicsStatus             @default(NOT_REQUIRED)
+  status                      ResearchRequestStatus       @default(DRAFT)
+  ethicsStatus                EthicsStatus                @default(NOT_REQUIRED)
   ethicsApprovalNumber        String?
   ethicsApprovalDate          DateTime?
-  priority                    ResearchPriority         @default(MEDIUM)
+  priority                    ResearchPriority            @default(MEDIUM)
   expectedOutcomes            String?
   riskAssessment              String?
   dataRetentionPeriod         Int?
-  submittedAt                 DateTime                 @default(now())
+  submittedAt                 DateTime?
   reviewedAt                  DateTime?
   approvedAt                  DateTime?
   rejectedAt                  DateTime?
@@ -629,8 +631,51 @@ model ResearchRequest {
   expiresAt                   DateTime?
   notes                       String?
   createdBy                   String
-  createdAt                   DateTime                 @default(now())
-  updatedAt                   DateTime                 @updatedAt
+  createdAt                   DateTime                    @default(now())
+  updatedAt                   DateTime                    @updatedAt
+
+  // NEW: Enhanced fields for checklist-based request
+  researchAbstract            String?                     @db.Text
+  researcherPhone             String?
+  researcherInstitution       String?
+
+  // NEW: Data fields selection (JSON)
+  requestedDataFields         Json? // {demographics: {selected: true, justification: "..."}, clinicalPresentation: {...}, ...}
+
+  // NEW: Data filters (JSON)
+  dataFilters                 Json? // {periodStart: "2020-01-01", periodEnd: "2024-12-31", tumorTypes: ["bone"], whoClassifications: [...], ennekingStages: ["IIA", "IIB"], ...}
+
+  // NEW: Estimated patient count
+  estimatedPatientCount       Int?
+
+  // NEW: Data sensitivity score (0-100)
+  dataSensitivityScore        Int?
+
+  // NEW: Auto-approval eligibility
+  isAutoApprovalEligible      Boolean                     @default(false)
+
+  // NEW: Ethics & compliance
+  needsEthicsReview           Boolean                     @default(true)
+  needsDataProtectionReview   Boolean                     @default(false)
+
+  // NEW: Document uploads
+  irbCertificateUrl           String?
+  protocolUrl                 String?
+  proposalUrl                 String?
+  cvUrl                       String?
+
+  // NEW: Agreement
+  agreementSigned             Boolean                     @default(false)
+  agreementDate               DateTime?
+
+  // NEW: Data export & access tracking
+  dataExportGeneratedAt       DateTime?
+  dataExportUrl               String?
+  dataExportFileSize          Int? // in bytes
+  dataDownloadedAt            DateTime?
+  dataDownloadCount           Int                         @default(0)
+
+  // Relations
   dataAccessSessions          DataAccessSession[]
   approvals                   ResearchApproval[]
   collaborations              ResearchCollaboration[]
@@ -641,9 +686,13 @@ model ResearchRequest {
   contributions               ResearcherContribution[]
   outcomes                    ResearchOutcome[]
   projects                    ResearchProject[]
-  creator                     User                     @relation("ResearchCreator", fields: [createdBy], references: [id])
-  principalInvestigator       User                     @relation("ResearchInvestigator", fields: [principalInvestigatorId], references: [id])
+  activities                  ResearchRequestActivity[]
+  creator                     User                        @relation("ResearchCreator", fields: [createdBy], references: [id])
+  principalInvestigator       User                        @relation("ResearchInvestigator", fields: [principalInvestigatorId], references: [id])
 
+  @@index([status])
+  @@index([priority])
+  @@index([dataSensitivityScore])
   @@map("research_requests")
   @@schema("medical")
 }
@@ -671,6 +720,27 @@ model ResearchApproval {
   researchRequest   ResearchRequest @relation(fields: [researchRequestId], references: [id], onDelete: Cascade)
 
   @@map("research_approvals")
+  @@schema("medical")
+}
+
+model ResearchRequestActivity {
+  id                String          @id @default(cuid())
+  researchRequestId String
+  actorId           String
+  action            String // CREATED, SUBMITTED, REVIEWED, APPROVED, REJECTED, DOWNLOADED, etc
+  statusFrom        String?
+  statusTo          String?
+  notes             String?         @db.Text
+  metadata          Json? // Additional context like {fields: [...], justifications: {...}, etc}
+  createdAt         DateTime        @default(now())
+
+  researchRequest   ResearchRequest @relation(fields: [researchRequestId], references: [id], onDelete: Cascade)
+  actor             User            @relation("ResearchActivityActor", fields: [actorId], references: [id])
+
+  @@index([researchRequestId])
+  @@index([actorId])
+  @@index([action])
+  @@map("research_request_activities")
   @@schema("medical")
 }
 
@@ -1050,18 +1120,24 @@ enum StudyType {
 }
 
 enum ResearchRequestStatus {
-  DRAFT
-  PENDING_REVIEW
-  UNDER_REVIEW
-  ETHICS_REVIEW
-  APPROVED
-  REJECTED
+  DRAFT // Researcher sedang isi form
+  SUBMITTED // Researcher submit, masuk approval queue
+  PENDING_REVIEW // Belum di-review admin
+  UNDER_REVIEW // Admin sedang review
+  NEED_MORE_INFO // Admin minta info tambahan
+  ETHICS_REVIEW // Menunggu IRB approval
+  APPROVED // Admin approve
+  APPROVED_WITH_CONDITIONS // Approve dengan syarat
+  REJECTED // Admin reject
+  DATA_READY // Export file siap download
+  ACTIVE // Researcher sedang akses data
   CONDITIONS_MET
   IN_PROGRESS
-  COMPLETED
+  COMPLETED // Research selesai/access expired
   SUSPENDED
   CANCELLED
-  EXPIRED
+  WITHDRAWN // Researcher batalkan request
+  EXPIRED // Access expired
 
   @@map("research_request_statuses")
   @@schema("medical")

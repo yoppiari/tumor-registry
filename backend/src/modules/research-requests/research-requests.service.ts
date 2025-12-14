@@ -1,5 +1,5 @@
 import { Injectable, NotFoundException, BadRequestException, ForbiddenException } from '@nestjs/common';
-import { PrismaService } from '../../prisma/prisma.service';
+import { PrismaService } from '../../database/prisma.service';
 import { CreateResearchRequestDto, UpdateResearchRequestDto, ApproveResearchRequestDto } from './dto/create-research-request.dto';
 import { calculateSensitivityScore, isAutoApprovalEligible } from './helpers/sensitivity-scorer';
 import { estimatePatientCount, validateFilters } from './helpers/patient-estimator';

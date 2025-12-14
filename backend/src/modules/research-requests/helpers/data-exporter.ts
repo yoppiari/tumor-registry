@@ -1,4 +1,4 @@
-import { PrismaService } from '../../../prisma/prisma.service';
+import { PrismaService } from '../../../database/prisma.service';
 
 export interface ExportOptions {
   requestedDataFields: any;

@@ -1,4 +1,4 @@
-import { PrismaService } from '../../../prisma/prisma.service';
+import { PrismaService } from '../../../database/prisma.service';
 import { DataFiltersDto } from '../dto/create-research-request.dto';
 
 /**

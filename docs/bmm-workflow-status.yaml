@@ -1228,11 +1228,11 @@ current_status:
         lines: 400
         status: "completed"
 
-  last_update: "2025-12-14 - 🐛 CRITICAL BUG FIX! | ✅ JWT permissions bug resolved | ✅ Admin users page working with real API | ✅ Only admin@inamsos.go.id in database | ✅ Users API fully integrated | 🔧 Fixed duplicate JWT strategy issue | 🚀 Status: Admin UI functional, ready for user/center management testing"
-  next_priority: "Admin UI Testing + User Creation Workflow"
-  next_agent: "dev"
-  next_action: "Test user creation via admin UI, test center creation workflow, verify role assignment, test permissions enforcement"
-  recommended_approach: "Admin UI Testing (0.5 day) → User Acceptance Testing (2 days) → Production Deployment Preparation"
+  last_update: "2025-12-15 - 🎯 Research Request UX Refinement | ✅ Removed institution field from Step 1 (users tied to centers) | ✅ Removed IRB approval requirement (INAMSOS approval is ethical clearance) | ✅ Updated Step 4 to 'Timeline & Submit' | ✅ Fixed approvals page popup error | ✅ Enhanced ResearchRequest interface | ✅ Improved error handling (403 graceful) | 🚀 Status: Research request wizard streamlined, ready for inter-center flow discussion"
+  next_priority: "Inter-Center Data Request Governance Architecture"
+  next_agent: "architect"
+  next_action: "Define approval flow for inter-center data requests, determine who approves when center requests data from pooled registry"
+  recommended_approach: "Design governance model → Implement approval routing → Test multi-center scenarios"
 
 musculoskeletal_requirements:
   form_structure:
@@ -1523,4 +1523,129 @@ current_work_session:
     integration: "20 minutes (module registration + testing)"
     documentation: "40 minutes (commit message + BMad update)"
     total: "~4.5 hours"
+
+# ============================================================================
+# CURRENT WORK SESSION - Research Request UX Refinement
+# Date: 2025-12-15
+# Session Focus: Streamline Research Request Wizard
+# ============================================================================
+
+current_work_session_2:
+  date: "2025-12-15"
+  session_number: "Research Request UX Refinement"
+  focus: "Simplify research request wizard based on user feedback"
+  trigger: "User identified redundant fields and ambiguous IRB approval flow"
+
+  changes_implemented:
+    institution_field_removal:
+      status: "✅ COMPLETED"
+      rationale: "Users are already tied to a specific center - institution field is redundant"
+      changes:
+        - "Removed researcherInstitution input field from Step 1"
+        - "Removed auto-fill useEffect for institution"
+        - "Changed No. HP from required to optional (Opsional)"
+        - "Made researcherInstitution optional in backend DTO"
+      files_modified:
+        - "frontend/src/components/research/wizard/WizardSteps.tsx"
+        - "backend/src/modules/research-requests/dto/create-research-request.dto.ts"
+      commit: "097df26"
+
+    irb_approval_removal:
+      status: "✅ COMPLETED"
+      rationale: "INAMSOS approval already represents ethical clearance - IRB creates ambiguity"
+      changes:
+        - "Removed IRB status dropdown from Step 4"
+        - "Removed IRB certificate upload conditional field"
+        - "Made irbStatus optional in backend DTO (not required)"
+        - "Added comment: 'INAMSOS approval represents ethical clearance'"
+        - "Renamed step from 'Ethics & Timeline' to 'Timeline & Submit'"
+        - "Updated description to focus on timeline and submission"
+      files_modified:
+        - "frontend/src/components/research/wizard/WizardSteps.tsx"
+        - "frontend/src/components/research/wizard/ResearchRequestWizard.tsx"
+        - "backend/src/modules/research-requests/dto/create-research-request.dto.ts"
+      commits: ["6c9e8ea", "1e87366", "5692fb2"]
+
+    approvals_page_fix:
+      status: "✅ COMPLETED"
+      problem: "Annoying popup 'Gagal memuat' when accessing /approvals without permission"
+      root_cause: "Missing fields in ResearchRequest interface + aggressive error alerting"
+      changes:
+        - "Enhanced ResearchRequest interface with missing fields (researchType, user, etc.)"
+        - "Added findAll() alias method in research-requests service"
+        - "Improved error handling to gracefully handle 403 permission errors"
+        - "Removed intrusive alert popup"
+        - "Now silently logs errors to console instead"
+      files_modified:
+        - "frontend/src/services/research-requests.service.ts"
+        - "frontend/src/app/approvals/page.tsx"
+      commit: "22ff877"
+
+  user_feedback_applied:
+    - feedback: "Di step 1, kolom institusi sebaiknya tidak ada karena asal permintaan sudah pasti dari center yang tergabung"
+      action: "✅ Removed institution field"
+    - feedback: "IRB approval status membingungkan karena akan di-approve oleh INAMSOS"
+      action: "✅ Removed IRB approval requirement, renamed to Timeline & Submit"
+    - feedback: "Ada popup gagal memuat di /approvals"
+      action: "✅ Fixed error handling and interface mismatches"
+
+  technical_improvements:
+    interface_updates:
+      - "Added missing fields to ResearchRequest interface"
+      - "Now includes: researchType, researchAbstract, objectives, researcherPhone, researcherInstitution"
+      - "Added isAutoApprovalEligible, adminNotes, accessDurationMonths"
+      - "Added both user and creator fields (backward compatibility)"
+
+    error_handling:
+      - "403 errors now handled gracefully without popup"
+      - "Error details logged to console for debugging"
+      - "Page displays empty state instead of error popup"
+      - "Better user experience for non-admin users"
+
+    backend_dto:
+      - "Made irbStatus optional (was required)"
+      - "Added comment explaining INAMSOS approval as ethical clearance"
+      - "Maintained backward compatibility with existing code"
+
+  commits_made:
+    - hash: "097df26"
+      message: "fix: Remove institution field from Step 1 research request wizard"
+      files_changed: 12
+    - hash: "6c9e8ea"
+      message: "fix: Remove IRB approval requirement from research requests"
+      files_changed: 5
+    - hash: "1e87366"
+      message: "fix: Update Step 4 title to 'Timeline & Submit'"
+      files_changed: 7
+    - hash: "5692fb2"
+      message: "fix: Update wizard step navigation title for Step 4"
+      files_changed: 7
+    - hash: "22ff877"
+      message: "fix: Remove popup alert and improve error handling in approvals page"
+      files_changed: 9
+
+  files_modified:
+    frontend:
+      - "src/components/research/wizard/WizardSteps.tsx"
+      - "src/components/research/wizard/ResearchRequestWizard.tsx"
+      - "src/services/research-requests.service.ts"
+      - "src/app/approvals/page.tsx"
+    backend:
+      - "src/modules/research-requests/dto/create-research-request.dto.ts"
+
+  lessons_learned:
+    - "User feedback is critical - removed features that caused confusion"
+    - "Redundant fields should be eliminated when user context provides the data"
+    - "Error handling should be graceful, not intrusive with popups"
+    - "Approval flow should be clear and unambiguous"
+    - "INAMSOS approval is sufficient - no need for separate IRB requirement"
+
+  next_discussion:
+    topic: "Inter-Center Data Request Governance"
+    questions:
+      - "Who approves when one center requests data from the pooled registry?"
+      - "Is there a NATIONAL_ADMIN role that approves all requests?"
+      - "Or does each center approve access to their own data?"
+      - "How does data pooling work across 21 centers?"
+    priority: "HIGH - Critical for multi-center registry operation"
 

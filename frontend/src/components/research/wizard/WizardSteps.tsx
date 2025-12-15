@@ -228,8 +228,8 @@ export function Step4EthicsTimeline({ formData, updateFormData }: any) {
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-2xl font-bold text-gray-900 mb-2">Timeline & Agreement</h2>
-        <p className="text-gray-600">Timeline penelitian dan persetujuan penggunaan data</p>
+        <h2 className="text-2xl font-bold text-gray-900 mb-2">Timeline & Submit</h2>
+        <p className="text-gray-600">Tentukan timeline penelitian dan submit request Anda</p>
       </div>
 
       <div className="grid grid-cols-2 gap-4">

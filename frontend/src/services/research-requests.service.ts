@@ -68,21 +68,37 @@ export interface ResearchRequest {
   id: string;
   requestNumber: string;
   title: string;
+  researchType: string;
+  researchAbstract?: string;
+  objectives?: string;
+  researcherPhone?: string;
+  researcherInstitution?: string;
   status: string;
   priority: string;
   dataSensitivityScore: number;
   estimatedPatientCount: number;
+  isAutoApprovalEligible?: boolean;
   submittedAt?: string;
   approvedAt?: string;
   expiresAt?: string;
   createdAt: string;
-  creator: {
+  updatedAt?: string;
+  user?: {
+    id: string;
+    name: string;
+    email: string;
+  };
+  creator?: {
     id: string;
     name: string;
     email: string;
   };
   requestedDataFields?: DataFieldsSelection;
   dataFilters?: DataFilters;
+  adminNotes?: string;
+  accessDurationMonths?: number;
+  researchStart?: string;
+  researchEnd?: string;
 }
 
 export interface ApprovalDecision {
@@ -124,6 +140,13 @@ class ResearchRequestsService {
   async getAll(filters?: any): Promise<ResearchRequest[]> {
     const response = await apiClient.get('/research-requests', { params: filters });
     return response.data;
+  }
+
+  /**
+   * Alias for getAll - used in research requests page
+   */
+  async findAll(filters?: any): Promise<ResearchRequest[]> {
+    return this.getAll(filters);
   }
 
   /**

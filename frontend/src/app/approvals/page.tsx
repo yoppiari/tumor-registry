@@ -82,9 +82,21 @@ export default function ApprovalsPage() {
       });
 
       setStats(statusCounts);
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error fetching approvals data:', error);
-      alert('Gagal memuat data approvals. Silakan coba lagi.');
+
+      // Handle different error types
+      if (error.response?.status === 403) {
+        console.error('Access denied: User does not have RESEARCH_REQUESTS_REVIEW permission');
+        // Just log, don't alert - user might not have permission
+        setRequests([]);
+        setFilteredRequests([]);
+      } else {
+        console.error('Error details:', error.response?.data || error.message);
+        // Only show alert for unexpected errors
+        // Comment out alert to prevent popup
+        // alert('Gagal memuat data approvals. Silakan coba lagi.');
+      }
     } finally {
       setLoading(false);
     }

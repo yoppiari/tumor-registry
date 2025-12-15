@@ -13,7 +13,7 @@ const WIZARD_STEPS: WizardStep[] = [
   { id: 1, title: 'Informasi Penelitian', description: 'Detail penelitian dan peneliti' },
   { id: 2, title: 'Kriteria Data', description: 'Filter dan estimasi pasien' },
   { id: 3, title: 'Data Fields', description: 'Pilih kategori data yang dibutuhkan' },
-  { id: 4, title: 'Ethics & Timeline', description: 'IRB approval dan timeline' },
+  { id: 4, title: 'Timeline & Submit', description: 'Timeline penelitian dan submit' },
 ];
 
 interface ResearchRequestWizardProps {

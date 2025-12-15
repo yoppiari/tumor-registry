@@ -493,3 +493,12 @@ prisma:query SELECT "system"."user_roles"."id", "system"."user_roles"."userId", 
 prisma:query SELECT "system"."roles"."id", "system"."roles"."name", "system"."roles"."code", "system"."roles"."description", "system"."roles"."level" FROM "system"."roles" WHERE "system"."roles"."id" IN ($1) OFFSET $2
 prisma:query SELECT "system"."user_roles"."id", "system"."user_roles"."userId", "system"."user_roles"."roleId", "system"."user_roles"."isActive", "system"."user_roles"."createdAt" FROM "system"."user_roles" WHERE ("system"."user_roles"."userId" = $1 AND "system"."user_roles"."isActive" = $2) LIMIT $3 OFFSET $4
 prisma:query SELECT "system"."roles"."id", "system"."roles"."name", "system"."roles"."code", "system"."roles"."description", "system"."roles"."level" FROM "system"."roles" WHERE "system"."roles"."id" IN ($1) OFFSET $2
+prisma:error Error in PostgreSQL connection: Error { kind: Closed, cause: None }
+prisma:error Error in PostgreSQL connection: Error { kind: Closed, cause: None }
+prisma:error Error in PostgreSQL connection: Error { kind: Closed, cause: None }
+prisma:error Error in PostgreSQL connection: Error { kind: Closed, cause: None }
+prisma:error Error in PostgreSQL connection: Error { kind: Closed, cause: None }
+prisma:error Error in PostgreSQL connection: Error { kind: Closed, cause: None }
+prisma:error Error in PostgreSQL connection: Error { kind: Closed, cause: None }
+prisma:error Error in PostgreSQL connection: Error { kind: Closed, cause: None }
+prisma:error Error in PostgreSQL connection: Error { kind: Closed, cause: None }

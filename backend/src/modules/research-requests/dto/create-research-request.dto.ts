@@ -121,9 +121,11 @@ export class CreateResearchRequestDto {
   @IsObject()
   requestedDataFields: DataFieldsSelectionDto;
 
-  // STEP 4: Ethics & Timeline
+  // STEP 4: Timeline & Agreement
+  // IRB fields are now optional - INAMSOS approval represents ethical clearance
+  @IsOptional()
   @IsEnum(IRBStatus)
-  irbStatus: IRBStatus;
+  irbStatus?: IRBStatus;
 
   @IsOptional()
   @IsString()

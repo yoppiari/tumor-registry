@@ -8,13 +8,6 @@ import researchRequestsService from '@/services/research-requests.service';
 export function Step1ResearchInfo({ formData, updateFormData }: any) {
   const { user } = useAuth();
 
-  useEffect(() => {
-    // Auto-fill from user profile
-    if (user) {
-      updateFormData('researcherInstitution', user.institution || '');
-    }
-  }, [user]);
-
   return (
     <div className="space-y-6">
       <div>
@@ -31,27 +24,15 @@ export function Step1ResearchInfo({ formData, updateFormData }: any) {
         </div>
       </div>
 
-      <div className="grid grid-cols-2 gap-4">
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Institusi</label>
-          <input
-            type="text"
-            value={formData.researcherInstitution || ''}
-            onChange={(e) => updateFormData('researcherInstitution', e.target.value)}
-            placeholder="Universitas/RS tempat Anda berasal"
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg"
-          />
-        </div>
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">No. HP</label>
-          <input
-            type="tel"
-            value={formData.researcherPhone || ''}
-            onChange={(e) => updateFormData('researcherPhone', e.target.value)}
-            placeholder="+62"
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg"
-          />
-        </div>
+      <div>
+        <label className="block text-sm font-medium text-gray-700 mb-2">No. HP (Opsional)</label>
+        <input
+          type="tel"
+          value={formData.researcherPhone || ''}
+          onChange={(e) => updateFormData('researcherPhone', e.target.value)}
+          placeholder="+62"
+          className="w-full px-4 py-2 border border-gray-300 rounded-lg"
+        />
       </div>
 
       <div>
